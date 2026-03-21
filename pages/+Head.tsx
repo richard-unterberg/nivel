@@ -1,7 +1,6 @@
 // https://vike.dev/Head
-
-import logoUrl from "@/assets/favicon.svg";
+import appConfig from '@/lib/config'
 
 export function Head() {
-  return <link rel="icon" href={logoUrl} />;
+  return <link rel="icon" href={`${appConfig.publicAssets}favicon.svg`} />
 }
