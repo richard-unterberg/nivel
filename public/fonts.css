@@ -22,3 +22,36 @@
   font-weight: 800;
   src: url('/fonts/inter-v20-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
+/*
+public/fonts/noto-sans-sc-v40-chinese-simplified-600.woff2
+public/fonts/noto-sans-sc-v40-chinese-simplified-800.woff2
+public/fonts/noto-sans-sc-v40-chinese-simplified-regular.woff2
+*/
+
+@font-face {
+  font-display: swap;
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/noto-sans-sc-v40-chinese-simplified-regular.woff2')
+    format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/noto-sans-sc-v40-chinese-simplified-600.woff2')
+    format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 800;
+  src: url('/fonts/noto-sans-sc-v40-chinese-simplified-800.woff2')
+    format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}

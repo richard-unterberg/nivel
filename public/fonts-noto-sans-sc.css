@@ -1,0 +1,23 @@
+@font-face {
+  font-display: swap;
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/noto-sans-sc-v40-chinese-simplified-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/noto-sans-sc-v40-chinese-simplified-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 800;
+  src: url('/fonts/noto-sans-sc-v40-chinese-simplified-800.woff2') format('woff2');
+}

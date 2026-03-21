@@ -17,15 +17,15 @@ const ThemeSwitch = () => {
   })
 
   return (
-    <label class="cursor-pointer swap swap-rotate">
+    <label class="cursor-pointer swap swap-rotate rounded-full bg-base-100 p-2">
       <input
         type="checkbox"
         checked={isLight()}
         aria-label="Toggle light theme"
         onChange={(event) => updateTheme(event.currentTarget.checked)}
       />
-      <Sun class={cmMerge('h-6 w-6', 'swap-on')} />
-      <Moon class={cmMerge('h-6 w-6', 'swap-off')} />
+      <Sun class={cmMerge('h-4 w-4', 'swap-on')} />
+      <Moon class={cmMerge('h-4 w-4', 'swap-off')} />
     </label>
   )
 }

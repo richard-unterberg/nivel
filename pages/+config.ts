@@ -9,5 +9,6 @@ export default {
   title: 'Vike',
   description: 'Docs re-amp',
   htmlAttributes: { 'data-theme': 'vike-dark' },
+  passToClient: ['locale', 'urlPathnameLocalized'],
   extends: [vikeSolid],
 } satisfies Config

@@ -1,0 +1,46 @@
+# Get Started
+
+This page demonstrates the localization strategy used in this repo.
+
+Each docs route stays a normal Vike page, but the route component renders MDX content from a locale-aware registry. That means `/get-started` resolves to English and `/zh/get-started` resolves to Chinese when `content.zh.mdx` exists next to the route.
+
+## Why This Structure
+
+- Vike keeps one stable route tree.
+- Every doc can have `content.en.mdx`, `content.zh.mdx`, or both.
+- Missing translations fall back to English automatically.
+- Shared UI such as the sidebar, header, and language switcher use the same locale from `pageContext`.
+
+## File Layout
+
+```text
+pages/
+  (docs)/
+    get-started/
+      +Page.tsx
+      content.en.mdx
+      content.zh.mdx
+    bodyAttributes/
+      +Page.tsx
+      content.en.mdx
+  +onBeforeRoute.ts
+  +lang.ts
+```
+
+## Adding Another Translation
+
+1. Create `pages/(docs)/<route>/content.zh.mdx`.
+2. Keep the route wrapper unchanged.
+3. The page will start rendering Chinese at `/zh/<route>`.
+
+If `content.zh.mdx` is missing, the page still works and renders the English file.
+
+## Why Not Duplicate `+Page.mdx` Per Locale
+
+Duplicating routed files for every language makes fallback harder and grows the route tree quickly.
+
+Using colocated content modules instead keeps routing and localization separate:
+
+- Vike handles locale-prefixed URLs.
+- The page component picks the best MDX file.
+- Fallback logic stays in one place.

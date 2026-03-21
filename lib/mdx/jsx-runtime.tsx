@@ -1,11 +1,11 @@
 import type { ValidComponent } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 
-export function Fragment(props: { children?: unknown }) {
+export const Fragment = (props: { children?: unknown }) => {
   return props.children
 }
 
-export function jsx(type: unknown, props: Record<string, unknown> = {}) {
+export const jsx = (type: unknown, props: Record<string, unknown> = {}) => {
   return <Dynamic component={type as ValidComponent} {...props} />
 }
 

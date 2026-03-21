@@ -1,20 +1,22 @@
-import { Show } from "solid-js";
-import { usePageContext } from "vike-solid/usePageContext";
+import { Show } from 'solid-js'
+import { usePageContext } from 'vike-solid/usePageContext'
+import { t } from '@/lib/i18n/messages'
 
-export default function Page() {
-  const { is404 } = usePageContext();
+const Page = () => {
+  const pageContext = usePageContext()
   return (
     <Show
-      when={is404}
+      when={pageContext.is404}
       fallback={
         <>
-          <h1>Internal Error</h1>
-          <p>Something went wrong.</p>
+          <h1>{t(pageContext.locale, 'error', 'internalTitle')}</h1>
+          <p>{t(pageContext.locale, 'error', 'internalBody')}</p>
         </>
       }
     >
-      <h1>Page Not Found</h1>
-      <p>This page could not be found.</p>
+      <h1>{t(pageContext.locale, 'error', 'notFoundTitle')}</h1>
+      <p>{t(pageContext.locale, 'error', 'notFoundBody')}</p>
     </Show>
-  );
+  )
 }
+export default Page
