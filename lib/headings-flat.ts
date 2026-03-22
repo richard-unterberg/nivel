@@ -330,8 +330,8 @@ const apiHeadingTitles = {
     zh: '路由优先级',
   },
   apiHooksMore: {
-    en: '... more',
-    zh: '更多...',
+    en: 'Overview',
+    zh: '概览',
   },
   apiSettingsMore: {
     en: '... more',

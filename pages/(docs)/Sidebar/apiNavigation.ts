@@ -43,6 +43,7 @@ const apiGroups: ApiGroupDefinition[] = [
   {
     titleKey: 'hooks',
     headings: [
+      'apiHooksMore',
       'apiData',
       'apiGuard',
       'apiOnBeforeRender',
@@ -54,7 +55,6 @@ const apiGroups: ApiGroupDefinition[] = [
       'apiOnCreateGlobalContext',
       'apiOnBeforePrerenderStart',
       'apiOnPrerenderStart',
-      'apiHooksMore',
     ],
   },
   {
@@ -103,54 +103,6 @@ const apiGroups: ApiGroupDefinition[] = [
       'apiMetaSetting',
       'apiSettingsMore',
     ],
-  },
-  {
-    titleKey: 'basics',
-    headings: ['apiLoading', 'apiFavicon', 'apiFileStructure', 'apiLang', 'apiReactSetting'],
-  },
-  {
-    titleKey: 'htmlShell',
-    headings: [
-      'apiOnRenderHtml',
-      'apiOnRenderClient',
-      'apiOnBeforeRenderHtml',
-      'apiOnAfterRenderHtml',
-      'apiHeadHtmlBegin',
-      'apiHeadHtmlEnd',
-      'apiBodyHtmlBegin',
-      'apiBodyHtmlEnd',
-      'apiInjectScriptsAt',
-      'apiInjectAssets',
-    ],
-  },
-  {
-    titleKey: 'advanced',
-    headings: [
-      'apiCreateDevMiddleware',
-      'apiOnBeforeRoute',
-      'apiOnData',
-      'apiHydrationCanBeAborted',
-      'apiExtends',
-      'apiOnCreateApp',
-      'apiHost',
-      'apiPort',
-      'apiForce',
-      'apiMode',
-      'apiGetPageContextServer',
-      'apiGetPageContextClient',
-      'apiGetVikeConfig',
-      'apiReactStrictMode',
-      'apiOnPageTransitionEnd',
-      'apiOnBeforeRenderClient',
-      'apiOnAfterRenderClient',
-      'apiClientHooks',
-      'apiRequire',
-      'apiFilesystemRoutingRoot',
-    ],
-  },
-  {
-    titleKey: 'seeAlso',
-    headings: ['apiVitePlugin', 'apiClientOnlyHelper'],
   },
 ]
 
