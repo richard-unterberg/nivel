@@ -1,3 +1,3 @@
-import { createDocPage } from '@/pages/(docs)/DocPage'
+import { createDocPage } from '@/docs/(components)/DocPage'
 
 export default createDocPage('get-started')

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
+import ApiTab from '@/docs/(components)/Sidebar/ApiTab'
+import MenuTab from '@/docs/(components)/Sidebar/MenuTab'
 import { t } from '@/lib/i18n/messages'
-import ApiTab from '@/pages/(docs)/Sidebar/ApiTab'
-import MenuTab from '@/pages/(docs)/Sidebar/MenuTab'
 
 const Sidebar = () => {
   const [selectedTab, setSelectedTab] = useState<'menu' | 'api'>('menu')

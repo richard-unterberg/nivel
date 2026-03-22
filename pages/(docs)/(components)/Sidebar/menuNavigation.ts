@@ -1,9 +1,9 @@
 import type { LucideIcon } from 'lucide-react'
 import { Compass, Map, Plug, Rocket, Sprout } from 'lucide-react'
+import type { SidebarCategory, SidebarGroup } from '@/docs/(components)/Sidebar/SidebarNavigation'
 import { getHeadingData, type HeadingKey } from '@/lib/headings-flat'
 import type { Locale } from '@/lib/i18n/config'
 import { t } from '@/lib/i18n/messages'
-import type { SidebarCategory, SidebarGroup } from '@/pages/(docs)/Sidebar/SidebarNavigation'
 
 type MenuCategoryDefinition = {
   titleKey: 'basics' | 'routing' | 'more' | 'staticHosts' | 'serverless' | 'selfHosted'

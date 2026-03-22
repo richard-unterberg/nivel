@@ -1,7 +1,7 @@
+import type { SidebarGroup } from '@/docs/(components)/Sidebar/SidebarNavigation'
 import { getHeadingData, type HeadingKey } from '@/lib/headings-flat'
 import type { Locale } from '@/lib/i18n/config'
 import { t } from '@/lib/i18n/messages'
-import type { SidebarGroup } from '@/pages/(docs)/Sidebar/SidebarNavigation'
 
 type ApiGroupDefinition = {
   titleKey:

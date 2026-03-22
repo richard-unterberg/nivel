@@ -1,5 +1,5 @@
-import type { ChangeEvent } from 'react'
 import { Languages } from 'lucide-react'
+import type { ChangeEvent } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { localeLabels, locales } from '@/lib/i18n/config'
 import { getLogicalPathname, localizeHref, stripLocaleFromPathname } from '@/lib/i18n/routing'
