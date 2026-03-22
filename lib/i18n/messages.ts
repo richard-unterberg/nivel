@@ -50,6 +50,10 @@ export const messages = {
       en: 'More',
       zh: '更多',
     },
+    other: {
+      en: 'Other',
+      zh: '其他',
+    },
     deploy: {
       en: 'Deploy',
       zh: '部署',

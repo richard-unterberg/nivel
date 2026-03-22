@@ -12,9 +12,14 @@
   body {
     @apply font-sans bg-base-300 text-base-content;
     @apply antialiased md:subpixel-antialiased;
+    @apply select-none;
   }
 
   code {
     @apply bg-base-200;
+  }
+
+  .prose {
+    @apply select-text;
   }
 }

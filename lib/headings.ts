@@ -17,6 +17,10 @@ const baseHeadingTitles = {
     en: 'Add SSR/SSG to existing Vite app',
     zh: '为现有 Vite 应用添加 SSR/SSG',
   },
+  newCore: {
+    en: 'Scaffold new Vike app without extension',
+    zh: '创建新的 Vike 应用（不使用扩展）',
+  },
   whyVike: {
     en: 'Why Vike',
     zh: '为什么选择 Vike',
@@ -397,6 +401,7 @@ export type HeadingKey = keyof typeof headingTitles
 const baseHeadingLinks = {
   scaffoldNewVikeApp: '/new',
   addSsrSsgToVite: '/add',
+  newCore: '/new/core',
   whyVike: '/why',
   faq: '/faq',
   openSourcePricing: '/pricing',

@@ -2,13 +2,19 @@ import type { ComponentType } from 'react'
 import { type DocHeading, extractDocHeadings } from '@/lib/docs/headings'
 import { DEFAULT_LOCALE, isLocale, type Locale } from '@/lib/i18n/config'
 
+export type DocConfig = {
+  tableOfContents?: boolean
+}
+
 type MdxModule = {
   default: ComponentType
+  docConfig?: DocConfig
 }
 
 type DocContentModule = {
   Page?: ComponentType
   headings?: DocHeading[]
+  config?: DocConfig
 }
 
 type DocEntry = Partial<Record<Locale, DocContentModule>>
@@ -57,6 +63,7 @@ for (const [path, mod] of Object.entries(pageModules)) {
   docs[meta.routeId] ??= {}
   const localizedDoc = (docs[meta.routeId][meta.locale] ??= {})
   localizedDoc.Page = mod.default
+  localizedDoc.config = mod.docConfig
 }
 
 for (const [path, source] of Object.entries(rawContentModules)) {
@@ -80,9 +87,15 @@ export const getDocPage = (slug: string, locale: Locale) => {
     return null
   }
 
+  const config = {
+    ...(doc[DEFAULT_LOCALE]?.config ?? {}),
+    ...(doc[locale]?.config ?? {}),
+  }
+
   return {
     Page: docContent.Page,
     headings: docContent.headings ?? [],
+    config,
     resolvedLocale: doc[locale] ? locale : DEFAULT_LOCALE,
   }
 }

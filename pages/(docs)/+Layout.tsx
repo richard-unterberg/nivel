@@ -17,6 +17,20 @@ const ProseContainer = cm.section`
   prose-a:text-primary
   prose-code:bg-base-200!
   prose-pre:bg-base-200!
+  prose-p:after:content-none
+  prose-p:before:content-none
+  prose-blockquote:not-italic
+  [&_blockquote_p]:mt-0
+  [&_blockquote_p]:leading-6
+  [&_blockquote_p]:mb-2
+  [&_blockquote_ul]:pl-4
+  [&_blockquote_ul]:mt-2
+  [&_blockquote_li]:mt-2
+  [&_blockquote_blockquote]:mt-2
+  [&_blockquote_blockquote]:mb-0
+  [&_blockquote_blockquote]:bg-base-300/40
+  [&_blockquote_blockquote]:pt-2
+  [&_blockquote_blockquote]:pb-1
 `
 
 const DocsLayout = (props: { children: ReactNode }) => {
@@ -24,11 +38,12 @@ const DocsLayout = (props: { children: ReactNode }) => {
   const pathname = pageContext.urlPathnameLocalized ?? pageContext.urlPathname
   const docSlug = getLogicalPathname(pathname).replace(/^\/+/, '')
   const doc = getDocPage(docSlug, pageContext.locale)
+  const showTableOfContents = (doc?.config.tableOfContents ?? true)
 
   return (
     <>
       <div className="absolute w-full h-full top-0 left-0 overflow-hidden">
-        <div className="w-500 h-300 absolute top-16 -right-100 z-0 opacity-66">
+        <div className="w-500 h-300 absolute top-16 -right-100 z-0 opacity-40 dark:opacity-100">
           <img
             src={`${appConfig.publicAssets}decorators/dot.png`}
             alt=""
@@ -48,7 +63,7 @@ const DocsLayout = (props: { children: ReactNode }) => {
           </ProseContainer>
           <DocsFooter />
         </div>
-        {doc?.headings && <TableOfContents headings={doc?.headings ?? []} />}
+        {showTableOfContents && <TableOfContents headings={doc?.headings ?? []} />}
       </LayoutComponent>
     </>
   )

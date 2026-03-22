@@ -9,6 +9,6 @@ export default {
   title: 'Vike',
   description: 'Docs re-amp',
   htmlAttributes: { 'data-theme': 'vike-dark' },
-  passToClient: ['locale', 'urlPathnameLocalized'],
+  passToClient: ['locale', 'urlPathnameLocalized', 'themePreference'],
   extends: [vikeReact],
 } satisfies Config

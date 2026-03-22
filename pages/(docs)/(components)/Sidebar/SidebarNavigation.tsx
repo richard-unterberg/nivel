@@ -42,7 +42,7 @@ export const renderInlineMarkdown = (title: ReactNode): ReactNode => {
 
   return title.split(/(`[^`]+`)/g).map((part, index) => {
     if (part.startsWith('`') && part.endsWith('`')) {
-      return <code className='text-xs!' key={index}>{part.slice(1, -1)}</code>
+      return <code className='text-sm!' key={index}>{part.slice(1, -1)}</code>
     }
 
     return <Fragment key={index}>{part}</Fragment>
@@ -59,8 +59,8 @@ const SidebarLink = (props: SidebarHeading & { currentPathname: string }) => {
       <a
         href={props.href}
         className={cmMerge(
-          'text-vike-grey-300 justify-start',
-          isActiveHref(props.currentPathname, props.href) && 'menu-active',
+          'text-vike-grey-300 justify-start hover:text-primary/80',
+          isActiveHref(props.currentPathname, props.href) && 'menu-active text-primary',
         )}
       >
         {renderInlineMarkdown(props.title)}

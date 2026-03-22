@@ -16,7 +16,7 @@ const TocLink = cm.a<{ $isActive?: boolean; $isNested?: boolean }>`
   hover:border-primary/40
   hover:text-base-content
   ${(props) => (props.$isNested ? 'pl-6' : 'pl-4')}
-  ${(props) => (props.$isActive ? 'border-primary text-base-content font-medium' : '')}
+  ${(props) => (props.$isActive ? 'border-primary text-base-content font-semibold' : '')}
 `
 
 const getCurrentHash = () => {
@@ -149,7 +149,7 @@ const TableOfContents = (props: { headings: DocHeading[] }) => {
     <aside className="hidden xl:block w-64 shrink-0">
       {hasHeadings && (
         <div className="sticky top-24 max-h-[calc(100svh-7rem)] overflow-y-auto pb-8">
-          <p className="mb-4 text-xs font-semibold text-vike-grey-300 uppercase flex gap-2 items-center">
+          <p className="mb-4 text-xs font-semibold tracking-widest text-vike-grey-300 uppercase flex gap-2 items-center">
             <ListTree className="w-3 h-3" />
             {t(pageContext.locale, 'docs', 'onThisPage')}
           </p>

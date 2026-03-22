@@ -16,7 +16,7 @@ const Navbar = () => {
           <a href={localizeHref('/', pageContext.locale)} className="flex gap-2 items-center">
             <img src={`${appConfig.publicAssets}vike.svg`} alt="Vike Logo" className="w-6 h-6 dark:hidden" />
             <img src={`${appConfig.publicAssets}vike-dark.svg`} alt="Vike Logo" className="w-6 h-6 hidden dark:block" />
-            <span className="font-medium">Vike {t(pageContext.locale, 'header', 'docsHome')}</span>
+            <span className="font-semibold">Vike {t(pageContext.locale, 'header', 'docsHome')}</span>
           </a>
           <div className="flex items-center gap-2">
             <LanguageSwitch />

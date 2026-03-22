@@ -9,11 +9,13 @@ import {
   iconPlug,
   iconScroll,
   iconSeedling,
+  // @ts-expect-error
 } from '@brillout/docpress' with { type: 'vike:pointer' }
 import type {
   Config,
   HeadingDefinition,
   HeadingDetachedDefinition as HeadingDetachedDefinition_,
+  // @ts-expect-error
 } from '@brillout/docpress'
 
 type HeadingDetachedDefinition = Omit<HeadingDetachedDefinition_, 'category'> & {

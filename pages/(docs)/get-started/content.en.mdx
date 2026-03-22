@@ -1,6 +1,36 @@
+import { Advanced, Danger, Warning, Construction, NoteWithoutIcon, Contribution, Info } from "@/components/Note"
+
 # Get Started
 
 This page demonstrates the localization strategy used in this repo.
+
+<Advanced>
+Advanced
+</Advanced>
+
+<Construction>
+Construction
+</Construction>
+
+<Warning>
+Warning
+</Warning>
+
+<Danger>
+Danger
+</Danger>
+
+<Contribution>
+Contribution
+</Contribution>
+
+<Info>
+Info
+</Info>
+
+<NoteWithoutIcon>
+Note without icon
+</NoteWithoutIcon>
 
 Each docs route stays a normal Vike page, but the route component renders MDX content from a locale-aware registry. That means `/get-started` resolves to English and `/zh/get-started` resolves to Chinese when `content.zh.mdx` exists next to the route.
 

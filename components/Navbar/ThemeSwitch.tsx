@@ -1,30 +1,20 @@
 import { cmMerge } from '@classmatejs/react'
 import { Moon, Sun } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useThemePreference } from '@/components/ThemeProvider'
 
 const ThemeSwitch = () => {
-  const [isLight, setIsLight] = useState(false)
-
-  const updateTheme = (isLight: boolean) => {
-    const html = document.documentElement
-    html.setAttribute('data-theme', isLight ? 'vike-light' : 'vike-dark')
-    setIsLight(isLight)
-  }
-
-  useEffect(() => {
-    setIsLight(document.documentElement.getAttribute('data-theme') === 'vike-light')
-  }, [])
+  const { themePreference, setThemePreference } = useThemePreference()
 
   return (
-    <label className="cursor-pointer swap swap-rotate rounded-full bg-base-100 p-1.5 border border-base-100">
-      <input
-        type="checkbox"
-        checked={isLight}
-        aria-label="Toggle light theme"
-        onChange={(event) => updateTheme(event.currentTarget.checked)}
+    <label className="cursor-pointer rounded-full bg-base-100 p-1.5 border border-base-100 relative inline-flex">
+      <button
+        type="button"
+        aria-label="Toggle theme"
+        onClick={() => setThemePreference(themePreference === 'light' ? 'dark' : 'light')}
+        className="absolute inset-0"
       />
-      <Sun className={cmMerge('h-4 w-4', 'swap-on')} />
-      <Moon className={cmMerge('h-4 w-4', 'swap-off')} />
+      <Sun className={cmMerge('h-4 w-4 dark:hidden')} />
+      <Moon className={cmMerge('hidden h-4 w-4 dark:block')} />
     </label>
   )
 }
