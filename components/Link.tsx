@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
-import { getHeadingTitleFromHref } from '@/lib/headings-flat'
+import { getHeadingTitleFromHref } from '@/lib/headings'
 import { getLogicalPathname, localizeHref } from '@/lib/i18n/routing'
 
 export const Link = (props: { href: string; children?: ReactNode; doNotInferSectionTitle?: boolean }) => {
