@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@classmatejs/solid": "^0.2.1",
+    "@classmatejs/react": "^0.2.1",
     "lucide-solid": "1.0.0-rc.0",
+    "lucide-react": "1.0.0-rc.0",
     "solid-js": "^1.9.11",
     "vike": "^0.4.255",
     "vike-solid": "^0.8.1"

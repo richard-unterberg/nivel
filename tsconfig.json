@@ -22,5 +22,5 @@
       "@/root/*": ["./*"]
     }
   },
-  "exclude": ["dist"]
+  "exclude": ["dist", "lib/headings-legacy.ts"]
 }
