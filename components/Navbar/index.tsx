@@ -1,3 +1,4 @@
+import { Smile } from 'lucide-react'
 import { useEffect, useMemo } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import LayoutComponent from '@/components/LayoutComponent'
@@ -6,15 +7,13 @@ import LanguageSwitch from '@/components/Navbar/LanguageSwitch'
 import Search from '@/components/Navbar/Search'
 import ThemeSwitch from '@/components/Navbar/ThemeSwitch'
 import SocialIcons from '@/components/SocialIcons'
-import appConfig from '@/lib/config'
 import type { Locale } from '@/lib/i18n/config'
 import { t } from '@/lib/i18n/messages'
 import { localizeHref } from '@/lib/i18n/routing'
 
 const VikeLogo = ({ locale, isLanding = false }: { locale: Locale; isLanding?: boolean }) => (
   <a href={localizeHref('/', locale)} className="flex gap-2 items-center text-base-content">
-    <img src={`${appConfig.publicAssets}vike.svg`} alt="Vike Logo" className="w-6 h-6 dark:hidden" />
-    <img src={`${appConfig.publicAssets}vike-dark.svg`} alt="Vike Logo" className="w-6 h-6 hidden dark:block" />
+    <Smile className="w-6 h-6" />
     <span className="font-semibold">Vike {!isLanding ? t(locale, 'header', 'docsHome') : null}</span>
   </a>
 )

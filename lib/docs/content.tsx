@@ -61,9 +61,12 @@ for (const [path, mod] of Object.entries(pageModules)) {
   if (!meta) continue
 
   docs[meta.routeId] ??= {}
-  const localizedDoc = (docs[meta.routeId][meta.locale] ??= {})
-  localizedDoc.Page = mod.default
-  localizedDoc.config = mod.docConfig
+  docs[meta.routeId][meta.locale] ??= {}
+  const localizedDoc = docs[meta.routeId][meta.locale]
+  if (localizedDoc) {
+    localizedDoc.Page = mod.default
+    localizedDoc.config = mod.docConfig
+  }
 }
 
 for (const [path, source] of Object.entries(rawContentModules)) {
@@ -71,9 +74,12 @@ for (const [path, source] of Object.entries(rawContentModules)) {
   if (!meta) continue
 
   docs[meta.routeId] ??= {}
-  const localizedDoc = (docs[meta.routeId][meta.locale] ??= {})
-  const rawSource = getRawDocSource(source)
-  localizedDoc.headings = extractDocHeadings(rawSource)
+  docs[meta.routeId][meta.locale] ??= {}
+  const localizedDoc = docs[meta.routeId][meta.locale]
+  if (localizedDoc) {
+    const rawSource = getRawDocSource(source)
+    localizedDoc.headings = extractDocHeadings(rawSource)
+  }
 }
 
 export const getDocPage = (slug: string, locale: Locale) => {

@@ -1,8 +1,7 @@
-import { Bug, Pencil } from 'lucide-react'
+import { Bug, Pencil, Smile } from 'lucide-react'
 import { usePageContext } from 'vike-react/usePageContext'
 import LanguageSwitch from '@/components/Navbar/LanguageSwitch'
 import SocialIcons from '@/components/SocialIcons'
-import appConfig from '@/lib/config'
 import { t } from '@/lib/i18n/messages'
 
 const DocsFooter = () => {
@@ -21,13 +20,8 @@ const DocsFooter = () => {
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <p>
-            <a href="vike.dev">
-              <img src={`${appConfig.publicAssets}vike.svg`} alt="Vike Logo" className="w-6 h-6 dark:hidden" />
-              <img
-                src={`${appConfig.publicAssets}vike-dark.svg`}
-                alt="Vike Logo"
-                className="w-6 h-6 hidden dark:block"
-              />
+            <a href="vike.dev" className='text-neutral'>
+              <Smile className="w-8 h-8" />
             </a>
           </p>
           <SocialIcons />

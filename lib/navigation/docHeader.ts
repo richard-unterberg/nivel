@@ -1,10 +1,8 @@
 import type { ReactNode } from 'react'
 import { getHeadingTitleFromHref } from '@/lib/headings'
-import { type Locale } from '@/lib/i18n/config'
+import type { Locale } from '@/lib/i18n/config'
 import { t } from '@/lib/i18n/messages'
 import { getLogicalPathname } from '@/lib/i18n/routing'
-import { getApiNavigation } from '@/lib/navigation/apiNavigation'
-import { getDevNavigation } from '@/lib/navigation/devNavigation'
 import { getMenuNavigation } from '@/lib/navigation/menuNavigation'
 import type {
   SidebarCategory,
@@ -53,10 +51,7 @@ const findInGroups = (groups: SidebarGroup[], pathname: string): DocHeaderMeta |
 }
 
 export const getDocHeaderMeta = (pathname: string, locale: Locale): DocHeaderMeta | null => {
-  const navigationMeta =
-    findInGroups(getMenuNavigation(locale), pathname) ??
-    findInGroups(getApiNavigation(locale), pathname) ??
-    findInGroups(getDevNavigation(locale), pathname)
+  const navigationMeta = findInGroups(getMenuNavigation(locale), pathname)
   if (navigationMeta) return navigationMeta
 
   const title = getHeadingTitleFromHref(pathname, locale)

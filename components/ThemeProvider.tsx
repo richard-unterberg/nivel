@@ -28,7 +28,7 @@ const getInitialThemePreference = (pageThemePreference: ThemePreference) => {
   )
 }
 
-const ThemeProvider = ({ children }: { children: ReactNode }) => {
+export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const pageContext = usePageContext()
   const [themePreference, setThemePreference] = useState<ThemePreference>(() => {
     return getInitialThemePreference(pageContext.themePreference ?? DEFAULT_THEME_PREFERENCE)
@@ -43,7 +43,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   return <ThemeContext.Provider value={{ themePreference, setThemePreference }}>{children}</ThemeContext.Provider>
 }
 
-const useThemePreference = () => {
+export const useThemePreference = () => {
   const value = useContext(ThemeContext)
 
   if (!value) {
@@ -53,4 +53,3 @@ const useThemePreference = () => {
   return value
 }
 
-export { ThemeProvider, useThemePreference }

@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { Compass, Map, Plug, Rocket, Sprout } from 'lucide-react'
+import { Compass, Map as MapIcon, Plug, Rocket, Sprout } from 'lucide-react'
 import { getHeadingData, type HeadingKey } from '@/lib/headings'
 import type { Locale } from '@/lib/i18n/config'
 import { t } from '@/lib/i18n/messages'
@@ -24,79 +24,27 @@ const menuGroups: MenuGroupDefinition[] = [
   {
     icon: Sprout,
     titleKey: 'getStarted',
-    links: ['getStarted', 'scaffoldNewVikeApp', 'addSsrSsgToVite'],
+    links: ['getStarted'],
   },
   {
     icon: Compass,
     titleKey: 'overview',
-    links: ['whyVike', 'faq', 'openSourcePricing', 'freeProgram', 'extensions', 'team'],
+    links: [],
   },
   {
-    icon: Map,
+    icon: MapIcon,
     titleKey: 'guides',
-    links: [
-      {
-        titleKey: 'basics',
-        headings: ['dataFetching', 'preRendering', 'ssrVsSpa', 'headTags', 'commonIssues'],
-      },
-      {
-        titleKey: 'routing',
-        headings: ['routing', 'baseUrl', 'activeLinks'],
-      },
-      {
-        titleKey: 'more',
-        headings: [
-          'staticDirectory',
-          'serverClient',
-          'environmentVariables',
-          'httpHeaders',
-          'i18n',
-          'pathAliases',
-          'preloading',
-          'apiRoutes',
-        ],
-      },
-    ],
+    links: [],
   },
   {
     icon: Rocket,
     titleKey: 'deploy',
-    links: [
-      {
-        titleKey: 'staticHosts',
-        headings: ['staticHostsOverview', 'githubPages', 'netlify', 'cloudflarePages'],
-      },
-      {
-        titleKey: 'serverless',
-        headings: ['cloudflare', 'vercel', 'awsLambda', 'netlifyFunctions', 'edgeonePages'],
-      },
-      {
-        titleKey: 'selfHosted',
-        headings: ['aws', 'docker', 'selfHostedOther'],
-      },
-      'otherDeployment',
-    ],
+    links: [],
   },
   {
     icon: Plug,
     titleKey: 'integration',
-    links: [
-      'authentication',
-      'serverIntegration',
-      'errorTracking',
-      'cssInJs',
-      'markdown',
-      'store',
-      'graphql',
-      'vanillaUiTools',
-      'analytics',
-      'componentLibraries',
-      'dataFetchingIntegration',
-      'serviceWorker',
-      'viewTransitions',
-      'uiFramework',
-      'seeAlso',
-    ],
+    links: [],
   },
 ]
 

@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
-import ApiTab from '@/docs/(components)/Sidebar/ApiTab'
 import MenuTab from '@/docs/(components)/Sidebar/MenuTab'
 import appConfig from '@/lib/config'
 import { t } from '@/lib/i18n/messages'
-import DevTab from '@/pages/(docs)/(components)/Sidebar/DevTab'
 
 const Sidebar = () => {
   const [selectedTab, setSelectedTab] = useState<'menu' | 'api' | 'dev'>('dev')
@@ -40,19 +38,9 @@ const Sidebar = () => {
               {t(locale, 'docs', 'apiReference')}
             </button>
           </li>
-          <li>
-            <button
-              className={selectedTab === 'dev' ? 'justify-start menu-active' : 'justify-start'}
-              onClick={() => setSelectedTab('dev')}
-              type="button"
-            >
-              {t(locale, 'docs', 'devDocsReference')}
-            </button>
-          </li>
         </ul>
         {selectedTab === 'menu' && <MenuTab />}
-        {selectedTab === 'api' && <ApiTab />}
-        {selectedTab === 'dev' && <DevTab />}
+        {selectedTab === 'dev' && <>A other tab</>}
       </div>
     </div>
   )

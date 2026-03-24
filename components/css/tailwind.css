@@ -1,6 +1,7 @@
 @import 'tailwindcss';
-@plugin '@tailwindcss/typography';
 @import './theme.css';
+
+@plugin '@tailwindcss/typography';
 
 /* https://daisyui.com/docs/config/ */
 @plugin 'daisyui' {
@@ -33,7 +34,7 @@
 
   .prose pre.shiki {
     /* background-color: var(--shiki-light-bg) !important; */
-    color: var(--shiki-light) !important;
+    color: var(--shiki-light);
     @apply rounded-lg border border-vike-grey;
   }
 
@@ -43,12 +44,12 @@
 
   [data-theme='vike-dark'] .prose pre.shiki {
     /* background-color: var(--shiki-dark-bg) !important; */
-    color: var(--shiki-dark) !important;
+    color: var(--shiki-dark);
   }
 
   .prose pre.shiki code {
-    background-color: transparent !important;
-    color: inherit !important;
+    background-color: transparent;
+    color: inherit;
     padding: 0;
   }
 
