@@ -1,5 +1,4 @@
 import { Sticker } from 'lucide-react'
-import { useEffect, useMemo } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import LayoutComponent from '@/components/LayoutComponent'
 import DocsMenu from '@/components/Navbar/DocsMenu'
@@ -26,14 +25,6 @@ const BrandLogo = ({ locale, isLanding = false }: { locale: Locale; isLanding?: 
 const Navbar = () => {
   const { locale, urlPathname } = usePageContext()
   const isLandingPage = urlPathname === '/'
-
-  const _piCalculator = useMemo(() => {
-    return locale
-  }, [locale])
-
-  useEffect(() => {
-    console.log('Current URL Pathname:', urlPathname)
-  }, [urlPathname])
 
   return (
     <header className="bg-base-300 fixed z-10 w-full h-16 border-vike-grey border-b dark:shadow">
