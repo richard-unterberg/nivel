@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
-import MenuTab from '@/docs/(components)/Sidebar/MenuTab'
+import MenuTab from '@/components/Sidebar/MenuTab'
 import appConfig from '@/lib/config'
 import { t } from '@/lib/i18n/messages'
 
 const Sidebar = () => {
-  const [selectedTab, setSelectedTab] = useState<'menu' | 'api' | 'dev'>('dev')
+  const [selectedTab, setSelectedTab] = useState<'menu' | 'api' | 'dev'>('menu')
   const { locale } = usePageContext()
 
   return (

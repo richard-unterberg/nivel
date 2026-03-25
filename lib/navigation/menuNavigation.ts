@@ -3,10 +3,10 @@ import { Compass, Map as MapIcon, Plug, Rocket, Sprout } from 'lucide-react'
 import { getHeadingData, type HeadingKey } from '@/lib/headings'
 import type { Locale } from '@/lib/i18n/config'
 import { t } from '@/lib/i18n/messages'
-import type { SidebarCategory, SidebarGroup } from '@/pages/(docs)/(components)/Sidebar/SidebarNavigation'
+import type { SidebarCategory, SidebarGroup } from '@/pages/docs/(components)/Sidebar/SidebarNavigation'
 
 type MenuCategoryDefinition = {
-  titleKey: 'basics' | 'routing' | 'more' | 'staticHosts' | 'serverless' | 'selfHosted'
+  titleKey: 'basics'
   headings: HeadingKey[]
 }
 

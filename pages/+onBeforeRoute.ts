@@ -22,7 +22,9 @@ const onBeforeRoute = (pageContext: PageContext) => {
 
   return {
     pageContext: {
-      locale: localePreference ?? locale,
+      // Keep the URL as the render-time source of truth. The persisted locale
+      // is only a redirect hint for non-prefixed URLs.
+      locale,
       urlPathnameLocalized,
       urlLogical: modifyUrl(pageContext.urlOriginal, { pathname }),
     },

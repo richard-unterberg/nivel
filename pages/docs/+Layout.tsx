@@ -2,12 +2,12 @@ import cm from '@classmatejs/react'
 import type { ReactNode } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import LayoutComponent from '@/components/LayoutComponent'
-import DocsFooter from '@/docs/(components)/Footer'
-import Sidebar from '@/docs/(components)/Sidebar'
-import TableOfContents from '@/docs/(components)/TableOfContents'
+import Sidebar from '@/components/Sidebar'
 import appConfig from '@/lib/config'
 import { getDocPage } from '@/lib/docs/content'
 import { getLogicalPathname } from '@/lib/i18n/routing'
+import DocsFooter from '@/pages/docs/(components)/Footer'
+import TableOfContents from '@/pages/docs/(components)/TableOfContents'
 
 const ProseContainer = cm.section`
   min-h-[calc(100svh-92*var(--spacing))]

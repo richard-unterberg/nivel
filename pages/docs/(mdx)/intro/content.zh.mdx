@@ -1,0 +1,36 @@
+# 开始
+
+这个页面展示了当前仓库采用的多语言文档方案。
+
+路由仍然由 Vike 正常管理，但真正渲染的内容来自一个按语言选择的 MDX 注册表。因此 `/get-started` 使用英文内容，而 `/zh/get-started` 会在当前目录存在 `content.zh.mdx` 时渲染中文内容。
+
+## 这种结构的好处
+
+- Vike 只维护一套路由。
+- 每篇文档都可以拥有 `content.en.mdx`、`content.zh.mdx`，或者只拥有其中一个。
+- 当中文内容不存在时，会自动回退到英文。
+- 侧边栏、头部和语言切换器都从同一个 `pageContext.locale` 读取当前语言。
+
+## 文件结构
+
+```text
+pages/
+  (docs)/
+    get-started/
+      +Page.tsx
+      content.en.mdx
+      content.zh.mdx
+    bodyAttributes/
+      +Page.tsx
+      content.en.mdx
+  +onBeforeRoute.ts
+  +lang.ts
+```
+
+## 新增中文文档的方法
+
+1. 新建 `pages/(docs)/<route>/content.zh.mdx`。
+2. 不需要修改对应的路由文件。
+3. 页面会自动在 `/zh/<route>` 下显示中文内容。
+
+如果某篇文档还没有 `content.zh.mdx`，页面依然可访问，并且自动显示英文版本。

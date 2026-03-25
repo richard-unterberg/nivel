@@ -47,6 +47,4 @@ export default defineConfig({
   preview: {
     port: 5556,
   },
-  // @ts-expect-error
-  _skipVikeReplaceConstants: (id: string) => id.endsWith('.mdx'),
 })
