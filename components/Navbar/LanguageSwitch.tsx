@@ -25,7 +25,7 @@ const LanguageSwitch = () => {
   }
 
   return (
-    <label className="select select-sm w-24">
+    <label className="select select-sm w-28">
       <span className="floating-label">
         <Languages className="w-4 h-4" />
       </span>

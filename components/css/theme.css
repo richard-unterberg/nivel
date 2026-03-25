@@ -47,14 +47,14 @@
   --color-warning-content: oklch(20% 0 0);
   --color-error: oklch(57% 0.245 27.325);
   --color-error-content: oklch(95% 0 0);
-  --radius-selector: 0.35rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.15rem;
+  --radius-selector: 0.15rem;
+  --radius-field: 0.35rem;
+  --radius-box: 0.5rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
   --depth: 0;
-  --noise: 0;
+  --noise: 1;
 }
 
 @plugin 'daisyui/theme' {
@@ -65,17 +65,17 @@
   /* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
   prefersdark: false;
   color-scheme: 'dark';
-  --color-base-100: oklch(26% 0 0);
+  --color-base-100: oklch(13% 0 0);
   --color-base-200: oklch(20% 0 0);
-  --color-base-300: oklch(13% 0 0); /* darkest */
-  --color-base-content: oklch(90% 0 0);
+  --color-base-300: oklch(15% 0 0); /* darkest */
+  --color-base-content: oklch(85% 0 0);
   --color-primary: #5654e8;
-  --color-primary-content: oklch(90% 0 0);
+  --color-primary-content: oklch(85% 0 0);
   --color-secondary: #fff000;
-  --color-secondary-content: oklch(90% 0 0);
+  --color-secondary-content: oklch(85% 0 0);
   --color-accent: #7373f4;
-  --color-accent-content: oklch(90% 0 0);
-  --color-neutral: oklch(90% 0 0);
+  --color-accent-content: oklch(85% 0 0);
+  --color-neutral: oklch(85% 0 0);
   --color-neutral-content: oklch(13% 0 0);
   --color-info: oklch(62.616% 0.143 240.033);
   --color-info-content: oklch(12.523% 0.028 240.033);
@@ -84,15 +84,15 @@
   --color-warning: oklch(77.482% 0.115 81.519);
   --color-warning-content: oklch(15.496% 0.023 81.519);
   --color-error: oklch(57% 0.245 27.325);
-  --color-error-content: oklch(90% 0 0);
-  --radius-selector: 0.35rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.15rem;
+  --color-error-content: oklch(85% 0 0);
+  --radius-selector: 0.15rem;
+  --radius-field: 0.35rem;
+  --radius-box: 0.5rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
   --depth: 0;
-  --noise: 0;
+  --noise: 1;
 }
 
 @theme inline {
@@ -102,6 +102,10 @@
   --color-vike-grey-300: var(--color-grey-300);
   --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
   --shadow-thick: 0 0 24px;
+}
+
+@theme {
+  --animate-pulse-slow: pulse 12s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 html:lang(zh-CN) {

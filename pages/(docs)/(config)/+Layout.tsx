@@ -35,17 +35,19 @@ const ProseContainer = cm.section`
 
 const DocsLayout = ({ children }: { children: ReactNode }) => {
   const pageContext = usePageContext()
-  const { locale } = pageContext
+  const { locale, pageId, is404, errorWhileRendering } = pageContext
   const docsConfig = getMdexSystemConfig(pageContext)
   const routeParams = pageContext.routeParams as { slug?: string }
   const docSlug = (routeParams.slug ?? '').replace(/^\/+|\/+$/g, '') || docsConfig.defaultSlug
-  const doc = getDocPage(docSlug, locale, docsConfig)
-  const showTableOfContents = doc?.config.tableOfContents ?? true
+  const isDocsErrorPage = is404 || errorWhileRendering
+  const doc = isDocsErrorPage ? null : getDocPage(docSlug, locale, docsConfig)
+  const showTableOfContents = !isDocsErrorPage && (doc?.config.tableOfContents ?? true)
+  const tocKey = `${pageId}:${docSlug}:${locale}`
 
   return (
     <>
       <div className="absolute w-full h-full top-0 left-0 overflow-hidden">
-        <div className="w-500 h-300 absolute top-16 -right-100 z-0 opacity-40 dark:opacity-70">
+        <div className="w-500 h-200 absolute top-16 -right-100 z-0 opacity-40 dark:opacity-70">
           <img
             src={`${baseAssets}decorators/dot.png`}
             alt=""
@@ -66,7 +68,7 @@ const DocsLayout = ({ children }: { children: ReactNode }) => {
             </ProseContainer>
             <DocsFooter />
           </div>
-          {showTableOfContents && <TableOfContents headings={doc?.headings ?? []} />}
+          {showTableOfContents && <TableOfContents key={tocKey} headings={doc?.headings ?? []} />}
         </div>
       </LayoutComponent>
     </>

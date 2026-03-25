@@ -1,3 +1,4 @@
+import { cmMerge } from '@classmatejs/react'
 import { Sticker } from 'lucide-react'
 import { usePageContext } from 'vike-react/usePageContext'
 import LayoutComponent from '@/components/LayoutComponent'
@@ -27,7 +28,12 @@ const Navbar = () => {
   const isLandingPage = urlPathname === '/'
 
   return (
-    <header className="bg-base-300 fixed z-10 w-full h-16 border-vike-grey border-b dark:shadow">
+    <header
+      className={cmMerge(
+        isLandingPage ? '' : 'bg-base-300 fixed border-vike-grey border-b dark:shadow',
+        'z-10 w-full h-16 ',
+      )}
+    >
       <LayoutComponent className="h-full">
         {isLandingPage ? (
           <div className="py-4 flex justify-between items-center h-full relative z-3">
