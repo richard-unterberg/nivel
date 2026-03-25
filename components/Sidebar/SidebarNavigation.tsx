@@ -23,7 +23,7 @@ const isActiveHref = (currentPathname: string, href: string) => {
     : currentLogicalPathname.startsWith(hrefLogicalPathname)
 }
 
-export const renderInlineMarkdown = (title: ReactNode): ReactNode => {
+const renderInlineMarkdown = (title: ReactNode): ReactNode => {
   if (typeof title !== 'string') return title
 
   return title.split(/(`[^`]+`)/g).map((part, index) => {

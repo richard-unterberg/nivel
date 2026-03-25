@@ -1,8 +1,8 @@
 import type { Locale } from '@/lib/i18n/config'
-import type { DocsSystemConfig } from '@/lib/docs/systemConfig'
+import type { MdexSystemConfig } from '@/lib/docs/systemConfig'
 import { DEFAULT_LOCALE, resolveLocale } from '@/lib/i18n/config'
 import { getDocPath } from '@/lib/docs/systemConfig'
-import { localizeHref, stripLocaleFromPathname } from '@/lib/i18n/routing'
+import { localizeHref } from '@/lib/i18n/routing'
 
 type HeadingDefinition = {
   docPath: string
@@ -49,36 +49,21 @@ export const headingDefinitions = {
 
 export type HeadingKey = keyof typeof headingDefinitions
 
-export const getHeadingTitle = (headingKey: HeadingKey, locale: Locale | string | undefined = DEFAULT_LOCALE) => {
+const getHeadingTitle = (headingKey: HeadingKey, locale: Locale | string | undefined = DEFAULT_LOCALE) => {
   return headingDefinitions[headingKey].title[resolveLocale(locale)]
 }
 
-export const getHeadingLink = (headingKey: HeadingKey, docsConfig?: DocsSystemConfig) => {
-  return getDocPath(headingDefinitions[headingKey].docPath, docsConfig)
+const getHeadingLink = (headingKey: HeadingKey, mdexConfig?: MdexSystemConfig) => {
+  return getDocPath(headingDefinitions[headingKey].docPath, mdexConfig)
 }
 
 export const getHeadingData = (
   headingKey: HeadingKey,
   locale: Locale | string | undefined = DEFAULT_LOCALE,
-  docsConfig?: DocsSystemConfig,
+  mdexConfig?: MdexSystemConfig,
 ) => {
   return {
     title: getHeadingTitle(headingKey, locale),
-    href: localizeHref(getHeadingLink(headingKey, docsConfig), locale),
+    href: localizeHref(getHeadingLink(headingKey, mdexConfig), locale),
   }
-}
-
-export const getHeadingTitleFromHref = (
-  href: string,
-  locale: Locale | string | undefined = DEFAULT_LOCALE,
-  docsConfig?: DocsSystemConfig,
-) => {
-  const pathname = stripLocaleFromPathname(href.split('#')[0]?.split('?')[0] ?? href).pathname
-  const match = Object.entries(headingDefinitions).find(
-    ([headingKey]) => getHeadingLink(headingKey as HeadingKey, docsConfig) === pathname,
-  )
-  if (!match) return null
-
-  const [headingKey] = match
-  return getHeadingTitle(headingKey as HeadingKey, locale)
 }

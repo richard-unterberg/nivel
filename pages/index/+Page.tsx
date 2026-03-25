@@ -17,7 +17,7 @@ const Page = () => {
           />
           <p className="font-semibold text-vike-grey-300 text-lg lg:text-xl">{t(locale, 'home', 'subtitle')}</p>
           <a
-            href={localizeHref(getDocsIndexPath(config.docs), locale)}
+            href={localizeHref(getDocsIndexPath(config.mdex), locale)}
             className="btn btn-soft btn-lg btn-neutral mx-auto"
           >
             {t(locale, 'home', 'cta')}

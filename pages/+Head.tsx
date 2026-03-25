@@ -62,10 +62,7 @@ export const Head = () => {
           />
         </>
       )}
-      <link
-        rel="stylesheet"
-        href={`${baseAssets}${isChinese ? 'fonts-noto-sans-sc.css' : 'fonts-inter.css'}`}
-      />
+      <link rel="stylesheet" href={`${baseAssets}${isChinese ? 'fonts-noto-sans-sc.css' : 'fonts-inter.css'}`} />
     </>
   )
 }

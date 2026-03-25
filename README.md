@@ -6,14 +6,14 @@ mdex is a documentation starter built on top of [Vike](https://vike.dev). It kee
 
 ## Docs config
 
-Shared docs settings can be defined with `docs.config.ts` or `docs.config.js`.
+Shared docs settings can be defined with `content.config.ts` or `content.config.js`.
 
 These files are inherited by logical doc path, so one config applies to every translated `content.<locale>.mdx` file for that route.
 
 Example:
 
 ```ts
-// pages/(docs)/(content)/intro/docs.config.ts
+// pages/(docs)/(content)/intro/content.config.ts
 import type { DocConfig } from '@/lib/docs/config'
 
 export default {
@@ -21,17 +21,17 @@ export default {
 } satisfies DocConfig
 ```
 
-You can also place a config higher up, for example `pages/(docs)/docs.config.ts`, to apply defaults to all docs below it.
+You can also place a config higher up, for example `pages/(docs)/content.config.ts`, to apply defaults to all docs below it.
 
 ## Root docs settings
 
-App-wide docs behavior is configured through Vike in `pages/+docs.ts` and exposed at `pageContext.config.docs`.
+App-wide docs behavior is configured through Vike in `pages/+mdex.ts` and exposed at `pageContext.config.mdex`.
 
 Example:
 
 ```ts
-// pages/+docs.ts
-import type { DocsSystemConfig } from '@/lib/docs/systemConfig'
+// pages/+mdex.ts
+import type { MdexSystemConfig } from '@/lib/docs/systemConfig'
 
 export default {
   basePath: '/docs',
@@ -39,7 +39,7 @@ export default {
   defaultDocConfig: {
     tableOfContents: true,
   },
-} satisfies DocsSystemConfig
+} satisfies MdexSystemConfig
 ```
 
-Use this for global defaults such as the docs URL base or the default doc slug. Use `docs.config.ts` for per-document overrides shared by all translations.
+Use this for global defaults such as the docs URL base or the default doc slug. Use `content.config.ts` for per-document overrides shared by all translations.

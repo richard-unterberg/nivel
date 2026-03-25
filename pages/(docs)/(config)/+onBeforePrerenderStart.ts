@@ -1,8 +1,8 @@
 import { getPrerenderDocUrls } from '@/lib/docs/content'
-import docs from '@/pages/+docs'
+import mdex from '@/pages/+mdex'
 
 const onBeforePrerenderStart = () => {
-  return getPrerenderDocUrls(docs)
+  return getPrerenderDocUrls(mdex)
 }
 
 export default onBeforePrerenderStart

@@ -1,13 +1,13 @@
 import type { Config } from 'vike/types'
 import vikeReact from 'vike-react/config'
-import docs from '@/pages/+docs'
+import mdex from '@/pages/+mdex'
 
 // Default config (can be overridden by pages)
 // https://vike.dev/config
 
 export default {
   meta: {
-    docs: {
+    mdex: {
       env: {
         server: true,
         client: true,
@@ -18,7 +18,7 @@ export default {
   // https://vike.dev/head-tags
   title: 'mdex',
   description: 'mdex docs starter kit',
-  docs,
+  mdex,
   htmlAttributes: { 'data-theme': 'vike-dark' },
   passToClient: ['locale', 'urlPathnameLocalized'],
   extends: [vikeReact],

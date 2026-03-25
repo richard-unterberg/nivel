@@ -7,7 +7,7 @@ import Sidebar from '@/components/Sidebar'
 import TableOfContents from '@/components/TableOfContents'
 import baseAssets from '@/lib/baseAssets'
 import { getDocPage } from '@/lib/docs/content'
-import { getDocsSystemConfig } from '@/lib/docs/systemConfig'
+import { getMdexSystemConfig } from '@/lib/docs/systemConfig'
 
 const ProseContainer = cm.section`
   min-h-[calc(100svh-92*var(--spacing))]
@@ -36,7 +36,7 @@ const ProseContainer = cm.section`
 const DocsLayout = ({ children }: { children: ReactNode }) => {
   const pageContext = usePageContext()
   const { locale } = pageContext
-  const docsConfig = getDocsSystemConfig(pageContext)
+  const docsConfig = getMdexSystemConfig(pageContext)
   const routeParams = pageContext.routeParams as { slug?: string }
   const docSlug = (routeParams.slug ?? '').replace(/^\/+|\/+$/g, '') || docsConfig.defaultSlug
   const doc = getDocPage(docSlug, locale, docsConfig)

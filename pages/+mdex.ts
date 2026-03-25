@@ -1,4 +1,4 @@
-import type { DocsSystemConfig } from '@/lib/docs/systemConfig'
+import type { MdexSystemConfig } from '@/lib/docs/systemConfig'
 
 export default {
   basePath: '',
@@ -6,4 +6,4 @@ export default {
   defaultDocConfig: {
     tableOfContents: true,
   },
-} satisfies DocsSystemConfig
+} satisfies MdexSystemConfig

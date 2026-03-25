@@ -1,6 +1,6 @@
 import cm from '@classmatejs/react'
 
-export const LayoutSize = {
+const LayoutSize = {
   xxs: 'xxs',
   xs: 'xs',
   sm: 'sm',
@@ -9,9 +9,9 @@ export const LayoutSize = {
   xl: 'xl',
   full: 'full',
 } as const
-export type LayoutSize = (typeof LayoutSize)[keyof typeof LayoutSize]
+type LayoutSize = (typeof LayoutSize)[keyof typeof LayoutSize]
 
-export const layoutComponentSizeMapping: { [key in LayoutSize]: string } = {
+const layoutComponentSizeMapping: { [key in LayoutSize]: string } = {
   xxs: 'max-w-[480px]',
   xs: 'max-w-[768px]',
   sm: 'max-w-[960px]',

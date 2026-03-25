@@ -6,7 +6,7 @@ export type DocHeading = {
 
 const normalizeWhitespace = (value: string) => value.replace(/\s+/g, ' ').trim()
 
-export const slugifyHeading = (value: string) => {
+const slugifyHeading = (value: string) => {
   const normalized = normalizeWhitespace(value)
     .normalize('NFKD')
     .toLowerCase()

@@ -2,11 +2,11 @@ import type { ComponentType } from 'react'
 import type { DocConfig } from '@/lib/docs/config'
 import { type DocHeading, extractDocHeadings } from '@/lib/docs/headings'
 import {
-  docsSystemConfig,
   getDocPath,
   getDocsIndexPath,
-  type DocsSystemConfig,
-  resolveDocsSystemConfig,
+  type MdexSystemConfig,
+  mdexSystemConfig,
+  resolveMdexSystemConfig,
 } from '@/lib/docs/systemConfig'
 import { DEFAULT_LOCALE, isLocale, type Locale, locales } from '@/lib/i18n/config'
 import { localizeHref } from '@/lib/i18n/routing'
@@ -44,7 +44,7 @@ const rawContentModules = import.meta.glob<RawContentModule>('../../pages/**/con
   query: '?raw',
 })
 
-const docConfigModules = import.meta.glob<DocConfigModule>('../../pages/**/docs.config.{ts,js}', {
+const docConfigModules = import.meta.glob<DocConfigModule>('../../pages/**/content.config.{ts,js}', {
   eager: true,
 })
 
@@ -55,8 +55,7 @@ const getRawDocSource = (module: RawContentModule) => {
 }
 
 const getLogicalSegments = (segments: string[]) => {
-  return segments
-    .filter((segment) => segment !== '' && !(segment.startsWith('(') && segment.endsWith(')')))
+  return segments.filter((segment) => segment !== '' && !(segment.startsWith('(') && segment.endsWith(')')))
 }
 
 const getPagePathInfo = (path: string): PagePathInfo | null => {
@@ -111,7 +110,7 @@ const getDocModuleMeta = (path: string) => {
 
 const getDocConfigRouteId = (path: string) => {
   const pathInfo = getPagePathInfo(path)
-  if (!pathInfo || !/^docs\.config\.[^.]+$/.test(pathInfo.filename)) return null
+  if (!pathInfo || !/^content\.config\.[^.]+$/.test(pathInfo.filename)) return null
 
   const contentRouteId = getDocSlugFromSegments(pathInfo.segments)
   if (contentRouteId !== null) return contentRouteId
@@ -170,7 +169,7 @@ for (const [path, mod] of Object.entries(docConfigModules)) {
 
   if (sharedDocConfigs.has(routeId)) {
     throw new Error(
-      `Duplicate docs.config for logical route "${routeId || '/'}". Keep only one config file for that docs path.`,
+      `Duplicate content.config for logical route "${routeId || '/'}". Keep only one config file for that docs path.`,
     )
   }
 
@@ -186,7 +185,7 @@ const getSharedDocConfig = (routeId: string) => {
   }, {})
 }
 
-export const getDocPage = (slug: string, locale: Locale, docsConfig?: DocsSystemConfig) => {
+export const getDocPage = (slug: string, locale: Locale, mdexConfig?: MdexSystemConfig) => {
   const doc = docs[slug]
   if (!doc) {
     return null
@@ -197,7 +196,7 @@ export const getDocPage = (slug: string, locale: Locale, docsConfig?: DocsSystem
     return null
   }
 
-  const resolvedDocsConfig = resolveDocsSystemConfig(docsConfig ?? docsSystemConfig)
+  const resolvedDocsConfig = resolveMdexSystemConfig(mdexConfig ?? mdexSystemConfig)
   const config = {
     ...resolvedDocsConfig.defaultDocConfig,
     ...getSharedDocConfig(slug),
@@ -217,12 +216,12 @@ export const hasDocSlug = (slug: string) => {
   return getAllDocSlugs().includes(slug.replace(/^\/+|\/+$/g, ''))
 }
 
-export const getAllDocSlugs = () => {
+const getAllDocSlugs = () => {
   return Object.keys(docs).sort((left, right) => left.localeCompare(right))
 }
 
-export const getPrerenderDocUrls = (docsConfig?: DocsSystemConfig) => {
-  const resolvedDocsConfig = resolveDocsSystemConfig(docsConfig ?? docsSystemConfig)
+export const getPrerenderDocUrls = (mdexConfig?: MdexSystemConfig) => {
+  const resolvedDocsConfig = resolveMdexSystemConfig(mdexConfig ?? mdexSystemConfig)
   const urls = new Set<string>()
   const docSlugs = getAllDocSlugs()
 

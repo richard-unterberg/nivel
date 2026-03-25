@@ -22,21 +22,21 @@ const DocsMenu = () => {
   return (
     <ul className="flex items-center font-semibold gap-2">
       <li>
-        <MenuItem $active tabIndex={0} href={getHeadingData('docsHome', locale, config.docs).href}>
+        <MenuItem $active tabIndex={0} href={getHeadingData('docsHome', locale, config.mdex).href}>
           <BookText className="w-4 h-4" />
-          {getHeadingData('docsHome', locale, config.docs).title}
+          {getHeadingData('docsHome', locale, config.mdex).title}
         </MenuItem>
       </li>
       <li>
-        <MenuItem tabIndex={0} href={getHeadingData('components', locale, config.docs).href}>
+        <MenuItem tabIndex={0} href={getHeadingData('components', locale, config.mdex).href}>
           <Cpu className="w-4 h-4" />
-          {getHeadingData('components', locale, config.docs).title}
+          {getHeadingData('components', locale, config.mdex).title}
         </MenuItem>
       </li>
       <li>
-        <MenuItem tabIndex={0} href={getHeadingData('guides', locale, config.docs).href}>
+        <MenuItem tabIndex={0} href={getHeadingData('guides', locale, config.mdex).href}>
           <Cpu className="w-4 h-4" />
-          {getHeadingData('guides', locale, config.docs).title}
+          {getHeadingData('guides', locale, config.mdex).title}
         </MenuItem>
       </li>
     </ul>

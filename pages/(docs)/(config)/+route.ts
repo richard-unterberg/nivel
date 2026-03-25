@@ -1,10 +1,10 @@
 import type { PageContext } from 'vike/types'
 import { hasDocSlug } from '@/lib/docs/content'
-import { getDocsSystemConfig, matchDocPath } from '@/lib/docs/systemConfig'
+import { getMdexSystemConfig, matchDocPath } from '@/lib/docs/systemConfig'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 
 const route = (pageContext: PageContext) => {
-  const docsConfig = getDocsSystemConfig(pageContext)
+  const docsConfig = getMdexSystemConfig(pageContext)
   const logicalPathname = stripLocaleFromPathname(pageContext.urlPathname).pathname
   const slug = matchDocPath(logicalPathname, docsConfig)
   if (slug === null) return false

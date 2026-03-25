@@ -9,11 +9,7 @@ const dataThemeByPreference = {
   dark: 'vike-dark',
 } satisfies Record<ThemePreference, string>
 
-export const isThemePreference = (value: unknown): value is ThemePreference => {
-  return value === 'light' || value === 'dark'
-}
-
-export const getDataTheme = (themePreference: ThemePreference) => {
+const getDataTheme = (themePreference: ThemePreference) => {
   return dataThemeByPreference[themePreference]
 }
 

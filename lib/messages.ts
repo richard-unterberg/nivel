@@ -1,6 +1,6 @@
 import { type Locale, resolveLocale } from '@/lib/i18n/config'
 
-export const messages = {
+const messages = {
   header: {
     docsHome: {
       en: 'Docs',
