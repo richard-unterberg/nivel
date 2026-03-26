@@ -29,7 +29,7 @@ const Page = () => {
               {t(locale, 'home', 'titlePrefix')}{' '}
               <GradientText className="underline">{t(locale, 'home', 'titleAccent')}</GradientText>
             </h1>
-            <p className="font-normal text-base-content/65 text-lg lg:text-2xl mt-10">
+            <p className="font-normal text-base-dark text-lg lg:text-2xl mt-10">
               <GradientText className="font-semibold text-base-content">mdex</GradientText>{' '}
               {t(locale, 'home', 'subtitle')}
             </p>
@@ -46,8 +46,8 @@ const Page = () => {
         </LayoutComponent>
       </div>
       <div className=" animate-bounce">
-        <Sticker className="w-8 h-8 mx-auto mb-2 text-base-content/65" />
-        <ArrowBigDownDash className="w-6 h-6 mx-auto text-base-content/65 animate-bounce" />
+        <Sticker className="w-8 h-8 mx-auto mb-2 text-base-dark" />
+        <ArrowBigDownDash className="w-6 h-6 mx-auto text-base-dark animate-bounce" />
       </div>
     </>
   )

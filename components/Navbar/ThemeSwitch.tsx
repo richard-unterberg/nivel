@@ -7,7 +7,7 @@ const ThemeSwitch = () => {
   const setThemePreference = useUserSettingsStore((state) => state.setThemePreference)
 
   return (
-    <label className="cursor-pointer rounded-full bg-base-200 w-8 h-8 border border-base-content/15 relative flex justify-center items-center">
+    <label className="cursor-pointer rounded-full bg-base-200 w-8 h-8 border border-base-light relative flex justify-center items-center">
       <button
         type="button"
         aria-label="Toggle theme"

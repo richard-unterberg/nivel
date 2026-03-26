@@ -59,8 +59,8 @@ const highlightCodeBlock = async (node: HastNode) => {
   const highlighted = await codeToHast(extractTextFromHast(codeNode.children ?? []), {
     lang: shikiLanguage,
     themes: {
-      light: 'github-light-default',
-      dark: 'github-dark-default',
+      light: 'min-light',
+      dark: 'one-dark-pro',
     },
   })
 

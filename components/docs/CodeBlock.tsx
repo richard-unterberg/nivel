@@ -128,6 +128,9 @@ const CodeBlockOuter = cm.div`
   overflow-auto
   flex
   flex-col
+  border
+  border-base-light
+  rounded-box
 `
 
 const CodeblockHeader = cm.div`
@@ -139,14 +142,18 @@ const CodeblockHeader = cm.div`
   items-center
   justify-between 
   border-b-1
-  border-base-content/15
+  border-base-light
 `
 
 const CodeBlockTitle = cm.div`
   text-xs 
   font-semibold 
   font-mono
-  text-base-content/65
+  text-base-dark
 `
 
-const CodeSegment = cm.pre`flex-1 w-full max-w-full min-w-0 overflow-auto rounded-box p-4 pt-14 text-sm`
+const CodeSegment = cm.pre`
+  flex-1 w-full max-w-full 
+  min-w-0 overflow-auto 
+  rounded-box p-4 pt-14 text-sm
+`

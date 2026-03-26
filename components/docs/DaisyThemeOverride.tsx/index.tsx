@@ -83,11 +83,11 @@ export const DaisyThemeOverride = () => {
 
   return (
     <section className="not-prose my-8">
-      <div className="rounded-box border border-base-content/15 bg-base-200 p-4 shadow-sm">
+      <div className="rounded-box border border-base-light bg-base-200 p-4 shadow-sm">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
           <div className="space-y-2">
             <h2 className="text-xl font-semibold">Temporary Global Theme Override</h2>
-            <p className="max-w-2xl text-sm text-base-content/65">
+            <p className="max-w-2xl text-sm text-base-dark">
               Selecting a DaisyUI theme updates the app-wide <code>data-theme</code> attribute on the main layout.
               Disable it to go back to the stored light or dark preference.
             </p>
@@ -95,7 +95,7 @@ export const DaisyThemeOverride = () => {
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
             <label className="block">
-              <span className="mb-2 block text-xs font-semibold uppercase tracking-wide text-base-content/65">
+              <span className="mb-2 block text-xs font-semibold uppercase tracking-wide text-base-dark">
                 DaisyUI theme
               </span>
               <select

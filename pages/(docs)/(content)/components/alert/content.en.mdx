@@ -45,7 +45,7 @@ The following types of alerts are available: `success`, `error`, `warning`, and 
     I'm an error alert, indicating a problem or issue that needs attention.
   </Alert>
   <Alert type='warning'>
-    `I'm a warning alert`, indicating a potential issue or cautionary message.
+    I'm a warning alert, indicating a potential issue or cautionary message.
   </Alert>
   <Alert type='success'>
     I'm a success alert, indicating a positive action or outcome.
@@ -55,7 +55,6 @@ The following types of alerts are available: `success`, `error`, `warning`, and 
   </Alert>
 </Presenter>
 
-
 <CodeGroup>
 
 ```mdx
@@ -64,9 +63,14 @@ import { Alert } from '@/components/docs'
 <Alert type='error'>
   I'm an error alert, indicating a problem or issue that needs attention.
 </Alert>
-
 <Alert type='warning'>
-  `I'm a warning alert`, indicating a potential issue or cautionary message.
+  I'm a warning alert, indicating a potential issue or cautionary message.
+</Alert>
+<Alert type='success'>
+  I'm a success alert, indicating a positive action or outcome.
+</Alert>
+<Alert type='info'>
+  I'm an info alert, indicating general information or a neutral message.
 </Alert>
 ```
 
@@ -80,7 +84,13 @@ export const MyComponent = () => {
         I'm an error alert, indicating a problem or issue that needs attention.
       </Alert>
       <Alert type='warning'>
-        `I'm a warning alert`, indicating a potential issue or cautionary message.
+        I'm a warning alert, indicating a potential issue or cautionary message.
+      </Alert>
+      <Alert type='success'>
+        I'm a success alert, indicating a positive action or outcome.
+      </Alert>
+      <Alert type='info'>
+        I'm an info alert, indicating general information or a neutral message.
       </Alert>
     </div>
   )

@@ -32,7 +32,7 @@ const SocialIcons = () => {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full flex items-center justify-center border bg-base-200 border-base-content/15 w-8 h-8"
+            className="rounded-full flex items-center justify-center border bg-base-200 border-base-light w-8 h-8"
           >
             <img
               src={`${baseAssets}brands/${icon}`}

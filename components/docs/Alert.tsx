@@ -37,10 +37,10 @@ const AlertOuter = cm.section.variants<{ $variant: AlertVariant }>({
   `,
   variants: {
     $variant: {
-      info: 'bg-info/5 border-info/20',
+      info: 'bg-info/5 border-info/30',
       warning: 'bg-warning/5 border-warning/30',
       error: 'bg-error/5 border-error/25',
-      success: 'bg-success/5 border-success/30',
+      success: 'bg-success/5 border-success/35',
     },
   },
   defaultVariants: {

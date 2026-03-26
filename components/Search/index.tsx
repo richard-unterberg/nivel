@@ -121,8 +121,8 @@ const Search = ({ inputSize }: SearchProps) => {
           type="text"
           placeholder={t(locale, 'search', 'placeholder')}
           className={cmMerge(
-            'w-full placeholder:text-base-content/40 transition-colors',
-            isSearchHovered && 'placeholder:text-base-content/65',
+            'w-full placeholder:text-base-medium transition-colors',
+            isSearchHovered && 'placeholder:text-base-dark',
           )}
           value={query}
           onFocus={() => {

@@ -17,6 +17,8 @@ const ProseContainer = cm.section`
   dark:prose-invert
   prose-a:text-primary
 
+  prose-pre:bg-base-200!
+
   prose-code:rounded!
   prose-code:inset-shadow-2xs
 
@@ -25,13 +27,6 @@ const ProseContainer = cm.section`
 
   prose-code:dark:bg-primary/10!
   prose-code:dark:border-primary/20!
-
-  prose-pre:bg-base-200!
-  prose-pre:rounded-box
-  prose-pre:border
-  prose-pre:border-base-content/15
-  prose-pre:leading-5!
-  prose-pre:overflow-x-auto
 
   prose-p:after:content-none
   prose-p:before:content-none

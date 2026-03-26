@@ -78,7 +78,7 @@ const SidebarLink = (props: SidebarHeading & { activeHref: string | null }) => {
       <a
         href={props.href}
         className={cmMerge(
-          'text-base-content/65 hover:text-base-content justify-start hover:bg-base-200',
+          'text-base-dark hover:text-base-content justify-start hover:bg-base-200',
           props.activeHref === props.href && 'menu-active text-primary! font-semibold bg-base-200',
         )}
       >
@@ -103,7 +103,7 @@ const SidebarGroupComponent = (props: SidebarGroup & { activeHref: string | null
         ))}
       </ul>
       {props.showSeparator && (
-        <span className="pointer-events-none absolute -bottom-1 border-b border-base-content/15 block rounded-none w-full mx-auto mb-3"></span>
+        <span className="pointer-events-none absolute -bottom-1 border-b border-base-light block rounded-none w-full mx-auto mb-3"></span>
       )}
     </li>
   )
