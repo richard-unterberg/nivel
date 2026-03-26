@@ -1,47 +1,104 @@
-import { Alert } from '@/components/Alert'
+# mdex
 
-# Get Started
+`mdex` is a docs starter built as a real Vike application, not as a standalone docs theme.
 
-<Alert>
-This page should provide an overview about all used elements and how they fit together. It should be a high-level introduction to the documentation, and should link to more detailed pages about each element.
-</Alert>
+The goal of this template is to give you a fully fledged SSR React app with a documentation runtime already integrated. You can ship docs, landing pages, custom product pages, and app-specific UI in the same codebase without fighting a docs-first framework that expects the whole project to behave like a docs site.
 
-<br />
+## Current Features
 
-# Heading 1
-The H1 Heading is the most important heading and should be used for the main title of a page. It should only be used once per page to maintain a clear hierarchy.
+- SSR and prerendering through Vike
+- MDX docs pages discovered from `pages/**/content.*.mdx`
+- Global docs system config in `pages/+mdex.ts`
+- Per-document inherited config through `content.config.ts` / `content.config.js`
+- Locale-aware routing with `en` and `zh`
+- Light/dark theme support with pre-hydration theme bootstrapping
+- Built-in localized search with build-time index generation and lazy client loading
+- Landing page plus docs layout in one app
+- Sidebar navigation, docs footer, and right-side table of contents
 
-```mdx
-# Heading 1
+## What This Template Is
+
+- A Vike + React SSR app with an MDX-powered docs runtime.
+- A starter for teams that want docs inside a real application shell.
+- A base for custom docs experiences, product sites, or hybrid marketing/docs apps.
+- A repo with built-in theming, localization, sidebar navigation, and table of contents support.
+
+## What This Template Is Not
+
+- Not a generic static docs theme trying to replace Docusaurus, Starlight, or VitePress feature-for-feature.
+- Not a batteries-included docs platform with versioning, search, analytics, and GitHub integrations already wired.
+- Not a file-tree-driven docs generator where every docs folder is also a native Vike page subtree.
+
+## Stack
+
+- [Vike](https://vike.dev/) + [`vike-react`](https://vike.dev/react) for routing, SSR, prerendering, and app architecture
+- [React 19](https://react.dev/)
+  - can be replaced with SolidJS
+- [Vite 7](https://vite.dev/)
+- [MDX](https://mdxjs.com/) via `@mdx-js/rollup`
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [DaisyUI 5](https://daisyui.com/)
+- [Zustand](https://zustand.docs.pmnd.rs/) for persisted user settings
+- [`@classmatejs/react`](https://www.npmjs.com/package/@classmatejs/react) for component class composition
+
+## Docs Runtime Model
+
+This repo does not render each document as its own Vike page subtree.
+
+Instead:
+
+- MDX files under `pages/(docs)/(content)/**` are treated as content modules.
+- The rendered docs page lives in the single dynamic Vike subtree at `pages/(docs)/(config)`.
+- Shared per-document options live in `content.config.ts` / `content.config.js`.
+- Global docs behavior lives in `pages/+mdex.ts`.
+
+This is the main tradeoff in the current architecture: you get a straightforward, app-centric docs runtime, but you do not get native Vike `+config.ts` inheritance next to each MDX file.
+
+## Configuration
+
+### Global docs settings
+
+Use `pages/+mdex.ts` for app-wide docs behavior:
+
+```ts
+import type { MdexSystemConfig } from '../lib/docs/systemConfig'
+
+export default {
+  basePath: '',
+  defaultSlug: 'get-started',
+  defaultDocConfig: {
+    tableOfContents: true,
+  },
+  search: {
+    indexedWordsPerDoc: 240,
+  },
+} satisfies MdexSystemConfig
 ```
 
-## Heading 2
-### Heading 3
-#### Heading 4
-##### Heading 5
-###### Heading 6
+With `basePath: ''`, docs currently resolve at root-level paths such as `/get-started` instead of `/docs/get-started`.
 
+`search.indexedWordsPerDoc` controls how many parsed words from each doc are included in the generated search index.
 
+### Per-document shared settings
 
-## Typography
+Use `content.config.ts` or `content.config.js` to define options shared by all translations of a doc route:
 
-<div className="grid grid-cols-2 -mt-6">
-  <div>
-  ### Basic List
-  - Item 1
-  - Item 2
-  - Item 3
-  </div>
+```ts
+import type { DocConfig } from '@/lib/docs/config'
 
-  <div>
-  ### Ordered List
-  1. First item
-  2. Second item
-  3. Third item
-  </div>
+export default {
+  tableOfContents: false,
+} satisfies DocConfig
+```
 
-  <div className='col-span-2'>
-  ### Blockquote
-  > This is a blockquote. It is used to highlight important information or to quote someone else's words.
-  </div>
-</div>
+These config files inherit by logical doc path, so higher-level configs can apply defaults to nested docs.
+
+## Search
+
+Search indexes are generated from raw MDX content, not from rendered HTML.
+
+- In dev, the Vite plugin serves locale-specific JSON at `/@search-index/<locale>.json`.
+- In production builds, the same plugin emits `dist/client/assets/search-index.en.json` and `dist/client/assets/search-index.zh.json`.
+- The plugin also patches `dist/assets.json` so deployments that rely on the asset manifest can discover those files.
+- The navbar search loads the active locale index on demand and ranks matches on the client using title, slug, headings, and truncated body text.
+

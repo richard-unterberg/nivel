@@ -51,7 +51,7 @@ const StyledLink = cm.a`
   flex flex-col p-4 
   rounded-box 
   border border-vike-grey 
-  bg-base-200
+  bg-base-200/40 dark:bg-base-200/60
   transition-colors duration-200
   shadow-lg
   shadow-base-300

@@ -45,6 +45,13 @@ export const headingDefinitions = {
       zh: '指南',
     },
   },
+  alert: {
+    docPath: 'components/alert',
+    title: {
+      en: 'Alert',
+      zh: '警告提示',
+    },
+  },
 } as const satisfies Record<string, HeadingDefinition>
 
 export type HeadingKey = keyof typeof headingDefinitions

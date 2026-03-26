@@ -1,0 +1,49 @@
+import { Alert, Table } from '@/components/docs'
+
+# Alert Component
+
+The Alert component is used to display important messages or warnings to the user. It can be used to highlight critical information, errors, or any other type of message that requires the user's attention.
+
+## Preview
+
+<Alert>
+  I'm an alert of type `info` (the default type). You can change my type to `success`, `error`, or `warning` to display different styles and icons.
+</Alert>
+
+<Alert type='success'>
+  I'm a success alert, indicating a positive action or outcome.
+</Alert>
+
+<Alert type='error'>
+  I'm an error alert, indicating a problem or issue that needs attention.
+</Alert>
+
+<Alert type='warning'>
+  I'm a warning alert, indicating a potential issue or cautionary message.
+</Alert>
+
+## Usage
+
+```mdx
+import { Alert } from '@/components/docs'
+
+# My Mdx Page
+
+<Alert>
+  I am an important alert message that needs your attention!
+</Alert>
+
+My regular content goes here.
+```
+
+## Properties
+
+export const alertTableData = {
+  headers: ['Prop', 'Type', 'Description', 'Default'],
+  rows: [
+    ['type', '`success` | `error` | `warning` | `info`', 'The type of alert to display, which determines the styling and icon used.', '`info`'],
+  ],
+}
+
+<Table data={alertTableData} size='sm' />
+

@@ -23,7 +23,7 @@ const menuGroups: MenuGroupDefinition[] = [
     id: 'components',
     icon: Compass,
     titleKey: 'components',
-    links: ['overview'],
+    links: ['overview', 'alert'],
   },
   {
     id: 'guides',
