@@ -4,21 +4,6 @@
 
 The goal of this template is to give you a fully fledged SSR React app with a documentation runtime already integrated. You can ship docs, landing pages, custom product pages, and app-specific UI in the same codebase without fighting a docs-first framework that expects the whole project to behave like a docs site.
 
-## What This Template Is
-
-- A Vike + React SSR app with an MDX-powered docs runtime.
-- A starter for teams that want docs inside a real application shell.
-- A base for custom docs experiences, product sites, or hybrid marketing/docs apps.
-- A repo with built-in theming, localization, sidebar navigation, and table of contents support.
-
-## What This Template Is Not
-
-- Not a generic static docs theme trying to replace Docusaurus, Starlight, or VitePress feature-for-feature.
-- Not a batteries-included docs platform with versioning, search, analytics, and GitHub integrations already wired.
-- Not a file-tree-driven docs generator where every docs folder is also a native Vike page subtree.
-
-If your main goal is "spin up a conventional docs portal with the biggest plugin ecosystem", there are more mature options. If your goal is "build a real SSR app that happens to have a strong docs runtime", this template is aimed at that use case.
-
 ![screenshot 1](https://github.com/richard-unterberg/vike-docpress/blob/master/public/preview/preview-1.jpg?raw=true)
 
 ## Current Features
@@ -33,54 +18,30 @@ If your main goal is "spin up a conventional docs portal with the biggest plugin
 - Landing page plus docs layout in one app
 - Sidebar navigation, docs footer, and right-side table of contents
 
+## What This Template Is
+
+- A Vike + React SSR app with an MDX-powered docs runtime.
+- A starter for teams that want docs inside a real application shell.
+- A base for custom docs experiences, product sites, or hybrid marketing/docs apps.
+- A repo with built-in theming, localization, sidebar navigation, and table of contents support.
+
+## What This Template Is Not
+
+- Not a generic static docs theme trying to replace Docusaurus, Starlight, or VitePress feature-for-feature.
+- Not a batteries-included docs platform with versioning, search, analytics, and GitHub integrations already wired.
+- Not a file-tree-driven docs generator where every docs folder is also a native Vike page subtree.
+
 ## Stack
 
 - [Vike](https://vike.dev/) + [`vike-react`](https://vike.dev/react) for routing, SSR, prerendering, and app architecture
 - [React 19](https://react.dev/)
+  - can be replaced with SolidJS
 - [Vite 7](https://vite.dev/)
 - [MDX](https://mdxjs.com/) via `@mdx-js/rollup`
 - [Tailwind CSS 4](https://tailwindcss.com/)
 - [DaisyUI 5](https://daisyui.com/)
 - [Zustand](https://zustand.docs.pmnd.rs/) for persisted user settings
 - [`@classmatejs/react`](https://www.npmjs.com/package/@classmatejs/react) for component class composition
-
-## Current Non-Goals / Missing Pieces
-
-- Edit-on-GitHub and report-issue links are placeholders
-- Navigation is currently manual
-- Docs versioning is not implemented
-- Search ranking is intentionally simple and the current search index only includes the first `n` parsed words per doc
-- This repo currently uses a custom docs content runtime instead of native per-doc Vike page config
-
-Those constraints are deliberate for now. The template favors application control and a simple internal model over trying to imitate the entire feature set of established docs platforms.
-
-## Project Shape
-
-```text
-pages/
-  +config.ts                # global Vike config
-  +mdex.ts                  # global docs runtime config
-  index/+Page.tsx           # landing page
-  (docs)/(config)/*         # single dynamic docs page subtree
-  (docs)/(content)/**       # MDX content modules and content.config.ts files
-
-lib/docs/
-  content.tsx               # docs discovery and runtime loading
-  systemConfig.ts           # docs URL and config resolution
-  headings.ts               # heading extraction
-
-lib/search/
-  buildIndex.ts             # build-time search index generation from raw MDX
-  vitePlugin.ts             # dev/build asset wiring for search indexes
-  index.ts                  # client-side loading and scoring
-
-components/
-  Navbar/
-  Sidebar/
-  TableOfContents.tsx
-  Footer.tsx
-  css/
-```
 
 ## Docs Runtime Model
 
