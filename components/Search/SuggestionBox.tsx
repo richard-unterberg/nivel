@@ -63,7 +63,7 @@ const SuggestionBox = ({
           placeholder={t(locale, 'search', 'placeholder')}
           ref={inputRef}
           type="text"
-          className="input input-primary input-xl rounded-xl w-full shadow-lg shadow-primary/50"
+          className="input input-primary input-xl w-full shadow-lg shadow-primary/30 dark:shadow-primary/50"
           value={query}
           onChange={(event) => onQueryChange(event.target.value)}
         />

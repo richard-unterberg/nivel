@@ -16,11 +16,40 @@ export type SidebarGroup = {
 }
 
 const isActiveHref = (currentPathname: string, href: string) => {
-  const currentLogicalPathname = getLogicalPathname(currentPathname)
-  const hrefLogicalPathname = getLogicalPathname(href)
-  return hrefLogicalPathname === '/'
-    ? currentLogicalPathname === hrefLogicalPathname
-    : currentLogicalPathname.startsWith(hrefLogicalPathname)
+  const normalizeLogicalPathname = (pathname: string) => {
+    const logicalPathname = getLogicalPathname(pathname)
+    return logicalPathname === '/' ? '/' : logicalPathname.replace(/\/+$/g, '')
+  }
+  const currentLogicalPathname = normalizeLogicalPathname(currentPathname)
+  const hrefLogicalPathname = normalizeLogicalPathname(href)
+
+  if (hrefLogicalPathname === '/') {
+    return currentLogicalPathname === hrefLogicalPathname
+  }
+
+  return currentLogicalPathname === hrefLogicalPathname || currentLogicalPathname.startsWith(`${hrefLogicalPathname}/`)
+}
+
+const getActiveHref = (groups: SidebarGroup[], currentPathname: string) => {
+  let activeHref: string | null = null
+  let activeHrefLength = -1
+
+  for (const group of groups) {
+    for (const link of group.links ?? []) {
+      if (!isActiveHref(currentPathname, link.href)) {
+        continue
+      }
+
+      const hrefLength = getLogicalPathname(link.href).length
+
+      if (hrefLength > activeHrefLength) {
+        activeHref = link.href
+        activeHrefLength = hrefLength
+      }
+    }
+  }
+
+  return activeHref
 }
 
 const renderInlineMarkdown = (title: ReactNode): ReactNode => {
@@ -43,14 +72,14 @@ const renderInlineMarkdown = (title: ReactNode): ReactNode => {
 
 const getSidebarItemKey = (item: SidebarHeading, index: number) => `${item.href}::${index}`
 
-const SidebarLink = (props: SidebarHeading & { currentPathname: string }) => {
+const SidebarLink = (props: SidebarHeading & { activeHref: string | null }) => {
   return (
     <li>
       <a
         href={props.href}
         className={cmMerge(
-          'text-vike-grey-300 justify-start hover:bg-base-200',
-          isActiveHref(props.currentPathname, props.href) && 'menu-active text-accent font-semibold bg-base-200',
+          'text-vike-grey-200 justify-start hover:bg-base-200',
+          props.activeHref === props.href && 'menu-active text-accent font-semibold bg-base-200',
         )}
       >
         {renderInlineMarkdown(props.title)}
@@ -59,7 +88,7 @@ const SidebarLink = (props: SidebarHeading & { currentPathname: string }) => {
   )
 }
 
-const SidebarGroupComponent = (props: SidebarGroup & { currentPathname: string; showSeparator: boolean }) => {
+const SidebarGroupComponent = (props: SidebarGroup & { activeHref: string | null; showSeparator: boolean }) => {
   const Icon = props.icon
 
   return (
@@ -70,7 +99,7 @@ const SidebarGroupComponent = (props: SidebarGroup & { currentPathname: string; 
       </span>
       <ul>
         {props.links?.map((item, index) => (
-          <SidebarLink key={getSidebarItemKey(item, index)} {...item} currentPathname={props.currentPathname} />
+          <SidebarLink key={getSidebarItemKey(item, index)} {...item} activeHref={props.activeHref} />
         ))}
       </ul>
       {props.showSeparator && (
@@ -81,13 +110,15 @@ const SidebarGroupComponent = (props: SidebarGroup & { currentPathname: string; 
 }
 
 const SidebarNavigation = (props: { groups: SidebarGroup[]; currentPathname: string }) => {
+  const activeHref = getActiveHref(props.groups, props.currentPathname)
+
   return (
     <ul className="menu w-full px-0 py-5 li:last-child:border-0">
       {props.groups.map((group, index) => (
         <SidebarGroupComponent
           key={`sidebar-group-${group.id}`}
           {...group}
-          currentPathname={props.currentPathname}
+          activeHref={activeHref}
           showSeparator={index !== props.groups.length - 1}
         />
       ))}

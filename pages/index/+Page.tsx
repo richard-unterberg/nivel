@@ -29,7 +29,7 @@ const Page = () => {
               {t(locale, 'home', 'titlePrefix')}{' '}
               <GradientText className="underline">{t(locale, 'home', 'titleAccent')}</GradientText>
             </h1>
-            <p className="font-normal text-vike-grey-300 text-lg lg:text-2xl mt-10">
+            <p className="font-normal text-vike-grey-200 text-lg lg:text-2xl mt-10">
               <GradientText className="font-semibold text-base-content">mdex</GradientText>{' '}
               {t(locale, 'home', 'subtitle')}
             </p>

@@ -1,5 +1,5 @@
 import cm from '@classmatejs/react'
-import { ListTree } from 'lucide-react'
+import { TableOfContentsIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { createHeadingSlugger, type DocHeading, normalizeHeadingTitle } from '@/lib/docs/headings'
@@ -8,15 +8,15 @@ import { t } from '@/lib/messages'
 const TocLink = cm.a<{ $isActive?: boolean; $isNested?: boolean }>`
   block
   border-l
-  border-base-300
+  border-vike-grey
   py-1.5
   text-sm
   text-base-content/65
   transition-colors
-  hover:border-primary/40
+  hover:border-primary/80
   hover:text-base-content
   ${(props) => (props.$isNested ? 'pl-6' : 'pl-4')}
-  ${(props) => (props.$isActive ? 'border-primary text-base-content font-semibold' : '')}
+  ${(props) => (props.$isActive ? 'border-l-2 border-primary text-base-content font-semibold' : '')}
 `
 
 const getCurrentHash = () => {
@@ -148,8 +148,8 @@ const TableOfContents = ({ headings }: { headings: DocHeading[] }) => {
     <aside className="hidden xl:block w-64 shrink-0">
       {hasHeadings && (
         <div className="sticky top-16 pt-10 max-h-[calc(100svh-7rem)] overflow-y-auto pb-8">
-          <p className="mb-4 text-xs font-semibold tracking-widest text-vike-grey-300 uppercase flex gap-2 items-center">
-            <ListTree className="w-3 h-3" />
+          <p className="mb-4 text-xs font-semibold tracking-widest text-vike-grey-200 uppercase flex gap-2 items-center">
+            <TableOfContentsIcon className="w-3 h-3" />
             {t(locale, 'docs', 'onThisPage')}
           </p>
           <nav aria-label={t(locale, 'docs', 'onThisPage')}>

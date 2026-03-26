@@ -9,6 +9,10 @@ import baseAssets from '@/lib/baseAssets'
 import { getDocPage } from '@/lib/docs/content'
 import { getMdexSystemConfig } from '@/lib/docs/systemConfig'
 
+// .prose pre {
+//   @apply rounded-lg border border-vike-grey leading-5!;
+// }
+
 const ProseContainer = cm.section`
   min-h-[calc(100svh-92*var(--spacing))]
   prose 
@@ -16,11 +20,29 @@ const ProseContainer = cm.section`
   max-w-none
   dark:prose-invert
   prose-a:text-accent
-  prose-code:bg-base-200!
+
+  prose-code:text-vike-grey-100
+
+  prose-code:rounded!
+  prose-code:inset-shadow-2xs
+
+  prose-code:bg-primary/5!
+  prose-code:border-accent/20!
+
+  prose-code:dark:bg-primary/10!
+  prose-code:dark:border-accent/20!
+
   prose-pre:bg-base-200!
+  prose-pre:rounded-box
+  prose-pre:border
+  prose-pre:border-vike-grey
+  prose-pre:leading-5!
+  prose-pre:overflow-x-auto
+
   prose-p:after:content-none
   prose-p:before:content-none
   prose-blockquote:not-italic
+  prose-li:my-1
   [&_blockquote_p]:mt-0
   [&_blockquote_p]:mb-2
   [&_blockquote_ul]:pl-4
