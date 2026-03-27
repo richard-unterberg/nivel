@@ -69,7 +69,7 @@ const ThemePresenter = ({
   setHoveredTheme: (themeName: string | null) => void
 }) => {
   return (
-    <Presenter key={theme.name} elevated className="relative m-0 p-0 overflow-hidden">
+    <Presenter key={theme.name} elevated className="relative m-0 p-0 overflow-hidden shadow">
       <div data-theme={theme.name}>
         <div
           className={cmMerge(

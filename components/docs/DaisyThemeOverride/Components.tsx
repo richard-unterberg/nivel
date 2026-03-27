@@ -2,7 +2,7 @@
 /** biome-ignore-all lint/a11y/noSvgWithoutTitle: example */
 export const DaisyUiComponents = () => {
   return (
-    <div className="not-prose text-base-content mx-auto grid gap-6 pb-20 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 [&_.carbon-responsive-wrap]:flex-nowrap! [&_.carbon-responsive-wrap]:text-[11px]! [&>*]:mb-6">
+    <div className="not-prose text-base-content mx-auto grid gap-3 xl:gap-4 pb-20 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 [&>*]:mb-6">
       <div className="flex flex-col gap-4">
         <div className="card bg-base-100 card-border border-base-300 card-sm">
           <div className="card-body gap-4">

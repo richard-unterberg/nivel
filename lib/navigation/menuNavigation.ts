@@ -29,7 +29,7 @@ const menuGroups: MenuGroupDefinition[] = [
     id: 'guides',
     icon: MapIcon,
     titleKey: 'guides',
-    links: ['tailwindDaisyUI'],
+    links: ['tailwind', 'daisyUiTestRange'],
   },
 ]
 

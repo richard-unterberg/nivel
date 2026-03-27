@@ -86,8 +86,8 @@ export const headingDefinitions = {
       zh: '按照分步指南充分利用 mdex 并定制你的文档站点。',
     },
   },
-  tailwindDaisyUI: {
-    docPath: 'guides/tailwind-daisyui',
+  tailwind: {
+    docPath: 'guides/tailwind',
     title: {
       en: 'Master the Design System',
       zh: '使用 Tailwind CSS 和 DaisyUI 进行样式设计',
@@ -95,6 +95,17 @@ export const headingDefinitions = {
     excerpt: {
       en: 'Learn how to style your mdex documentation site using Tailwind CSS and DaisyUI.',
       zh: '学习如何使用 Tailwind CSS 和 DaisyUI 来设计你的 mdex 文档站点。',
+    },
+  },
+  daisyUiTestRange: {
+    docPath: 'guides/daisy-ui-test-range',
+    title: {
+      en: 'DaisyUI Test Range',
+      zh: 'DaisyUI 测试范围',
+    },
+    excerpt: {
+      en: 'Explore the test range for DaisyUI components and ensure compatibility with mdex.',
+      zh: '探索 DaisyUI 组件的测试范围，确保与 mdex 的兼容性。',
     },
   },
 } satisfies HeadingConfig
