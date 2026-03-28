@@ -1,9 +1,9 @@
 import fs from 'node:fs'
 import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import mdex from '../../pages/+mdex'
+import telefunc from '../../pages/+telefunc'
 import { extractDocHeadings } from '../docs/headings'
-import { getDocPath, resolveMdexSystemConfig } from '../docs/systemConfig'
+import { getDocPath, resolveTelefuncSystemConfig } from '../docs/systemConfig'
 import { DEFAULT_LOCALE, isLocale, type Locale, locales } from '../i18n/config'
 import { localizeHref } from '../i18n/routing'
 import type { SearchIndexEntry } from './shared'
@@ -63,7 +63,7 @@ const getDocsSourceMap = (): DocsSourceMap => {
 
 export const buildSearchIndexes = (): Record<Locale, SearchIndexEntry[]> => {
   const docs = getDocsSourceMap()
-  const resolvedConfig = resolveMdexSystemConfig(mdex)
+  const resolvedConfig = resolveTelefuncSystemConfig(telefunc)
   const slugs = Object.keys(docs).sort((left, right) => left.localeCompare(right))
 
   return Object.fromEntries(

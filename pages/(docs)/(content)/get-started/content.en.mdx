@@ -1,93 +1,178 @@
-import { Alert, CodeGroup, Link, Table } from '@/components/docs'
+import { Alert, CodeGroup, Link, Presenter, Table } from '@/components/docs'
 
-# Welcome to telefunc!
+# Telefunc docs maintainer guide
 
-<Alert>
-Test Alert
+<Alert type="warning" heading="Content-only workflow">
+  Work in the MDX content files under `pages/(docs)/(content)/**`. Reuse the components exported from `@/components/docs` and avoid changing TSX, layout, routing, or theme files unless a developer explicitly asks for it.
+</Alert>
+
+## Where to edit
+
+<Table data={{
+  headers: ['Path', 'Purpose', 'Maintainer action'],
+  rows: [
+    ['pages/(docs)/(content)/<slug>/content.en.mdx', 'English source for one doc route', 'Write and update content'],
+    ['pages/(docs)/(content)/<slug>/content.zh.mdx', 'Chinese translation for the same route', 'Keep localized content aligned when needed'],
+    ['pages/(docs)/(content)/<slug>/content.config.ts', 'Shared per-document options such as tableOfContents', 'Only touch when the doc needs a TOC change'],
+    ['lib/headings.ts', 'Doc metadata registry keyed by heading ids', 'Update titles, navTitle, excerpt, and docPath mappings'],
+    ['lib/navigation/menuNavigation.ts', 'Sidebar groups and link order', 'Add, remove, or reorder links under the existing groups'],
+    ['components/docs/index.tsx', 'Whitelisted MDX component exports', 'Import only from here'],
+    ['pages/+telefunc.ts', 'Global docs runtime settings', 'Read for context, but treat as developer-owned'],
+    ['pages/(docs)/(config) and components/**', 'Rendered layout, routing, and shared UI', 'Do not edit for normal documentation work'],
+  ]
+}} />
+
+<Presenter elevated>
+   **Rule of thumb:** if the change is prose, examples, headings, links, screenshots, callouts, or tables, it belongs in MDX. If it changes routing, layout, styling, navigation wiring, or React code, hand it back to a developer.
+</Presenter>
+
+## Working rules
+
+- Every doc route lives in its own folder under `pages/(docs)/(content)`.
+- The route slug comes from the folder path, so `pages/(docs)/(content)/get-started/content.en.mdx` becomes `<Link href="/get-started">/get-started</Link>`.
+- English is the default locale. Non-default locale URLs are prefixed, for example `/zh/get-started`.
+- Shared per-document settings belong in `content.config.ts` or `content.config.js`; do not create Vike `+config.ts` files next to MDX content.
+- Search and table-of-contents data are extracted from raw MDX, so keep the top `#` heading, section headings, and link text accurate.
+
+## Navigation and page metadata
+
+Use `lib/headings.ts` when a doc needs metadata or label changes, and use `lib/navigation/menuNavigation.ts` when a doc needs to move within the sidebar.
+
+<Table data={{
+  headers: ['Field', 'Meaning', 'When to edit it'],
+  rows: [
+    ['docPath', 'The route slug for the document, for example `get-started` or `telefunc-url`', 'Set it to the doc folder path that the metadata entry belongs to'],
+    ['title', 'The main page title for the document', 'Edit when the document title itself should change'],
+    ['navTitle', 'An optional shorter or alternate label used in the sidebar instead of `title`', 'Edit when the full page title is too long or too technical for navigation'],
+    ['excerpt', 'The short page description used for page metadata and doc summaries', 'Edit when the page description shown in metadata should change'],
+  ]
+}} />
+
+<Alert type="info" heading="How `navTitle` works">
+  If `navTitle` is omitted, the navigation uses `title`. Only add `navTitle` when the sidebar label should differ from the page heading.
 </Alert>
 
 <CodeGroup>
-```js
-// some js
-const function = () => {
-  console.log('Hello, world!')
+```ts
+quickStart: {
+  docPath: 'get-started',
+  title: {
+    en: 'Getting Started with Telefunc',
+  },
+  navTitle: {
+    en: 'Get Started',
+  },
+  excerpt: {
+    en: 'Setup, repo orientation, and the writing rules for this documentation.',
+  },
 }
 ```
+
 ```ts
-// some ts
-const function: () => void = () => {
-  console.log('Hello, world!')
+links: [
+  'quickStart',
+  'concepts',
+  'bestPractices',
+]
+```
+</CodeGroup>
+
+- Edit `lib/headings.ts` when the document name, short nav label, or description needs to change.
+- Edit `lib/navigation/menuNavigation.ts` when a link should move to another section, appear in a different order, or be removed from the sidebar.
+- Keep the keys aligned: the sidebar uses heading keys such as `quickStart`, which must exist in `lib/headings.ts`.
+
+## How the menu builder works
+
+`lib/navigation/menuNavigation.ts` defines the sidebar as data. The important part is the `menuGroups` array: each object becomes one sidebar section, and each item in its `links` array becomes either a doc link or a divider label.
+
+<Table data={{
+  headers: ['Part', 'Meaning', 'What the maintainer can change'],
+  rows: [
+    ['id', 'Stable id for the sidebar section', 'Usually leave it as-is unless a developer asks for a structural rename'],
+    ['icon', 'Lucide icon shown for the section', 'Usually leave it alone'],
+    ['groupKey', 'Translation key for the section title', 'Usually leave it alone unless the section title system changes'],
+    ['links', 'Ordered list of heading keys and divider objects', 'This is the main place to edit the menu'],
+    ['heading key', 'A string like `quickStart` or `apiTelefunc` that maps to `lib/headings.ts`', 'Add, remove, or reorder these to control doc links'],
+    ['dividerText', 'A plain label inserted between link groups', 'Edit when you need sub-sections inside one sidebar group'],
+  ]
+}} />
+
+<CodeGroup>
+```ts
+const menuGroups = [
+  {
+    id: 'get-started',
+    icon: Sprout,
+    groupKey: 'getStarted',
+    links: [
+      'quickStart',
+      'concepts',
+      { dividerText: 'Guides' },
+      'serverIntegration',
+    ],
+  },
+]
+```
+
+```ts
+quickStart: {
+  docPath: 'get-started',
+  title: {
+    en: 'Quick Start',
+  },
 }
 ```
 </CodeGroup>
 
-<Link href="/">A classic Link</Link>
+<Alert type="info" heading="How a link is built">
+  A string in `links` is not the URL itself. It is a heading key. The builder passes that key to `getHeadingData()`, which reads `lib/headings.ts` and turns it into the localized sidebar label and href.
+</Alert>
 
-{/* example propery table */}
+<Presenter elevated>
+  <p>
+    <strong>Safe editing pattern:</strong> first create or update the metadata entry in <code>lib/headings.ts</code>, then add that key to the right <code>links</code> array in <code>lib/navigation/menuNavigation.ts</code>.
+  </p>
+</Presenter>
+
+- To reorder the sidebar, move items up or down within a `links` array.
+- To remove a doc from the sidebar, remove its heading key from `links`.
+- To add a divider, insert `{ dividerText: 'Your label' }` where the break should appear.
+- To add a new doc link, add the matching heading key after confirming that key exists in `lib/headings.ts`.
+- Do not put raw URLs into `links`; always use heading keys so labels and localized paths stay in sync.
+
+## Approved MDX components
+
+Use this import at the top of a doc:
+
+```mdx
+import { Alert, CodeGroup, Link, Presenter, Table } from '@/components/docs'
+```
 
 <Table data={{
-  headers: ['Property', 'Description', 'Type', 'Default'],
+  headers: ['Component', 'Use it for', 'Example'],
   rows: [
-    ['`tableOfContents`', 'Whether to show the table of contents sidebar for this doc', '`boolean`', '`true`'],
-    ['`search.indexedWordsPerDoc`', 'How many parsed words from each doc to include in the generated search index', '`number`', '`240`'],
+    ['Alert', 'Notes, warnings, and important guidance', '<Alert type="warning" heading="Heads up">...</Alert>'],
+    ['CodeGroup', 'Showing alternative snippets in one framed block', '<CodeGroup>{multiple fenced code blocks}</CodeGroup>'],
+    ['Link', 'Internal or external links; internal links keep locale prefixes correct', '<Link href="/intro">Intro</Link>'],
+    ['Presenter', 'Framed screenshots, diagrams, or embedded visual examples', '<Presenter elevated>...</Presenter>'],
+    ['Table', 'Structured reference tables with headers and rows', '<Table data={{ headers: [...], rows: [...] }} />'],
   ]
 }} />
 
-## Docs Runtime Model
+## Starter snippets
 
-This repo does not render each document as its own Vike page subtree.
-
-Instead:
-
-- MDX files under `pages/(docs)/(content)/**` are treated as content modules.
-- The rendered docs page lives in the single dynamic Vike subtree at `pages/(docs)/(config)`.
-- Shared per-document options live in `content.config.ts` / `content.config.js`.
-- Global docs behavior lives in `pages/+mdex.ts`.
-
-This is the main tradeoff in the current architecture: you get a straightforward, app-centric docs runtime, but you do not get native Vike `+config.ts` inheritance next to each MDX file.
-
-## Configuration
-
-### Global docs settings
-
-Use `pages/+mdex.ts` for app-wide docs behavior:
-
-```ts
-import type { MdexSystemConfig } from '../lib/docs/systemConfig'
-
-export default {
-  defaultDocConfig: {
-    tableOfContents: true,
-  },
-  search: {
-    indexedWordsPerDoc: 240,
-  },
-} satisfies MdexSystemConfig
+<CodeGroup>
+```mdx
+import { Alert, CodeGroup, Link, Presenter, Table } from '@/components/docs'
 ```
 
-Docs URLs are derived from the Vike route structure. In the current template, docs resolve at root-level paths such as `/get-started` instead of `/docs/get-started`.
-
-`search.indexedWordsPerDoc` controls how many parsed words from each doc are included in the generated search index.
-
-### Per-document shared settings
-
-Use `content.config.ts` or `content.config.js` to define options shared by all translations of a doc route:
-
-```ts
-import type { DocConfig } from '@/lib/docs/config'
-
-export default {
-  tableOfContents: false,
-} satisfies DocConfig
+```mdx
+<Alert type="info" heading="Internal links">
+  Use <Link href="/intro">Link</Link> for links to docs pages so locale prefixes stay correct.
+</Alert>
 ```
+</CodeGroup>
 
-These config files inherit by logical doc path, so higher-level configs can apply defaults to nested docs.
-
-## Search
-
-Search indexes are generated from raw MDX content, not from rendered HTML.
-
-- In dev, the Vite plugin serves locale-specific JSON at `/@search-index/<locale>.json`.
-- In production builds, the same plugin emits `dist/client/assets/search-index.en.json` and `dist/client/assets/search-index.zh.json`.
-- The plugin also patches `dist/assets.json` so deployments that rely on the asset manifest can discover those files.
-- The navbar search loads the active locale index on demand and ranks matches on the client using title, slug, headings, and truncated body text.
+<Alert type="info" heading="When to ask a developer">
+  Ask for developer help if you need a new route, a sidebar or navigation change, a new MDX component, a layout tweak, or any change inside `components`, `pages/(docs)/(config)`, `lib`, or the theme files.
+</Alert>

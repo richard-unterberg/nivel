@@ -1,15 +1,26 @@
 import type { HeadingConfig } from './docs/headings'
 
 export const headingDefinitions = {
-  quickStart: {
+  getStarted: {
     docPath: 'get-started',
+    title: {
+      en: 'Doc maintainer guide',
+      zh: '快速开始',
+    },
+    excerpt: {
+      en: 'Get started with telefunc and learn how to create your own documentation site.',
+      zh: '开始使用 telefunc, 学习如何创建你自己的文档站点。',
+    },
+  },
+  quickStart: {
+    docPath: 'quick-start',
     title: {
       en: 'Quick Start',
       zh: '快速开始',
     },
     excerpt: {
       en: 'Get started with telefunc and learn how to create your own documentation site.',
-      zh: '开始使用 mdex, 学习如何创建你自己的文档站点。',
+      zh: '开始使用 telefunc, 学习如何创建你自己的文档站点。',
     },
   },
   concepts: {

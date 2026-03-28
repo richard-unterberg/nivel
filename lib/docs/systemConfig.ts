@@ -1,17 +1,17 @@
-import mdex from '../../pages/+mdex'
+import telefunc from '../../pages/+telefunc'
 import type { DocConfig } from './config'
 
-export type MdexSearchConfig = {
+export type TelefuncSearchConfig = {
   indexedWordsPerDoc?: number
 }
 
-export type MdexSystemConfig = {
+export type TelefuncSystemConfig = {
   defaultSlug?: string
   defaultDocConfig?: DocConfig
-  search?: MdexSearchConfig
+  search?: TelefuncSearchConfig
 }
 
-export type ResolvedMdexSystemConfig = {
+export type ResolvedTelefuncSystemConfig = {
   defaultSlug: string
   defaultDocConfig: DocConfig
   search: {
@@ -23,7 +23,7 @@ const normalizeDocSlug = (value: string | undefined) => {
   return (value ?? '').replace(/^\/+|\/+$/g, '')
 }
 
-export const resolveMdexSystemConfig = (config?: MdexSystemConfig): ResolvedMdexSystemConfig => {
+export const resolveTelefuncSystemConfig = (config?: TelefuncSystemConfig): ResolvedTelefuncSystemConfig => {
   return {
     defaultSlug: normalizeDocSlug(config?.defaultSlug) || 'get-started',
     defaultDocConfig: config?.defaultDocConfig ?? { tableOfContents: true },
@@ -33,19 +33,24 @@ export const resolveMdexSystemConfig = (config?: MdexSystemConfig): ResolvedMdex
   }
 }
 
-export const mdexSystemConfig = resolveMdexSystemConfig(mdex)
+export const telefuncSystemConfig = resolveTelefuncSystemConfig(telefunc)
 
-export const getMdexSystemConfig = (value?: { config?: { mdex?: MdexSystemConfig } }) => {
-  return resolveMdexSystemConfig(value?.config?.mdex ?? mdexSystemConfig)
+export const getTelefuncSystemConfig = (value?: { config?: { telefunc?: TelefuncSystemConfig } }) => {
+  return resolveTelefuncSystemConfig(value?.config?.telefunc ?? telefuncSystemConfig)
 }
 
-export const getDocsIndexPath = (config: MdexSystemConfig | ResolvedMdexSystemConfig = mdexSystemConfig) => {
-  const resolved = resolveMdexSystemConfig(config)
+export const getDocsIndexPath = (
+  config: TelefuncSystemConfig | ResolvedTelefuncSystemConfig = telefuncSystemConfig,
+) => {
+  const resolved = resolveTelefuncSystemConfig(config)
   return `/${resolved.defaultSlug}`
 }
 
-export const getDocPath = (slug: string, config: MdexSystemConfig | ResolvedMdexSystemConfig = mdexSystemConfig) => {
-  const resolved = resolveMdexSystemConfig(config)
+export const getDocPath = (
+  slug: string,
+  config: TelefuncSystemConfig | ResolvedTelefuncSystemConfig = telefuncSystemConfig,
+) => {
+  const resolved = resolveTelefuncSystemConfig(config)
   const normalizedSlug = normalizeDocSlug(slug)
 
   if (normalizedSlug === '') {

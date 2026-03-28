@@ -28,12 +28,6 @@ const SuggestionBox = ({
   results,
 }: SuggestionBoxProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const _usefulLinks = [
-    { href: '/get-started', label: t(locale, 'search', 'usefulGetStarted') },
-    { href: '/intro', label: t(locale, 'search', 'usefulIntroduction') },
-    { href: '/', label: t(locale, 'search', 'usefulHome') },
-    { href: 'https://github.com/vikejs/vike', label: t(locale, 'search', 'usefulGithub') },
-  ]
 
   useEffect(() => {
     if (!isOpen) {

@@ -1,12 +1,12 @@
 import { usePageContext } from 'vike-react/usePageContext'
 import { getDocPage } from '@/lib/docs/content'
-import { getMdexSystemConfig } from '@/lib/docs/systemConfig'
+import { getTelefuncSystemConfig } from '@/lib/docs/systemConfig'
 
 const normalizeSlug = (value: string) => value.replace(/^\/+|\/+$/g, '')
 
 const Page = () => {
   const pageContext = usePageContext()
-  const docsConfig = getMdexSystemConfig(pageContext)
+  const docsConfig = getTelefuncSystemConfig(pageContext)
   const routeParams = pageContext.routeParams as { slug?: string }
   const requestedSlug = normalizeSlug(routeParams.slug ?? '')
   const docSlug = requestedSlug || docsConfig.defaultSlug

@@ -1,4 +1,4 @@
-import type { MdexSystemConfig } from '../lib/docs/systemConfig'
+import type { TelefuncSystemConfig } from '../lib/docs/systemConfig'
 
 export default {
   defaultSlug: 'get-started',
@@ -8,4 +8,4 @@ export default {
   search: {
     indexedWordsPerDoc: 2400,
   },
-} satisfies MdexSystemConfig
+} satisfies TelefuncSystemConfig

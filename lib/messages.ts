@@ -33,14 +33,6 @@ const messages = {
     },
   },
   header: {
-    docsHome: {
-      en: 'Docs',
-      zh: '文档',
-    },
-    blogHome: {
-      en: 'Blog',
-      zh: '博客',
-    },
     menuDocumentation: {
       en: 'Documentation',
       zh: '文档',
@@ -67,26 +59,6 @@ const messages = {
       en: 'No matching docs found.',
       zh: '没有找到匹配的文档。',
     },
-    usefulLinks: {
-      en: 'Useful links',
-      zh: '实用链接',
-    },
-    usefulGetStarted: {
-      en: 'Get started',
-      zh: '开始使用',
-    },
-    usefulIntroduction: {
-      en: 'Introduction',
-      zh: '介绍',
-    },
-    usefulHome: {
-      en: 'Home',
-      zh: '首页',
-    },
-    usefulGithub: {
-      en: 'GitHub repository',
-      zh: 'GitHub 仓库',
-    },
   },
   home: {
     titlePrefix: {
@@ -100,10 +72,6 @@ const messages = {
     subtitle: {
       en: 'End-to-End type safety without the schema',
       zh: '是一个以开发者为中心的文档入门套件，构建在 Vike 之上，并针对性能与开发体验进行了优化。',
-    },
-    cta: {
-      en: 'See it in action',
-      zh: '查看演示',
     },
   },
   sidebar: {
@@ -128,14 +96,6 @@ const messages = {
     reportIssue: {
       en: 'Report an issue',
       zh: '报告问题',
-    },
-    documentation: {
-      en: 'Documentation',
-      zh: '文档',
-    },
-    componentReference: {
-      en: 'Component Reference',
-      zh: '块引用',
     },
   },
   error: {

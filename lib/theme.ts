@@ -1,8 +1,8 @@
 export const DEFAULT_THEME_PREFERENCE: ThemePreference = 'dark'
 
 const dataThemeByPreference = {
-  light: 'mdex-light',
-  dark: 'mdex-dark',
+  light: 'telefunc-light',
+  dark: 'telefunc-dark',
 } satisfies Record<ThemePreference, string>
 
 export type ThemePreference = 'light' | 'dark'

@@ -1,7 +1,7 @@
 import { headingDefinitions } from '../headings'
 import { DEFAULT_LOCALE, type Locale, resolveLocale } from '../i18n/config'
 import { localizeHref } from '../i18n/routing'
-import { getDocPath, type MdexSystemConfig } from './systemConfig'
+import { getDocPath, type TelefuncSystemConfig } from './systemConfig'
 
 export type DocHeading = {
   depth: number
@@ -164,18 +164,18 @@ const getHeadingNavTitle = (headingKey: HeadingKey, locale: Locale | string | un
   return heading.navTitle?.[resolvedLocale] ?? heading.title[resolvedLocale]
 }
 
-const getHeadingLink = (headingKey: HeadingKey, mdexConfig?: MdexSystemConfig) => {
-  return getDocPath(getHeadingDefinition(headingKey).docPath, mdexConfig)
+const getHeadingLink = (headingKey: HeadingKey, telefuncConfig?: TelefuncSystemConfig) => {
+  return getDocPath(getHeadingDefinition(headingKey).docPath, telefuncConfig)
 }
 
 export const getHeadingData = (
   headingKey: HeadingKey,
   locale: Locale | string | undefined = DEFAULT_LOCALE,
-  mdexConfig?: MdexSystemConfig,
+  telefuncConfig?: TelefuncSystemConfig,
 ) => {
   return {
     title: getHeadingNavTitle(headingKey, locale),
-    href: localizeHref(getHeadingLink(headingKey, mdexConfig), locale),
+    href: localizeHref(getHeadingLink(headingKey, telefuncConfig), locale),
   }
 }
 

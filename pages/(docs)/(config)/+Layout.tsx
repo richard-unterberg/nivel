@@ -7,7 +7,7 @@ import Sidebar from '@/components/Sidebar'
 import TableOfContents from '@/components/TableOfContents'
 import baseAssets from '@/lib/baseAssets'
 import { getDocPage } from '@/lib/docs/content'
-import { getMdexSystemConfig } from '@/lib/docs/systemConfig'
+import { getTelefuncSystemConfig } from '@/lib/docs/systemConfig'
 
 const ProseContainer = cm.section`
   min-h-[calc(100svh-92*var(--spacing))]
@@ -47,7 +47,7 @@ const ProseContainer = cm.section`
 const DocsLayout = ({ children }: { children: ReactNode }) => {
   const pageContext = usePageContext()
   const { locale, pageId, is404, errorWhileRendering } = pageContext
-  const docsConfig = getMdexSystemConfig(pageContext)
+  const docsConfig = getTelefuncSystemConfig(pageContext)
   const routeParams = pageContext.routeParams as { slug?: string }
   const docSlug = (routeParams.slug ?? '').replace(/^\/+|\/+$/g, '') || docsConfig.defaultSlug
   const isDocsErrorPage = is404 || errorWhileRendering

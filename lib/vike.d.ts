@@ -1,4 +1,4 @@
-import type { MdexSystemConfig, ResolvedMdexSystemConfig } from '@/lib/docs/systemConfig'
+import type { ResolvedTelefuncSystemConfig, TelefuncSystemConfig } from '@/lib/docs/systemConfig'
 import type { Locale } from '@/lib/i18n/config'
 import type { ThemePreference } from '@/lib/theme'
 
@@ -9,11 +9,11 @@ declare global {
 
   namespace Vike {
     interface Config {
-      mdex?: MdexSystemConfig
+      telefunc?: TelefuncSystemConfig
     }
 
     interface ConfigResolved {
-      mdex?: ResolvedMdexSystemConfig
+      telefunc?: ResolvedTelefuncSystemConfig
     }
 
     interface PageContext {

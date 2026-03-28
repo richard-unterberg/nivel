@@ -15,7 +15,7 @@ export const Presenter = ({ elevated = false, children, ...props }: PresenterPro
 
 const StyledPresenter = cm.div.variants<{ $elevated?: boolean }>({
   base: `
-    p-4 pb-0 mb-6
+    p-4 py-0 mb-6
     rounded-box border 
   `,
   variants: {

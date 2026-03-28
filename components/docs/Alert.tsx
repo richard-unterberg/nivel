@@ -49,7 +49,7 @@ const AlertOuter = cm.section.variants<{ $variant: AlertVariant }>({
 })
 
 const AlertHeading = cm.header`
-  mt-3
+  mt-1
   font-bold
   text-base
   mb-5

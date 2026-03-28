@@ -20,6 +20,7 @@ const menuGroups: MenuGroupDefinition[] = [
     icon: Sprout,
     groupKey: 'getStarted',
     links: [
+      'getStarted',
       'quickStart',
       'concepts',
       'bestPractices',

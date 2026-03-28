@@ -1,10 +1,10 @@
 import type { Config } from 'vike/types'
 import vikeReact from 'vike-react/config'
-import mdex from '@/pages/+mdex'
+import telefunc from '@/pages/+telefunc'
 
 export default {
   meta: {
-    mdex: {
+    telefunc: {
       env: {
         server: true,
         client: true,
@@ -12,10 +12,10 @@ export default {
       global: true,
     },
   },
-  title: 'mdex',
-  description: 'mdex docs starter kit',
-  mdex,
-  htmlAttributes: { 'data-theme': 'mdex-dark' },
+  title: 'telefunc',
+  description: 'telefunc documentation',
+  telefunc,
+  htmlAttributes: { 'data-theme': 'telefunc-dark' },
   passToClient: ['locale', 'urlPathnameLocalized'],
   extends: [vikeReact],
   prerender: true,

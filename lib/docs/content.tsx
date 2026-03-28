@@ -4,9 +4,9 @@ import { type DocHeading, extractDocHeadings } from '@/lib/docs/headings'
 import {
   getDocPath,
   getDocsIndexPath,
-  type MdexSystemConfig,
-  mdexSystemConfig,
-  resolveMdexSystemConfig,
+  type TelefuncSystemConfig,
+  resolveTelefuncSystemConfig,
+  telefuncSystemConfig,
 } from '@/lib/docs/systemConfig'
 import { DEFAULT_LOCALE, isLocale, type Locale, locales } from '@/lib/i18n/config'
 import { localizePathname } from '@/lib/i18n/routing'
@@ -187,7 +187,7 @@ const getSharedDocConfig = (routeId: string) => {
   }, {})
 }
 
-export const getDocPage = (slug: string, locale: Locale, mdexConfig?: MdexSystemConfig) => {
+export const getDocPage = (slug: string, locale: Locale, telefuncConfig?: TelefuncSystemConfig) => {
   const doc = docs[slug]
   if (!doc) {
     return null
@@ -198,7 +198,7 @@ export const getDocPage = (slug: string, locale: Locale, mdexConfig?: MdexSystem
     return null
   }
 
-  const resolvedDocsConfig = resolveMdexSystemConfig(mdexConfig ?? mdexSystemConfig)
+  const resolvedDocsConfig = resolveTelefuncSystemConfig(telefuncConfig ?? telefuncSystemConfig)
   const config = {
     ...resolvedDocsConfig.defaultDocConfig,
     ...getSharedDocConfig(slug),
@@ -227,8 +227,8 @@ const getAllDocSlugs = () => {
   return Object.keys(docs).sort((left, right) => left.localeCompare(right))
 }
 
-export const getPrerenderDocUrls = (mdexConfig?: MdexSystemConfig) => {
-  const resolvedDocsConfig = resolveMdexSystemConfig(mdexConfig ?? mdexSystemConfig)
+export const getPrerenderDocUrls = (telefuncConfig?: TelefuncSystemConfig) => {
+  const resolvedDocsConfig = resolveTelefuncSystemConfig(telefuncConfig ?? telefuncSystemConfig)
   const urls = new Set<string>()
   const docSlugs = getAllDocSlugs()
 

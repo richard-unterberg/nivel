@@ -10,15 +10,15 @@
 ## Current Implementation Spec
 
 - Stack: Vike + `vike-react`, React 19, Vite 7, MDX via `@mdx-js/rollup`, Tailwind CSS 4, DaisyUI 5, Zustand, and `@classmatejs/react`.
-- Global app config lives in `pages/+config.ts`. It enables global `mdex` config, prerendering, `vike-react`, `htmlAttributes.data-theme = 'mdex-dark'`, and passes `locale` plus `urlPathnameLocalized` to the client.
-- App-wide docs system config lives in `pages/+mdex.ts`. Current values are `defaultSlug: 'get-started'`, `defaultDocConfig.tableOfContents: true`, and `search.indexedWordsPerDoc: 120`.
+- Global app config lives in `pages/+config.ts`. It enables global `telefunc` config, prerendering, `vike-react`, `htmlAttributes.data-theme = 'telefunc-dark'`, and passes `locale` plus `urlPathnameLocalized` to the client.
+- App-wide docs system config lives in `pages/+telefunc.ts`. Current values are `defaultSlug: 'get-started'`, `defaultDocConfig.tableOfContents: true`, and `search.indexedWordsPerDoc: 120`.
 - Current URL model: `/` is the landing page from `pages/index/+Page.tsx`. Docs pages are served from the single dynamic Vike subtree at `pages/(docs)/(config)` and currently resolve at root-level slugs like `/get-started` and `/intro`.
 - Locales are defined in `lib/i18n/config.ts` as `en` and `zh`, with `en` as the default locale. Non-default locale URLs use a pathname prefix like `/zh/...`; default locale URLs stay unprefixed.
 - Routing locale behavior is handled in `pages/+onBeforeRoute.ts`. For non-prefixed URLs, the app may redirect on the client to a stored non-default locale preference. The URL remains the source of truth for the render-time locale.
 - Theme and locale preferences are persisted in local storage under `vike-user-settings` using Zustand persistence. `UserSettingsSync` reapplies theme and keeps the stored locale in sync with explicit locale-prefixed URLs.
-- Theme bootstrapping happens in `pages/+Head.tsx` via `themeBootstrapScript` from `lib/theme.ts`, so `data-theme` is set before hydration. Current theme names are `mdex-light` and `mdex-dark`, with `dark` as the default preference.
+- Theme bootstrapping happens in `pages/+Head.tsx` via `themeBootstrapScript` from `lib/theme.ts`, so `data-theme` is set before hydration. Current theme names are `telefunc-light` and `telefunc-dark`, with `dark` as the default preference.
 - Global CSS entry is `components/css/tailwind.css`, imported from `pages/+Wrapper.tsx`. It imports `components/css/theme.css`, registers Tailwind Typography and DaisyUI, and defines base-level styling for `html`, `body`, prose code blocks, and links.
-- DaisyUI theme tokens are defined in `components/css/theme.css`. The repo currently uses custom `mdex-light` and `mdex-dark` themes, custom grey tokens exposed through `@theme inline`, `Inter` as the default sans font, and `Noto Sans SC` for `zh-CN`.
+- DaisyUI theme tokens are defined in `components/css/theme.css`. The repo currently uses custom `telefunc-light` and `telefunc-dark` themes, custom grey tokens exposed through `@theme inline`, `Inter` as the default sans font, and `Noto Sans SC` for `zh-CN`.
 - Docs content is discovered through `import.meta.glob` in `lib/docs/content.tsx`. The system eagerly loads `pages/**/content.*.mdx`, raw MDX source for heading extraction, and `pages/**/content.config.{ts,js}` for shared content-level config.
 - The docs runtime is content-module based, not page-subtree based. MDX files under `pages/(docs)/(content)/**` are parsed and registered as content entries, while the rendered page remains the single dynamic Vike page under `pages/(docs)/(config)`.
 - Logical doc slugs are derived from folder segments after `(content)`. Route matching is implemented in `pages/(docs)/(config)/+route.ts` using helpers from `lib/docs/systemConfig.ts`.
@@ -26,10 +26,10 @@
 - Prerendered docs URLs are generated in `pages/(docs)/(config)/+onBeforePrerenderStart.ts` using `getPrerenderDocUrls()`, which expands all locales and all discovered doc slugs.
 - Current content inventory is limited to the `get-started` and `intro` doc slugs, each with `content.en.mdx` and `content.zh.mdx`.
 - Shared per-document options use `content.config.ts` or `content.config.js`, not Vike `+config.ts`. These configs inherit by logical doc path lineage and apply across translations.
-- Current config merge order in `getDocPage()` is: `defaultDocConfig` from `pages/+mdex.ts`, then inherited `content.config.*`, then `docConfig` exported by the default-locale MDX module, then `docConfig` exported by the active-locale MDX module.
+- Current config merge order in `getDocPage()` is: `defaultDocConfig` from `pages/+telefunc.ts`, then inherited `content.config.*`, then `docConfig` exported by the default-locale MDX module, then `docConfig` exported by the active-locale MDX module.
 - `DocConfig` currently supports `tableOfContents?: boolean` only. Example: `pages/(docs)/(content)/intro/content.config.ts` disables the table of contents for the intro page.
 - Headings are extracted from raw MDX in `lib/docs/headings.ts` for heading depths 2-3. The Table of Contents also re-syncs headings from the rendered DOM on the client and auto-assigns missing heading IDs.
-- Search text is also extracted from raw MDX. The current search index includes title, slug, headings, and a locale-aware body excerpt limited by `pages/+mdex.ts -> search.indexedWordsPerDoc`.
+- Search text is also extracted from raw MDX. The current search index includes title, slug, headings, and a locale-aware body excerpt limited by `pages/+telefunc.ts -> search.indexedWordsPerDoc`.
 - Docs layout is defined in `pages/(docs)/(config)/+Layout.tsx`. It composes `LayoutComponent`, `Sidebar`, a prose-styled content column, `DocsFooter`, and an optional right-side `TableOfContents`.
 - Global shell layout is defined in `pages/+Layout.tsx`. It always renders `Navbar` plus a `pt-16` page offset to clear the fixed header.
 - Navigation is manually defined, not generated from the filesystem. Top-level heading metadata lives in `lib/headings.ts`, and sidebar group structure lives in `lib/navigation/menuNavigation.ts`.

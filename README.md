@@ -1,6 +1,6 @@
-# mdex
+# telefunc
 
-`mdex` is a docs starter built as a real Vike application, not as a standalone docs theme.
+`telefunc` is a docs starter built as a real Vike application, not as a standalone docs theme.
 
 The goal of this template is to give you a fully fledged SSR React app with a documentation runtime already integrated. You can ship docs, landing pages, custom product pages, and app-specific UI in the same codebase without fighting a docs-first framework that expects the whole project to behave like a docs site.
 
@@ -10,7 +10,7 @@ The goal of this template is to give you a fully fledged SSR React app with a do
 
 - SSR and prerendering through Vike
 - MDX docs pages discovered from `pages/**/content.*.mdx`
-- Global docs system config in `pages/+mdex.ts`
+- Global docs system config in `pages/+telefunc.ts`
 - Per-document inherited config through `content.config.ts` / `content.config.js`
 - Locale-aware routing with `en` and `zh`
 - Light/dark theme support with pre-hydration theme bootstrapping
@@ -52,7 +52,7 @@ Instead:
 - MDX files under `pages/(docs)/(content)/**` are treated as content modules.
 - The rendered docs page lives in the single dynamic Vike subtree at `pages/(docs)/(config)`.
 - Shared per-document options live in `content.config.ts` / `content.config.js`.
-- Global docs behavior lives in `pages/+mdex.ts`.
+- Global docs behavior lives in `pages/+telefunc.ts`.
 
 This is the main tradeoff in the current architecture: you get a straightforward, app-centric docs runtime, but you do not get native Vike `+config.ts` inheritance next to each MDX file.
 
@@ -60,10 +60,10 @@ This is the main tradeoff in the current architecture: you get a straightforward
 
 ### Global docs settings
 
-Use `pages/+mdex.ts` for app-wide docs behavior:
+Use `pages/+telefunc.ts` for app-wide docs behavior:
 
 ```ts
-import type { MdexSystemConfig } from '../lib/docs/systemConfig'
+import type { TelefuncSystemConfig } from '../lib/docs/systemConfig'
 
 export default {
   defaultSlug: 'get-started',
@@ -73,7 +73,7 @@ export default {
   search: {
     indexedWordsPerDoc: 240,
   },
-} satisfies MdexSystemConfig
+} satisfies TelefuncSystemConfig
 ```
 
 Docs URLs are derived from the Vike route structure. In the current template, docs resolve at root-level paths such as `/get-started` instead of `/docs/get-started`.

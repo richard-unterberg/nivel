@@ -1,6 +1,7 @@
 import { usePageContext } from 'vike-react/usePageContext'
 import Link from '@/components/docs/Link'
 import LayoutComponent from '@/components/LayoutComponent'
+import { headingDefinitions } from '@/lib/headings'
 import { t } from '@/lib/messages'
 import BackendCode from '@/pages/index/backendCode.mdx'
 import FrontendCode from '@/pages/index/frontendCode.mdx'
@@ -28,10 +29,13 @@ const Page = () => {
       </LayoutComponent>
 
       <LayoutComponent $size="sm" className="flex gap-2 justify-center">
-        <Link href="get-started" className="btn btn-secondary btn-lg">
+        <Link href={headingDefinitions.getStarted.docPath} className="btn btn-secondary btn-lg">
           {t(locale, 'landing', 'getStartedButton')}
         </Link>
-        <Link className="btn btn-ghost border-base-content bg-transparent btn-lg">
+        <Link
+          href={headingDefinitions.quickStart.docPath}
+          className="btn btn-ghost border-base-content bg-transparent btn-lg"
+        >
           {t(locale, 'landing', 'learnMoreButton')}
         </Link>
       </LayoutComponent>
