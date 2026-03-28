@@ -1,15 +1,93 @@
 import { ArrowBigDownDash, Sticker } from 'lucide-react'
 import { usePageContext } from 'vike-react/usePageContext'
+import { MdxCodeBlock } from '@/components/docs/CodeBlock'
 import GradientText from '@/components/GradientText'
 import LayoutComponent from '@/components/LayoutComponent'
 import baseAssets from '@/lib/baseAssets'
-import { getDocsIndexPath } from '@/lib/docs/systemConfig'
-import { localizeHref } from '@/lib/i18n/routing'
 import { t } from '@/lib/messages'
-import UspSection from '@/pages/index/UspSection'
+
+/*
+frontend:
+
+// CreateTodo.tsx
+// Environment: client
+ 
+// CreateTodo.telefunc.ts isn't actually loaded;
+// Telefunc transforms it into a thin HTTP client.
+import { onNewTodo } from './CreateTodo.telefunc.ts'
+ 
+async function onClick(form) {
+  const text = form.input.value
+  // Behind the scenes, Telefunc makes an HTTP request
+  // to the server.
+  await onNewTodo(text)
+}
+ 
+function CreateTodo() {
+  return (
+    <form>
+      <input input="text"></input>
+      <button onClick={onClick}>Add To-Do</button>
+    </form>
+  )
+}
+
+*/
+
+const frontendCode = `// CreateTodo.telefunc.ts isn't actually loaded;
+// Telefunc transforms it into a thin HTTP client.
+import { onNewTodo } from './CreateTodo.telefunc.ts'
+ 
+async function onClick(form) {
+  const text = form.input.value
+  // Behind the scenes, Telefunc makes an HTTP request
+  // to the server.
+  await onNewTodo(text)
+}
+ 
+function CreateTodo() {
+  return (
+    <form>
+      <input input="text"></input>
+      <button onClick={onClick}>Add To-Do</button>
+    </form>
+  )
+}
+`
+
+/*
+server:
+
+
+*/
+
+const backendCode = `// CreateTodo.telefunc.ts
+// Environment: server
+ 
+// Telefunc makes onNewTodo() remotely callable
+// from the browser.
+export { onNewTodo }
+ 
+import { getContext } from 'telefunc'
+ 
+// Telefunction arguments are automatically validated
+// at runtime, so \`text\` is guaranteed to be a string.
+async function onNewTodo(text: string) {
+  const { user } = getContext()
+ 
+  // With an ORM
+  await Todo.create({ text, authorId: user.id })
+ 
+  // With SQL
+  await sql(
+    'INSERT INTO todo_items VALUES (:text, :authorId)',
+    { text, authorId: user.id }
+  )
+}
+`
 
 const Page = () => {
-  const { locale, config } = usePageContext()
+  const { locale } = usePageContext()
 
   return (
     <>
@@ -24,25 +102,21 @@ const Page = () => {
               className="w-full h-full select-none pointer-events-none opacity-40 dark:opacity-45"
             />
           </div>
-          <div className="text-center w-4/5 lg:w-3/5 mx-auto z-2 relative">
+          <div className="text-center mx-auto z-2 relative">
             <h1 className="text-4xl lg:text-5xl xl:text-7xl font-bold">
               {t(locale, 'home', 'titlePrefix')}{' '}
-              <GradientText className="underline">{t(locale, 'home', 'titleAccent')}</GradientText>
+              <GradientText className="">{t(locale, 'home', 'titleAccent')}</GradientText>
             </h1>
-            <p className="font-normal text-base-muted text-lg lg:text-2xl mt-10">
-              <GradientText className="font-semibold text-base-content">mdex</GradientText>{' '}
-              {t(locale, 'home', 'subtitle')}
-            </p>
-            <a
-              href={localizeHref(getDocsIndexPath(config.mdex), locale)}
-              className="btn  btn-lg btn-neutral mx-auto mt-8"
-            >
-              {t(locale, 'home', 'cta')}
-            </a>
+            <p className="font-normal text-base-muted text-lg lg:text-3xl mt-6">{t(locale, 'home', 'subtitle')}</p>
           </div>
         </LayoutComponent>
-        <LayoutComponent $size="sm" className="relative">
-          <UspSection />
+        <LayoutComponent $size="sm" className="relative grid grid-cols-2 gap-4 items-stretch ">
+          <MdxCodeBlock data-language="typescript" data-language-label="Called on the frontend">
+            {frontendCode}
+          </MdxCodeBlock>
+          <MdxCodeBlock data-language="typescript" data-language-label="Defined on the server">
+            {backendCode}
+          </MdxCodeBlock>
         </LayoutComponent>
       </div>
       <div className=" animate-bounce">

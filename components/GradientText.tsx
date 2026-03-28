@@ -11,7 +11,7 @@ const GradientText = React.forwardRef<HTMLSpanElement, GradientTextProps>(
   ({ children, color, startColor, endColor, rotation = 10, style, ...props }, ref) => {
     const isCustomGradient = Boolean(startColor && endColor)
     const usedStartColor = isCustomGradient ? startColor : 'primary'
-    const usedEndColor = isCustomGradient ? endColor : 'secondary'
+    const usedEndColor = isCustomGradient ? endColor : 'accent'
 
     const gradientStyle = {
       '--gradient-start': `var(--color-${usedStartColor})`,

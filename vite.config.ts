@@ -34,30 +34,28 @@ export const pathAliases = Object.entries(tsConf.compilerOptions.paths).map(([ke
   return { find: key, replacement: path.resolve(__dirname, value) }
 })
 
-const plugins: PluginOption[] = [
-  {
-    ...mdx({
-      jsxImportSource: '@/lib/mdx',
-      rehypePlugins: [rehypeDocHeadings, rehypeShikiCodeBlocks],
-    }),
-    enforce: 'pre',
-  },
-  react(),
-  vike(),
-  tailwindcss() as PluginOption,
-  searchIndexPlugin(),
-]
-
 export default defineConfig({
   base,
-  plugins,
+  plugins: [
+    {
+      ...mdx({
+        jsxImportSource: '@/lib/mdx',
+        rehypePlugins: [rehypeDocHeadings, rehypeShikiCodeBlocks],
+      }),
+      enforce: 'pre',
+    },
+    react(),
+    vike(),
+    tailwindcss() as PluginOption,
+    searchIndexPlugin(),
+  ],
   resolve: {
     alias: [...pathAliases],
   },
   server: {
-    port: 5555,
+    port: 3001,
   },
   preview: {
-    port: 5556,
+    port: 3002,
   },
 })

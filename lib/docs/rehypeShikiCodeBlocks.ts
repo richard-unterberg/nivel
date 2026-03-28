@@ -1,20 +1,11 @@
-import { type BundledLanguage, bundledLanguages, bundledLanguagesAlias, getSingletonHighlighter } from 'shiki'
 import { extractTextFromHast } from './headings'
+import { highlightCodeToHast } from './shiki'
 
 type HastNode = {
   children?: HastNode[]
   properties?: Record<string, unknown>
   tagName?: string
   type?: string
-}
-
-const shikiThemes = {
-  light: 'min-light',
-  dark: 'one-dark-pro',
-} as const
-
-const embeddedLanguageWarmups: Partial<Record<BundledLanguage, BundledLanguage[]>> = {
-  mdx: ['mdx', 'tsx', 'jsx', 'typescript', 'javascript'],
 }
 
 const isElement = (node: HastNode | undefined, tagName?: string): node is HastNode => {
@@ -46,24 +37,6 @@ const getCodeLanguage = (node: HastNode) => {
   return languageClassName?.slice('language-'.length).trim().toLowerCase() ?? null
 }
 
-const resolveShikiLanguage = (language: string) => {
-  if (language in bundledLanguages) {
-    return language as BundledLanguage
-  }
-
-  const alias = bundledLanguagesAlias[language as keyof typeof bundledLanguagesAlias]
-  return typeof alias === 'string' ? alias : null
-}
-
-const getHighlighter = async (language: BundledLanguage) => {
-  const langs = [...new Set(embeddedLanguageWarmups[language] ?? [language])]
-
-  return getSingletonHighlighter({
-    themes: [shikiThemes.light, shikiThemes.dark],
-    langs,
-  })
-}
-
 const highlightCodeBlock = async (node: HastNode) => {
   const codeNode = node.children?.find((child) => isElement(child, 'code'))
   if (!codeNode) return null
@@ -71,14 +44,8 @@ const highlightCodeBlock = async (node: HastNode) => {
   const language = getCodeLanguage(codeNode)
   if (!language) return null
 
-  const shikiLanguage = resolveShikiLanguage(language)
-  if (!shikiLanguage) return null
-
-  const highlighter = await getHighlighter(shikiLanguage)
-  const highlighted = await highlighter.codeToHast(extractTextFromHast(codeNode.children ?? []), {
-    lang: shikiLanguage,
-    themes: shikiThemes,
-  })
+  const highlighted = await highlightCodeToHast(extractTextFromHast(codeNode.children ?? []), language)
+  if (!highlighted) return null
 
   const highlightedPreCandidate = highlighted.children.find(
     (child) => child.type === 'element' && child.tagName === 'pre',

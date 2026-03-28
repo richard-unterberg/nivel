@@ -14,8 +14,8 @@ type LayoutSize = (typeof LayoutSize)[keyof typeof LayoutSize]
 const layoutComponentSizeMapping: { [key in LayoutSize]: string } = {
   xxs: 'max-w-[480px]',
   xs: 'max-w-[768px]',
-  sm: 'max-w-[960px]',
-  md: 'max-w-[1100px]', // 1140 base header width - 2 x 20px padding from header elements..
+  sm: 'max-w-5xl',
+  md: 'max-w-6xl',
   lg: 'max-w-7xl',
   xl: 'max-w-[1440px]',
   full: 'max-w-full',

@@ -94,15 +94,15 @@ const messages = {
   },
   home: {
     titlePrefix: {
-      en: 'Docs for',
-      zh: '为',
+      en: 'Telefunc(tions)',
+      zh: 'Telefunc(函数)',
     },
     titleAccent: {
-      en: 'Developers',
+      en: '',
       zh: '开发者',
     },
     subtitle: {
-      en: 'is a documentation starter kit built on top of the vike SSR-framework.',
+      en: 'End-to-End type safety without the schema',
       zh: '是一个以开发者为中心的文档入门套件，构建在 Vike 之上，并针对性能与开发体验进行了优化。',
     },
     cta: {

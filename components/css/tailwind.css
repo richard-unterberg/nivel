@@ -13,25 +13,11 @@
   body {
     @apply font-sans bg-base-100 text-base-content;
     @apply antialiased md:subpixel-antialiased;
-    @apply select-none;
     @apply ring-primary;
   }
 
   a {
     @apply text-primary;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  .prose,
-  a,
-  li,
-  p {
-    @apply select-text;
   }
 
   .noise {

@@ -3,7 +3,6 @@ import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import LayoutComponent from '@/components/LayoutComponent'
 import type { Locale } from '@/lib/i18n/config'
-import { localizeHref } from '@/lib/i18n/routing'
 import { t } from '@/lib/messages'
 import type { SearchResult } from '@/lib/search/shared'
 
@@ -29,7 +28,7 @@ const SuggestionBox = ({
   results,
 }: SuggestionBoxProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const usefulLinks = [
+  const _usefulLinks = [
     { href: '/get-started', label: t(locale, 'search', 'usefulGetStarted') },
     { href: '/intro', label: t(locale, 'search', 'usefulIntroduction') },
     { href: '/', label: t(locale, 'search', 'usefulHome') },
@@ -80,56 +79,36 @@ const SuggestionBox = ({
             </span>
           )}
         </div>
-        <div className="grid grid-cols-12 ">
-          <div className="col-span-8 -translate-x-3 -translate-y-3">
-            {query.trim() && !isLoading ? (
-              results.length > 0 ? (
-                <div className="max-h-80 overflow-y-auto p-3">
-                  <ul className="flex flex-col gap-2">
-                    {results.map((result) => (
-                      <li key={result.href}>
-                        <a
-                          href={result.href}
-                          className="block p-4 bg-base-100 border border-primary-muted-medium transition-colors hover:bg-base-200 rounded-box shadow-md shadow-primary-muted-light hover:border-primary-muted-medium"
-                          onClick={onClose}
-                        >
-                          <div className="flex justify-start items-center gap-2 mb-2">
-                            <div className="text font-bold text-base-content">{result.title}</div>
-                            {result.sectionTitle ? (
-                              <div className="text-sm text-base-muted-medium flex gap-1 items-center">
-                                <ArrowRightFromLine className="w-3 h-3" /> {result.sectionTitle}
-                              </div>
-                            ) : null}
-                          </div>
-                          {result.excerpt ? (
-                            <p className="text-xs leading-5 text-base-muted">{result.excerpt}</p>
+        <div className="">
+          {query.trim() && !isLoading ? (
+            results.length > 0 ? (
+              <div className="max-h-80 overflow-y-auto -mx-2 p-2">
+                <ul className="flex flex-col gap-2">
+                  {results.map((result) => (
+                    <li key={result.href}>
+                      <a
+                        href={result.href}
+                        className="block p-4 bg-base-100 border border-primary-muted-medium transition-colors hover:bg-base-200 rounded-box shadow-md shadow-primary-muted-light hover:border-primary-muted-medium"
+                        onClick={onClose}
+                      >
+                        <div className="flex justify-start items-center gap-2 mb-2">
+                          <div className="text font-bold text-base-content">{result.title}</div>
+                          {result.sectionTitle ? (
+                            <div className="text-sm text-base-muted-medium flex gap-1 items-center">
+                              <ArrowRightFromLine className="w-3 h-3" /> {result.sectionTitle}
+                            </div>
                           ) : null}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                <div className="text-sm text-base-muted rounded">{t(locale, 'search', 'empty')}</div>
-              )
-            ) : null}
-          </div>
-          <div className="col-span-4 p-4 bg-base-100 border border-base-muted-light rounded-box h-fit">
-            <h3 className="mb-3 font-semibold">{t(locale, 'search', 'usefulLinks')}</h3>
-            <ul className="flex flex-col gap-2">
-              {usefulLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={localizeHref(link.href, locale)}
-                    className="link link-hover text-sm text-primary"
-                    onClick={onClose}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+                        </div>
+                        {result.excerpt ? <p className="text-xs leading-5 text-base-muted">{result.excerpt}</p> : null}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div className="text-sm text-base-muted rounded">{t(locale, 'search', 'empty')}</div>
+            )
+          ) : null}
         </div>
       </LayoutComponent>
     </div>,

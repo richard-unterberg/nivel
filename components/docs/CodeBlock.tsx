@@ -46,6 +46,17 @@ const isMdxCodeBlock = (node: ReactNode): node is ReactElement<MdxCodeBlockProps
   return isValidElement(node) && node.type === MdxCodeBlock
 }
 
+const CodeBlockFrame = ({ label, children }: { label: string; children: ReactNode }) => {
+  return (
+    <CodeBlockOuter>
+      <CodeblockHeader>
+        <CodeBlockTitle>{label}</CodeBlockTitle>
+      </CodeblockHeader>
+      {children}
+    </CodeBlockOuter>
+  )
+}
+
 export const MdxCodeBlock = ({ children, className, grouped = false, ...props }: MdxCodeBlockProps) => {
   const label = getCodeBlockLabel(props)
   const codeBlock = (
@@ -58,14 +69,7 @@ export const MdxCodeBlock = ({ children, className, grouped = false, ...props }:
     return codeBlock
   }
 
-  return (
-    <CodeBlockOuter>
-      <CodeblockHeader>
-        <CodeBlockTitle>{label}</CodeBlockTitle>
-      </CodeblockHeader>
-      {codeBlock}
-    </CodeBlockOuter>
-  )
+  return <CodeBlockFrame label={label}>{codeBlock}</CodeBlockFrame>
 }
 
 export const CodeGroup = ({ children }: { children: ReactNode }) => {
