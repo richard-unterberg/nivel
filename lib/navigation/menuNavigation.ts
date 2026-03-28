@@ -6,8 +6,7 @@ import type { MenuGroupShared, MenuRendererGroup } from '@/lib/types'
 
 const GroupKeys = {
   getStarted: 'getStarted',
-  components: 'components',
-  guides: 'guides',
+  api: 'api',
 } as const
 type GroupKeys = (typeof GroupKeys)[keyof typeof GroupKeys]
 
@@ -20,16 +19,45 @@ const menuGroups: MenuGroupDefinition[] = [
     id: 'get-started',
     icon: Sprout,
     groupKey: 'getStarted',
-    links: ['getStarted', { dividerText: 'Guides' }, 'designSystem'],
-    collapsible: {
-      isDefaultOpen: true,
-    },
+    links: [
+      'quickStart',
+      'concepts',
+      'bestPractices',
+      { dividerText: 'Guides' },
+      'serverIntegration',
+      'initialData',
+      'permissions',
+      'validation',
+      'fileUploads',
+      'errorHandling',
+      { dividerText: 'Learn More' },
+      'whySchemaless',
+      'howItWorks',
+    ],
   },
   {
     id: 'guides',
     icon: MapIcon,
-    groupKey: 'guides',
-    links: ['tailwind', 'daisyUiTestRange'],
+    groupKey: 'api',
+    links: [
+      { dividerText: 'Server' },
+      'apiTelefunc',
+      'throwAbort',
+      'getContext',
+      'shield',
+      'onBug',
+      { dividerText: 'Client' },
+      'onAbort',
+      { dividerText: 'Config' },
+      'telefuncUrl',
+      'disableNamingConvention',
+      'httpHeaders',
+      'fetch',
+      'telefuncFiles',
+      'root',
+      'configShield',
+      'log',
+    ],
   },
 ]
 

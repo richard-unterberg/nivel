@@ -1,5 +1,6 @@
-import { Bug, Pencil, Sticker } from 'lucide-react'
+import { Bug, Pencil } from 'lucide-react'
 import { usePageContext } from 'vike-react/usePageContext'
+import BrandLogo from '@/components/BrandLogo'
 import LanguageSwitch from '@/components/Navbar/LanguageSwitch'
 import SocialIcons from '@/components/SocialIcons'
 import { t } from '@/lib/messages'
@@ -23,7 +24,7 @@ const DocsFooter = () => {
           <LanguageSwitch />
           <p>
             <a href="unterberg.dev" className="text-base-content">
-              <Sticker className="w-7 h-7" />
+              <BrandLogo locale={locale} showText={false} />
             </a>
           </p>
         </div>

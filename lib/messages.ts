@@ -111,13 +111,9 @@ const messages = {
       en: 'Get Started',
       zh: '开始',
     },
-    components: {
-      en: 'Components',
-      zh: '组件',
-    },
-    guides: {
-      en: 'Guides',
-      zh: '指南',
+    api: {
+      en: 'API',
+      zh: 'API',
     },
   },
   docs: {

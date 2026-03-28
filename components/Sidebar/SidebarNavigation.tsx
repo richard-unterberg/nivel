@@ -85,8 +85,8 @@ const SidebarLink = (props: SidebarLinkItem & { activeHref: string | null }) => 
 
 const SidebarDivider = (props: { title: ReactNode }) => {
   return (
-    <li className="-mb-2 mt-1 text-base-muted-medium pointer-events-none font-semibold">
-      <span>{renderInlineMarkdown(props.title)}</span>
+    <li className="ml-3 mt-2 text-xs text-base-muted-medium pointer-events-none font-semibold border-b border-base-muted-light mb-2">
+      <span className="-ml-3">{renderInlineMarkdown(props.title)}</span>
     </li>
   )
 }
@@ -167,7 +167,7 @@ const SidebarGroupComponent = (props: MenuRendererGroup & { activeHref: string |
         </>
       )}
       {props.showSeparator && (
-        <span className="pointer-events-none absolute -bottom-1 border-b border-base-muted-light block rounded-none w-full mx-auto mb-3"></span>
+        <span className="pointer-events-none absolute -bottom-1 block rounded-none w-full mx-auto mb-3"></span>
       )}
     </li>
   )

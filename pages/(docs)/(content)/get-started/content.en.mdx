@@ -1,45 +1,37 @@
+import { Alert, CodeGroup, Link, Table } from '@/components/docs'
+
 # Welcome to telefunc!
 
-`mdex` is a docs starter built as a real Vike application, not as a standalone docs theme.
+<Alert>
+Test Alert
+</Alert>
 
-The goal of this template is to give you a fully fledged SSR React app with a documentation runtime already integrated. You can ship docs, landing pages, custom product pages, and app-specific UI in the same codebase without fighting a docs-first framework that expects the whole project to behave like a docs site.
+<CodeGroup>
+```js
+// some js
+const function = () => {
+  console.log('Hello, world!')
+}
+```
+```ts
+// some ts
+const function: () => void = () => {
+  console.log('Hello, world!')
+}
+```
+</CodeGroup>
 
-## Current Features
+<Link href="/">A classic Link</Link>
 
-- SSR and prerendering through Vike
-- MDX docs pages discovered from `pages/**/content.*.mdx`
-- Global docs system config in `pages/+mdex.ts`
-- Per-document inherited config through `content.config.ts` / `content.config.js`
-- Locale-aware routing with `en` and `zh`
-- Light/dark theme support with pre-hydration theme bootstrapping
-- Built-in localized search with build-time index generation and lazy client loading
-- Landing page plus docs layout in one app
-- Sidebar navigation, docs footer, and right-side table of contents
+{/* example propery table */}
 
-## What This Template Is
-
-- A Vike + React SSR app with an MDX-powered docs runtime.
-- A starter for teams that want docs inside a real application shell.
-- A base for custom docs experiences, product sites, or hybrid marketing/docs apps.
-- A repo with built-in theming, localization, sidebar navigation, and table of contents support.
-
-## What This Template Is Not
-
-- Not a generic static docs theme trying to replace Docusaurus, Starlight, or VitePress feature-for-feature.
-- Not a batteries-included docs platform with versioning, search, analytics, and GitHub integrations already wired.
-- Not a file-tree-driven docs generator where every docs folder is also a native Vike page subtree.
-
-## Stack
-
-- [Vike](https://vike.dev/) + [`vike-react`](https://vike.dev/react) for routing, SSR, prerendering, and app architecture
-- [React 19](https://react.dev/)
-  - can be replaced with SolidJS
-- [Vite 7](https://vite.dev/)
-- [MDX](https://mdxjs.com/) via `@mdx-js/rollup`
-- [Tailwind CSS 4](https://tailwindcss.com/)
-- [DaisyUI 5](https://daisyui.com/)
-- [Zustand](https://zustand.docs.pmnd.rs/) for persisted user settings
-- [`@classmatejs/react`](https://www.npmjs.com/package/@classmatejs/react) for component class composition
+<Table data={{
+  headers: ['Property', 'Description', 'Type', 'Default'],
+  rows: [
+    ['`tableOfContents`', 'Whether to show the table of contents sidebar for this doc', '`boolean`', '`true`'],
+    ['`search.indexedWordsPerDoc`', 'How many parsed words from each doc to include in the generated search index', '`number`', '`240`'],
+  ]
+}} />
 
 ## Docs Runtime Model
 
@@ -64,7 +56,6 @@ Use `pages/+mdex.ts` for app-wide docs behavior:
 import type { MdexSystemConfig } from '../lib/docs/systemConfig'
 
 export default {
-  defaultSlug: 'get-started',
   defaultDocConfig: {
     tableOfContents: true,
   },

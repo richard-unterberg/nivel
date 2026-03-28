@@ -1,28 +1,11 @@
 import { cmMerge } from '@classmatejs/react'
 import { usePageContext } from 'vike-react/usePageContext'
+import BrandLogo from '@/components/BrandLogo'
 import LayoutComponent from '@/components/LayoutComponent'
 import DocsMenu from '@/components/Navbar/DocsMenu'
 import ThemeSwitch from '@/components/Navbar/ThemeSwitch'
 import Search from '@/components/Search'
 import SocialIcons from '@/components/SocialIcons'
-import baseAssets from '@/lib/baseAssets'
-import type { Locale } from '@/lib/i18n/config'
-import { localizeHref } from '@/lib/i18n/routing'
-import { t } from '@/lib/messages'
-
-const BrandLogo = ({ locale, isLanding = false }: { locale: Locale; isLanding?: boolean }) => (
-  <a href={localizeHref('/', locale)} className="flex gap-2 items-center text-base-content">
-    {/* <img src={`${baseAssets}logo-dark.svg`} alt="telefunc logo" className="w-6 h-6 dark:hidden block" />
-    <img src={`${baseAssets}logo-light.svg`} alt="telefunc logo" className="w-6 h-6 hidden dark:block" /> */}
-    <img src={`${baseAssets}favicon/favicon.svg`} alt="telefunc logo" className="w-6 h-6" />
-    <span className="font-semibold text-xl">
-      Telefunc{' '}
-      <span className="font-normal text-base-muted text-xs lowercase">
-        {!isLanding ? t(locale, 'header', 'docsHome') : null}
-      </span>
-    </span>
-  </a>
-)
 
 const Navbar = () => {
   const { locale, urlPathname } = usePageContext()
