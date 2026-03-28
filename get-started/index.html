@@ -95,7 +95,7 @@
 <div class="not-prose relative mb-6 min-w-0 overflow-auto flex flex-col border border-base-muted-light rounded-box"><div class="flex inset-x-4 top-0 absolute min-h-10 items-center justify-between border-b-1 border-base-muted-light"><div class="text-xs font-semibold font-mono text-base-muted">ts</div></div><pre style="background-color:#ffffff;--shiki-dark-bg:#282c34;color:#24292eff;--shiki-dark:#abb2bf" tabindex="0" data-language="ts" data-language-label="ts" class="flex-1 w-full max-w-full min-w-0 overflow-auto rounded-box p-4 pt-14 text-sm shiki shiki-themes min-light one-dark-pro doc-code-pre"><code><span class="line"><span style="color:#D32F2F;--shiki-dark:#C678DD">import</span><span style="color:#D32F2F;--shiki-dark:#C678DD"> type</span><span style="color:#24292EFF;--shiki-dark:#ABB2BF"> { </span><span style="color:#24292EFF;--shiki-dark:#E06C75">MdexSystemConfig</span><span style="color:#24292EFF;--shiki-dark:#ABB2BF"> } </span><span style="color:#D32F2F;--shiki-dark:#C678DD">from</span><span style="color:#22863A;--shiki-dark:#98C379"> &#x27;../lib/docs/systemConfig&#x27;</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#D32F2F;--shiki-dark:#C678DD">export</span><span style="color:#D32F2F;--shiki-dark:#C678DD"> default</span><span style="color:#24292EFF;--shiki-dark:#ABB2BF"> {</span></span>
-<span class="line"><span style="color:#24292EFF;--shiki-dark:#E06C75">  basePath</span><span style="color:#D32F2F;--shiki-dark:#ABB2BF">:</span><span style="color:#22863A;--shiki-dark:#98C379"> &#x27;&#x27;</span><span style="color:#212121;--shiki-dark:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#24292EFF;--shiki-dark:#E06C75">  docsBasePath</span><span style="color:#D32F2F;--shiki-dark:#ABB2BF">:</span><span style="color:#22863A;--shiki-dark:#98C379"> &#x27;&#x27;</span><span style="color:#212121;--shiki-dark:#ABB2BF">,</span></span>
 <span class="line"><span style="color:#24292EFF;--shiki-dark:#E06C75">  defaultSlug</span><span style="color:#D32F2F;--shiki-dark:#ABB2BF">:</span><span style="color:#22863A;--shiki-dark:#98C379"> &#x27;get-started&#x27;</span><span style="color:#212121;--shiki-dark:#ABB2BF">,</span></span>
 <span class="line"><span style="color:#24292EFF;--shiki-dark:#E06C75">  defaultDocConfig</span><span style="color:#D32F2F;--shiki-dark:#ABB2BF">:</span><span style="color:#24292EFF;--shiki-dark:#ABB2BF"> {</span></span>
 <span class="line"><span style="color:#24292EFF;--shiki-dark:#E06C75">    tableOfContents</span><span style="color:#D32F2F;--shiki-dark:#ABB2BF">:</span><span style="color:#1976D2;--shiki-dark:#D19A66"> true</span><span style="color:#212121;--shiki-dark:#ABB2BF">,</span></span>
@@ -105,7 +105,7 @@
 <span class="line"><span style="color:#24292EFF;--shiki-dark:#ABB2BF">  }</span><span style="color:#212121;--shiki-dark:#ABB2BF">,</span></span>
 <span class="line"><span style="color:#24292EFF;--shiki-dark:#ABB2BF">} </span><span style="color:#D32F2F;--shiki-dark:#C678DD">satisfies</span><span style="color:#6F42C1;--shiki-dark:#E5C07B"> MdexSystemConfig</span></span>
 <span class="line"></span></code></pre></div>
-<p>With <code>basePath: &#x27;&#x27;</code>, docs currently resolve at root-level paths such as <code>/get-started</code> instead of <code>/docs/get-started</code>.</p>
+<p>With <code>docsBasePath: &#x27;&#x27;</code>, docs currently resolve at root-level paths such as <code>/get-started</code> instead of <code>/docs/get-started</code>.</p>
 <p><code>search.indexedWordsPerDoc</code> controls how many parsed words from each doc are included in the generated search index.</p>
 <h3 id="per-document-shared-settings" class="scroll-mt-24">Per-document shared settings</h3>
 <p>Use <code>content.config.ts</code> or <code>content.config.js</code> to define options shared by all translations of a doc route:</p>
@@ -127,10 +127,10 @@
         
         <script id="vike_pageContext" type="application/json">{"locale":"en","urlPathnameLocalized":"\\/get-started","pageId":"\\/pages\\/(docs)\\/(config)","routeParams":{"slug":"get-started"}}</script>
         <script id="vike_globalContext" type="application/json">{}</script>
-        <script src="/vike-docpress/assets/entries/entry-client-routing.CCFaJHIW.js" type="module" async></script>
-        <link rel="modulepreload" href="/vike-docpress/assets/entries/pages_-docs-_-config-.CwJILUUL.js" as="script" type="text/javascript">
-        <link rel="modulepreload" href="/vike-docpress/assets/chunks/chunk-C-WMh_Mz.js" as="script" type="text/javascript">
-        <link rel="modulepreload" href="/vike-docpress/assets/chunks/chunk-Czpq8MYV.js" as="script" type="text/javascript">
-        <link rel="modulepreload" href="/vike-docpress/assets/chunks/chunk-VVlZ_pEh.js" as="script" type="text/javascript">
+        <script src="/vike-docpress/assets/entries/entry-client-routing.CG9WH2a3.js" type="module" async></script>
+        <link rel="modulepreload" href="/vike-docpress/assets/entries/pages_-docs-_-config-.CmbMFkwe.js" as="script" type="text/javascript">
+        <link rel="modulepreload" href="/vike-docpress/assets/chunks/chunk-B67gL0tr.js" as="script" type="text/javascript">
+        <link rel="modulepreload" href="/vike-docpress/assets/chunks/chunk-DPGRa23V.js" as="script" type="text/javascript">
+        <link rel="modulepreload" href="/vike-docpress/assets/chunks/chunk-Bku_DmHg.js" as="script" type="text/javascript">
       </body>
     </html>
