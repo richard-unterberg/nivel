@@ -56,8 +56,9 @@ const SuggestionBox = ({
   }
 
   return createPortal(
-    <div className="z-30 fixed inset-0 bg-base-100/70 backdrop-blur-lg">
-      <LayoutComponent ref={contentRef} $size="sm" className="pt-6">
+    <div className="z-30 fixed inset-0 bg-base-100/50 backdrop-blur-lg w-full h-full">
+      <div className="absolute bg-linear-to-b dark:bg-linear-to-t from-base-100 via-base-100 via-25% to-primary-muted-superlight inset-0 z-1" />
+      <LayoutComponent ref={contentRef} $size="sm" className="pt-6 z-2 relative">
         <input
           placeholder={t(locale, 'search', 'placeholder')}
           ref={inputRef}
