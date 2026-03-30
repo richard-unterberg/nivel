@@ -54,3 +54,8 @@ This keeps local development close to the eventual npm-consumer setup without so
 
 - The monorepo restructure plan is tracked in `MONOREPO_RESTRUCTURE_PLAN.md`.
 - Repo-specific engineering instructions are tracked in `agents.md`.
+
+## Publishing override
+```
+pnpm publish --access public --no-git-checks
+```
