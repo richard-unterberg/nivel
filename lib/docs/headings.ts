@@ -134,6 +134,7 @@ export const normalizeHeadingTitle = (value: string) => normalizeWhitespace(valu
 
 export type HeadingDefinition = {
   docPath: string
+  hrefAliases?: string[]
   title: Record<Locale, string>
   navTitle?: Record<Locale, string>
   excerpt?: Record<Locale, string>
@@ -149,12 +150,16 @@ const getHeadingDefinition = (headingKey: HeadingKey) => {
   return headingDefinitions[headingKey] as HeadingDefinition
 }
 
+const getHeadingPathCandidates = (heading: HeadingDefinition) => {
+  return [heading.docPath, ...(heading.hrefAliases ?? [])].map((value) => normalizeDocPath(value))
+}
+
 const getHeadingByDocPath = (docPath: string) => {
   const normalizedDocPath = normalizeDocPath(docPath)
 
-  return Object.values(headingDefinitions).find((heading) => normalizeDocPath(heading.docPath) === normalizedDocPath) as
-    | HeadingDefinition
-    | undefined
+  return Object.values(headingDefinitions).find((heading) =>
+    getHeadingPathCandidates(heading).includes(normalizedDocPath),
+  ) as HeadingDefinition | undefined
 }
 
 const getHeadingNavTitle = (headingKey: HeadingKey, locale: Locale | string | undefined = DEFAULT_LOCALE) => {
@@ -166,6 +171,24 @@ const getHeadingNavTitle = (headingKey: HeadingKey, locale: Locale | string | un
 
 const getHeadingLink = (headingKey: HeadingKey, telefuncConfig?: TelefuncSystemConfig) => {
   return getDocPath(getHeadingDefinition(headingKey).docPath, telefuncConfig)
+}
+
+export const resolveHeadingByHrefPathname = (pathname: string) => {
+  const normalizedPathname = normalizeDocPath(pathname)
+
+  for (const [headingKey, heading] of Object.entries(headingDefinitions) as [HeadingKey, HeadingDefinition][]) {
+    if (!getHeadingPathCandidates(heading).includes(normalizedPathname)) {
+      continue
+    }
+
+    return {
+      headingKey,
+      heading,
+      docPath: normalizeDocPath(heading.docPath),
+    }
+  }
+
+  return null
 }
 
 export const getHeadingLinkData = (

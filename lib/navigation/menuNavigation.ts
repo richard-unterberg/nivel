@@ -74,6 +74,11 @@ const menuGroups: MenuGroupDefinition[] = [
 
 export type MenuDocLink = ReturnType<typeof getHeadingLinkData>
 
+export const getHeadingGroupTitle = (headingKey: HeadingKey, locale: Locale) => {
+  const group = menuGroups.find((menuGroup) => menuGroup.links.some((item) => item === headingKey))
+  return group ? t(locale, 'sidebar', group.groupKey) : null
+}
+
 export const getMenuDocLinks = (locale: Locale, telefuncConfig?: TelefuncSystemConfig): MenuDocLink[] => {
   return menuGroups.flatMap((group) =>
     group.links.flatMap((item) => {

@@ -1,11 +1,13 @@
 @import 'tailwindcss';
 @import './theme.css';
+@import './code.css';
 
 @plugin '@tailwindcss/typography';
 
 /* https://daisyui.com/docs/config/ */
 @plugin 'daisyui' {
   exclude: rootcolor;
+  themes: false;
 }
 
 @layer base {
@@ -14,44 +16,5 @@
     @apply font-sans bg-base-100 text-base-content;
     @apply antialiased md:subpixel-antialiased;
     @apply ring-primary;
-  }
-
-  a {
-    @apply text-primary;
-  }
-
-  .noise {
-    @apply absolute inset-0 z-1 pointer-events-none;
-  }
-
-  .noise:after {
-    background-image: var(--fx-noise);
-    background-repeat: repeat;
-    background-size: 100px 100px;
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-
-  .doc-code-pre {
-    @apply bg-base-200! dark:bg-base-muted-superlight!;
-  }
-
-  .landing-code-samples [data-code-block-header] {
-    @apply hidden!;
-  }
-
-  .landing-code-samples [data-code-block-content] {
-    @apply pt-4! mb-0;
-    font-size: 12.5px !important;
-  }
-
-  :is([data-theme='telefunc-dark']) .shiki {
-    color: var(--shiki-dark) !important;
-  }
-
-  :is([data-theme='telefunc-dark']) .shiki span {
-    color: var(--shiki-dark) !important;
   }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/knip/schema.json",
-  "entry": ["lib/mdx/jsx-runtime.tsx", "lib/mdx/jsx-dev-runtime.tsx"],
+  "entry": ["lib/mdx/provider.tsx"],
   "ignoreFiles": ["public/**/*"],
   "tags": ["-lintignore"]
 }

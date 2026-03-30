@@ -1,4 +1,4 @@
-import { Alert, CodeGroup, Link, Table } from '@/components/index'
+import { Alert, CodeBlockTransformer, FileAdded, FileRemoved, Link, Table } from '@/components/index'
 
 # Telefunc docs maintainer guide
 
@@ -52,7 +52,7 @@ Use `lib/headings.ts` when a doc needs metadata or label changes, and use `lib/n
   If `navTitle` is omitted, the navigation uses `title`. Only add `navTitle` when the sidebar label should differ from the page heading.
 </Alert>
 
-```ts
+```ts ts-only
 quickStart: {
   docPath: 'get-started',
   title: {
@@ -87,8 +87,7 @@ quickStart: {
   ]
 }} />
 
-<CodeGroup>
-```ts
+```ts choice=menuNavigation.ts
 const menuGroups = [
   {
     id: 'get-started',
@@ -104,7 +103,7 @@ const menuGroups = [
 ]
 ```
 
-```ts
+```ts ts-only choice=headings.ts
 quickStart: {
   docPath: 'get-started',
   title: {
@@ -112,7 +111,6 @@ quickStart: {
   },
 }
 ```
-</CodeGroup>
 
 <Alert type="info" heading="How a link is built">
   A string in `links` is not the URL itself. It is a heading key. The builder passes that key to `getHeadingData()`, which reads `lib/headings.ts` and turns it into the localized sidebar label and href.
@@ -133,14 +131,16 @@ quickStart: {
 Use this import at the top of a doc:
 
 ```mdx
-import { Alert, CodeGroup, Link, Table } from '@/components/index'
+import { Alert, CodeBlockTransformer, FileAdded, FileRemoved, Link, Table } from '@/components/index'
 ```
 
 <Table data={{
   headers: ['Component', 'Use it for', 'Example'],
   rows: [
     ['Alert', 'Notes, warnings, and important guidance', '<Alert type="warning" heading="Heads up">...</Alert>'],
-    ['CodeGroup', 'Showing alternative snippets in one framed block', '<CodeGroup>{multiple fenced code blocks}</CodeGroup>'],
+    ['CodeBlockTransformer', 'Changing wrapping behavior for a fenced block you nest inside it', '<CodeBlockTransformer lineBreak="break-word">{code block}</CodeBlockTransformer>'],
+    ['FileAdded', 'Showing a whole code block as a newly added file', '<FileAdded>{code block}</FileAdded>'],
+    ['FileRemoved', 'Showing a whole code block as a removed file', '<FileRemoved>{code block}</FileRemoved>'],
     ['Link', 'Internal or external links; internal links keep locale prefixes correct', '<Link href="/intro">Intro</Link>'],
     ['Table', 'Structured reference tables with headers and rows', '<Table data={{ headers: [...], rows: [...] }} />'],
   ]
@@ -148,17 +148,39 @@ import { Alert, CodeGroup, Link, Table } from '@/components/index'
 
 ## Starter snippets
 
-<CodeGroup>
 ```mdx
-import { Alert, CodeGroup, Link, Table } from '@/components/index'
+import { Alert, CodeBlockTransformer, FileAdded, FileRemoved, Link, Table } from '@/components/index'
 ```
 
+<CodeBlockTransformer lineBreak="break-word">
 ```mdx
 <Alert type="info" heading="Internal links">
   Use <Link href="/intro">Link</Link> for links to docs pages so locale prefixes stay correct.
 </Alert>
 ```
-</CodeGroup>
+</CodeBlockTransformer>
+
+<FileAdded>
+```mdx
+// pages/(docs)/(content)/new-doc/content.en.mdx
+
+import { Alert, Link } from '@/components/index'
+
+# New doc
+
+<Alert type="info" heading="Draft">
+  Start here and link to <Link href="/get-started">Get Started</Link>.
+</Alert>
+```
+</FileAdded>
+
+<FileRemoved>
+```ts
+// pages/(docs)/(content)/old-doc/content.en.mdx
+
+export const deprecatedDoc = true
+```
+</FileRemoved>
 
 <Alert type="info" heading="When to ask a developer">
   Ask for developer help if you need a new route, a sidebar or navigation change, a new MDX component, a layout tweak, or any change inside `components`, `pages/(docs)`, `lib`, or the theme files.

@@ -93,7 +93,7 @@ export const getLogicalPathname = (pathnameOrHref: string) => {
   return stripLocaleFromPathname(getPathnameOnly(pathnameOrHref)).pathname
 }
 
-export const isExternalHref = (href: string) => {
+const isExternalHref = (href: string) => {
   return /^(?:[a-z]+:)?\/\//i.test(href) || href.startsWith('mailto:') || href.startsWith('tel:')
 }
 

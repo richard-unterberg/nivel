@@ -3,6 +3,7 @@ import type { HeadingConfig } from './docs/headings'
 export const headingDefinitions = {
   quickStart: {
     docPath: 'quick-start',
+    hrefAliases: ['start', 'intro'],
     title: {
       en: 'Quick Start',
       zh: '快速开始',
@@ -36,6 +37,7 @@ export const headingDefinitions = {
   },
   serverIntegration: {
     docPath: 'server-integration',
+    hrefAliases: ['server'],
     title: {
       en: 'Server Integration',
       zh: '服务器集成',
@@ -43,6 +45,83 @@ export const headingDefinitions = {
     excerpt: {
       en: 'Learn how to integrate telefunc with your server and deploy your documentation site.',
       zh: '学习如何将 telefunc 集成到你的服务器中，并部署你的文档站点。',
+    },
+  },
+  bundler: {
+    docPath: 'bundler',
+    title: {
+      en: 'Bundlers',
+      zh: '打包工具',
+    },
+    excerpt: {
+      en: 'Learn how to use Telefunc with bundlers and environments that do not rely on a transformer plugin.',
+      zh: '了解如何在打包工具中使用 Telefunc，以及如何在不依赖转换器插件的环境中使用它。',
+    },
+  },
+  next: {
+    docPath: 'next',
+    title: {
+      en: 'Next.js',
+      zh: 'Next.js',
+    },
+    excerpt: {
+      en: 'Learn how to integrate Telefunc with Next.js.',
+      zh: '了解如何将 Telefunc 集成到 Next.js 中。',
+    },
+  },
+  nuxt: {
+    docPath: 'nuxt',
+    title: {
+      en: 'Nuxt',
+      zh: 'Nuxt',
+    },
+    excerpt: {
+      en: 'Learn how to integrate Telefunc with Nuxt.',
+      zh: '了解如何将 Telefunc 集成到 Nuxt 中。',
+    },
+  },
+  reactNative: {
+    docPath: 'react-native',
+    title: {
+      en: 'React Native',
+      zh: 'React Native',
+    },
+    excerpt: {
+      en: 'Learn how to use Telefunc with React Native.',
+      zh: '了解如何在 React Native 中使用 Telefunc。',
+    },
+  },
+  reactRouter: {
+    docPath: 'react-router',
+    title: {
+      en: 'React Router',
+      zh: 'React Router',
+    },
+    excerpt: {
+      en: 'Learn how to integrate Telefunc with React Router.',
+      zh: '了解如何将 Telefunc 集成到 React Router 中。',
+    },
+  },
+  svelteKit: {
+    docPath: 'svelte-kit',
+    title: {
+      en: 'SvelteKit',
+      zh: 'SvelteKit',
+    },
+    excerpt: {
+      en: 'Learn how to integrate Telefunc with SvelteKit.',
+      zh: '了解如何将 Telefunc 集成到 SvelteKit 中。',
+    },
+  },
+  vike: {
+    docPath: 'vike',
+    title: {
+      en: 'Vike',
+      zh: 'Vike',
+    },
+    excerpt: {
+      en: 'Learn how to integrate Telefunc with Vike.',
+      zh: '了解如何将 Telefunc 集成到 Vike 中。',
     },
   },
   initialData: {
@@ -69,6 +148,7 @@ export const headingDefinitions = {
   },
   validation: {
     docPath: 'validation',
+    hrefAliases: ['form-validation'],
     title: {
       en: 'Validation',
       zh: '验证',
@@ -80,6 +160,7 @@ export const headingDefinitions = {
   },
   fileUploads: {
     docPath: 'file-uploads',
+    hrefAliases: ['file-upload'],
     title: {
       en: 'File Uploads',
       zh: '文件上传',
@@ -135,6 +216,7 @@ export const headingDefinitions = {
   },
   throwAbort: {
     docPath: 'throw-abort',
+    hrefAliases: ['Abort'],
     title: {
       en: '`throw Abort()`',
       zh: '`throw Abort()`',
@@ -146,6 +228,7 @@ export const headingDefinitions = {
   },
   getContext: {
     docPath: 'get-context',
+    hrefAliases: ['getContext'],
     title: {
       en: '`getContext()`',
       zh: '`getContext()`',
@@ -168,6 +251,7 @@ export const headingDefinitions = {
   },
   onBug: {
     docPath: 'on-bug',
+    hrefAliases: ['onBug'],
     title: {
       en: '`onBug()`',
       zh: '`onBug()`',
@@ -179,6 +263,7 @@ export const headingDefinitions = {
   },
   onAbort: {
     docPath: 'on-abort',
+    hrefAliases: ['onAbort'],
     title: {
       en: '`onAbort()`',
       zh: '`onAbort()`',
@@ -190,6 +275,7 @@ export const headingDefinitions = {
   },
   telefuncUrl: {
     docPath: 'telefunc-url',
+    hrefAliases: ['telefuncUrl'],
     title: {
       en: '`telefuncURL`',
       zh: 'telefunc URL',
@@ -201,6 +287,7 @@ export const headingDefinitions = {
   },
   disableNamingConvention: {
     docPath: 'disable-naming-convention',
+    hrefAliases: ['disableNamingConvention'],
     title: {
       en: '`disableNamingConvention`',
       zh: '禁用命名约定',
@@ -212,6 +299,7 @@ export const headingDefinitions = {
   },
   httpHeaders: {
     docPath: 'http-headers',
+    hrefAliases: ['httpHeaders'],
     title: {
       en: '`httpHeaders`',
       zh: 'HTTP 头',
@@ -234,6 +322,7 @@ export const headingDefinitions = {
   },
   telefuncFiles: {
     docPath: 'telefunc-files',
+    hrefAliases: ['telefuncFiles'],
     title: {
       en: '`telefuncFiles`',
       zh: 'telefunc 文件',
@@ -255,14 +344,14 @@ export const headingDefinitions = {
     },
   },
   configShield: {
-    docPath: 'shield',
+    docPath: 'shield-config',
     title: {
-      en: '`shield`',
-      zh: '`shield`',
+      en: '`config.shield`',
+      zh: '`config.shield`',
     },
     excerpt: {
-      en: 'Learn about the shield API and how to use it to protect your documentation site from unauthorized access.',
-      zh: '了解 shield API 以及如何使用它来保护你的文档站点免受未经授权的访问。',
+      en: 'Learn how to configure shield generation in development and production.',
+      zh: '了解如何在开发和生产环境中配置 shield 生成。',
     },
   },
   log: {
