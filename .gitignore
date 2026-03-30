@@ -7,6 +7,7 @@ dist
 .vscode
 
 .DS_Store
+*.tsbuildinfo
 
 # generated docs pages
 (generated)
