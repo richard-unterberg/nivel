@@ -12,3 +12,8 @@
 .landing-code-samples [data-code-block-frame] {
   height: 100%;
 }
+
+.landing-code-samples [data-code-block-header],
+.landing-code-samples [data-choice-group-header] {
+  display: none !important;
+}

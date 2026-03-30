@@ -21,8 +21,8 @@ const ProseContainer = cm.section`
   prose-code:dark:bg-primary/10!
   prose-code:dark:border-primary/20!
 
-  prose-p:leading-[240%]
-  prose-li:leading-[240%]
+  prose-p:leading-[200%]
+  prose-li:leading-[200%]
 
   prose-p:after:content-none
   prose-p:before:content-none

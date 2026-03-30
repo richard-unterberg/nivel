@@ -1,12 +1,13 @@
 import { usePageContext } from 'vike-react/usePageContext'
 import LayoutComponent from '@/app-components/LayoutComponent'
-import ProseContainer from '@/components/app/ProseContainer'
 import Link from '@/components/docs/Link'
 import { headingDefinitions } from '@/lib/headings'
 import { t } from '@/lib/messages'
 import BackendCode from '@/pages/index/backendCode.mdx'
 import { Features } from '@/pages/index/Features'
+import StartPageFooter from '@/pages/index/Footer'
 import FrontendCode from '@/pages/index/frontendCode.mdx'
+import SectionHeading from '@/pages/index/SectionHeading'
 import { Quickstart } from './QuickStart/QuickStart'
 
 const Page = () => {
@@ -55,11 +56,17 @@ const Page = () => {
         </LayoutComponent>
       </div>
 
-      <LayoutComponent $size="sm" className="mt-10">
-        <ProseContainer className="prose-headings:my-0 prose-headings:mb-4 prose-img:my-0">
-          <Features />
-          <Quickstart />
-        </ProseContainer>
+      <LayoutComponent $size="md">
+        <SectionHeading>Features</SectionHeading>
+        <Features />
+      </LayoutComponent>
+      <LayoutComponent $size="md">
+        <SectionHeading className="mt-24">Quick Start</SectionHeading>
+        <Quickstart />
+      </LayoutComponent>
+      <LayoutComponent $size="sm">
+        <SectionHeading className="mt-24">You may not need an API schema</SectionHeading>
+        <StartPageFooter />
       </LayoutComponent>
     </>
   )

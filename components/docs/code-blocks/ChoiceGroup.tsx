@@ -56,7 +56,10 @@ function ChoiceGroup({
 
   return (
     <div className="overflow-hidden rounded-box border border-base-muted-light flex flex-col mb-6 h-full">
-      <div className="not-prose flex min-h-10 items-center justify-between gap-3 border-b border-base-muted-light bg-base-muted-superlight px-4">
+      <div
+        className="not-prose flex min-h-10 items-center justify-between gap-3 border-b border-base-muted-light bg-base-muted-superlight px-4"
+        data-choice-group-header
+      >
         <div className="text-xs font-semibold font-mono tracking-[0.08em] text-base-muted">
           {activeChoiceElement.props['data-choice-value']}
         </div>

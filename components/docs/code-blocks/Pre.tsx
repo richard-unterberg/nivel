@@ -76,7 +76,7 @@ function Pre({ children, className, ...props }: PreProps) {
   const codeBlock = (
     <div
       className={[
-        'group relative not-prose overflow-hidden',
+        'group relative not-prose overflow-hidden h-full',
         isInChoiceGroup ? '' : 'mb-6 rounded-box border border-base-muted-light bg-base-100/60',
       ]
         .filter(Boolean)
@@ -96,7 +96,9 @@ function Pre({ children, className, ...props }: PreProps) {
       <pre
         {...props}
         ref={preRef}
-        className={['doc-code-pre m-0 overflow-x-auto p-4 text-sm bg-base-200!', className].filter(Boolean).join(' ')}
+        className={['doc-code-pre m-0 overflow-x-auto p-4 text-sm bg-base-200! h-full', className]
+          .filter(Boolean)
+          .join(' ')}
         data-code-block-content=""
       >
         {children}
