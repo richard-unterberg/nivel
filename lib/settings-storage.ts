@@ -1,4 +1,5 @@
 export const USER_SETTINGS_STORAGE_KEY = 'vike-user-settings'
+const LEGACY_CODE_BLOCK_CHOICE_STORAGE_KEY_PREFIX = 'solid-docpress:choice:'
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null
@@ -22,6 +23,19 @@ export const readPersistedSettingsState = () => {
 
     const state = parsedValue.state
     return isRecord(state) ? state : null
+  } catch {
+    return null
+  }
+}
+
+export const readLegacyCodeBlockChoice = (choiceGroupName: string) => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  try {
+    const value = window.localStorage.getItem(`${LEGACY_CODE_BLOCK_CHOICE_STORAGE_KEY_PREFIX}${choiceGroupName}`)
+    return value || null
   } catch {
     return null
   }

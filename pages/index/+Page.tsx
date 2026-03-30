@@ -1,9 +1,11 @@
 import { usePageContext } from 'vike-react/usePageContext'
 import LayoutComponent from '@/app-components/LayoutComponent'
+import ProseContainer from '@/components/app/ProseContainer'
 import Link from '@/components/docs/Link'
 import { headingDefinitions } from '@/lib/headings'
 import { t } from '@/lib/messages'
 import BackendCode from '@/pages/index/backendCode.mdx'
+import { Features } from '@/pages/index/Features'
 import FrontendCode from '@/pages/index/frontendCode.mdx'
 import { Quickstart } from './QuickStart/QuickStart'
 
@@ -54,7 +56,10 @@ const Page = () => {
       </div>
 
       <LayoutComponent $size="sm" className="mt-10">
-        <Quickstart />
+        <ProseContainer className="prose-headings:my-0 prose-headings:mb-4 prose-img:my-0">
+          <Features />
+          <Quickstart />
+        </ProseContainer>
       </LayoutComponent>
     </>
   )

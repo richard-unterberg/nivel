@@ -1,5 +1,4 @@
 import { usePageContext } from 'vike-react/usePageContext'
-
 import Link from '@/components/docs/Link'
 import { headingDefinitions } from '@/lib/headings'
 import { t } from '@/lib/messages'
@@ -15,18 +14,16 @@ export const Quickstart = () => {
       <div className="flex p-2 mb-12">
         <div>
           <NumberedHeading index={1} label="Define your telefunction" />
-          <p className="leading-8">
-            Telefunctions are slim server functions that are scoped to UI events or interactions.
-          </p>
-          <p className="leading-8">
+          <p>Telefunctions are slim server functions that are scoped to UI events or interactions.</p>
+          <p>
             To invoke them remotely, Telefunc wraps front-end calls with a lightweight HTTP client that handles the
             request boilerplate. Server-side, Telefunc middleware intercepts the call and runs our function.
           </p>
-          <p className="leading-8">
+          <p>
             Telefunc automatically generates a runtime **shield** from your argument types, so we don't need to worry
             about validation. In this example, we just need to check user permissions, then run our SQL.
           </p>
-          <p className="leading-8">
+          <p>
             Since our telefunction is scoped to a specific event, we only need to return the data our UI needs (in this
             case, nothing).
           </p>
