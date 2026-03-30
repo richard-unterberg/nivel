@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { Plugin, ViteDevServer } from 'vite'
+import { applyTrailingSlashToPathname } from '../vike/urlPathname.js'
 import { extractDocHeadings } from './headings'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -159,7 +160,7 @@ const getGeneratedDataSource = (routeId: string, entries: DocsContentEntry[]) =>
 }
 
 const getGeneratedRouteSource = (routeId: string) => {
-  return [`export default ${JSON.stringify(`/${routeId}/`)}`, ''].join('\n')
+  return [`export default ${JSON.stringify(applyTrailingSlashToPathname(`/${routeId}`))}`, ''].join('\n')
 }
 
 const syncGeneratedDocPages = () => {

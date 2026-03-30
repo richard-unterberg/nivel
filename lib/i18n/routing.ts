@@ -1,4 +1,5 @@
 import { DEFAULT_LOCALE, isLocale, type Locale, resolveLocale } from './config'
+import { applyTrailingSlashToPathname } from '../vike/urlPathname.js'
 
 type LocalePath = {
   locale: Locale
@@ -100,16 +101,22 @@ const isExternalHref = (href: string) => {
 export const localizePathname = (href: string, locale: Locale | string | undefined) => {
   const localeResolved = resolveLocale(locale)
 
-  if (localeResolved === DEFAULT_LOCALE || href === '' || href.startsWith('#') || isExternalHref(href)) {
+  if (href === '' || href.startsWith('#') || isExternalHref(href)) {
     return href
   }
 
   const [hrefWithoutHash, hash = ''] = href.split('#')
   const [pathname, search = ''] = hrefWithoutHash.split('?')
   const pathnameLocalized = getLogicalPathname(pathname)
-  const pathnameWithLocale = pathnameLocalized === '/' ? `/${localeResolved}` : `/${localeResolved}${pathnameLocalized}`
+  const pathnameWithLocale =
+    localeResolved === DEFAULT_LOCALE
+      ? pathnameLocalized
+      : pathnameLocalized === '/'
+        ? `/${localeResolved}`
+        : `/${localeResolved}${pathnameLocalized}`
+  const pathnameCanonical = applyTrailingSlashToPathname(pathnameWithLocale)
 
-  return `${pathnameWithLocale}${search ? `?${search}` : ''}${hash ? `#${hash}` : ''}`
+  return `${pathnameCanonical}${search ? `?${search}` : ''}${hash ? `#${hash}` : ''}`
 }
 
 export const localizeHref = (href: string, locale: Locale | string | undefined) => {
