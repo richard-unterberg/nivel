@@ -16,9 +16,10 @@ Reusable MDX-facing React components extracted from the Telefunc docs app.
 - `code-blocks` build-time entrypoint for remark/rehype/Shiki code-block tooling
 - `FileAdded`
 - `FileRemoved`
+- `Link`
 - `Pre`
 - `Table`
 - `RepoLink`
 - `UniversalMdxProvider`
 - `useUniversalMdxRuntime`
-- runtime contract types for future context-aware components, including code-block choice persistence
+- runtime contract types for future context-aware components, including code-block choice persistence and host-provided doc-link resolution

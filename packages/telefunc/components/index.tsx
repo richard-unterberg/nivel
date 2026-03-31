@@ -1,4 +1,3 @@
-import { Alert, CodeBlockTransformer, FileAdded, FileRemoved, Table } from '@unterberg/universal-mdx-mods'
-import Link from '@/components/docs/Link'
+import { Alert, CodeBlockTransformer, FileAdded, FileRemoved, Link, Table } from '@unterberg/universal-mdx-mods'
 
 export { Alert, CodeBlockTransformer, FileAdded, FileRemoved, Link, Table }

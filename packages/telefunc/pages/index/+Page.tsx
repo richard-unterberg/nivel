@@ -1,6 +1,6 @@
+import { Link } from '@unterberg/universal-mdx-mods'
 import { usePageContext } from 'vike-react/usePageContext'
 import LayoutComponent from '@/app-components/LayoutComponent'
-import Link from '@/components/docs/Link'
 import { headingDefinitions } from '@/lib/headings'
 import { t } from '@/lib/messages'
 import BackendCode from '@/pages/index/backendCode.mdx'

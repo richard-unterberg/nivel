@@ -1,6 +1,6 @@
+import { Link } from '@unterberg/universal-mdx-mods'
 import { usePageContext } from 'vike-react/usePageContext'
 import ProseContainer from '@/components/app/ProseContainer'
-import { Link } from '@/components/index'
 import { headingDefinitions } from '@/lib/headings'
 import { t } from '@/lib/messages'
 

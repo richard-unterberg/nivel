@@ -12,6 +12,7 @@
 
 ## Active Migration Plan
 
+- Status: in progress. The MDX-facing `Link` component is the next extraction target, with rendering moving to `@unterberg/universal-mdx-mods` while Telefunc retains Vike page-context integration, docs metadata resolution, and locale-aware canonical href generation through the shared runtime adapter.
 - Status: completed. The emitted code-block React component stack now ships from the published `@unterberg/universal-mdx-mods` bundle, while Telefunc retains routing, MDX AST transforms, and styling ownership.
 - Completed step 1: extended the shared runtime adapter contract so code-block choice persistence flows through `UniversalMdxProvider` instead of importing Telefunc Zustand/storage code directly.
 - Completed step 2: moved the emitted code-block React pieces (`pre`, choice groups, copy button, file-state wrappers, and code-block transformer helpers) into `packages/universal-mdx-mods` and exported them from the shared package entrypoint.

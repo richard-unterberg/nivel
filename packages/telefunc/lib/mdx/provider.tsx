@@ -6,11 +6,11 @@ import {
   CodeBlockTransformer,
   FileAdded,
   FileRemoved,
+  Link,
   Pre,
   RepoLink,
   Table,
 } from '@unterberg/universal-mdx-mods'
-import Link from '@/components/docs/Link'
 
 type MdxComponents = Record<string, unknown>
 

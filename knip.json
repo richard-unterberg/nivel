@@ -3,7 +3,7 @@
   "workspaces": {
     "packages/telefunc": {
       "entry": ["lib/mdx/provider.tsx"],
-      "ignoreFiles": ["public/**/*"]
+      "ignoreFiles": ["public/**/*", "**/*.build-*.mjs"]
     }
   },
   "tags": ["-lintignore"]

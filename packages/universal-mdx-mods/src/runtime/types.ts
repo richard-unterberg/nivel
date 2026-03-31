@@ -2,13 +2,21 @@ import type { ReactNode } from 'react'
 
 export type UniversalMdxTranslationFn = (group: string, key: string) => string
 
+export type UniversalResolveDocLinkArgs = {
+  href: string
+  doNotInferSectionTitle?: boolean
+  noWarning?: boolean
+}
+
 export type UniversalResolvedDocLink = {
   href: string
   title?: ReactNode
   breadcrumb?: ReactNode[]
+  sectionTitle?: ReactNode
+  isCurrentPage?: boolean
 }
 
-export type UniversalResolveDocLinkFn = (href: string) => UniversalResolvedDocLink | null
+export type UniversalResolveDocLinkFn = (args: UniversalResolveDocLinkArgs) => UniversalResolvedDocLink | null
 
 export interface UniversalMdxCodeBlockChoiceStore {
   subscribe: (listener: () => void) => () => void
