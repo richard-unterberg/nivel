@@ -10,16 +10,6 @@
 - Component rule: before inventing a new component, inspect the existing components under `/components` and prefer reuse or extension.
 - Component rule: MDX-usable shared components are re-exported from `components/index.tsx`.
 
-## Monorepo Plan Snapshot
-
-- Workspace root owns repo-wide scripts, TypeScript project references, Biome, Knip, and Lefthook.
-- `packages/telefunc` remains private and owns Vike routing, docs runtime, search generation, page context, app-local translations, and GitHub Pages build concerns.
-- `packages/universal-mdx-mods` is published as `@unterberg/universal-mdx-mods` and should stay host-agnostic.
-- Current shared extraction scope: `Alert`, `Table`, and `RepoLink`.
-- Current non-goals: `Link`, docs pagination, table of contents, footer, navbar, and code-block orchestration remain in `packages/telefunc`.
-- Runtime boundary: future shared runtime-aware components should use an adapter/provider contract instead of importing `vike-react` or app-local doc metadata directly.
-- Future extraction note: code-block components and MDX helper orchestration are planned for a later wave, after the adapter contract is in real use.
-
 ## Current Implementation Spec
 
 - Stack: Vike + `vike-react`, React 19, Vite 7, MDX via `@mdx-js/rollup`, Tailwind CSS 4, DaisyUI 5, Zustand, and `@classmatejs/react`.
