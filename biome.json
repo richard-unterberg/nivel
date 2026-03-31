@@ -8,10 +8,10 @@
       "!*.mjs",
       "!*.spec.ts",
       "!**/*.ts.build-*.mjs",
-      "!dist/**",
-      "!**/dist/**",
-      "!node_modules/**",
-      "!**/node_modules/**",
+      "!dist/*",
+      "!**/dist/*",
+      "!node_modules/*",
+      "!**/node_modules/*",
       "!**/.DS_Store"
     ]
   },
@@ -47,6 +47,9 @@
       },
       "complexity": {
         "noImportantStyles": "off"
+      },
+      "nursery": {
+        "noInlineStyles": "warn"
       }
     }
   },

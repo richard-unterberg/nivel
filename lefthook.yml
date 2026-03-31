@@ -1,6 +1,8 @@
 pre-commit:
   parallel: true
   commands:
+    inline-styles:
+      run: pnpm check:inline-styles --staged
     format:
       glob: '*.{ts,tsx,cts,mts,js,jsx,cjs,mjs,json,jsonc,css}'
       stage_fixed: true

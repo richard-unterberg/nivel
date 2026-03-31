@@ -11,13 +11,14 @@
     "build:mods": "pnpm --filter @unterberg/universal-mdx-mods build",
     "preview": "pnpm --filter ./packages/telefunc preview",
     "typecheck": "pnpm build:mods && pnpm --filter ./packages/telefunc generate:docs && pnpm --filter @unterberg/universal-mdx-mods typecheck && pnpm --filter ./packages/telefunc typecheck:prepared",
+    "check:inline-styles": "node scripts/checkInlineStyles.mjs",
     "lint": "biome lint --write .",
     "format": "biome format --write .",
     "knip": "pnpm --filter ./packages/telefunc generate:docs && pnpm build:mods && knip",
     "prepare": "lefthook install"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.7",
+    "@biomejs/biome": "2.4.10",
     "knip": "^6.0.5",
     "lefthook": "^2.1.4",
     "typescript": "^5.9.3"

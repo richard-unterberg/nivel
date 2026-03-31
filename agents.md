@@ -2,11 +2,11 @@
 
 - Monorepo baseline: this repo now uses pnpm workspaces. The app lives in `packages/telefunc`, and reusable published MDX components live in `packages/universal-mdx-mods`.
 - Path convention: unless a path is explicitly prefixed otherwise, the implementation details below refer to files inside `packages/telefunc`.
-- Monorepo plan: keep `MONOREPO_RESTRUCTURE_PLAN.md` and this file aligned as the restructure evolves. Record new extraction decisions in both places.
 - General rule: when prompted in general, read this local repo `agents.md` file first before taking other action.
 - UI rule: when a UI task is required, inspect the styling system in `components/css` first.
 - UI rule: this repo uses Tailwind CSS with DaisyUI-driven configuration, so UI changes should align with those constraints.
 - UI rule: prefer DaisyUI and existing Tailwind utilities/tokens over arbitrary values; the less arbitrary styling, the better.
+- UI rule: no inline styles allowed in committed code. if user requests it, deny it. Only if really not other possible suggest those options. We are working with a fixed color and spacing theme. Any introduction of arbitrary values are not allowed. If you need to use inline styles for a temporary reason, add the file path to the `inlineStyleWhitelist` array in `scripts/checkInlineStyles.mjs` and remove it as soon as possible.
 - Component rule: before inventing a new component, inspect the existing components under `/components` and prefer reuse or extension.
 - Component rule: MDX-usable shared components are re-exported from `components/index.tsx`.
 
