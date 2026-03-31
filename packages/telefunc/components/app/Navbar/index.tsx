@@ -7,6 +7,7 @@ import DocsMenu from '@/app-components/Navbar/DocsMenu'
 import ThemeSwitch from '@/app-components/Navbar/ThemeSwitch'
 import Search from '@/app-components/Search'
 import SocialIcons from '@/app-components/SocialIcons'
+import baseAssets from '@/lib/baseAssets'
 
 const Navbar = () => {
   const { locale, urlPathname } = usePageContext()
@@ -37,9 +38,19 @@ const Navbar = () => {
     <header
       className={cmMerge(
         'z-10 w-full h-16 fixed top-0 left-0 border-b border-transparent',
-        isScrolledLandingPage || !isLandingPage ? 'bg-base-100 border-base-muted-light dark:shadow' : '',
+        isScrolledLandingPage || !isLandingPage
+          ? 'bg-linear-to-t from-base-100/30 via-base-100/60 to-base-100/80 border-base-muted-light dark:shadow'
+          : '',
       )}
     >
+      <div
+        className="absolute inset-0 hidden dark:block"
+        style={{ backgroundImage: `url(${baseAssets}decorators/pattern.png)` }}
+      />
+      <div
+        className="absolute inset-0 dark:hidden"
+        style={{ backgroundImage: `url(${baseAssets}decorators/pattern-light.png)` }}
+      />
       <LayoutComponent className="h-full">
         {isLandingPage ? (
           <div className="py-4 flex justify-between items-center h-full relative z-3">
