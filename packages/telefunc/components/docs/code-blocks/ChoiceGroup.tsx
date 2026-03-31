@@ -83,7 +83,7 @@ function ChoiceGroup({
   }
 
   return (
-    <div className="overflow-hidden rounded-box border border-base-muted-light flex flex-col mb-6 h-full">
+    <div className="overflow-hidden rounded-box border border-base-muted-light flex flex-col mt-5 mb-5 h-full">
       <div
         className="not-prose flex min-h-10 items-center justify-between gap-3 border-b border-base-muted-light bg-base-muted-superlight px-4"
         data-choice-group-header

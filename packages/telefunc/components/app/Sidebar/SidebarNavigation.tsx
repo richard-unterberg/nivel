@@ -174,7 +174,10 @@ const SidebarGroupTitle = (props: {
     <>
       {props.icon && <props.icon className="inline w-3 h-3" />}
       <span
-        className={cmMerge(props.allowNavigation ? 'font-medium' : 'font-semibold', props.isActive && 'text-primary!')}
+        className={cmMerge(
+          props.allowNavigation ? 'font-medium' : 'font-semibold',
+          props.isActive && (props.allowNavigation ? 'text-primary!' : 'text-base-content'),
+        )}
       >
         {renderInlineMarkdown(props.title)}
       </span>

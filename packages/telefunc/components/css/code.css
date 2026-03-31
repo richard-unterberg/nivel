@@ -27,7 +27,7 @@
 }
 
 figure[data-rehype-pretty-code-figure] {
-  @apply my-0 min-w-0 h-full;
+  @apply min-w-0 h-full;
 }
 
 figure[data-rehype-pretty-code-figure] pre {
