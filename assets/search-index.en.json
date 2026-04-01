@@ -1,5 +1,14 @@
 [
   {
+    "headings": [],
+    "href": "/vike-docpress/api/",
+    "locale": "en",
+    "resolvedLocale": "en",
+    "slug": "api",
+    "text": "<Overview items={[ , \"apiTelefunc\", \"throwAbort\", \"getContext\", \"shield\", \"onBug\", , \"onAbort\", , \"telefuncUrl\", \"disableNamingConvention\", \"httpHeaders\", \"fetch\", \"telefuncFiles\", \"root\", \"configShield\", \"log\", ]} />",
+    "title": "api"
+  },
+  {
     "headings": [
       {
         "depth": 2,

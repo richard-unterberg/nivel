@@ -1,1 +1,0 @@
-import{C as s,h as o,F as r,q as a,r as n,T as i,R as p,f as t,A as d}from"./chunk-DixFdjQM.js";const m=(e={})=>({Alert:d,Link:t,RepoLink:p,Table:i,pre:n,ChoiceGroup:a,FileAdded:r,FileRemoved:o,CodeBlockTransformer:s,...e});export{m as u};
