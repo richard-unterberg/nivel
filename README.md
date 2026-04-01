@@ -1,4 +1,4 @@
-# solid-docpress workspace
+# vike-docpress workspace
 
 This repo is a pnpm workspace with two packages:
 

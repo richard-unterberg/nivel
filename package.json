@@ -1,5 +1,5 @@
 {
-  "name": "solid-docpress-monorepo",
+  "name": "vike-docpress-monorepo",
   "private": true,
   "packageManager": "pnpm@10.28.1",
   "scripts": {

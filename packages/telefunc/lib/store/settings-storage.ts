@@ -1,5 +1,5 @@
 export const USER_SETTINGS_STORAGE_KEY = 'vike-user-settings'
-const LEGACY_CODE_BLOCK_CHOICE_STORAGE_KEY_PREFIX = 'solid-docpress:choice:'
+const LEGACY_CODE_BLOCK_CHOICE_STORAGE_KEY_PREFIX = 'vike-docpress:choice:'
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null

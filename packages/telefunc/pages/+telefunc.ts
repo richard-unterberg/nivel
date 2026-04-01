@@ -1,7 +1,7 @@
 import type { TelefuncSystemConfig } from '../lib/docs/systemConfig'
 
 export default {
-  defaultSlug: 'get-started',
+  defaultSlug: 'quick-start',
   defaultDocConfig: {
     tableOfContents: true,
   },
