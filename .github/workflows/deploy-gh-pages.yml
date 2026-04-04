@@ -37,7 +37,7 @@ jobs:
       - name: Build Page
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
-        run: pnpm build:consumer-test:prod
+        run: pnpm build
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/new-engine'

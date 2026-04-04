@@ -24,6 +24,30 @@ const run = (command, args, options = {}) => {
   })
 }
 
+const isPublishedVersionAvailable = (packageName, version) => {
+  try {
+    const resolvedVersion = execFileSync('npm', ['view', `${packageName}@${version}`, 'version'], {
+      cwd: rootDir,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: process.env,
+      encoding: 'utf8',
+    }).trim()
+
+    return resolvedVersion === version
+  } catch {
+    return false
+  }
+}
+
+const getTargetNivelVersion = () => {
+  if (process.env.NIVEL_VERSION) {
+    return process.env.NIVEL_VERSION
+  }
+
+  const nivelPackageJson = readJson(path.join(rootDir, 'packages', 'engine', 'package.json'))
+  return nivelPackageJson.version
+}
+
 const createTempWorkspace = (nivelVersion) => {
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'nivel-consumer-test-'))
   const rootPackageJson = readJson(path.join(rootDir, 'package.json'))
@@ -61,7 +85,19 @@ const syncDistToWorkspace = (tempRoot) => {
 }
 
 const buildPublishedConsumerTest = (tempRoot) => {
-  run('pnpm', ['install'], { cwd: tempRoot })
+  try {
+    run('pnpm', ['install', '--no-frozen-lockfile'], { cwd: tempRoot })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+
+    if (message.includes('@unterberg/nivel') && message.includes('ERR_PNPM_FETCH_404')) {
+      throw new Error(
+        `@unterberg/nivel@${getTargetNivelVersion()} is not available on npm yet. Publish it first, then rerun this production build.`,
+      )
+    }
+
+    throw error
+  }
   run('pnpm', ['--dir', 'packages/consumer-test', 'generate:docs'], { cwd: tempRoot })
   run('pnpm', ['--dir', 'packages/consumer-test', 'exec', 'vike', 'build'], { cwd: tempRoot })
   run('node', ['--import', 'tsx', 'packages/consumer-test/scripts/syncNivelAssets.ts'], { cwd: tempRoot })
@@ -69,8 +105,13 @@ const buildPublishedConsumerTest = (tempRoot) => {
 }
 
 const main = () => {
-  const nivelPackageJson = readJson(path.join(rootDir, 'packages', 'engine', 'package.json'))
-  const tempRoot = createTempWorkspace(nivelPackageJson.version)
+  const nivelVersion = getTargetNivelVersion()
+
+  if (!isPublishedVersionAvailable('@unterberg/nivel', nivelVersion)) {
+    throw new Error(`@unterberg/nivel@${nivelVersion} is not available on npm yet. Publish it first.`)
+  }
+
+  const tempRoot = createTempWorkspace(nivelVersion)
   buildPublishedConsumerTest(tempRoot)
 }
 
