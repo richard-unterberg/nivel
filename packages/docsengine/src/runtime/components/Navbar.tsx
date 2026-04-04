@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { renderInlineMarkdown } from '../../components/renderInlineMarkdown.js'
 import { baseAssets, withSiteBaseUrl } from '../../docsengineAssets.js'
-import type { ResolvedDocsBrandConfig, ResolvedNavbarItem } from '../../types.js'
+import type { DocsThemeConfig, ResolvedDocsBrandConfig, ResolvedNavbarItem } from '../../types.js'
 import { Brand } from './Brand.js'
 import { LayoutComponent } from './LayoutComponent.js'
 import { ThemeSwitch } from './ThemeSwitch.js'
@@ -12,9 +12,10 @@ interface NavbarProps {
   brand: ResolvedDocsBrandConfig
   activeSectionId: string | null
   navbarItems: ResolvedNavbarItem[]
+  theme: Required<DocsThemeConfig>
 }
 
-export const Navbar = ({ brand, activeSectionId, navbarItems }: NavbarProps) => {
+export const Navbar = ({ brand, activeSectionId, navbarItems, theme }: NavbarProps) => {
   const { urlPathname } = usePageContext()
   const isLandingPage = urlPathname === '/'
   const [isLandingPageScrolled, setIsLandingPageScrolled] = useState(false)
@@ -84,7 +85,7 @@ export const Navbar = ({ brand, activeSectionId, navbarItems }: NavbarProps) => 
               </ul>
             </nav>
             <div className="flex flex-1 items-center justify-end gap-2">
-              <ThemeSwitch />
+              <ThemeSwitch theme={theme} />
             </div>
           </div>
         ) : (
@@ -113,7 +114,7 @@ export const Navbar = ({ brand, activeSectionId, navbarItems }: NavbarProps) => 
               </ul>
             </nav>
             <div className="flex flex-1 items-center justify-end gap-2 lg:flex-none">
-              <ThemeSwitch />
+              <ThemeSwitch theme={theme} />
             </div>
           </div>
         )}

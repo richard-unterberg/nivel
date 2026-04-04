@@ -1,18 +1,19 @@
 import { useEffect } from 'react'
 import type { DocsConfig } from '../../types.js'
 import { useDocsUserSettingsStore } from '../store/settings-store.js'
-import { applyThemePreference } from '../theme.js'
+import { applyThemePreference, resolveThemePreference } from '../theme.js'
 
 export const UserSettingsSync = ({ theme }: { theme?: DocsConfig['theme'] }) => {
   const themePreference = useDocsUserSettingsStore((state) => state.themePreference)
+  const lightTheme = theme?.light ?? 'consumer-light'
+  const darkTheme = theme?.dark ?? 'consumer-dark'
+  const defaultThemePreference = theme?.defaultPreference ?? 'light'
+  const resolvedTheme = { light: lightTheme, dark: darkTheme, defaultPreference: defaultThemePreference }
+  const effectiveThemePreference = resolveThemePreference(themePreference, resolvedTheme)
 
   useEffect(() => {
-    applyThemePreference(themePreference, {
-      light: theme?.light ?? 'consumer-light',
-      dark: theme?.dark ?? 'consumer-dark',
-      defaultPreference: theme?.defaultPreference ?? 'light',
-    })
-  }, [theme?.dark, theme?.light, theme?.defaultPreference, themePreference])
+    applyThemePreference(effectiveThemePreference, resolvedTheme)
+  }, [darkTheme, defaultThemePreference, effectiveThemePreference, lightTheme])
 
   return null
 }

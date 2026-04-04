@@ -2,12 +2,11 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import type { UniversalMdxCodeBlockChoiceStore } from '../../components/types.js'
 import type { ThemePreference } from '../../types.js'
-import { DEFAULT_THEME_PREFERENCE } from '../theme.js'
 import { readLegacyCodeBlockChoice, USER_SETTINGS_STORAGE_KEY } from './settings-storage.js'
 
 type DocsUserSettingsState = {
   codeBlockChoices: Record<string, string>
-  themePreference: ThemePreference
+  themePreference: ThemePreference | null
   setCodeBlockChoice: (choiceGroupName: string, choice: string) => void
   setThemePreference: (themePreference: ThemePreference) => void
 }
@@ -16,7 +15,7 @@ export const useDocsUserSettingsStore = create<DocsUserSettingsState>()(
   persist(
     (set) => ({
       codeBlockChoices: {},
-      themePreference: DEFAULT_THEME_PREFERENCE,
+      themePreference: null,
       setCodeBlockChoice: (choiceGroupName, choice) =>
         set((state) => ({
           codeBlockChoices: {

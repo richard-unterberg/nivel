@@ -5,11 +5,15 @@ import docs from './+docs'
 
 export { config }
 
+const themePreference = docs.theme?.defaultPreference ?? 'light'
+const dataTheme =
+  themePreference === 'dark' ? (docs.theme?.dark ?? 'consumer-dark') : (docs.theme?.light ?? 'consumer-light')
+
 const config: Config = {
   ...docsengine,
   title: docs.siteTitle,
   description: docs.siteDescription ?? `${docs.siteTitle} documentation`,
   extends: [vikeReact],
-  htmlAttributes: { 'data-theme': 'telefunc-dark' },
+  htmlAttributes: { 'data-theme': dataTheme },
   prerender: true,
 }

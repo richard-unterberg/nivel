@@ -193,7 +193,7 @@ export const TableOfContents = ({ headings, partners }: TableOfContentsProps) =>
                     <TableOfContentsIcon className="h-3 w-3" />
                     On this page
                   </p>
-                  <nav aria-label="On this page">
+                  <nav aria-label="On this page" className="mb-16">
                     <ul>
                       {effectiveHeadings.map((heading, index) => (
                         <li key={heading.id}>
@@ -235,7 +235,7 @@ const Adbar = ({ partners }: { partners: ResolvedDocsPartnersConfig }) => {
   }
 
   return (
-    <ul className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(5.5rem,1fr))] gap-3 opacity-90">
+    <ul className="grid grid-cols-[repeat(auto-fit,minmax(5.5rem,1fr))] gap-3 opacity-90">
       {partners.primary.map((partner) => (
         <AdbarItem key={partner.name} className="col-span-full">
           <AdbarLink href={partner.href} title={partner.name}>

@@ -1,10 +1,12 @@
 import type { DocsThemeConfig } from '../../../types.js'
 import { USER_SETTINGS_STORAGE_KEY } from '../../store/settings-storage.js'
-import { DEFAULT_THEME_PREFERENCE } from '../../theme.js'
+import { DARK_THEME_MEDIA_QUERY } from '../../theme.js'
 
 const getThemeBootstrapScript = (theme: Required<DocsThemeConfig>) => {
   return `(() => {
   const storageKey = ${JSON.stringify(USER_SETTINGS_STORAGE_KEY)};
+  const darkThemeMediaQuery = ${JSON.stringify(DARK_THEME_MEDIA_QUERY)};
+  const defaultThemePreference = ${JSON.stringify(theme.defaultPreference)};
   const themes = {
     light: ${JSON.stringify(theme.light)},
     dark: ${JSON.stringify(theme.dark)}
@@ -17,11 +19,22 @@ const getThemeBootstrapScript = (theme: Required<DocsThemeConfig>) => {
     const themePreference =
       storedThemePreference === 'light' || storedThemePreference === 'dark'
         ? storedThemePreference
-        : ${JSON.stringify(DEFAULT_THEME_PREFERENCE)};
+        : typeof window.matchMedia === 'function'
+          ? window.matchMedia(darkThemeMediaQuery).matches
+            ? 'dark'
+            : 'light'
+          : defaultThemePreference;
 
     document.documentElement.setAttribute('data-theme', themes[themePreference]);
   } catch {
-    document.documentElement.setAttribute('data-theme', themes[${JSON.stringify(DEFAULT_THEME_PREFERENCE)}]);
+    const themePreference =
+      typeof window.matchMedia === 'function'
+        ? window.matchMedia(darkThemeMediaQuery).matches
+          ? 'dark'
+          : 'light'
+        : defaultThemePreference;
+
+    document.documentElement.setAttribute('data-theme', themes[themePreference]);
   }
 })();`
 }
