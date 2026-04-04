@@ -45,7 +45,7 @@ export const Navbar = ({ brand, activeSectionId, navbarItems, theme }: NavbarPro
       className={cmMerge(
         'fixed top-0 left-0 z-20 h-16 w-full border-b border-transparent',
         showChrome &&
-          'bg-linear-to-t from-base-100/30 via-base-100/60 to-base-100 backdrop-grayscale border-base-muted-light dark:shadow',
+          'bg-linear-to-t from-base-100 via-base-100/40 to-base-100 backdrop-grayscale border-base-muted-light dark:shadow',
       )}
     >
       <div

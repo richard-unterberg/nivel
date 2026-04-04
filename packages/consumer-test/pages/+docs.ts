@@ -35,23 +35,13 @@ export default defineDocsConfig({
     ],
     gold: [
       {
-        name: 'Labs',
-        href: 'https://labs.void.dev',
-        logoLight: 'partners/labs.svg',
-      },
-      {
-        name: 'Bolt',
-        href: 'https://bolt.com',
-        logoLight: 'partners/bolt.svg',
-      },
-      {
         name: 'Telefunc',
-        href: 'https://telefunc.com',
+        href: '#',
         logoLight: 'partners/telefunc.svg',
       },
       {
         name: 'Void(0)',
-        href: 'https://void.dev',
+        href: '#',
         logoLight: 'partners/void-0.svg',
       },
     ],

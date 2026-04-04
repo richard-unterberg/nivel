@@ -193,7 +193,7 @@ export const TableOfContents = ({ headings, partners }: TableOfContentsProps) =>
                     <TableOfContentsIcon className="h-3 w-3" />
                     On this page
                   </p>
-                  <nav aria-label="On this page" className="mb-16">
+                  <nav aria-label="On this page" className="mb-12">
                     <ul>
                       {effectiveHeadings.map((heading, index) => (
                         <li key={heading.id}>
@@ -202,7 +202,7 @@ export const TableOfContents = ({ headings, partners }: TableOfContentsProps) =>
                             aria-current={activeHeadingId === heading.id ? 'location' : undefined}
                             onClick={() => setActiveHeadingId(heading.id)}
                             className={cmMerge(
-                              'block border-l border-base-muted-light py-1.5 text-sm text-base-muted hover:border-primary-muted hover:text-base-content',
+                              'cursor-pointer block border-l border-base-muted-light py-1.5 text-sm text-base-muted hover:border-primary-muted hover:text-base-content',
                               heading.depth > 2 ? 'pl-6' : 'pl-4',
                               activeHeadingId
                                 ? activeHeadingId === heading.id
@@ -235,22 +235,34 @@ const Adbar = ({ partners }: { partners: ResolvedDocsPartnersConfig }) => {
   }
 
   return (
-    <ul className="grid grid-cols-[repeat(auto-fit,minmax(5.5rem,1fr))] gap-3 opacity-90">
-      {partners.primary.map((partner) => (
-        <AdbarItem key={partner.name} className="col-span-full">
-          <AdbarLink href={partner.href} title={partner.name}>
-            <PartnerLogo partner={partner} />
-          </AdbarLink>
-        </AdbarItem>
-      ))}
-      {partners.gold.map((partner) => (
-        <AdbarItem key={partner.name}>
-          <AdbarLink href={partner.href} title={partner.name}>
-            <PartnerLogo partner={partner} />
-          </AdbarLink>
-        </AdbarItem>
-      ))}
-    </ul>
+    <>
+      <ul className="grid grid-cols-[repeat(auto-fit,minmax(5.5rem,1fr))] gap-3 opacity-90">
+        {partners.primary.map((partner) => (
+          <AdbarItem key={partner.name} className="col-span-full">
+            <AdbarLink href={partner.href} title={partner.name}>
+              <PartnerLogo partner={partner} />
+            </AdbarLink>
+          </AdbarItem>
+        ))}
+        {partners.gold.map((partner) => (
+          <AdbarItem key={partner.name}>
+            <AdbarLink href={partner.href} title={partner.name}>
+              <PartnerLogo partner={partner} />
+            </AdbarLink>
+          </AdbarItem>
+        ))}
+      </ul>
+      <AdbarItem className="col-span-full p-2 text-left mt-3 block!">
+        <strong className="text-sm tracking-tighter leading-tight mb-1 block">Your company name here! 💎 </strong>
+        <p className="text-xs text-base-muted">
+          Hey, this is a classic text ad here!{' '}
+          <a href="#adlink" className="text-info">
+            link
+          </a>{' '}
+          to some thing
+        </p>
+      </AdbarItem>
+    </>
   )
 }
 
@@ -283,7 +295,7 @@ const AdbarItem = cm.div`
   flex
   items-center
   justify-center
-  rounded-box
+  rounded-field
 `
 
 const AdbarLink = cm.a`
