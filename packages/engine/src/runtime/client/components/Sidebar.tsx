@@ -123,7 +123,7 @@ interface SidebarItemListProps {
 
 const SidebarItemList = ({ items, currentHref }: SidebarItemListProps) => {
   return (
-    <ul className="menu menu-horizontal">
+    <ul className="menu">
       {items.map((item) => {
         if (item.kind === 'divider') {
           return <SidebarDivider key={item.id} title={item.title} />
@@ -234,7 +234,7 @@ export const Sidebar = ({ sections, activeSectionId, currentHref, horizontal }: 
       <div className="-ml-3 sticky top-16">
         <div className="absolute h-full w-px right-0 top-0 bg-linear-to-t to-base-muted-light via-base-muted-light pointer-events-none z-1" />
         <div className="pr-4 h-[calc(100svh-16*var(--spacing))] overflow-y-scroll overflow-x-hidden relative z-10">
-          <ul className={cmMerge('menu w-full px-0 py-5 li:last-child:border-0', horizontal && 'menu-horizontal')}>
+          <ul className={cmMerge('menu w-full px-0 py-5 li:last-child:border-0')}>
             {sections.map((section) => (
               <SidebarSectionGroup
                 key={section.id}

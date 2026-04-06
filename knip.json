@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/knip/schema.json",
-  "ignore": ["packages/engine/assets/**"],
+  "ignore": ["packages/engine/assets/**", "trunk/**"],
   "ignoreDependencies": [
     "@brillout/shiki-transformers",
     "@mdx-js/rollup",
