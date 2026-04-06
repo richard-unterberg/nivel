@@ -1,4 +1,4 @@
-import type { DocsConfig } from '../types.js'
+import type { DocsGlobalContextData } from '../types.js'
 import type {
   UniversalMdxRuntimeValue,
   UniversalResolvedDocLink,
@@ -10,7 +10,6 @@ import {
   getResolvedPageByPathname,
   getResolvedSectionById,
   isSamePagePathname,
-  resolveDocsConfig,
 } from './resolveDocsConfig.js'
 import { docsCodeBlockChoiceStore } from './store/settings-store.js'
 
@@ -44,7 +43,7 @@ const toDocsPathname = (basePath: '/docs', href: string) => {
 }
 
 const resolveDocLink = (options: {
-  resolvedConfig: ReturnType<typeof resolveDocsConfig>
+  docs: DocsGlobalContextData
   currentPathname: string
   href: string
 }): UniversalResolvedDocLink | null => {
@@ -54,18 +53,18 @@ const resolveDocLink = (options: {
   }
 
   const { pathname, hash } = splitHref(href)
-  const docsPathname = toDocsPathname(options.resolvedConfig.basePath, pathname)
+  const docsPathname = toDocsPathname(options.docs.basePath, pathname)
 
   if (!docsPathname) {
     return null
   }
 
-  const page = getResolvedPageByPathname(options.resolvedConfig, docsPathname)
+  const page = getResolvedPageByPathname(options.docs, docsPathname)
   if (!page) {
     return null
   }
 
-  const section = getResolvedSectionById(options.resolvedConfig, page.sectionId)
+  const section = getResolvedSectionById(options.docs, page.sectionId)
 
   return {
     href: withSiteBaseUrl(`${page.href}${hash}`),
@@ -76,10 +75,10 @@ const resolveDocLink = (options: {
 }
 
 const resolveOverviewItem = (options: {
-  resolvedConfig: ReturnType<typeof resolveDocsConfig>
+  docs: DocsGlobalContextData
   id: string
 }): UniversalResolvedOverviewItem | null => {
-  const page = options.resolvedConfig.pages.find((candidate) => candidate.id === options.id)
+  const page = options.docs.pages.find((candidate) => candidate.id === options.id)
 
   if (!page) {
     return null
@@ -93,13 +92,12 @@ const resolveOverviewItem = (options: {
 }
 
 export const getMdxRuntimeValue = (options: {
-  docsConfig: DocsConfig
+  docs: DocsGlobalContextData
   currentPathname: string
 }): UniversalMdxRuntimeValue => {
-  const { currentPathname, docsConfig } = options
-  const resolvedConfig = resolveDocsConfig(docsConfig)
-  const activeSection = getActiveSectionByPathname(resolvedConfig, currentPathname)
-  const currentPage = getResolvedPageByPathname(resolvedConfig, currentPathname)
+  const { currentPathname, docs } = options
+  const activeSection = getActiveSectionByPathname(docs, currentPathname)
+  const currentPage = getResolvedPageByPathname(docs, currentPathname)
 
   return {
     locale: 'en',
@@ -110,8 +108,8 @@ export const getMdxRuntimeValue = (options: {
       }
 
       const { pathname, hash } = splitHref(href)
-      const docsPathname = toDocsPathname(resolvedConfig.basePath, pathname)
-      const page = docsPathname ? getResolvedPageByPathname(resolvedConfig, docsPathname) : null
+      const docsPathname = toDocsPathname(docs.basePath, pathname)
+      const page = docsPathname ? getResolvedPageByPathname(docs, docsPathname) : null
 
       if (!page) {
         return withSiteBaseUrl(href)
@@ -121,13 +119,13 @@ export const getMdxRuntimeValue = (options: {
     },
     resolveDocLink: ({ href }) =>
       resolveDocLink({
-        resolvedConfig,
+        docs,
         currentPathname,
         href,
       }),
     resolveOverviewItem: (id) =>
       resolveOverviewItem({
-        resolvedConfig,
+        docs,
         id,
       }),
     t: (group, key) => {

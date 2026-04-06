@@ -1,17 +1,16 @@
-import type { DocsConfig } from '../../../types.js'
-import { resolveDocsConfig } from '../../resolveDocsConfig.js'
+import { useDocsGlobalContext } from '../../docsGlobalContext.js'
 import { FaviconLinks } from './FaviconLinks.js'
 import { FontLinks } from './FontLinks.js'
 import { ThemeBootstrap } from './ThemeBootstrap.js'
 
-export const MetaHead = ({ docsConfig }: { docsConfig: DocsConfig }) => {
-  const resolvedConfig = resolveDocsConfig(docsConfig)
+export const MetaHead = () => {
+  const docs = useDocsGlobalContext()
 
   return (
     <>
-      <ThemeBootstrap theme={resolvedConfig.theme} />
-      <FaviconLinks head={resolvedConfig.head} />
-      <FontLinks head={resolvedConfig.head} />
+      <ThemeBootstrap theme={docs.theme} />
+      <FaviconLinks head={docs.head} />
+      <FontLinks head={docs.head} />
     </>
   )
 }

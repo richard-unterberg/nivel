@@ -15,5 +15,6 @@ const config: Config = {
   description: docs.siteDescription ?? `${docs.siteTitle} documentation`,
   extends: [vikeReact],
   htmlAttributes: { 'data-theme': dataTheme },
+  passToClient: ['docs'],
   prerender: true,
 }

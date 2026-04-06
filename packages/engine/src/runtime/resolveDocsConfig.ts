@@ -349,7 +349,7 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
   }
 }
 
-export const getResolvedPageById = (config: ResolvedDocsConfig, pageId: string) => {
+export const getResolvedPageById = (config: { pages: ResolvedDocsPage[] }, pageId: string) => {
   const page = config.pages.find((candidate) => candidate.id === pageId)
   if (!page) {
     throw new Error(`Unknown docs page id "${pageId}".`)
@@ -357,11 +357,15 @@ export const getResolvedPageById = (config: ResolvedDocsConfig, pageId: string) 
   return page
 }
 
-export const getResolvedSectionById = (config: ResolvedDocsConfig, sectionId: string) => {
-  return config.sections.find((section) => section.id === sectionId) ?? null
+export const getResolvedSectionById = (
+  config: { sections?: ResolvedDocsSection[]; sidebarSections?: ResolvedDocsSection[] },
+  sectionId: string,
+) => {
+  const sections = config.sections ?? config.sidebarSections ?? []
+  return sections.find((section) => section.id === sectionId) ?? null
 }
 
-export const getResolvedPageByPathname = (config: ResolvedDocsConfig, pathname: string) => {
+export const getResolvedPageByPathname = (config: { pages: ResolvedDocsPage[] }, pathname: string) => {
   const normalizedPathname = normalizePathname(pathname)
 
   return (
@@ -375,7 +379,10 @@ export const getResolvedPageByPathname = (config: ResolvedDocsConfig, pathname: 
   )
 }
 
-export const getActiveSectionByPathname = (config: ResolvedDocsConfig, pathname: string) => {
+export const getActiveSectionByPathname = (
+  config: { pages: ResolvedDocsPage[]; sections?: ResolvedDocsSection[]; sidebarSections?: ResolvedDocsSection[] },
+  pathname: string,
+) => {
   const activePage = getResolvedPageByPathname(config, pathname)
 
   if (!activePage) {

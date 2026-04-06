@@ -6,3 +6,11 @@ declare module '*.mdx' {
 }
 
 declare module '*.css'
+
+declare global {
+  namespace Vike {
+    interface GlobalContext {
+      docs: import('@unterberg/nivel').DocsGlobalContextData
+    }
+  }
+}

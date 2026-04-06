@@ -2,34 +2,33 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
-import type { DocsConfig } from '../types.js'
 import { Navbar } from './components/Navbar/index.js'
 import { UserSettingsSync } from './components/UserSettingsSync.js'
-import { getActiveSectionByPathname, resolveDocsConfig } from './resolveDocsConfig.js'
+import { getDocsGlobalContext } from './docsGlobalContext.js'
+import { getActiveSectionByPathname } from './resolveDocsConfig.js'
 
 interface AppLayoutProps {
   children: ReactNode
-  docsConfig: DocsConfig
 }
 
-export const AppLayout = ({ children, docsConfig }: AppLayoutProps) => {
+export const AppLayout = ({ children }: AppLayoutProps) => {
   const pageContext = usePageContext()
-  const resolvedConfig = resolveDocsConfig(docsConfig)
-  const activeSection = getActiveSectionByPathname(resolvedConfig, pageContext.urlPathname)
+  const docs = getDocsGlobalContext(pageContext as Parameters<typeof getDocsGlobalContext>[0])
+  const activeSection = getActiveSectionByPathname(docs, pageContext.urlPathname)
   const [queryClient] = useState(() => new QueryClient())
 
   return (
     // todo: we should try vike-react-query instead
     <QueryClientProvider client={queryClient}>
-      <UserSettingsSync theme={resolvedConfig.theme} />
+      <UserSettingsSync theme={docs.theme} />
       <div className="min-h-screen bg-base-100 text-base-content">
         <Navbar
-          brand={resolvedConfig.brand}
+          brand={docs.brand}
           activeSectionId={activeSection?.id ?? null}
-          algolia={resolvedConfig.algolia}
-          navbarItems={resolvedConfig.navbarItems}
-          sections={resolvedConfig.sections}
-          theme={resolvedConfig.theme}
+          algolia={docs.algolia}
+          navbarItems={docs.navbarItems}
+          sections={docs.sidebarSections}
+          theme={docs.theme}
         />
         <div className="pt-16">{children}</div>
       </div>

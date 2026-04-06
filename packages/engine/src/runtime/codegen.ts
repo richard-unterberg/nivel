@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import type { DocPageData, DocPageLinkData, DocsConfig } from '../types.js'
+import type { DocPageData, DocPageLinkData, DocsConfig, DocsGlobalContextData } from '../types.js'
 import { extractDocHeadings } from './docHeadings.js'
-import { getResolvedPageById, getResolvedSectionById, resolveDocsConfig } from './resolveDocsConfig.js'
+import { getResolvedPageById, resolveDocsConfig } from './resolveDocsConfig.js'
 
 const GENERATED_DIRNAME = '(nivel-generated)'
 
@@ -26,11 +26,7 @@ const getRelativeImportPath = (fromDirectory: string, toFile: string) => {
   return `./${relativePath}`
 }
 
-const getRelativeScriptImportPath = (fromDirectory: string, toFile: string) => {
-  return getRelativeImportPath(fromDirectory, toFile).replace(/\.(cts|mts|ts|tsx)$/, '')
-}
-
-const serializeData = (data: DocPageData) => JSON.stringify(data, null, 2)
+const serializeData = (data: DocPageData | DocsGlobalContextData) => JSON.stringify(data, null, 2)
 
 const collectFiles = (directoryPath: string): string[] => {
   if (!fs.existsSync(directoryPath)) {
@@ -67,14 +63,13 @@ const removeEmptyDirectories = (directoryPath: string, rootPath: string) => {
   }
 }
 
-const getGeneratedPageSource = (contentImportPath: string, docsConfigImportPath: string) => {
+const getGeneratedPageSource = (contentImportPath: string) => {
   return [
     "import { DocsPage } from '@unterberg/nivel/client'",
-    `import docsConfig from ${JSON.stringify(docsConfigImportPath)}`,
     `import Content from ${JSON.stringify(contentImportPath)}`,
     '',
     'const Page = () => {',
-    '  return <DocsPage Content={Content} docsConfig={docsConfig} />',
+    '  return <DocsPage Content={Content} />',
     '}',
     '',
     'export default Page',
@@ -93,6 +88,17 @@ const getGeneratedDataSource = (data: DocPageData) => {
     '}',
     '',
     'export default pageData',
+    '',
+  ].join('\n')
+}
+
+const getGeneratedGlobalContextSource = (data: DocsGlobalContextData) => {
+  return [
+    "import type { DocsGlobalContextData } from '@unterberg/nivel'",
+    '',
+    `const docsGlobalContextData: DocsGlobalContextData = ${serializeData(data)}`,
+    '',
+    'export { docsGlobalContextData }',
     '',
   ].join('\n')
 }
@@ -142,10 +148,27 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
   const resolved = resolveDocsConfig(docsConfig)
   const generatedPagesRoot = getGeneratedPagesRoot(rootDir)
   const docsRoot = path.join(rootDir, 'docs')
-  const docsConfigPath = path.join(rootDir, 'pages', '+docs.ts')
   const expectedFiles = new Set<string>()
+  const globalContextFilePath = path.join(generatedPagesRoot, '_docsGlobalContext.ts')
 
   fs.mkdirSync(generatedPagesRoot, { recursive: true })
+
+  const globalContextData: DocsGlobalContextData = {
+    siteTitle: resolved.siteTitle,
+    basePath: resolved.basePath,
+    theme: resolved.theme,
+    footer: resolved.footer,
+    brand: resolved.brand,
+    head: resolved.head,
+    partners: resolved.partners,
+    algolia: resolved.algolia,
+    pages: resolved.pages,
+    navbarItems: resolved.navbarItems,
+    sidebarSections: resolved.sections,
+  }
+
+  writeFileIfChanged(globalContextFilePath, getGeneratedGlobalContextSource(globalContextData))
+  expectedFiles.add(globalContextFilePath)
 
   for (const [pageIndex, page] of resolved.pages.entries()) {
     const contentFilePath = path.join(docsRoot, page.source)
@@ -154,36 +177,25 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
       throw new Error(`Docs page "${page.id}" points to missing source file: ${contentFilePath}`)
     }
 
-    const section = getResolvedSectionById(resolved, page.sectionId)
     const pageSource = fs.readFileSync(contentFilePath, 'utf8')
     const data: DocPageData = {
-      siteTitle: resolved.siteTitle,
-      basePath: resolved.basePath,
-      theme: resolved.theme,
-      footer: resolved.footer,
       page: getResolvedPageById(resolved, page.id),
-      activeSectionId: page.sectionId,
-      activeSectionTitle: section?.title ?? page.sectionId,
       headings: extractDocHeadings(pageSource),
       previousPage: toDocPageLinkData(resolved.pages[pageIndex - 1]),
       nextPage: toDocPageLinkData(resolved.pages[pageIndex + 1]),
-      navbarItems: resolved.navbarItems,
-      sidebarItems: section?.items ?? [],
-      sidebarSections: resolved.sections,
     }
 
     for (const routeHref of [page.href, ...page.aliasHrefs]) {
       const routeSlug = routeHref.replace(/^\/docs\//, '').replace(/\/+$/g, '')
       const pageDir = path.join(generatedPagesRoot, ...routeSlug.split('/'))
       const contentImportPath = getRelativeImportPath(pageDir, contentFilePath)
-      const docsConfigImportPath = getRelativeScriptImportPath(pageDir, docsConfigPath)
 
       const pageFilePath = path.join(pageDir, '+Page.tsx')
       const dataFilePath = path.join(pageDir, '+data.ts')
       const routeFilePath = path.join(pageDir, '+route.ts')
       const titleFilePath = path.join(pageDir, '+title.ts')
 
-      writeFileIfChanged(pageFilePath, getGeneratedPageSource(contentImportPath, docsConfigImportPath))
+      writeFileIfChanged(pageFilePath, getGeneratedPageSource(contentImportPath))
       writeFileIfChanged(dataFilePath, getGeneratedDataSource(data))
       writeFileIfChanged(routeFilePath, getGeneratedRouteSource(routeHref))
       writeFileIfChanged(titleFilePath, getGeneratedTextExport(page.documentTitle))

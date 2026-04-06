@@ -44,6 +44,7 @@ export {
 } from './nivelAssets.js'
 export type {
   DocHeading,
+  DocsGlobalContextData,
   DocsAlgoliaConfig,
   DocsAlgoliaFieldsConfig,
   DocPageData,

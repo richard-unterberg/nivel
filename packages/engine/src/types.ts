@@ -223,18 +223,16 @@ export type ResolvedDocsConfig = {
 
 export type DocPageLinkData = Pick<ResolvedDocsPage, 'id' | 'title' | 'href' | 'documentTitle'>
 
+export type DocsGlobalContextData = Pick<
+  ResolvedDocsConfig,
+  'siteTitle' | 'basePath' | 'theme' | 'footer' | 'brand' | 'head' | 'partners' | 'algolia' | 'pages' | 'navbarItems'
+> & {
+  sidebarSections: ResolvedDocsConfig['sections']
+}
+
 export type DocPageData = {
-  siteTitle: string
-  basePath: '/docs'
-  theme: Required<DocsThemeConfig>
-  footer: Required<DocsFooterConfig>
   page: ResolvedDocsPage
-  activeSectionId: string
-  activeSectionTitle: string
   headings: DocHeading[]
   previousPage: DocPageLinkData | null
   nextPage: DocPageLinkData | null
-  navbarItems: ResolvedNavbarItem[]
-  sidebarItems: ResolvedSidebarNode[]
-  sidebarSections: ResolvedDocsSection[]
 }
