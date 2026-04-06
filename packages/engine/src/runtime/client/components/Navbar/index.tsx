@@ -2,6 +2,7 @@ import cm, { cmMerge } from '@classmatejs/react'
 import { ChevronDown } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
+import { getActiveSectionByPathname } from '../../../../docs/resolveDocsConfig.js'
 import type {
   DocsThemeConfig,
   ResolvedDocsAlgoliaConfig,
@@ -11,6 +12,7 @@ import type {
 } from '../../../../docs/types.js'
 import { withSiteBaseUrl } from '../../../../shared/assets.js'
 import { renderInlineMarkdown } from '../../../../shared/renderInlineMarkdown.js'
+import { getDocsGlobalContext } from '../../docsGlobalContext.js'
 import { Brand } from '../Brand.js'
 import { LayoutComponent } from '../LayoutComponent.js'
 import { Search } from '../Search.js'
@@ -20,22 +22,25 @@ import { useNavbarScroll } from './useNavbarScroll.js'
 
 interface NavbarProps {
   brand: ResolvedDocsBrandConfig
-  activeSectionId: string | null
   algolia: ResolvedDocsAlgoliaConfig | null
   navbarItems: ResolvedNavbarItem[]
   theme: Required<DocsThemeConfig>
   sections: ResolvedDocsSection[]
 }
 
-export const Navbar = ({ brand, activeSectionId, algolia, navbarItems, theme, sections }: NavbarProps) => {
+export const Navbar = ({ brand, algolia, navbarItems, theme, sections }: NavbarProps) => {
   const { urlPathname } = usePageContext()
   const isLandingPage = urlPathname === '/'
   const { isLandingPageScrolled } = useNavbarScroll(isLandingPage)
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false)
   const megaMenuCloseTimeoutRef = useRef<number | null>(null)
+  const pageContext = usePageContext()
+  const docs = getDocsGlobalContext(pageContext as Parameters<typeof getDocsGlobalContext>[0])
+  const activeSection = getActiveSectionByPathname(docs, pageContext.urlPathname)
+  const [hoveredSectionId, setHoveredSectionId] = useState<string | undefined>(activeSection?.id ?? sections[0]?.id)
 
   const showChrome = useMemo(
-    () => !isLandingPage || isLandingPageScrolled || isMegaMenuOpen,
+    () => !isLandingPage || isLandingPageScrolled || !isMegaMenuOpen,
     [isLandingPage, isLandingPageScrolled, isMegaMenuOpen],
   )
 
@@ -48,7 +53,11 @@ export const Navbar = ({ brand, activeSectionId, algolia, navbarItems, theme, se
     megaMenuCloseTimeoutRef.current = null
   }, [])
 
-  const openMegaMenu = () => {
+  const openMegaMenu = (currentSectionId?: string) => {
+    if (currentSectionId !== undefined) {
+      setHoveredSectionId(currentSectionId)
+    }
+
     clearMegaMenuCloseTimeout()
     setIsMegaMenuOpen(true)
   }
@@ -74,7 +83,7 @@ export const Navbar = ({ brand, activeSectionId, algolia, navbarItems, theme, se
 
   return (
     <>
-      <StyledNavbar>
+      <StyledNavbar $border={showChrome}>
         <LayoutComponent className="h-full">
           {isLandingPage ? (
             <div className="relative z-3 flex h-full items-center justify-between py-4">
@@ -91,9 +100,9 @@ export const Navbar = ({ brand, activeSectionId, algolia, navbarItems, theme, se
                       <a
                         href={withSiteBaseUrl(item.href)}
                         className={'h-full block py-3.25'}
-                        onPointerEnter={openMegaMenu}
+                        onPointerEnter={() => openMegaMenu(item.id)}
                         onPointerLeave={scheduleMegaMenuClose}
-                        onFocus={openMegaMenu}
+                        onFocus={() => openMegaMenu(item.id)}
                         onBlur={scheduleMegaMenuClose}
                         onClick={closeMegaMenu}
                       >
@@ -127,14 +136,14 @@ export const Navbar = ({ brand, activeSectionId, algolia, navbarItems, theme, se
                     <li key={item.id}>
                       <a
                         href={withSiteBaseUrl(item.href)}
-                        onPointerEnter={openMegaMenu}
+                        onPointerEnter={() => openMegaMenu(item.id)}
                         onPointerLeave={scheduleMegaMenuClose}
-                        onFocus={openMegaMenu}
+                        onFocus={() => openMegaMenu(item.id)}
                         onBlur={scheduleMegaMenuClose}
                         onClick={closeMegaMenu}
                         className={cmMerge(
                           'btn btn-sm px-2 whitespace-nowrap text-base tracking-tight',
-                          item.id === activeSectionId ? 'btn-primary btn-soft' : 'btn-ghost',
+                          item.id === activeSection?.id ? 'btn-primary btn-soft' : 'btn-ghost',
                         )}
                       >
                         {renderInlineMarkdown(item.title)}
@@ -152,8 +161,9 @@ export const Navbar = ({ brand, activeSectionId, algolia, navbarItems, theme, se
         </LayoutComponent>
       </StyledNavbar>
       <MegaMenu
-        showChrome={showChrome}
         sections={sections}
+        activeSectionId={activeSection?.id}
+        hoveredSectionId={hoveredSectionId}
         isActive={isMegaMenuOpen}
         onOpen={openMegaMenu}
         onClose={scheduleMegaMenuClose}
@@ -162,6 +172,6 @@ export const Navbar = ({ brand, activeSectionId, algolia, navbarItems, theme, se
   )
 }
 
-const StyledNavbar = cm.header`
+const StyledNavbar = cm.header<{ $border: boolean }>`
   fixed top-0 left-0 z-20 h-16 w-full bg-base-100
 `

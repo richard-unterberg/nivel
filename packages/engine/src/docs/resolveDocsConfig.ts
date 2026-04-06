@@ -56,14 +56,22 @@ const normalizeSourcePath = (value: string) => {
   return normalizedSegments.join('/')
 }
 
-const getSectionHref = (items: ResolvedSidebarNode[]): string | null => {
+const getSectionHref = (items: ResolvedSidebarNode[], visibleOnly = false): string | null => {
   for (const item of items) {
     if (item.kind === 'page') {
+      if (visibleOnly && !item.showInNav) {
+        continue
+      }
+
       return item.href
     }
 
     if (item.kind === 'group') {
-      const href = getSectionHref(item.items)
+      if (visibleOnly && !item.showInNav) {
+        continue
+      }
+
+      const href = getSectionHref(item.items, visibleOnly)
       if (href) {
         return href
       }
@@ -227,6 +235,7 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
           id: node.id,
           title: node.title,
           href: node.href ? resolveNavigationHref(node.href, `group "${node.id}" href`) : undefined,
+          showInNav: node.showInNav ?? true,
           collapsible: node.collapsible,
           items: resolveSidebarNodes(node.items, sectionId),
         }
@@ -284,6 +293,7 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
         title: pageNode.title,
         navTitle: pageNode.navTitle ?? pageNode.title,
         href,
+        showInNav: pageNode.showInNav ?? true,
       }
     })
   }
@@ -300,9 +310,10 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
     sectionIds.add(section.id)
 
     const items = resolveSidebarNodes(section.items, section.id)
+    const firstVisibleHref = getSectionHref(items, true)
     const href = section.href
       ? resolveNavigationHref(section.href, `section "${section.id}" href`)
-      : getSectionHref(items)
+      : (firstVisibleHref ?? getSectionHref(items))
 
     if (!href) {
       throw new Error(`Docs section "${section.id}" must contain at least one page.`)

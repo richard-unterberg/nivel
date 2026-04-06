@@ -69,6 +69,7 @@ export type DocsPageNode = {
   title: string
   slug: string
   source: string
+  showInNav?: boolean
   aliases?: string[]
   tableOfContents?: boolean
   navTitle?: string
@@ -80,6 +81,7 @@ export type DocsGroupNode = {
   id: string
   title?: string
   href?: string
+  showInNav?: boolean
   items: DocsSidebarNode[]
   collapsible?: DocsCollapsible
 }
@@ -169,6 +171,7 @@ export type ResolvedSidebarGroup = {
   id: string
   title?: string
   href?: string
+  showInNav: boolean
   items: ResolvedSidebarNode[]
   collapsible?: DocsCollapsible
 }
@@ -179,6 +182,7 @@ export type ResolvedSidebarPage = {
   title: string
   navTitle: string
   href: string
+  showInNav: boolean
 }
 
 export type ResolvedSidebarNode = ResolvedSidebarGroup | ResolvedSidebarPage

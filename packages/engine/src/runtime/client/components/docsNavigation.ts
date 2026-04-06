@@ -12,12 +12,16 @@ export const containsActiveHref = (items: ResolvedSidebarNode[], currentHref: st
 
 export const hasActiveItem = (items: ResolvedSidebarNode[], activeHref: string) => containsActiveHref(items, activeHref)
 
+export const getVisibleNavItems = (items: ResolvedSidebarNode[]) => items.filter((item) => item.showInNav)
+
 export const getVisibleGroupItems = (group: ResolvedSidebarGroup) => {
+  const visibleItems = getVisibleNavItems(group.items)
+
   if (!group.href) {
-    return group.items
+    return visibleItems
   }
 
-  return group.items.filter((item): item is ResolvedSidebarNode => {
+  return visibleItems.filter((item): item is ResolvedSidebarNode => {
     if (item.kind !== 'page') {
       return true
     }

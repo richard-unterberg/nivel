@@ -5,7 +5,13 @@ import { create } from 'zustand'
 import type { ResolvedDocsSection, ResolvedSidebarGroup, ResolvedSidebarNode } from '../../../docs/types.js'
 import { withSiteBaseUrl } from '../../../shared/assets.js'
 import { renderInlineMarkdown } from '../../../shared/renderInlineMarkdown.js'
-import { containsActiveHref, getGroupHref, getVisibleGroupItems, hasActiveItem } from './docsNavigation.js'
+import {
+  containsActiveHref,
+  getGroupHref,
+  getVisibleGroupItems,
+  getVisibleNavItems,
+  hasActiveItem,
+} from './docsNavigation.js'
 
 type SidebarDisclosureState = {
   openNodes: Record<string, boolean>
@@ -133,7 +139,9 @@ interface SidebarItemListProps {
 }
 
 const SidebarItemList = ({ items, currentHref }: SidebarItemListProps) => {
-  return <ul className="menu w-full">{renderSidebarItems(items, currentHref)}</ul>
+  const visibleItems = getVisibleNavItems(items)
+
+  return <ul className="menu w-full">{renderSidebarItems(visibleItems, currentHref)}</ul>
 }
 
 interface SidebarNestedGroupProps {
@@ -146,7 +154,7 @@ const SidebarNestedGroup = ({ group, currentHref }: SidebarNestedGroupProps) => 
   const visibleItems = getVisibleGroupItems(group)
   const isCollapsible = group.collapsible !== undefined
   const isOpenByDefault = group.collapsible?.isDefaultOpen ?? true
-  const nestedHasActiveItem = groupHref === currentHref || hasActiveItem(visibleItems, currentHref)
+  const nestedHasActiveItem = groupHref === currentHref || hasActiveItem(group.items, currentHref)
   const { isOpen, setIsOpen } = useAutoOpenDetails(`group:${group.id}`, isOpenByDefault, nestedHasActiveItem)
 
   if (!isCollapsible) {

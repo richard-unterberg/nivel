@@ -207,6 +207,7 @@ export const docsGraph = defineDocsGraph({
           slug: 'api',
           source: 'content/api/content.mdx',
           tableOfContents: false,
+          showInNav: false,
           description: 'Get started with telefunc and learn how to create your own documentation site.',
         },
         {

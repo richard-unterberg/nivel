@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { Navbar } from './components/Navbar/index.js'
 import { UserSettingsSync } from './components/UserSettingsSync.js'
-import { getActiveSectionByPathname } from '../../docs/resolveDocsConfig.js'
 import { getDocsGlobalContext } from './docsGlobalContext.js'
 
 interface AppLayoutProps {
@@ -14,7 +13,7 @@ interface AppLayoutProps {
 export const AppLayout = ({ children }: AppLayoutProps) => {
   const pageContext = usePageContext()
   const docs = getDocsGlobalContext(pageContext as Parameters<typeof getDocsGlobalContext>[0])
-  const activeSection = getActiveSectionByPathname(docs, pageContext.urlPathname)
+
   const [queryClient] = useState(() => new QueryClient())
 
   return (
@@ -24,7 +23,6 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
       <div className="min-h-screen bg-base-100 text-base-content">
         <Navbar
           brand={docs.brand}
-          activeSectionId={activeSection?.id ?? null}
           algolia={docs.algolia}
           navbarItems={docs.navbarItems}
           sections={docs.sidebarSections}
