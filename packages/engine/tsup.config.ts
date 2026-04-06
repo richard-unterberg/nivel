@@ -3,12 +3,12 @@ import { defineConfig } from 'tsup'
 export default defineConfig({
   entry: {
     index: 'src/index.ts',
-    client: 'src/runtime/client.ts',
-    'code-blocks': 'src/components/code-blocks/index.ts',
-    config: 'src/config.ts',
-    mdx: 'src/mdx.ts',
-    'runtime/index': 'src/runtime/node.ts',
-    'runtime/client': 'src/runtime/client.ts',
+    vike: 'src/vike/index.ts',
+    mdx: 'src/mdx/index.ts',
+    'mdx/code-blocks': 'src/mdx/code-blocks/index.ts',
+    client: 'src/runtime/client/index.ts',
+    'runtime/client': 'src/runtime/client/index.ts',
+    'runtime/node': 'src/runtime/node/index.ts',
   },
   format: ['esm'],
   dts: true,

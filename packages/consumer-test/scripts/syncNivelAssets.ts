@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { nivelPublicRoute } from '@unterberg/nivel'
 
 const getNivelPackageRoot = () => {
-  const nivelConfigUrl = import.meta.resolve('@unterberg/nivel/config')
+  const nivelConfigUrl = import.meta.resolve('@unterberg/nivel/vike')
   const nivelConfigPath = fileURLToPath(nivelConfigUrl)
   return path.resolve(path.dirname(nivelConfigPath), '..')
 }

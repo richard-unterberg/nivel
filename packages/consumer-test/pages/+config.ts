@@ -1,4 +1,4 @@
-import nivel from '@unterberg/nivel/config'
+import nivel from '@unterberg/nivel/vike'
 import type { Config } from 'vike/types'
 import vikeReact from 'vike-react/config'
 import docs from './+docs'

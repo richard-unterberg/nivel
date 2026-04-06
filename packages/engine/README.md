@@ -83,7 +83,7 @@ export const docsGraph = defineDocsGraph({
 
 Then the consumer wires:
 
-- `@unterberg/nivel/config` into Vike config
+- `@unterberg/nivel/vike` into Vike config
 - `MetaHead` in global `+Head`
 - `AppLayout` in global `+Layout`
 - `syncGeneratedDocsPages()` before dev/build/typecheck

@@ -26,29 +26,29 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./config": {
-      "types": "./dist/config.d.ts",
-      "import": "./dist/config.js"
-    },
-    "./client": {
-      "types": "./dist/client.d.ts",
-      "import": "./dist/client.js"
+    "./vike": {
+      "types": "./dist/vike.d.ts",
+      "import": "./dist/vike.js"
     },
     "./mdx": {
       "types": "./dist/mdx.d.ts",
       "import": "./dist/mdx.js"
     },
-    "./code-blocks": {
-      "types": "./dist/code-blocks.d.ts",
-      "import": "./dist/code-blocks.js"
+    "./mdx/code-blocks": {
+      "types": "./dist/mdx/code-blocks.d.ts",
+      "import": "./dist/mdx/code-blocks.js"
     },
-    "./runtime": {
-      "types": "./dist/runtime/index.d.ts",
-      "import": "./dist/runtime/index.js"
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
     },
     "./runtime/client": {
       "types": "./dist/runtime/client.d.ts",
       "import": "./dist/runtime/client.js"
+    },
+    "./runtime/node": {
+      "types": "./dist/runtime/node.d.ts",
+      "import": "./dist/runtime/node.js"
     }
   },
   "scripts": {

@@ -1,4 +1,4 @@
-import { syncGeneratedDocsPages } from '@unterberg/nivel/runtime'
+import { syncGeneratedDocsPages } from '@unterberg/nivel/runtime/node'
 import docsConfig from '../pages/+docs'
 
 syncGeneratedDocsPages({
