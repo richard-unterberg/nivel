@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "npm@11.6.3",
   "scripts": {
-    "generate:docs": "node --import tsx ./scripts/generateDocsPages.ts",
+    "generate:docs": "nivel prepare",
     "predev": "npm run generate:docs",
     "dev": "vike dev",
     "prebuild": "npm run generate:docs",
