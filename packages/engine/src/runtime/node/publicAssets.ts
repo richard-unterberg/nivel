@@ -5,6 +5,13 @@ import { nivelPublicRoute } from '../../shared/assets.js'
 
 const toPosix = (value: string) => value.split(path.sep).join(path.posix.sep)
 
+const collectPublicAssetFilePaths = (directoryPath: string): string[] => {
+  return fs.readdirSync(directoryPath, { withFileTypes: true }).flatMap((entry) => {
+    const entryPath = path.join(directoryPath, entry.name)
+    return entry.isDirectory() ? collectPublicAssetFilePaths(entryPath) : [entryPath]
+  })
+}
+
 const getRequestPathname = (requestUrl: string | undefined) => {
   return requestUrl?.split('?')[0]?.split('#')[0] ?? ''
 }
@@ -55,6 +62,15 @@ export const getNivelPublicAssetsRoot = () => {
   }
 
   throw new Error(`Unable to locate nivel public assets from ${runtimeDir}.`)
+}
+
+export const getNivelPublicAssets = () => {
+  const assetsRoot = getNivelPublicAssetsRoot()
+
+  return collectPublicAssetFilePaths(assetsRoot).map((filePath) => ({
+    fileName: toPosix(path.relative(assetsRoot, filePath)),
+    filePath,
+  }))
 }
 
 export const getNivelPublicAssetFilePath = (requestUrl: string | undefined) => {

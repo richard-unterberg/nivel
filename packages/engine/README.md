@@ -84,7 +84,8 @@ Then the consumer wires:
 - `@unterberg/nivel/vike` into Vike config
 - `MetaHead` in global `+Head`
 - `AppLayout` in global `+Layout`
-- `syncGeneratedDocsPages()` before dev/build/typecheck
+- `nivel prepare` before dev/build/typecheck
+- `@import '@unterberg/nivel/tailwind-sources.css'` in the consumer Tailwind entry
 
 Algolia search is optional. When configured, `apiKey` must be a search-only public key because requests are made from the browser.
 

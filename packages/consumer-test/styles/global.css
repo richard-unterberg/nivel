@@ -1,11 +1,10 @@
 @import 'tailwindcss';
+@import '@unterberg/nivel/tailwind-sources.css';
 @import './theme.css';
 @import './code.css';
 
 @source '../pages';
 @source '../docs';
-@source '../../engine/src';
-@source '../../engine/dist';
 
 @plugin '@tailwindcss/typography';
 

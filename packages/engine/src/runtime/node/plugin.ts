@@ -1,37 +1,46 @@
 import fs from 'node:fs'
-import path from 'node:path'
 import type { Plugin, ViteDevServer } from 'vite'
-import type { DocsConfig } from '../../docs/types.js'
 import { isDocsSourcePath, syncGeneratedDocsPages } from './codegen.js'
 import {
   getNivelPublicAssetContentType,
   getNivelPublicAssetFilePath,
+  getNivelPublicAssets,
   getNivelPublicAssetsRoot,
   isNivelAssetPath,
   isNivelAssetRequestUrl,
 } from './publicAssets.js'
-
-const loadDocsConfig = async (server: ViteDevServer, rootDir: string): Promise<DocsConfig> => {
-  const modulePath = path.join(rootDir, 'pages', '+docs.ts')
-  const loaded = await server.ssrLoadModule(modulePath)
-  const docsConfig = loaded.default as DocsConfig | undefined
-
-  if (!docsConfig) {
-    throw new Error(`Expected default export from ${modulePath}`)
-  }
-
-  return docsConfig
-}
+import { loadDocsConfig } from './loadDocsConfig.js'
 
 const syncGeneratedPages = async (server: ViteDevServer, rootDir: string) => {
-  const docsConfig = await loadDocsConfig(server, rootDir)
+  const docsConfig = await loadDocsConfig({
+    rootDir,
+    loadModule: (modulePath) => server.ssrLoadModule(modulePath),
+  })
   syncGeneratedDocsPages({ rootDir, docsConfig })
 }
 
 export const nivelPagesPlugin = (): Plugin => {
+  let shouldEmitBuildAssets = false
+
   return {
     name: 'nivel-pages-plugin',
     enforce: 'pre',
+    configResolved(config) {
+      shouldEmitBuildAssets = config.command === 'build' && !config.build.ssr
+    },
+    buildStart() {
+      if (!shouldEmitBuildAssets) {
+        return
+      }
+
+      for (const asset of getNivelPublicAssets()) {
+        this.emitFile({
+          fileName: asset.fileName,
+          source: fs.readFileSync(asset.filePath),
+          type: 'asset',
+        })
+      }
+    },
     configureServer(server) {
       const rootDir = server.config.root
       const assetsRoot = getNivelPublicAssetsRoot()

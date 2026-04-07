@@ -1,6 +1,6 @@
 {
   "name": "@unterberg/nivel",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "sideEffects": false,
   "repository": {
@@ -15,9 +15,14 @@
   "publishConfig": {
     "access": "public"
   },
+  "bin": {
+    "nivel": "./bin/nivel.mjs"
+  },
   "files": [
     "dist",
-    "assets"
+    "assets",
+    "bin",
+    "tailwind-sources.css"
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -49,7 +54,8 @@
     "./runtime/node": {
       "types": "./dist/runtime/node.d.ts",
       "import": "./dist/runtime/node.js"
-    }
+    },
+    "./tailwind-sources.css": "./tailwind-sources.css"
   },
   "scripts": {
     "build": "tsup",
@@ -74,6 +80,7 @@
     "remark-directive": "^4.0.0",
     "remark-gfm": "^4.0.1",
     "shiki": "^4.0.2",
+    "tsx": "^4.21.0",
     "unist-util-visit": "^5.1.0",
     "vike-react": "^0.6.21",
     "zustand": "^5.0.8"

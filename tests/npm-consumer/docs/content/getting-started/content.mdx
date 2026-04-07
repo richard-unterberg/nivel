@@ -1,0 +1,19 @@
+import { Alert, Link } from '@unterberg/nivel'
+
+# Getting Started
+
+This fixture exists to verify that a consumer can install `@unterberg/nivel` directly from npm and run without any workspace-relative access to the engine source.
+
+<Alert heading="What this tests">
+  The app uses the published package entry points, runs <code>nivel prepare</code>, and builds a docs page from a minimal docs graph.
+</Alert>
+
+## Current setup
+
+- The package version is pinned to <code>0.0.2</code>.
+- The consumer lives under <code>tests/npm-consumer</code> and is not part of the workspace packages list.
+- Tailwind scans the package helper export from <code>@unterberg/nivel/tailwind-sources.css</code>.
+
+## Next step
+
+Open <Link href="/docs/getting-started/" doNotInferSectionTitle={true} /> after starting the dev server.

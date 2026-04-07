@@ -1,6 +1,10 @@
 {
   "$schema": "./node_modules/knip/schema.json",
-  "ignore": ["packages/engine/assets/**", "trunk/**"],
+  "ignore": [
+    "tests/npm-consumer/**",
+    "packages/consumer-test/vite.config.source.ts",
+    "packages/engine/assets/**"
+  ],
   "ignoreDependencies": [
     "@brillout/shiki-transformers",
     "@mdx-js/rollup",

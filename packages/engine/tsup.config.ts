@@ -2,6 +2,7 @@ import { defineConfig } from 'tsup'
 
 export default defineConfig((overrideOptions) => ({
   entry: {
+    cli: 'src/cli.ts',
     index: 'src/index.ts',
     vike: 'src/vike/index.ts',
     mdx: 'src/mdx/index.ts',

@@ -3,12 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate:docs": "node --import tsx ./scripts/generateDocsPages.ts",
+    "generate:docs": "nivel prepare",
     "predev": "pnpm generate:docs",
     "dev": "vike dev",
+    "dev:source": "vike dev --config vite.config.source.ts",
     "prebuild": "pnpm generate:docs",
     "build": "vike build",
-    "postbuild": "node --import tsx ./scripts/syncNivelAssets.ts",
     "prepreview": "pnpm build",
     "preview": "vike preview",
     "pretypecheck": "pnpm generate:docs",
@@ -40,7 +40,6 @@
     "remark-gfm": "^4.0.1",
     "shiki": "^4.0.2",
     "tailwindcss": "^4.1.12",
-    "tsx": "^4.20.5",
     "typescript": "^5.9.3",
     "unist-util-visit": "^5.1.0",
     "vite": "^7.3.1"

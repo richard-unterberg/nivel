@@ -11,10 +11,11 @@
     "url": "https://github.com/richard-unterberg/nivel/issues"
   },
   "scripts": {
-    "preview": "pnpm --filter ./packages/consumer-test preview",
-    "dev": "pnpm --filter ./packages/consumer-test dev",
+    "preview": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/consumer-test build && pnpm --filter ./packages/consumer-test exec vike preview",
+    "dev": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/consumer-test dev",
+    "dev:source": "pnpm --filter @unterberg/nivel dev & pnpm --filter ./packages/consumer-test dev:source",
     "build": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/consumer-test build",
-    "typecheck": "pnpm --filter @unterberg/nivel typecheck && pnpm --filter ./packages/consumer-test typecheck",
+    "typecheck": "pnpm --filter @unterberg/nivel build && pnpm --filter @unterberg/nivel typecheck && pnpm --filter ./packages/consumer-test typecheck",
     "lint": "biome lint --write .",
     "format": "biome format --write .",
     "knip": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/consumer-test generate:docs && knip",
