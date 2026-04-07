@@ -1,7 +1,7 @@
 import nivel from '@unterberg/nivel/vike'
 import type { Config } from 'vike/types'
 import vikeReact from 'vike-react/config'
-import { config as docsConfig } from './+docs'
+import docsConfig from './+docs'
 
 export { config }
 

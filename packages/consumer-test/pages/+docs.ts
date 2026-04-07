@@ -1,7 +1,7 @@
 import { type DocsConfig } from '@unterberg/nivel'
 import { docsGraph } from '../docs/docs.graph'
 
-export const config = {
+const docsConfig = {
   graph: docsGraph,
   siteTitle: 'telefunc',
   siteDescription: 'telefunc documentation',
@@ -53,3 +53,5 @@ export const config = {
     ],
   },
 } satisfies DocsConfig
+
+export default docsConfig
