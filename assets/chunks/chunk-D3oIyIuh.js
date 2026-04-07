@@ -1,0 +1,37 @@
+import{j as i}from"./chunk-Dq3t7wIs.js";import{u as r,L as e,A as t}from"./chunk-Cn9dvBjU.js";function h(n){const s={code:"code",figure:"figure",h2:"h2",li:"li",p:"p",pre:"pre",span:"span",strong:"strong",ul:"ul",...r(),...n.components};return i.jsxs(i.Fragment,{children:[i.jsxs(s.p,{children:[i.jsx(s.strong,{children:"Environment"}),": server."]}),`
+`,i.jsxs(s.p,{children:["Use ",i.jsx(s.code,{children:"throw Abort()"})," to implement ",i.jsx(e,{href:"/permissions",children:"permissions and other guards"}),"."]}),`
+`,i.jsxs(s.p,{children:["Telefunc uses ",i.jsx(s.code,{children:"Abort"})," to distinguish ",i.jsx(s.strong,{children:"expected failures"})," from bugs (errors in code, logic, data, etc.)."]}),`
+`,i.jsxs(t,{type:"warning",children:[i.jsxs(s.p,{children:["Note that using ",i.jsx(s.code,{children:"throw Abort()"}),":"]}),i.jsxs(s.ul,{children:[`
+`,i.jsxs(s.li,{children:["❌ Does not trigger ",i.jsx(e,{href:"/onBug"})]}),`
+`,i.jsxs(s.li,{children:["✅ Triggers ",i.jsx(e,{href:"/onAbort"})," on the client"]}),`
+`,i.jsx(s.li,{children:"✅ Error data is passed to client"}),`
+`,i.jsx(s.li,{children:"❌ Is not logged on the server"}),`
+`]})]}),`
+`,i.jsx(s.h2,{id:"rejecting-bad-requests",className:"scroll-mt-24",children:"Rejecting bad requests"}),`
+`,i.jsxs(s.p,{children:["In other words, use ",i.jsx(s.code,{children:"throw Abort"})," to implement permissions and other control flows. When returning an error message for the client to display, returning early is recommended instead. For more, see ",i.jsx(e,{href:"/error-handling"}),"."]}),`
+`,i.jsxs(s.p,{children:["In the following example, unauthenticated calls are rejected with ",i.jsx(s.code,{children:"throw Abort()"}),". The request bypasses ",i.jsx(s.code,{children:"onBug()"}),", and is returned with a status code ",i.jsx(s.code,{children:"403"}),"."]}),`
+`,i.jsx(s.figure,{"data-rehype-pretty-code-figure":"",children:i.jsx(s.pre,{tabIndex:"0","data-language":"js","data-theme":"github-light one-dark-pro",children:i.jsxs(s.code,{"data-language":"js","data-theme":"github-light one-dark-pro",style:{display:"grid"},children:[i.jsx(s.span,{"data-line":"",children:i.jsx(s.span,{style:{"--shiki-light":"#6A737D","--shiki-light-font-style":"inherit","--shiki-dark":"#7F848E","--shiki-dark-font-style":"italic"},children:"// hello.telefunc.js"})}),`
+`,i.jsx(s.span,{"data-line":"",children:i.jsx(s.span,{style:{"--shiki-light":"#6A737D","--shiki-light-font-style":"inherit","--shiki-dark":"#7F848E","--shiki-dark-font-style":"italic"},children:"// Environment: server"})}),`
+`,i.jsx(s.span,{"data-line":"",children:i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:" "})}),`
+`,i.jsxs(s.span,{"data-line":"",children:[i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#C678DD"},children:"export"}),i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#C678DD"},children:" async"}),i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#C678DD"},children:" function"}),i.jsx(s.span,{style:{"--shiki-light":"#6F42C1","--shiki-dark":"#61AFEF"},children:" hello"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:"("}),i.jsx(s.span,{style:{"--shiki-light":"#E36209","--shiki-light-font-style":"inherit","--shiki-dark":"#E06C75","--shiki-dark-font-style":"italic"},children:"name"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:") {"})]}),`
+`,i.jsxs(s.span,{"data-line":"",children:[i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#C678DD"},children:"  const"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:" { "}),i.jsx(s.span,{style:{"--shiki-light":"#005CC5","--shiki-dark":"#E5C07B"},children:"user"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:" } "}),i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#56B6C2"},children:"="}),i.jsx(s.span,{style:{"--shiki-light":"#6F42C1","--shiki-dark":"#61AFEF"},children:" getContext"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:"()"})]}),`
+`,i.jsxs(s.span,{"data-line":"",children:[i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#C678DD"},children:"  if"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:" ("}),i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#56B6C2"},children:"!"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#E06C75"},children:"user"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:") {"})]}),`
+`,i.jsx(s.span,{"data-line":"",children:i.jsx(s.span,{style:{"--shiki-light":"#6A737D","--shiki-light-font-style":"inherit","--shiki-dark":"#7F848E","--shiki-dark-font-style":"italic"},children:"    // We expect clients will sometimes make unauthed requests"})}),`
+`,i.jsxs(s.span,{"data-line":"",children:[i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#C678DD"},children:"    throw"}),i.jsx(s.span,{style:{"--shiki-light":"#6F42C1","--shiki-dark":"#61AFEF"},children:" Abort"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:"({ "}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#E06C75"},children:"code"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:": "}),i.jsx(s.span,{style:{"--shiki-light":"#032F62","--shiki-dark":"#98C379"},children:"'unauthenticated'"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:" })"})]}),`
+`,i.jsx(s.span,{"data-line":"",children:i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:"  }"})}),`
+`,i.jsx(s.span,{"data-line":"",children:" "}),`
+`,i.jsx(s.span,{"data-line":"",children:i.jsx(s.span,{style:{"--shiki-light":"#6A737D","--shiki-light-font-style":"inherit","--shiki-dark":"#7F848E","--shiki-dark-font-style":"italic"},children:"  // Typo => syntax error => it should be `name` instead of `namee`"})}),`
+`,i.jsxs(s.span,{"data-line":"",children:[i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#C678DD"},children:"  return"}),i.jsx(s.span,{style:{"--shiki-light":"#032F62","--shiki-dark":"#98C379"},children:" 'Hello '"}),i.jsx(s.span,{style:{"--shiki-light":"#D73A49","--shiki-dark":"#56B6C2"},children:" +"}),i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#E06C75"},children:" namee"})]}),`
+`,i.jsx(s.span,{"data-line":"",children:i.jsx(s.span,{style:{"--shiki-light":"#24292E","--shiki-dark":"#ABB2BF"},children:"}"})})]})})}),`
+`,i.jsxs(s.h2,{id:"accessing-abortvalue",className:"scroll-mt-24",children:["Accessing ",i.jsx(s.code,{children:"abortValue"})]}),`
+`,i.jsxs(s.p,{children:["The ",i.jsx(s.code,{children:"Abort"})," error data can be accessed client-side from the ",i.jsx(e,{href:"/onAbort"})," hook."]}),`
+`,i.jsxs(s.p,{children:["This pattern is powerful when used in combination with ",i.jsx(e,{href:"/permissions#dry-permissions",doNotInferSectionTitle:!0})," helpers."]}),`
+`,i.jsx(s.h2,{id:"see-also",className:"scroll-mt-24",children:"See also"}),`
+`,i.jsxs(s.ul,{children:[`
+`,i.jsxs(s.li,{children:[`
+`,i.jsx(e,{href:"/onAbort",children:i.jsx("code",{children:"onAbort()"})}),`
+`]}),`
+`,i.jsxs(s.li,{children:[`
+`,i.jsx(e,{href:"/permissions",children:"Permissions"}),`
+`]}),`
+`]})]})}function d(n={}){const{wrapper:s}={...r(),...n.components};return s?i.jsx(s,{...n,children:i.jsx(h,{...n})}):h(n)}export{d as M};
