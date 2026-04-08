@@ -1,5 +1,5 @@
 {
-  "name": "consumer-test",
+  "name": "consumer-dev",
   "private": true,
   "type": "module",
   "scripts": {

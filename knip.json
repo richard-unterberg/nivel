@@ -16,7 +16,7 @@
     "unist-util-visit"
   ],
   "ignoreIssues": {
-    "packages/consumer-test/docs/content/concepts/CodeComparison.tsx": [
+    "packages/consumer-dev/docs/content/concepts/CodeComparison.tsx": [
       "exports"
     ],
     "packages/engine/src/index.ts": ["exports", "types"]

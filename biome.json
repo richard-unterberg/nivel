@@ -5,9 +5,9 @@
       "**",
       "!legacy",
       "!**/*.build-*.mjs",
-      "!packages/consumer-test/pages/(nivel-generated)",
+      "!packages/consumer-dev/pages/(nivel-generated)",
       "!packages/engine/dist",
-      "!packages/consumer-test/dist"
+      "!packages/consumer-dev/dist"
     ]
   },
   "formatter": {

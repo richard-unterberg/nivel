@@ -5,7 +5,7 @@ Early alpha docs engine for Vike + Vite + React.
 The repo currently contains three important pieces:
 
 - `packages/engine`: the reusable `@unterberg/nivel` package
-- `packages/consumer-test`: the main in-repo consumer, currently exercising the engine against Telefunc docs content
+- `packages/consumer-dev`: the main in-repo consumer, currently exercising the engine against Telefunc docs content
 - `tests/npm-consumer`: a standalone npm fixture that installs the published package outside the workspace and validates the consumer contract from a real package install
 
 Current engine capabilities include:

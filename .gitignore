@@ -1,6 +1,7 @@
 node_modules
-dist
 .DS_Store
-packages/consumer-test/pages/(nivel-generated)
 *.build-*.mjs
 .pnpm-store
+(nivel-generated)
+package-lock.json
+dist

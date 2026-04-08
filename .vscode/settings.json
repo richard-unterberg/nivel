@@ -1,13 +1,4 @@
 {
-  "files.exclude": {
-    "**/*.build-*.mjs": true
-  },
-  "search.exclude": {
-    "**/*.build-*.mjs": true
-  },
-  "files.watcherExclude": {
-    "**/*.build-*.mjs": true
-  },
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit",
     "source.organizeImports.biome": "explicit"
