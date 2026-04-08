@@ -1,4 +1,4 @@
-export { getResolvedPageById, resolveDocsConfig } from '../../docs/resolveDocsConfig.js'
+export { getResolvedPageById, resolveDocsConfig, resolveDocsHref } from '../../docs/resolveDocsConfig.js'
 export { getGeneratedPagesRoot, syncGeneratedDocsPages } from './codegen.js'
 export { loadDocsConfig } from './loadDocsConfig.js'
 export { nivelPagesPlugin } from './plugin.js'

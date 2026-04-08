@@ -21,19 +21,116 @@ import type {
   ThemePreference,
 } from './types.js'
 
+export const isExternalHref = (value: string) => {
+  return /^(?:[a-z]+:)?\/\//i.test(value) || value.startsWith('mailto:') || value.startsWith('tel:')
+}
+
 const normalizeBasePath = (value: string) => {
-  const normalized = value.trim().replace(/^\/+|\/+$/g, '')
-  return `/${normalized}` as '/docs'
+  const normalized = value.trim()
+
+  if (!normalized) {
+    throw new Error('Docs basePath must be a non-empty absolute path.')
+  }
+
+  if (!normalized.startsWith('/') || normalized.startsWith('//')) {
+    throw new Error(`Docs basePath must start with "/". Received ${JSON.stringify(value)}.`)
+  }
+
+  if (normalized.includes('?') || normalized.includes('#')) {
+    throw new Error(`Docs basePath cannot include query strings or hashes. Received ${JSON.stringify(value)}.`)
+  }
+
+  const collapsed = normalized.replace(/\/+/g, '/').replace(/\/+$/g, '')
+  return collapsed === '' ? '/' : collapsed
+}
+
+const normalizeContentDir = (value: string | undefined) => {
+  const normalized = (value ?? 'docs').trim()
+
+  if (!normalized) {
+    throw new Error('Docs contentDir must be a non-empty project-relative path.')
+  }
+
+  if (normalized.startsWith('/') || normalized.startsWith('\\')) {
+    throw new Error(`Docs contentDir must be project-relative. Received ${JSON.stringify(value)}.`)
+  }
+
+  if (/^[a-zA-Z]:[\\/]/.test(normalized)) {
+    throw new Error(`Docs contentDir must be project-relative. Received ${JSON.stringify(value)}.`)
+  }
+
+  const segments = normalized.replaceAll('\\', '/').split('/')
+  const resolvedSegments: string[] = []
+
+  for (const segment of segments) {
+    if (segment === '' || segment === '.') {
+      continue
+    }
+
+    if (segment === '..') {
+      throw new Error(`Docs contentDir cannot escape the project root. Received ${JSON.stringify(value)}.`)
+    }
+
+    resolvedSegments.push(segment)
+  }
+
+  if (resolvedSegments.length === 0) {
+    throw new Error(`Docs contentDir must contain at least one path segment. Received ${JSON.stringify(value)}.`)
+  }
+
+  return resolvedSegments.join('/')
 }
 
 const normalizeSlug = (value: string) => value.replace(/^\/+|\/+$/g, '')
 
-const joinHref = (basePath: '/docs', slug: string) => `${basePath}/${normalizeSlug(slug)}/`
+const joinDocsHref = (basePath: string, slug: string) => {
+  const normalizedBasePath = normalizeBasePath(basePath)
+  const normalizedSlug = normalizeSlug(slug)
+
+  if (!normalizedSlug) {
+    return normalizedBasePath === '/' ? '/' : `${normalizedBasePath}/`
+  }
+
+  return normalizedBasePath === '/' ? `/${normalizedSlug}/` : `${normalizedBasePath}/${normalizedSlug}/`
+}
 
 const normalizePathname = (value: string) => {
   const pathname = value.split('?')[0]?.split('#')[0] ?? value
   const normalized = pathname.trim().replace(/\/+$/g, '')
   return normalized === '' ? '/' : `${normalized}/`.replace(/\/+/g, '/')
+}
+
+export const resolveDocsHref = (basePath: string, href: string) => {
+  const normalized = href.trim()
+
+  if (!normalized || normalized.startsWith('#') || isExternalHref(normalized)) {
+    return null
+  }
+
+  const pathname = normalized.split('?')[0]?.split('#')[0] ?? normalized
+
+  if (!pathname) {
+    return null
+  }
+
+  if (pathname.startsWith('/')) {
+    const normalizedPathname = normalizePathname(pathname)
+    const normalizedBasePath = normalizeBasePath(basePath)
+
+    if (normalizedBasePath === '/') {
+      return normalizedPathname
+    }
+
+    return normalizedPathname === `${normalizedBasePath}/` || normalizedPathname.startsWith(`${normalizedBasePath}/`)
+      ? normalizedPathname
+      : null
+  }
+
+  if (pathname.startsWith('./') || pathname.startsWith('../')) {
+    return null
+  }
+
+  return joinDocsHref(basePath, pathname)
 }
 
 const normalizeSourcePath = (value: string) => {
@@ -81,11 +178,19 @@ const getSectionHref = (items: ResolvedSidebarNode[], visibleOnly = false): stri
   return null
 }
 
-const resolveNavigationHref = (value: string, fieldName: string) => {
+const resolveNavigationHref = (value: string, fieldName: string, basePath: string) => {
   const normalized = value.trim()
 
   if (!normalized) {
     throw new Error(`Docs ${fieldName} must be a non-empty string.`)
+  }
+
+  if (normalized.startsWith('#') || isExternalHref(normalized)) {
+    return normalized
+  }
+
+  if (!normalized.startsWith('/')) {
+    return joinDocsHref(basePath, normalized)
   }
 
   return normalizePathname(normalized)
@@ -209,9 +314,8 @@ const normalizeAliases = (aliases: string[] | undefined, slug: string) => {
 }
 
 export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
-  if (normalizeBasePath(config.basePath) !== '/docs') {
-    throw new Error(`nivel currently requires basePath to be "/docs". Received ${JSON.stringify(config.basePath)}.`)
-  }
+  const normalizedBasePath = normalizeBasePath(config.basePath)
+  const normalizedContentDir = normalizeContentDir(config.contentDir)
 
   const pageIds = new Set<string>()
   const pageSlugs = new Set<string>()
@@ -234,7 +338,7 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
           kind: 'group',
           id: node.id,
           title: node.title,
-          href: node.href ? resolveNavigationHref(node.href, `group "${node.id}" href`) : undefined,
+          href: node.href ? resolveNavigationHref(node.href, `group "${node.id}" href`, normalizedBasePath) : undefined,
           showInNav: node.showInNav ?? true,
           collapsible: node.collapsible,
           items: resolveSidebarNodes(node.items, sectionId),
@@ -273,13 +377,13 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
         pageAliases.add(alias)
       }
 
-      const href = joinHref('/docs', slug)
+      const href = joinDocsHref(normalizedBasePath, slug)
       const page: ResolvedDocsPage = {
         ...pageNode,
         slug,
         aliases,
         href,
-        aliasHrefs: aliases.map((alias) => joinHref('/docs', alias)),
+        aliasHrefs: aliases.map((alias) => joinDocsHref(normalizedBasePath, alias)),
         tableOfContents: pageNode.tableOfContents ?? true,
         sectionId,
         documentTitle: `${pageNode.title} | ${config.siteTitle}`,
@@ -312,7 +416,7 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
     const items = resolveSidebarNodes(section.items, section.id)
     const firstVisibleHref = getSectionHref(items, true)
     const href = section.href
-      ? resolveNavigationHref(section.href, `section "${section.id}" href`)
+      ? resolveNavigationHref(section.href, `section "${section.id}" href`, normalizedBasePath)
       : (firstVisibleHref ?? getSectionHref(items))
 
     if (!href) {
@@ -343,7 +447,8 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
   return {
     siteTitle: config.siteTitle,
     siteDescription: config.siteDescription ?? null,
-    basePath: '/docs',
+    basePath: normalizedBasePath,
+    contentDir: normalizedContentDir,
     theme: resolveThemeConfig(config.theme),
     footer: resolveFooterConfig(config.footer),
     brand: resolveBrandConfig(config.brand, config.siteTitle),

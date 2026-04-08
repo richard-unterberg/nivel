@@ -45,6 +45,8 @@ export default defineDocsConfig({
   siteTitle: 'My Docs',
   siteDescription: 'Documentation site powered by @unterberg/nivel.',
   basePath: '/docs',
+  // Optional project-relative root for page.source resolution.
+  // contentDir: 'docs',
   graph: docsGraph,
 })
 ```
@@ -74,6 +76,8 @@ export default defineDocsConfig({
   graph: docsGraph,
 })
 ```
+
+`basePath` controls the public docs route prefix. `contentDir` is an optional project-relative filesystem root for resolving `page.source` entries and defaults to `docs`.
 
 ```ts
 // pages/+config.ts

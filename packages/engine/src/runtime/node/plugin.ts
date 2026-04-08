@@ -1,6 +1,7 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import type { Plugin, ViteDevServer } from 'vite'
-import { isDocsSourcePath, syncGeneratedDocsPages } from './codegen.js'
+import { getDocsSourcePaths, isDocsSourcePath, syncGeneratedDocsPages, type DocsSourcePaths } from './codegen.js'
 import {
   getNivelPublicAssetContentType,
   getNivelPublicAssetFilePath,
@@ -11,16 +12,31 @@ import {
 } from './publicAssets.js'
 import { loadDocsConfig } from './loadDocsConfig.js'
 
-const syncGeneratedPages = async (server: ViteDevServer, rootDir: string) => {
+const syncGeneratedPages = async (
+  server: ViteDevServer,
+  rootDir: string,
+  onDocsSourcesResolved: (docsSourcePaths: DocsSourcePaths) => void,
+) => {
   const docsConfig = await loadDocsConfig({
     rootDir,
     loadModule: (modulePath) => server.ssrLoadModule(modulePath),
   })
+  onDocsSourcesResolved(getDocsSourcePaths({ rootDir, docsConfig }))
   syncGeneratedDocsPages({ rootDir, docsConfig })
+}
+
+const getDefaultDocsSourcePaths = (rootDir: string): DocsSourcePaths => {
+  return {
+    contentRootPath: path.join(rootDir, 'docs'),
+    docsConfigPath: path.join(rootDir, 'pages', '+docs.ts'),
+    docsGraphPath: path.join(rootDir, 'docs', 'docs.graph.ts'),
+    generatedRootPath: path.join(rootDir, 'pages', '(nivel-generated)'),
+  }
 }
 
 export const nivelPagesPlugin = (): Plugin => {
   let shouldEmitBuildAssets = false
+  let docsSourcePaths: DocsSourcePaths | null = null
 
   return {
     name: 'nivel-pages-plugin',
@@ -45,17 +61,49 @@ export const nivelPagesPlugin = (): Plugin => {
       const rootDir = server.config.root
       const assetsRoot = getNivelPublicAssetsRoot()
       let pendingSync = Promise.resolve()
+      docsSourcePaths = getDefaultDocsSourcePaths(rootDir)
 
       server.watcher.add(assetsRoot)
+      server.watcher.add([
+        docsSourcePaths.docsConfigPath,
+        docsSourcePaths.docsGraphPath,
+        docsSourcePaths.contentRootPath,
+      ])
+
+      const updateDocsSourcePaths = (nextDocsSourcePaths: DocsSourcePaths) => {
+        if (!docsSourcePaths) {
+          docsSourcePaths = nextDocsSourcePaths
+          server.watcher.add(nextDocsSourcePaths.contentRootPath)
+          return
+        }
+
+        if (nextDocsSourcePaths.contentRootPath !== docsSourcePaths.contentRootPath) {
+          server.watcher.unwatch(docsSourcePaths.contentRootPath)
+          server.watcher.add(nextDocsSourcePaths.contentRootPath)
+        }
+
+        docsSourcePaths = nextDocsSourcePaths
+      }
+
+      void loadDocsConfig({
+        rootDir,
+        loadModule: (modulePath) => server.ssrLoadModule(modulePath),
+      })
+        .then((docsConfig) => {
+          updateDocsSourcePaths(getDocsSourcePaths({ rootDir, docsConfig }))
+        })
+        .catch((error: unknown) => {
+          console.error(error)
+        })
 
       const queueSync = (filePath: string) => {
-        if (!isDocsSourcePath(filePath, rootDir)) {
+        if (!docsSourcePaths || !isDocsSourcePath(filePath, docsSourcePaths)) {
           return
         }
 
         pendingSync = pendingSync
           .then(async () => {
-            await syncGeneratedPages(server, rootDir)
+            await syncGeneratedPages(server, rootDir, updateDocsSourcePaths)
             server.ws.send({ type: 'full-reload' })
           })
           .catch((error: unknown) => {
@@ -100,11 +148,16 @@ export const nivelPagesPlugin = (): Plugin => {
         return []
       }
 
-      if (!isDocsSourcePath(ctx.file, ctx.server.config.root)) {
+      const rootDir = ctx.server.config.root
+      const resolvedDocsSourcePaths = docsSourcePaths ?? getDefaultDocsSourcePaths(rootDir)
+
+      if (!isDocsSourcePath(ctx.file, resolvedDocsSourcePaths)) {
         return
       }
 
-      await syncGeneratedPages(ctx.server, ctx.server.config.root)
+      await syncGeneratedPages(ctx.server, rootDir, (nextDocsSourcePaths) => {
+        docsSourcePaths = nextDocsSourcePaths
+      })
       ctx.server.ws.send({ type: 'full-reload' })
       return []
     },

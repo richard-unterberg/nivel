@@ -104,7 +104,8 @@ export type DocsGraph = {
 export type DocsConfig = {
   siteTitle: string
   siteDescription?: string
-  basePath: '/docs'
+  basePath: string
+  contentDir?: string
   graph: DocsGraph
   theme?: DocsThemeConfig
   footer?: DocsFooterConfig
@@ -158,7 +159,8 @@ export type DocHeading = {
   title: string
 }
 
-export type ResolvedDocsPage = DocsPageNode & {
+export type ResolvedDocsPage = Omit<DocsPageNode, 'aliases'> & {
+  aliases: string[]
   href: string
   aliasHrefs: string[]
   tableOfContents: boolean
@@ -204,7 +206,8 @@ export type ResolvedNavbarItem = {
 export type ResolvedDocsConfig = {
   siteTitle: string
   siteDescription: string | null
-  basePath: '/docs'
+  basePath: string
+  contentDir: string
   theme: Required<DocsThemeConfig>
   footer: Required<DocsFooterConfig>
   brand: ResolvedDocsBrandConfig

@@ -143,11 +143,52 @@ const toDocPageLinkData = (
 
 export const getGeneratedPagesRoot = (rootDir: string) => path.join(rootDir, 'pages', GENERATED_DIRNAME)
 
+export type DocsSourcePaths = {
+  contentRootPath: string
+  docsConfigPath: string
+  docsGraphPath: string
+  generatedRootPath: string
+}
+
+const getDocsConfigPath = (rootDir: string) => path.join(rootDir, 'pages', '+docs.ts')
+
+const getDocsGraphPath = (rootDir: string) => path.join(rootDir, 'docs', 'docs.graph.ts')
+
+export const getDocsSourcePaths = (options: { rootDir: string; docsConfig: DocsConfig }): DocsSourcePaths => {
+  const resolved = resolveDocsConfig(options.docsConfig)
+
+  return {
+    contentRootPath: path.join(options.rootDir, resolved.contentDir),
+    docsConfigPath: getDocsConfigPath(options.rootDir),
+    docsGraphPath: getDocsGraphPath(options.rootDir),
+    generatedRootPath: getGeneratedPagesRoot(options.rootDir),
+  }
+}
+
+export const isDocsSourcePath = (filePath: string, docsSourcePaths: DocsSourcePaths) => {
+  const normalized = toPosix(filePath)
+  const generatedRootPath = toPosix(docsSourcePaths.generatedRootPath)
+  const docsConfigPath = toPosix(docsSourcePaths.docsConfigPath)
+  const docsGraphPath = toPosix(docsSourcePaths.docsGraphPath)
+  const contentRootPath = toPosix(docsSourcePaths.contentRootPath)
+
+  if (normalized.startsWith(generatedRootPath)) {
+    return false
+  }
+
+  return (
+    normalized === docsConfigPath ||
+    normalized === docsGraphPath ||
+    normalized === contentRootPath ||
+    normalized.startsWith(`${contentRootPath}/`)
+  )
+}
+
 export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: DocsConfig }) => {
   const { rootDir, docsConfig } = options
   const resolved = resolveDocsConfig(docsConfig)
   const generatedPagesRoot = getGeneratedPagesRoot(rootDir)
-  const docsRoot = path.join(rootDir, 'docs')
+  const docsContentRoot = path.join(rootDir, resolved.contentDir)
   const expectedFiles = new Set<string>()
   const globalContextFilePath = path.join(generatedPagesRoot, '_docsGlobalContext.ts')
 
@@ -171,7 +212,7 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
   expectedFiles.add(globalContextFilePath)
 
   for (const [pageIndex, page] of resolved.pages.entries()) {
-    const contentFilePath = path.join(docsRoot, page.source)
+    const contentFilePath = path.join(docsContentRoot, page.source)
 
     if (!fs.existsSync(contentFilePath)) {
       throw new Error(`Docs page "${page.id}" points to missing source file: ${contentFilePath}`)
@@ -185,9 +226,16 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
       nextPage: toDocPageLinkData(resolved.pages[pageIndex + 1]),
     }
 
-    for (const routeHref of [page.href, ...page.aliasHrefs]) {
-      const routeSlug = routeHref.replace(/^\/docs\//, '').replace(/\/+$/g, '')
-      const pageDir = path.join(generatedPagesRoot, ...routeSlug.split('/'))
+    const routeTargets = [
+      { routeHref: page.href, routePath: page.slug },
+      ...page.aliases.map((routePath, index) => ({
+        routeHref: page.aliasHrefs[index] as string,
+        routePath,
+      })),
+    ]
+
+    for (const { routeHref, routePath } of routeTargets) {
+      const pageDir = path.join(generatedPagesRoot, ...routePath.split('/'))
       const contentImportPath = getRelativeImportPath(pageDir, contentFilePath)
 
       const pageFilePath = path.join(pageDir, '+Page.tsx')
@@ -222,17 +270,4 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
   }
 
   removeEmptyDirectories(generatedPagesRoot, generatedPagesRoot)
-}
-
-export const isDocsSourcePath = (filePath: string, rootDir: string) => {
-  const normalized = toPosix(filePath)
-  const docsRoot = toPosix(path.join(rootDir, 'docs'))
-  const docsConfigPath = toPosix(path.join(rootDir, 'pages', '+docs.ts'))
-  const generatedRoot = toPosix(getGeneratedPagesRoot(rootDir))
-
-  if (normalized.startsWith(generatedRoot)) {
-    return false
-  }
-
-  return normalized === docsConfigPath || normalized.startsWith(`${docsRoot}/`)
 }

@@ -9,7 +9,7 @@ export interface TableProps {
   size?: 'sm' | 'md' | 'lg'
   data: TableData
 }
-
+/** @deprecated - do not use pls */
 export const Table = ({ size = 'md', data }: TableProps) => {
   return (
     <StyledTable $size={size}>

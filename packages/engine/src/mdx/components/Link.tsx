@@ -1,5 +1,6 @@
 import { cmMerge } from '@classmatejs/react'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { isExternalHref } from '../../docs/resolveDocsConfig.js'
 import { withSiteBaseUrl } from '../../shared/assets.js'
 import { useUniversalMdxRuntime } from './UniversalMdxProvider.js'
 
@@ -77,8 +78,14 @@ const determineSectionTitle = (href: string) => {
     .join(' ')
 }
 
-const isExternalHref = (href: string) => {
-  return /^(?:[a-z]+:)?\/\//i.test(href) || href.startsWith('mailto:') || href.startsWith('tel:')
+const isDocsRelativeHref = (href: string) => {
+  return (
+    !href.startsWith('/') &&
+    !href.startsWith('#') &&
+    !isExternalHref(href) &&
+    !href.startsWith('./') &&
+    !href.startsWith('../')
+  )
 }
 
 const renderLabelPart = (value: ReactNode) => {
@@ -151,8 +158,8 @@ export const Link = ({
   }
 
   assertUsage(
-    href.startsWith('/') || href.startsWith('#') || isExternalHref(href),
-    `<Link href /> prop \`href==='${href}'\` but should be external or start with '/' or '#'`,
+    href.startsWith('/') || href.startsWith('#') || isExternalHref(href) || isDocsRelativeHref(href),
+    `<Link href /> prop \`href==='${href}'\` but should be external, docs-relative, or start with '/' or '#'`,
   )
   assertUsage(!text || !children, 'Cannot use both `text` or `children`')
 

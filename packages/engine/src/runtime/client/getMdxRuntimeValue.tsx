@@ -9,6 +9,7 @@ import {
   getActiveSectionByPathname,
   getResolvedPageByPathname,
   getResolvedSectionById,
+  resolveDocsHref,
   isSamePagePathname,
 } from '../../docs/resolveDocsConfig.js'
 import { docsCodeBlockChoiceStore } from './store/settings-store.js'
@@ -25,23 +26,6 @@ const splitHref = (href: string) => {
   }
 }
 
-const toDocsPathname = (basePath: '/docs', href: string) => {
-  if (!href.startsWith('/')) {
-    return null
-  }
-
-  if (href === basePath || href.startsWith(`${basePath}/`)) {
-    return href
-  }
-
-  const normalizedPath = href.replace(/^\/+/, '')
-  if (!normalizedPath) {
-    return null
-  }
-
-  return `${basePath}/${normalizedPath}`
-}
-
 const resolveDocLink = (options: {
   docs: DocsGlobalContextData
   currentPathname: string
@@ -53,7 +37,7 @@ const resolveDocLink = (options: {
   }
 
   const { pathname, hash } = splitHref(href)
-  const docsPathname = toDocsPathname(options.docs.basePath, pathname)
+  const docsPathname = resolveDocsHref(options.docs.basePath, pathname)
 
   if (!docsPathname) {
     return null
@@ -108,10 +92,14 @@ export const getMdxRuntimeValue = (options: {
       }
 
       const { pathname, hash } = splitHref(href)
-      const docsPathname = toDocsPathname(docs.basePath, pathname)
+      const docsPathname = resolveDocsHref(docs.basePath, pathname)
       const page = docsPathname ? getResolvedPageByPathname(docs, docsPathname) : null
 
       if (!page) {
+        if (docsPathname && !pathname.startsWith('/')) {
+          return withSiteBaseUrl(`${docsPathname}${hash}`)
+        }
+
         return withSiteBaseUrl(href)
       }
 
