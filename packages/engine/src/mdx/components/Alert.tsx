@@ -53,8 +53,7 @@ export const Alert = ({
 const AlertOuter = cm.section.variants<{ $variant: AlertVariant }>({
   base: `
     p-4
-    mt-5
-    mb-5
+    my-7
     border
     rounded-lg
     prose-p:last:mb-0

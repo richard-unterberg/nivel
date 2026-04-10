@@ -1,9 +1,9 @@
 import { cmMerge } from '@classmatejs/react'
 import { useEffect, useState } from 'react'
-import type { ResolvedDocsSection } from '../../../../../docs/types.js'
-import { withSiteBaseUrl } from '../../../../../shared/assets.js'
-import { renderInlineMarkdown } from '../../../../../shared/renderInlineMarkdown.js'
-import { LayoutComponent } from '../../LayoutComponent.js'
+import type { ResolvedDocsSection } from '../../../../docs/types.js'
+import { withSiteBaseUrl } from '../../../../shared/assets.js'
+import { renderInlineMarkdown } from '../../../../shared/renderInlineMarkdown.js'
+import { LayoutComponent } from '../LayoutComponent.js'
 
 export const MegaMenu = ({
   isActive,
@@ -12,6 +12,7 @@ export const MegaMenu = ({
   sections,
   activeSectionId,
   hoveredSectionId,
+  isLandingPage,
 }: {
   isActive: boolean
   onOpen: (sectionId?: string) => void
@@ -19,6 +20,7 @@ export const MegaMenu = ({
   sections: ResolvedDocsSection[]
   activeSectionId?: string
   hoveredSectionId?: string
+  isLandingPage: boolean
 }) => {
   const visibleSectionId = hoveredSectionId ?? activeSectionId ?? sections[0]?.id
   const [visibleSectionElement, setVisibleSectionElement] = useState<HTMLDivElement | null>(null)
@@ -68,7 +70,8 @@ export const MegaMenu = ({
       />
       <div
         className={cmMerge(
-          'relative z-4 overflow-hidden bg-base-100 transition-[height] duration-300 ease-out border-b border-base-muted-light',
+          'relative z-4 overflow-hidden transition-[height] bg-base-100 duration-300',
+          isLandingPage && !isActive ? '' : 'border-b border-base-muted-light ease-out',
         )}
         // biome-ignore lint/nursery/noInlineStyles: needed here
         style={{ height: isActive ? contentHeight : 0 }}

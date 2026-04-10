@@ -1,13 +1,13 @@
 import type { ComponentType } from 'react'
 import { useData } from 'vike-react/useData'
 import { usePageContext } from 'vike-react/usePageContext'
-import { UniversalMdxProvider } from '../../mdx/components/UniversalMdxProvider.js'
 import type { DocPageData } from '../../docs/types.js'
+import { UniversalMdxProvider } from '../../mdx/components/UniversalMdxProvider.js'
 import { renderInlineMarkdown } from '../../shared/renderInlineMarkdown.js'
-import { LayoutComponent } from './components/LayoutComponent.js'
-import { ProseContainer } from './components/ProseContainer.js'
 import { DocsPagination } from './components/DocsPagination.js'
 import { DocsFooter } from './components/Footer.js'
+import { LayoutComponent } from './components/LayoutComponent.js'
+import { ProseContainer } from './components/ProseContainer.js'
 import { Sidebar } from './components/Sidebar.js'
 import { TableOfContents } from './components/TableOfContents.js'
 import { getDocsGlobalContext } from './docsGlobalContext.js'
@@ -29,8 +29,7 @@ export const DocsPage = ({ Content }: DocsPageProps) => {
         currentPathname: pageContext.urlPathname,
       })}
     >
-      <div className="absolute top-0 left-0 w-full h-[60svh] bg-radial-[at_65%_-85%] from-primary-muted-light to-65%" />
-
+      <div className="absolute top-0 left-0 w-full h-[60svh] bg-radial-[at_65%_-85%] from-primary-muted-light/40 dark:from-primary-muted-light/60 to-65%" />
       <LayoutComponent>
         <div className="lg:flex lg:gap-10 xl:gap-14">
           <Sidebar sections={docs.sidebarSections} activeSectionId={page.sectionId} currentHref={page.href} />

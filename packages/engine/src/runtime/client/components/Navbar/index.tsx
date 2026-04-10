@@ -1,6 +1,6 @@
 import cm, { cmMerge } from '@classmatejs/react'
 import { ChevronDown, TextSearch } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { getActiveSectionByPathname } from '../../../../docs/resolveDocsConfig.js'
 import type {
@@ -18,8 +18,7 @@ import { LayoutComponent } from '../LayoutComponent.js'
 import { Search, SearchTrigger } from '../Search.js'
 import SocialIcons from '../SocialLinks.js'
 import { ThemeSwitch } from '../ThemeSwitch.js'
-import { MegaMenu } from './MegaMenu/index.js'
-import { useNavbarScroll } from './useNavbarScroll.js'
+import { MegaMenu } from './MegaMenu.js'
 
 interface NavbarProps {
   brand: ResolvedDocsBrandConfig
@@ -31,7 +30,6 @@ interface NavbarProps {
 export const Navbar = ({ brand, navbarItems, theme, sections }: NavbarProps) => {
   const { urlPathname } = usePageContext()
   const isLandingPage = urlPathname === '/'
-  const { isLandingPageScrolled } = useNavbarScroll(isLandingPage)
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false)
   const megaMenuCloseTimeoutRef = useRef<number | null>(null)
   const pageContext = usePageContext()
@@ -39,11 +37,6 @@ export const Navbar = ({ brand, navbarItems, theme, sections }: NavbarProps) => 
   const activeSection = getActiveSectionByPathname(docs, pageContext.urlPathname)
   const [hoveredSectionId, setHoveredSectionId] = useState<string | undefined>(activeSection?.id ?? sections[0]?.id)
   const { toggle: toggleSearch } = useDocsSearchActions()
-
-  const showChrome = useMemo(
-    () => !isLandingPage || isLandingPageScrolled || !isMegaMenuOpen,
-    [isLandingPage, isLandingPageScrolled, isMegaMenuOpen],
-  )
 
   const clearMegaMenuCloseTimeout = useCallback(() => {
     if (megaMenuCloseTimeoutRef.current === null) {
@@ -73,7 +66,7 @@ export const Navbar = ({ brand, navbarItems, theme, sections }: NavbarProps) => 
     megaMenuCloseTimeoutRef.current = window.setTimeout(() => {
       setIsMegaMenuOpen(false)
       megaMenuCloseTimeoutRef.current = null
-    }, 120)
+    }, 140)
   }
 
   useEffect(() => {
@@ -84,7 +77,7 @@ export const Navbar = ({ brand, navbarItems, theme, sections }: NavbarProps) => 
 
   return (
     <>
-      <StyledNavbar $border={showChrome}>
+      <StyledNavbar $border={isLandingPage}>
         <LayoutComponent className="h-full">
           {isLandingPage ? (
             <div className="relative z-3 flex h-full items-center justify-between py-4">
@@ -182,11 +175,13 @@ export const Navbar = ({ brand, navbarItems, theme, sections }: NavbarProps) => 
         isActive={isMegaMenuOpen}
         onOpen={openMegaMenu}
         onClose={scheduleMegaMenuClose}
+        isLandingPage={isLandingPage}
       />
     </>
   )
 }
 
 const StyledNavbar = cm.header<{ $border: boolean }>`
-  fixed top-0 left-0 z-20 h-16 w-full bg-base-100
+   top-0 left-0 z-20 h-16 w-full bg-base-100
+  ${({ $border }) => ($border ? 'relative' : 'fixed')}
 `

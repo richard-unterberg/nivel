@@ -35,6 +35,7 @@
     @apply prose-code:dark:border-primary/20!;
 
     @apply prose-p:leading-[200%];
+    @apply prose-p:my-7;
     @apply prose-li:leading-[200%];
 
     /* table */

@@ -1,3 +1,4 @@
+import { cmMerge } from '@classmatejs/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
@@ -12,8 +13,11 @@ interface AppLayoutProps {
 }
 
 export const AppLayout = ({ children }: AppLayoutProps) => {
+  const { urlPathname } = usePageContext()
   const pageContext = usePageContext()
+
   const docs = getDocsGlobalContext(pageContext as Parameters<typeof getDocsGlobalContext>[0])
+  const isLandingPage = urlPathname === '/'
 
   const [docsRuntimeStore] = useState(() => createDocsRuntimeStore())
   const [queryClient] = useState(() => new QueryClient())
@@ -30,7 +34,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
             sections={docs.sidebarSections}
             theme={docs.theme}
           />
-          <div className="pt-16">{children}</div>
+          <div className={cmMerge(isLandingPage ? '' : 'pt-16')}>{children}</div>
         </div>
       </QueryClientProvider>
     </DocsRuntimeStoreProvider>

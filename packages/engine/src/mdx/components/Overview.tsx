@@ -1,3 +1,4 @@
+import cm from '@classmatejs/react'
 import type { ReactNode } from 'react'
 import { withSiteBaseUrl } from '../../shared/assets.js'
 import { renderInlineMarkdown } from '../../shared/renderInlineMarkdown.js'
@@ -8,6 +9,7 @@ type OverviewLinkItem = {
   title: ReactNode
   href: string
   excerpt?: ReactNode | null
+  compact?: boolean
 }
 
 type OverviewDividerItem = {
@@ -18,6 +20,7 @@ export type OverviewItem = OverviewLinkItem | OverviewDividerItem
 
 interface OverviewProps {
   items: Array<string | OverviewItem>
+  compact?: boolean
 }
 
 const isOverviewDividerItem = (item: string | OverviewItem): item is OverviewDividerItem =>
@@ -59,17 +62,36 @@ const groupOverviewItems = (items: OverviewItem[]) => {
   return groups
 }
 
-const OverviewCard = ({ excerpt, href, title }: OverviewLinkItem) => {
+const OverviewCard = ({ excerpt, href, title, compact }: OverviewLinkItem) => {
   return (
-    <a
-      href={withSiteBaseUrl(href)}
-      className="group flex h-full flex-col gap-3 rounded-box border border-base-muted-light bg-base-muted-superlight p-5 no-underline hover:border-primary-muted-medium hover:bg-base-muted-superlight/50"
-    >
+    <StyleOverviewCard href={withSiteBaseUrl(href)} $compact={compact}>
       <h3 className="text-lg font-semibold text-base-content">{renderInlineMarkdown(title)}</h3>
-      {excerpt ? <p className="text-sm leading-relaxed text-base-muted">{renderInlineMarkdown(excerpt)}</p> : null}
-    </a>
+      {excerpt && !compact ? (
+        <p className="text-sm leading-relaxed text-base-muted">{renderInlineMarkdown(excerpt)}</p>
+      ) : null}
+    </StyleOverviewCard>
   )
 }
+
+const StyleOverviewCard = cm.a.variants<{ $compact?: boolean }>({
+  base: `
+    flex h-full flex-col gap-3 
+    rounded-box border 
+    border-base-muted-light hover:border-primary-muted
+    hover:bg-primary-muted-superlight 
+    no-underline transition-colors 
+    shadow shadow-transparent hover:shadow-primary-muted-light
+  `,
+  variants: {
+    $compact: {
+      true: 'p-3',
+      false: 'p-5',
+    },
+  },
+  defaultVariants: {
+    $compact: false,
+  },
+})
 
 const normalizeOverviewItems = (
   items: Array<string | OverviewItem>,
@@ -91,7 +113,7 @@ const normalizeOverviewItems = (
   })
 }
 
-export const Overview = ({ items }: OverviewProps) => {
+export const Overview = ({ items, compact }: OverviewProps) => {
   const runtime = useUniversalMdxRuntime()
   const groups = groupOverviewItems(normalizeOverviewItems(items, runtime?.resolveOverviewItem))
 
@@ -106,9 +128,9 @@ export const Overview = ({ items }: OverviewProps) => {
           {group.dividerText ? (
             <p className="text-sm font-semibold uppercase tracking-wide">{renderInlineMarkdown(group.dividerText)}</p>
           ) : null}
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             {group.items.map((item, itemIndex) => (
-              <OverviewCard {...item} key={item.href || itemIndex} />
+              <OverviewCard {...item} key={item.href || itemIndex} excerpt={!!item.excerpt} compact={compact} />
             ))}
           </div>
         </section>
