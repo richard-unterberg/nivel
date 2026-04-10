@@ -1,25 +1,83 @@
-# nivel engine
+# @unterberg/nivel
 
-Opinionated, documentation site builder for Vike + Vite + React
+Opinionated docs engine for Vike + Vite + React.
 
-### Overview:
+`@unterberg/nivel` owns the docs runtime: Vike integration, MDX setup, docs-graph validation, route code generation, page shell rendering, and reusable docs UI primitives. The consumer stays thin and keeps its content, docs graph, visible Vike shell files, and theme files local.
 
-| Workspace | Role |
-| --- | --- |
-| `packages/engine` | Reusable package |
-| `packages/consumer-dev` | Main in-repo consumer, currently exercising the engine against Telefunc docs content |
-| `tests/npm-consumer` | Standalone npm fixture that installs the published package outside the workspace and validates the consumer contract from a real package install |
+## What It Provides
 
-## Public Helpers
+- typed docs config and docs graph helpers
+- generated Vike docs pages from a single docs graph
+- docs shell primitives such as navbar, sidebar, table of contents, pagination, search, and meta head wiring
+- MDX support with built-in docs components and code-block tooling
+- Tailwind v4 and daisyUI integration helpers
+- a small CLI for consumer scaffolding and docs page generation
 
-```ts
-import { defineDocsConfig, defineDocsGraph } from '@unterberg/nivel/config'
+## Install
+
+```bash
+pnpm add @unterberg/nivel react react-dom vike vike-react
+pnpm add -D vite typescript @types/react @types/react-dom
 ```
 
-Both helpers are identity functions. They are also re-exported from `@unterberg/nivel`, but the dedicated config entry keeps `pages/+docs.ts` and `docs/docs.graph.ts` on a lean config-time import path.
+`vike` and `vite` are peer dependencies. The package exposes a local `nivel` binary after install.
+
+## Quick Start
+
+Scaffold a consumer:
+
+```bash
+pnpm exec nivel init
+```
+
+Generate docs pages:
+
+```bash
+pnpm exec nivel prepare
+```
+
+Typical consumer scripts:
+
+```json
+{
+  "scripts": {
+    "generate:docs": "nivel prepare",
+    "predev": "pnpm generate:docs",
+    "dev": "vike dev",
+    "prebuild": "pnpm generate:docs",
+    "build": "vike build",
+    "pretypecheck": "pnpm generate:docs",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}
+```
+
+## Consumer Shape
+
+Keep these files local and visible in the consumer:
+
+- `docs/docs.graph.ts`
+- `pages/+docs.ts`
+- `pages/+config.ts`
+- `pages/+Head.tsx`
+- `pages/+Layout.tsx`
+- `pages/+onCreateGlobalContext.ts`
+- `pages/+Wrapper.tsx`
+- `global.d.ts`
+- docs content, brand assets, and consumer CSS/theme files
+
+Only `pages/(nivel-generated)` is engine-generated and should not be edited by hand.
+
+`docs/docs.graph.ts` is the single source of truth for docs structure. Navbar and sidebar behavior come from that graph.
+
+## Minimal Setup
+
+`docs/docs.graph.ts`
 
 ```ts
-const docsGraph = defineDocsGraph({
+import { defineDocsGraph } from '@unterberg/nivel/config'
+
+export const docsGraph = defineDocsGraph({
   items: [
     {
       kind: 'section',
@@ -28,56 +86,37 @@ const docsGraph = defineDocsGraph({
       items: [
         {
           kind: 'page',
-          id: 'quickStart',
-          title: 'Quick Start',
-          slug: 'quick-start',
-          source: 'content/quick-start/content.mdx',
+          id: 'gettingStarted',
+          title: 'Getting Started',
+          slug: 'getting-started',
+          source: 'content/getting-started/content.mdx',
+          description: 'Getting started with @unterberg/nivel.',
         },
       ],
     },
   ],
 })
-
-export default defineDocsConfig({
-  siteTitle: 'My Docs',
-  siteDescription: 'Documentation site powered by @unterberg/nivel.',
-  basePath: '/docs',
-  // Optional project-relative root for page.source resolution.
-  // contentDir: 'docs',
-  graph: docsGraph,
-})
 ```
 
-## Recommended Consumer Files
-
-A consumer should keep these files explicit and local:
-
-- hand-authored: `pages/+docs.ts`, `docs/docs.graph.ts`, docs content, brand assets, and consumer CSS/Tailwind/theme files
-- scaffolded once but still editable: `pages/+config.ts`, `pages/+Head.tsx`, `pages/+Layout.tsx`, `pages/+onCreateGlobalContext.ts`, `pages/+Wrapper.tsx`, and `global.d.ts`
-
-Only `(nivel-generated)` stays engine-generated.
-
-## Standard Vike Config
-
-Keep `pages/+config.ts` looking like normal Vike config and spread in the engine-owned config from `@unterberg/nivel/vike`:
+`pages/+docs.ts`
 
 ```ts
-// pages/+docs.ts
 import { defineDocsConfig } from '@unterberg/nivel/config'
 import { docsGraph } from '../docs/docs.graph'
 
-export default defineDocsConfig({
+const docsConfig = defineDocsConfig({
+  graph: docsGraph,
   siteTitle: 'My Docs',
   siteDescription: 'Documentation site powered by @unterberg/nivel.',
   basePath: '/docs',
-  graph: docsGraph,
 })
+
+export default docsConfig
 ```
 
-`basePath` controls the public docs route prefix. `contentDir` is an optional project-relative filesystem root for resolving `page.source` entries and defaults to `docs`.
+`pages/+config.ts`
 
 ```ts
-// pages/+config.ts
 import nivel from '@unterberg/nivel/vike'
 import type { Config } from 'vike/types'
 import vikeReact from 'vike-react/config'
@@ -98,90 +137,70 @@ const config: Config = {
   description: docsConfig.siteDescription ?? `${docsConfig.siteTitle} documentation`,
   htmlAttributes: { 'data-theme': dataTheme },
   passToClient: ['docs'],
-
-  // User-facing Vike levers stay visible here.
   prerender: true,
-  // ssr: true,
-  // prefetchStaticAssets: 'viewport',
 }
 ```
 
-The engine still owns the MDX, Vite, route-generation, and runtime wiring. The consumer keeps the normal Vike entry file and can adjust visible levers such as `prerender`, `ssr`, and prefetch-related settings directly in `+config.ts`.
+`vite.config.ts`
 
-## CLI
+```ts
+import { nivelTailwindVite } from '@unterberg/nivel/tailwind'
+import vike from 'vike/plugin'
 
-`nivel prepare` generates docs pages from `pages/+docs.ts`.
+process.env.VIKE_CRAWL ??= JSON.stringify({ git: false })
 
-`nivel init` scaffolds the visible consumer shell files and updates the standard docs scripts in `package.json`.
-
-```bash
-nivel init
-nivel prepare
+export default {
+  plugins: [nivelTailwindVite(), vike()],
+}
 ```
 
-`nivel init` does not create or overwrite consumer CSS/Tailwind/theme files. Keep those hand-authored. Add the engine Tailwind helper manually in your stylesheet:
+`pages/+Head.tsx`
+
+```tsx
+import { MetaHead } from '@unterberg/nivel/client'
+
+export const Head = () => {
+  return <MetaHead />
+}
+```
+
+`pages/+Layout.tsx`
+
+```tsx
+import { AppLayout } from '@unterberg/nivel/client'
+import type { ReactNode } from 'react'
+
+const Layout = ({ children }: { children: ReactNode }) => {
+  return <AppLayout>{children}</AppLayout>
+}
+
+export default Layout
+```
+
+`pages/+Wrapper.tsx`
+
+```tsx
+import type { ReactNode } from 'react'
+import '../styles/global.css'
+
+const Wrapper = ({ children }: { children: ReactNode }) => {
+  return <>{children}</>
+}
+
+export default Wrapper
+```
+
+`styles/global.css`
 
 ```css
-@import '@unterberg/nivel/tailwind-sources.css';
+@import '@unterberg/nivel/tailwind.css';
+@import './theme.css';
+
+@source '../pages';
+@source '../docs';
 ```
 
-If you use Algolia, `apiKey` must be a search-only public key because requests are made from the browser.
-
-## Commands
-
-```bash
-pnpm install
-pnpm dev
-pnpm build
-pnpm typecheck
-pnpm format
-pnpm knip
-```
-
-### Features:
-
-- docs graph validation and resolution
-- generated Vike routes for docs pages
-- docs shell primitives such as navbar, sidebar, table of contents, pagination, and meta head wiring
-- MDX integration with built-in docs components and code-block transforms
-- search wiring via optional Algolia config
-- theme preference wiring and engine-owned font assets
-
-The engine provides:
-
-| Surface | Purpose |
-| --- | --- |
-| `defineDocsConfig()` and `defineDocsGraph()` | Identity helpers for typed authoring, with a lean config-time entry at `@unterberg/nivel/config` |
-| `@unterberg/nivel/vike` | Engine-owned Vike config you spread into the consumer's normal `+config.ts` |
-| `nivel prepare` | Docs page code generation |
-| `nivel init` | Scaffolding for visible consumer shell files and package scripts |
-
-Consumer CSS remains hand-authored. `nivel init` does not create or overwrite Tailwind or theme files.
-
-## Package CLI
-
-After installing `@unterberg/nivel`, the package exposes the `nivel` binary in your app.
-
-Typical first-time setup in a consumer:
-
-```bash
-npx nivel init
-```
-
-If you already have the package installed and want to use your package manager's local binary resolution:
-
-```bash
-pnpm exec nivel init
-npm exec nivel init
-```
-
-Generate docs pages from `pages/+docs.ts`:
-
-```bash
-npx nivel prepare
-```
-
-Current CLI commands:
+## CLI
 
 ```bash
 nivel init [--root <path>] [--force]
@@ -189,13 +208,30 @@ nivel prepare [--root <path>]
 nivel --help
 ```
 
-What they do:
+- `nivel init` scaffolds the visible consumer files and patches the standard docs scripts in `package.json`
+- `nivel init --force` overwrites scaffold-managed files if they already exist
+- `nivel prepare` reads `pages/+docs.ts` and generates `pages/(nivel-generated)`
 
-| Command | Effect |
+`nivel init` does not create or overwrite your brand assets or consumer-specific styling decisions beyond the initial scaffold. Theme and palette files stay consumer-owned.
+
+## Public Entry Points
+
+| Entry | Purpose |
 | --- | --- |
-| `nivel init` | Scaffold the visible consumer files such as `pages/+config.ts`, `pages/+Head.tsx`, `pages/+Layout.tsx`, `pages/+onCreateGlobalContext.ts`, `pages/+Wrapper.tsx`, `global.d.ts`, `pages/+docs.ts`, and `docs/docs.graph.ts` |
-| `nivel init --force` | Overwrite those scaffold-managed files if they already exist |
-| `nivel init --root <path>` | Scaffold a consumer at another directory instead of the current working directory |
-| `nivel prepare` | Generate `(nivel-generated)` docs routes and data files from your docs config |
-| `nivel prepare --root <path>` | Run generation for another consumer root |
-| `nivel --help` | Print the current CLI usage |
+| `@unterberg/nivel` | main types, docs helpers, MDX components, shared utilities |
+| `@unterberg/nivel/config` | lean config-time entry for `defineDocsConfig()` and `defineDocsGraph()` |
+| `@unterberg/nivel/vike` | engine-owned Vike config for the consumer's `pages/+config.ts` |
+| `@unterberg/nivel/client` | `AppLayout`, `MetaHead`, `UserSettingsSync`, `DocsPage`, and client stores |
+| `@unterberg/nivel/mdx` | MDX provider entry |
+| `@unterberg/nivel/mdx/code-blocks` | code-block components and transforms |
+| `@unterberg/nivel/tailwind` | `nivelTailwindVite()` helper |
+| `@unterberg/nivel/daisyui-theme` | daisyUI theme plugin surface |
+| `@unterberg/nivel/runtime/node` | lower-level runtime helpers for loading config, resolving docs, scaffolding, and codegen |
+| `@unterberg/nivel/runtime/client` | lower-level client runtime entry |
+
+## Notes
+
+- `basePath` controls the public docs route prefix.
+- `contentDir` is optional and defaults to `docs`.
+- If you configure Algolia, `apiKey` must be a browser-safe search key.
+- The repo validates this package through both the in-repo consumer at `packages/consumer-dev` and the standalone fixture at `tests/npm-consumer`.
