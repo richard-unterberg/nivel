@@ -46,7 +46,31 @@ test('search store toggle and close actions can close an opened search panel', (
   assert.equal(closedStore.getState().searchState.isOpen, false)
 })
 
+test('sidebar store tracks open nodes and scroll position', () => {
+  const store = createDocsRuntimeStore()
+
+  assert.deepEqual(store.getState().sidebarState, {
+    openNodes: {},
+    scrollTop: 0,
+  })
+
+  store.getState().sidebarActions.setNodeOpen('section:getting-started', true)
+  store.getState().sidebarActions.setScrollTop(240)
+
+  assert.deepEqual(store.getState().sidebarState, {
+    openNodes: {
+      'section:getting-started': true,
+    },
+    scrollTop: 240,
+  })
+})
+
 test('client runtime exports the public search hooks', () => {
   assert.equal(typeof clientRuntime.useDocsSearchActions, 'function')
   assert.equal(typeof clientRuntime.useDocsSearchStore, 'function')
+})
+
+test('client runtime exports the public sidebar hooks', () => {
+  assert.equal(typeof clientRuntime.useDocsSidebarActions, 'function')
+  assert.equal(typeof clientRuntime.useDocsSidebarStore, 'function')
 })

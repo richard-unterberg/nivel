@@ -70,8 +70,10 @@ export const rehypeDocsHeadings = () => {
         tagName: 'a',
         properties: {
           href: `#${node.properties.id}`,
+          'data-copy-heading-link': '',
           'aria-hidden': 'true',
-          'aria-label': `Link to heading: ${title}`,
+          'aria-label': `Copy link to heading: ${title}`,
+          title: `Copy link to heading: ${title}`,
           className: ['docs-heading-link absolute inset-0 flex items-center justify-end text-primary-muted'],
         },
         children: [

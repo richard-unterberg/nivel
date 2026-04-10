@@ -2,11 +2,20 @@ import type { ReactNode } from 'react'
 import { createContext, useContext } from 'react'
 import { useStore } from 'zustand'
 import { createStore } from 'zustand/vanilla'
-import type { DocsSearchActions, DocsSearchSlice, DocsSearchState } from './types.js'
+import type {
+  DocsSearchActions,
+  DocsSearchSlice,
+  DocsSearchState,
+  DocsSidebarActions,
+  DocsSidebarSlice,
+  DocsSidebarState,
+} from './types.js'
 
 type DocsRuntimeStoreState = {
   searchActions: DocsSearchActions
   searchState: DocsSearchState
+  sidebarActions: DocsSidebarActions
+  sidebarState: DocsSidebarState
 }
 
 type DocsRuntimeStoreApi = ReturnType<typeof createDocsRuntimeStore>
@@ -14,6 +23,11 @@ type DocsRuntimeStoreApi = ReturnType<typeof createDocsRuntimeStore>
 const defaultDocsSearchState: DocsSearchState = {
   isOpen: false,
   query: '',
+}
+
+const defaultDocsSidebarState: DocsSidebarState = {
+  openNodes: {},
+  scrollTop: 0,
 }
 
 export const createDocsRuntimeStore = () => {
@@ -80,9 +94,43 @@ export const createDocsRuntimeStore = () => {
         }),
     }
 
+    const sidebarActions: DocsSidebarActions = {
+      setNodeOpen: (nodeId, isOpen) =>
+        set((state) => {
+          if (state.sidebarState.openNodes[nodeId] === isOpen) {
+            return state
+          }
+
+          return {
+            sidebarState: {
+              ...state.sidebarState,
+              openNodes: {
+                ...state.sidebarState.openNodes,
+                [nodeId]: isOpen,
+              },
+            },
+          }
+        }),
+      setScrollTop: (scrollTop) =>
+        set((state) => {
+          if (state.sidebarState.scrollTop === scrollTop) {
+            return state
+          }
+
+          return {
+            sidebarState: {
+              ...state.sidebarState,
+              scrollTop,
+            },
+          }
+        }),
+    }
+
     return {
       searchActions,
       searchState: defaultDocsSearchState,
+      sidebarActions,
+      sidebarState: defaultDocsSidebarState,
     }
   })
 }
@@ -118,4 +166,17 @@ export const useDocsSearchStore = <Selected,>(selector: (state: DocsSearchSlice)
 
 export const useDocsSearchActions = () => {
   return useDocsRuntimeStore((state) => state.searchActions)
+}
+
+export const useDocsSidebarStore = <Selected,>(selector: (state: DocsSidebarSlice) => Selected) => {
+  return useDocsRuntimeStore((state) =>
+    selector({
+      ...state.sidebarState,
+      ...state.sidebarActions,
+    }),
+  )
+}
+
+export const useDocsSidebarActions = () => {
+  return useDocsRuntimeStore((state) => state.sidebarActions)
 }

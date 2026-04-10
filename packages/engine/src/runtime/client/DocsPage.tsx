@@ -6,6 +6,7 @@ import { UniversalMdxProvider } from '../../mdx/components/UniversalMdxProvider.
 import { renderInlineMarkdown } from '../../shared/renderInlineMarkdown.js'
 import { DocsPagination } from './components/DocsPagination.js'
 import { DocsFooter } from './components/Footer.js'
+import { HeadingLinkCopy } from './components/HeadingLinkCopy.js'
 import { LayoutComponent } from './components/LayoutComponent.js'
 import { ProseContainer } from './components/ProseContainer.js'
 import { Sidebar } from './components/Sidebar.js'
@@ -29,6 +30,7 @@ export const DocsPage = ({ Content }: DocsPageProps) => {
         currentPathname: pageContext.urlPathname,
       })}
     >
+      <HeadingLinkCopy />
       <div className="absolute top-0 left-0 w-full h-[60svh] bg-radial-[at_65%_-85%] from-primary-muted-light/40 dark:from-primary-muted-light/60 to-65%" />
       <LayoutComponent>
         <div className="lg:flex lg:gap-10 xl:gap-14">

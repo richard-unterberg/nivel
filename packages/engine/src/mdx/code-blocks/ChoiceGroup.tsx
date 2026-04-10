@@ -88,7 +88,7 @@ const ChoiceGroup = ({
   return (
     <div
       data-choice-group-outer
-      className="my-7 flex h-full flex-col overflow-hidden rounded-box border border-base-muted-light"
+      className="my-6 flex h-full flex-col overflow-hidden rounded-box border border-base-muted-light"
     >
       <div
         className="not-prose flex min-h-10 items-center relative justify-between gap-3 border-b border-base-muted-light bg-base-muted-superlight px-4"

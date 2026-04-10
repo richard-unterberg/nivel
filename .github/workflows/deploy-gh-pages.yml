@@ -12,6 +12,29 @@ permissions:
   contents: write
 
 jobs:
+  test-engine:
+    name: Test Engine
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Tests
+        run: pnpm test --workspace engine
+
   build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
