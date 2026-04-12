@@ -109,7 +109,6 @@ const getConfigTemplate = () => {
     '  title: docsConfig.siteTitle,',
     '  description: docsConfig.siteDescription ?? `${docsConfig.siteTitle} documentation`,',
     "  htmlAttributes: { 'data-theme': dataTheme },",
-    "  passToClient: ['docs'],",
     '',
     '  // User-facing Vike levers stay visible in +config.ts.',
     '  prerender: true,',
@@ -387,25 +386,20 @@ export const getTailwindBootstrapWarnings = (rootDir: string) => {
   const themeCssPath = path.join(rootDir, 'styles', 'theme.css')
 
   const viteConfigSource = readFileIfExists(viteConfigPath)
-  if (
-    !viteConfigSource ||
-    !viteConfigSource.includes('@unterberg/nivel/tailwind') ||
-    !viteConfigSource.includes('nivelTailwindVite()')
-  ) {
+  if (!viteConfigSource?.includes('@unterberg/nivel/tailwind') || !viteConfigSource.includes('nivelTailwindVite()')) {
     warnings.push(
       'vite.config.ts should use @unterberg/nivel/tailwind and call nivelTailwindVite() for the engine-owned Tailwind integration.',
     )
   }
 
   const wrapperSource = readFileIfExists(wrapperPath)
-  if (!wrapperSource || !wrapperSource.includes('../styles/global.css')) {
+  if (!wrapperSource?.includes('../styles/global.css')) {
     warnings.push('pages/+Wrapper.tsx should import ../styles/global.css.')
   }
 
   const globalCssSource = readFileIfExists(globalCssPath)
   if (
-    !globalCssSource ||
-    !globalCssSource.includes('@unterberg/nivel/tailwind.css') ||
+    !globalCssSource?.includes('@unterberg/nivel/tailwind.css') ||
     !globalCssSource.includes("@import './theme.css';") ||
     !globalCssSource.includes("@source '../pages';") ||
     !globalCssSource.includes("@source '../docs';")

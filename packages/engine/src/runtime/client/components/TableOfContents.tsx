@@ -2,9 +2,10 @@ import cm, { cmMerge } from '@classmatejs/react'
 import { Flame, TableOfContentsIcon } from 'lucide-react'
 import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
-import { useData } from 'vike-react/useData'
 import { createHeadingSlugger, normalizeHeadingTitle } from '../../../docs/docHeadings.js'
-import type { DocHeading, DocPageData, ResolvedDocsPartnersConfig } from '../../../docs/types.js'
+import type { DocHeading, ResolvedDocsPartnersConfig } from '../../../docs/types.js'
+import { useDocsGlobalContext } from '../docsGlobalContext.js'
+import { useDocsRouteStore } from '../store/runtime-store.js'
 
 const getCurrentHash = () => {
   try {
@@ -107,15 +108,22 @@ const updateActiveHeadingFromScroll = (setActiveHeadingId: (value: string) => vo
 }
 
 interface TableOfContentsProps {
-  headings: DocHeading[]
-  partners: ResolvedDocsPartnersConfig
+  headings?: DocHeading[]
+  tableOfContents?: boolean
 }
 
-export const TableOfContents = ({ headings, partners }: TableOfContentsProps) => {
+export const TableOfContents = ({
+  headings: headingsProp = [],
+  tableOfContents: tableOfContentsProp = false,
+}: TableOfContentsProps) => {
+  const { partners } = useDocsGlobalContext()
+  const headings = useDocsRouteStore((state) => state.headings)
+  const tableOfContents = useDocsRouteStore((state) => state.tableOfContents)
+  const effectiveRouteHeadings = headings.length > 0 ? headings : headingsProp
+  const effectiveTableOfContents = tableOfContents || tableOfContentsProp
   const [activeHeadingId, setActiveHeadingId] = useState('')
-  const [domHeadings, setDomHeadings] = useState<DocHeading[]>(headings)
-  const effectiveHeadings = domHeadings.length > 0 ? domHeadings : headings
-  const { page } = useData() as DocPageData
+  const [domHeadings, setDomHeadings] = useState<DocHeading[]>(effectiveRouteHeadings)
+  const effectiveHeadings = domHeadings.length > 0 ? domHeadings : effectiveRouteHeadings
 
   useEffect(() => {
     let scrollFrame = 0
@@ -168,11 +176,11 @@ export const TableOfContents = ({ headings, partners }: TableOfContentsProps) =>
     }
 
     setDomHeadings((currentHeadings) => {
-      if (areHeadingsEqual(currentHeadings, headings)) {
+      if (areHeadingsEqual(currentHeadings, effectiveRouteHeadings)) {
         return currentHeadings
       }
 
-      return headings
+      return effectiveRouteHeadings
     })
     setActiveHeadingId('')
 
@@ -180,13 +188,13 @@ export const TableOfContents = ({ headings, partners }: TableOfContentsProps) =>
       syncHeadingsFromDom(setDomHeadings)
       updateActiveHeadingFromScroll(setActiveHeadingId)
     })
-  }, [headings])
+  }, [effectiveRouteHeadings])
 
   return (
-    <aside className={cmMerge(page.tableOfContents ? 'w-64' : 'w-32', 'hidden shrink-0 xl:block')}>
+    <aside className={cmMerge(effectiveTableOfContents ? 'w-64' : 'w-32', 'hidden shrink-0 xl:block')}>
       <div className="sticky top-16">
         <div className="relative h-[calc(100svh-16*var(--spacing))] overflow-y-auto overflow-x-hidden pt-10 pb-8">
-          {page.tableOfContents
+          {effectiveTableOfContents
             ? effectiveHeadings.length > 0 && (
                 <>
                   <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-base-muted">

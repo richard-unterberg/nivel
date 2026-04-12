@@ -1,10 +1,11 @@
 import { cmMerge } from '@classmatejs/react'
 import type { ReactNode } from 'react'
-import { useEffect, useRef } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import type { ResolvedDocsSection, ResolvedSidebarGroup, ResolvedSidebarNode } from '../../../docs/types.js'
 import { withSiteBaseUrl } from '../../../shared/assets.js'
 import { renderInlineMarkdown } from '../../../shared/renderInlineMarkdown.js'
-import { useDocsSidebarActions, useDocsSidebarStore } from '../store/runtime-store.js'
+import { useDocsGlobalContext } from '../docsGlobalContext.js'
+import { useDocsRouteStore, useDocsSidebarActions, useDocsSidebarStore } from '../store/runtime-store.js'
 import {
   containsActiveHref,
   getGroupHref,
@@ -202,49 +203,38 @@ const SidebarSectionGroup = ({ section, currentHref, activeSectionId }: SidebarS
 }
 
 interface SidebarProps {
-  sections: ResolvedDocsSection[]
-  activeSectionId: string
-  currentHref: string
+  currentHref?: string
+  activeSectionId?: string
 }
 
-export const Sidebar = ({ sections, activeSectionId, currentHref }: SidebarProps) => {
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null)
-  const scrollTop = useDocsSidebarStore((state) => state.scrollTop)
-  const { setScrollTop } = useDocsSidebarActions()
+export const Sidebar = memo(
+  ({ currentHref: currentHrefProp = '', activeSectionId: activeSectionIdProp = '' }: SidebarProps) => {
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+    const currentHref = useDocsRouteStore((state) => state.currentHref) || currentHrefProp
+    const activeSectionId = useDocsRouteStore((state) => state.currentSectionId ?? '') || activeSectionIdProp
+    const { sidebarSections } = useDocsGlobalContext()
 
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current
-
-    if (!scrollContainer || scrollContainer.scrollTop === scrollTop) {
-      return
-    }
-
-    scrollContainer.scrollTop = scrollTop
-  }, [scrollTop])
-
-  return (
-    <aside className="hidden basis-76 shrink-0 lg:block">
-      <div className="-ml-3 sticky top-16">
-        <div className="absolute h-full w-px right-0 top-0 bg-linear-to-t to-base-muted-light via-base-muted-light pointer-events-none z-1" />
-        <div
-          ref={scrollContainerRef}
-          className="pr-4 h-[calc(100svh-16*var(--spacing))] overflow-y-scroll overflow-x-hidden relative z-10"
-          onScroll={(event) => {
-            setScrollTop(event.currentTarget.scrollTop)
-          }}
-        >
-          <ul className={cmMerge('menu w-full px-0 py-5 li:last-child:border-0')}>
-            {sections.map((section) => (
-              <SidebarSectionGroup
-                key={section.id}
-                section={section}
-                currentHref={currentHref}
-                activeSectionId={activeSectionId}
-              />
-            ))}
-          </ul>
+    return (
+      <aside className="hidden basis-76 shrink-0 lg:block">
+        <div className="-ml-3 sticky top-16">
+          <div className="absolute h-full w-px right-0 top-0 bg-linear-to-t to-base-muted-light via-base-muted-light pointer-events-none z-1" />
+          <div
+            ref={scrollContainerRef}
+            className="pr-4 h-[calc(100svh-16*var(--spacing))] overflow-y-scroll overflow-x-hidden relative z-10"
+          >
+            <ul className={cmMerge('menu w-full px-0 py-5 li:last-child:border-0')}>
+              {sidebarSections.map((section) => (
+                <SidebarSectionGroup
+                  key={section.id}
+                  section={section}
+                  currentHref={currentHref}
+                  activeSectionId={activeSectionId}
+                />
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-    </aside>
-  )
-}
+      </aside>
+    )
+  },
+)

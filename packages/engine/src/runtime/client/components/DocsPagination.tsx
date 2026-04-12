@@ -3,6 +3,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { DocPageData } from '../../../docs/types.js'
 import { withSiteBaseUrl } from '../../../shared/assets.js'
 import { renderInlineMarkdown } from '../../../shared/renderInlineMarkdown.js'
+import { useDocsGlobalContext } from '../docsGlobalContext.js'
+import { useDocsRouteStore } from '../store/runtime-store.js'
 
 interface PaginationCardProps {
   item: NonNullable<DocPageData['previousPage']>
@@ -41,11 +43,22 @@ const PaginationCard = ({ item, direction, isOffset }: PaginationCardProps) => {
 }
 
 interface DocsPaginationProps {
-  previousPage: DocPageData['previousPage']
-  nextPage: DocPageData['nextPage']
+  previousPage?: DocPageData['previousPage']
+  nextPage?: DocPageData['nextPage']
 }
 
-export const DocsPagination = ({ previousPage, nextPage }: DocsPaginationProps) => {
+export const DocsPagination = ({
+  previousPage: previousPageProp = null,
+  nextPage: nextPageProp = null,
+}: DocsPaginationProps) => {
+  const paginationEnabled = useDocsGlobalContext().footer.pagination
+  const previousPage = useDocsRouteStore((state) => state.previousPage) ?? previousPageProp
+  const nextPage = useDocsRouteStore((state) => state.nextPage) ?? nextPageProp
+
+  if (!paginationEnabled) {
+    return null
+  }
+
   if (!previousPage && !nextPage) {
     return null
   }

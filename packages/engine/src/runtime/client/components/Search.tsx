@@ -2,11 +2,11 @@ import { cmMerge } from '@classmatejs/react'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowRightFromLine, MessageCircleQuestion, Search as SearchIcon, TriangleAlert } from 'lucide-react'
 import type { RefObject } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { usePageContext } from 'vike-react/usePageContext'
 import { withSiteBaseUrl } from '../../../shared/assets.js'
-import { getDocsGlobalContext } from '../docsGlobalContext.js'
+import { useDocsGlobalContext } from '../docsGlobalContext.js'
 import { searchAlgoliaIndex } from '../search.js'
 import { useDocsSearchActions, useDocsSearchStore } from '../store/runtime-store.js'
 import { LayoutComponent } from './LayoutComponent.js'
@@ -30,9 +30,8 @@ const useDebouncedValue = (value: string, delayMs: number) => {
   return debouncedValue
 }
 
-export const SearchTrigger = () => {
-  const pageContext = usePageContext()
-  const docs = getDocsGlobalContext(pageContext as Parameters<typeof getDocsGlobalContext>[0])
+export const SearchTrigger = memo(() => {
+  const docs = useDocsGlobalContext()
   const { open, setQuery } = useDocsSearchActions()
   const query = useDocsSearchStore((state) => state.query)
   const [isSearchHovered, setIsSearchHovered] = useState(false)
@@ -76,34 +75,34 @@ export const SearchTrigger = () => {
       </button>
     </>
   )
-}
+})
 
-export const Search = () => {
-  const pageContext = usePageContext()
-  const docs = getDocsGlobalContext(pageContext as Parameters<typeof getDocsGlobalContext>[0])
+export const Search = memo(() => {
+  const docs = useDocsGlobalContext()
+  const { urlPathname } = usePageContext()
   const { close, setQuery } = useDocsSearchActions()
   const isOpen = useDocsSearchStore((state) => state.isOpen)
   const query = useDocsSearchStore((state) => state.query)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const suggestionBoxRef = useRef<HTMLDivElement | null>(null)
-  const previousPathnameRef = useRef(pageContext.urlPathname)
+  const previousPathnameRef = useRef(urlPathname)
   const debouncedQuery = useDebouncedValue(query, QUERY_DEBOUNCE_MS)
   const normalizedQuery = debouncedQuery.trim()
   const canSearch = Boolean(docs.algolia) && normalizedQuery.length >= MIN_QUERY_LENGTH
 
   const searchQuery = useQuery({
     queryKey: ['nivel-algolia-search', docs.algolia?.appId, docs.algolia?.indexName, normalizedQuery],
-    queryFn: ({ signal }) => searchAlgoliaIndex({ config: docs.algolia!, query: normalizedQuery, signal }),
+    queryFn: ({ signal }) => searchAlgoliaIndex({ config: docs.algolia, query: normalizedQuery, signal }),
     enabled: isOpen && canSearch,
     retry: false,
   })
 
   useEffect(() => {
-    if (previousPathnameRef.current !== pageContext.urlPathname) {
+    if (previousPathnameRef.current !== urlPathname) {
       close()
-      previousPathnameRef.current = pageContext.urlPathname
+      previousPathnameRef.current = urlPathname
     }
-  }, [close, pageContext.urlPathname])
+  }, [close, urlPathname])
 
   useEffect(() => {
     if (!isOpen) {
@@ -151,7 +150,7 @@ export const Search = () => {
       />
     </div>
   )
-}
+})
 
 type SearchSuggestionBoxProps = {
   contentRef: RefObject<HTMLDivElement | null>

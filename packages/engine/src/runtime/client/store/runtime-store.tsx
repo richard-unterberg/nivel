@@ -3,6 +3,9 @@ import { createContext, useContext } from 'react'
 import { useStore } from 'zustand'
 import { createStore } from 'zustand/vanilla'
 import type {
+  DocsRouteActions,
+  DocsRouteSlice,
+  DocsRouteState,
   DocsSearchActions,
   DocsSearchSlice,
   DocsSearchState,
@@ -12,6 +15,8 @@ import type {
 } from './types.js'
 
 type DocsRuntimeStoreState = {
+  routeActions: DocsRouteActions
+  routeState: DocsRouteState
   searchActions: DocsSearchActions
   searchState: DocsSearchState
   sidebarActions: DocsSidebarActions
@@ -27,11 +32,79 @@ const defaultDocsSearchState: DocsSearchState = {
 
 const defaultDocsSidebarState: DocsSidebarState = {
   openNodes: {},
-  scrollTop: 0,
+}
+
+const defaultDocsRouteState: DocsRouteState = {
+  currentHref: '',
+  currentSectionId: null,
+  pageTitle: '',
+  headings: [],
+  tableOfContents: false,
+  previousPage: null,
+  nextPage: null,
 }
 
 export const createDocsRuntimeStore = () => {
   return createStore<DocsRuntimeStoreState>()((set) => {
+    const routeActions: DocsRouteActions = {
+      setPageData: (data) =>
+        set((state) => {
+          const nextRouteState: DocsRouteState = {
+            ...state.routeState,
+            currentHref: data.page.href,
+            currentSectionId: data.page.sectionId,
+            pageTitle: data.page.title,
+            headings: data.headings,
+            tableOfContents: data.page.tableOfContents,
+            previousPage: data.previousPage,
+            nextPage: data.nextPage,
+          }
+
+          if (
+            state.routeState.currentHref === nextRouteState.currentHref &&
+            state.routeState.currentSectionId === nextRouteState.currentSectionId &&
+            state.routeState.pageTitle === nextRouteState.pageTitle &&
+            state.routeState.headings === nextRouteState.headings &&
+            state.routeState.tableOfContents === nextRouteState.tableOfContents &&
+            state.routeState.previousPage === nextRouteState.previousPage &&
+            state.routeState.nextPage === nextRouteState.nextPage
+          ) {
+            return state
+          }
+
+          return {
+            routeState: nextRouteState,
+          }
+        }),
+      clearPageData: () =>
+        set((state) => {
+          if (
+            state.routeState.currentHref === defaultDocsRouteState.currentHref &&
+            state.routeState.currentSectionId === defaultDocsRouteState.currentSectionId &&
+            state.routeState.pageTitle === defaultDocsRouteState.pageTitle &&
+            state.routeState.headings === defaultDocsRouteState.headings &&
+            state.routeState.tableOfContents === defaultDocsRouteState.tableOfContents &&
+            state.routeState.previousPage === defaultDocsRouteState.previousPage &&
+            state.routeState.nextPage === defaultDocsRouteState.nextPage
+          ) {
+            return state
+          }
+
+          return {
+            routeState: {
+              ...state.routeState,
+              currentHref: defaultDocsRouteState.currentHref,
+              currentSectionId: defaultDocsRouteState.currentSectionId,
+              pageTitle: defaultDocsRouteState.pageTitle,
+              headings: defaultDocsRouteState.headings,
+              tableOfContents: defaultDocsRouteState.tableOfContents,
+              previousPage: defaultDocsRouteState.previousPage,
+              nextPage: defaultDocsRouteState.nextPage,
+            },
+          }
+        }),
+    }
+
     const searchActions: DocsSearchActions = {
       open: () =>
         set((state) => {
@@ -111,22 +184,11 @@ export const createDocsRuntimeStore = () => {
             },
           }
         }),
-      setScrollTop: (scrollTop) =>
-        set((state) => {
-          if (state.sidebarState.scrollTop === scrollTop) {
-            return state
-          }
-
-          return {
-            sidebarState: {
-              ...state.sidebarState,
-              scrollTop,
-            },
-          }
-        }),
     }
 
     return {
+      routeActions,
+      routeState: defaultDocsRouteState,
       searchActions,
       searchState: defaultDocsSearchState,
       sidebarActions,
@@ -179,4 +241,17 @@ export const useDocsSidebarStore = <Selected,>(selector: (state: DocsSidebarSlic
 
 export const useDocsSidebarActions = () => {
   return useDocsRuntimeStore((state) => state.sidebarActions)
+}
+
+export const useDocsRouteStore = <Selected,>(selector: (state: DocsRouteSlice) => Selected) => {
+  return useDocsRuntimeStore((state) =>
+    selector({
+      ...state.routeState,
+      ...state.routeActions,
+    }),
+  )
+}
+
+export const useDocsRouteActions = () => {
+  return useDocsRuntimeStore((state) => state.routeActions)
 }

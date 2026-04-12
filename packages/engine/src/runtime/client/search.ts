@@ -142,11 +142,16 @@ const mapHitToSearchResult = (hit: unknown, config: ResolvedDocsAlgoliaConfig): 
 }
 
 export const searchAlgoliaIndex = async (options: {
-  config: ResolvedDocsAlgoliaConfig
+  config?: ResolvedDocsAlgoliaConfig | null
   query: string
   signal?: AbortSignal
 }) => {
   const { config, query, signal } = options
+
+  if (!config) {
+    throw new Error('Algolia search is not configured.')
+  }
+
   const response = await fetch(buildSearchUrl(config.appId, config.indexName), {
     method: 'POST',
     signal,

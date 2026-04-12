@@ -77,6 +77,20 @@ const getGeneratedPageSource = (contentImportPath: string) => {
   ].join('\n')
 }
 
+const getGeneratedLayoutSource = () => {
+  return [
+    "import { DocsRouteLayout } from '@unterberg/nivel/client'",
+    "import type { ReactNode } from 'react'",
+    '',
+    'const Layout = ({ children }: { children: ReactNode }) => {',
+    '  return <DocsRouteLayout>{children}</DocsRouteLayout>',
+    '}',
+    '',
+    'export default Layout',
+    '',
+  ].join('\n')
+}
+
 const getGeneratedDataSource = (data: DocPageData) => {
   return [
     "import type { DocPageData } from '@unterberg/nivel'",
@@ -191,6 +205,7 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
   const docsContentRoot = path.join(rootDir, resolved.contentDir)
   const expectedFiles = new Set<string>()
   const globalContextFilePath = path.join(generatedPagesRoot, '_docsGlobalContext.ts')
+  const layoutFilePath = path.join(generatedPagesRoot, '+Layout.tsx')
 
   fs.mkdirSync(generatedPagesRoot, { recursive: true })
 
@@ -210,7 +225,9 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
   }
 
   writeFileIfChanged(globalContextFilePath, getGeneratedGlobalContextSource(globalContextData))
+  writeFileIfChanged(layoutFilePath, getGeneratedLayoutSource())
   expectedFiles.add(globalContextFilePath)
+  expectedFiles.add(layoutFilePath)
 
   for (const [pageIndex, page] of resolved.pages.entries()) {
     const contentFilePath = path.join(docsContentRoot, page.source)

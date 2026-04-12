@@ -65,7 +65,6 @@ export const createNivelVikeConfig = (docsConfig: DocsConfig) => {
     htmlAttributes: {
       'data-theme': getDefaultConsumerDataTheme(docsConfig),
     },
-    passToClient: ['docs'],
     prerender: true,
   } as Config
 }

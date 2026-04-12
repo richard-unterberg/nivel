@@ -1,10 +1,10 @@
-import { useDocsGlobalContext } from '../../docsGlobalContext.js'
+import { useDocsFromPageGlobalContext } from '../../docsGlobalContext.js'
 import { FaviconLinks } from './FaviconLinks.js'
 import { FontLinks } from './FontLinks.js'
 import { ThemeBootstrap } from './ThemeBootstrap.js'
 
 export const MetaHead = () => {
-  const docs = useDocsGlobalContext()
+  const docs = useDocsFromPageGlobalContext()
 
   return (
     <>

@@ -136,7 +136,6 @@ const config: Config = {
   title: docsConfig.siteTitle,
   description: docsConfig.siteDescription ?? `${docsConfig.siteTitle} documentation`,
   htmlAttributes: { 'data-theme': dataTheme },
-  passToClient: ['docs'],
   prerender: true,
 }
 ```

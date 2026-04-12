@@ -1,6 +1,6 @@
-import { usePageContext } from 'vike-react/usePageContext'
+import { memo } from 'react'
 import { nivelAssetUrl } from '../../../shared/assets.js'
-import { getDocsGlobalContext } from '../docsGlobalContext.js'
+import { useDocsGlobalContext } from '../docsGlobalContext.js'
 
 const _iconAssets = {
   github: nivelAssetUrl('brands/github.svg'),
@@ -27,9 +27,8 @@ const SocialIconElement = ({ icon, href }: { icon: SocialPlatform; href: string 
   )
 }
 
-const SocialIcons = () => {
-  const pageContext = usePageContext()
-  const docs = getDocsGlobalContext(pageContext as Parameters<typeof getDocsGlobalContext>[0])
+const SocialIcons = memo(() => {
+  const docs = useDocsGlobalContext()
   const socialEntries = Object.entries(docs.social ?? {}).filter(
     (entry): entry is [SocialPlatform, string] =>
       entry[0] in _iconAssets && typeof entry[1] === 'string' && entry[1].length > 0,
@@ -46,6 +45,6 @@ const SocialIcons = () => {
       ))}
     </ul>
   )
-}
+})
 
 export default SocialIcons
