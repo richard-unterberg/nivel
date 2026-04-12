@@ -4,7 +4,6 @@ import { Children, isValidElement, type ReactElement, type ReactNode, useRef } f
 import { CodeBlockHeaderMeta } from './CodeBlockHeaderMeta.js'
 import { CodeBlockCopyButton, trimTrailingWhitespace } from './CopyButton.js'
 import { CodeBlockGroupProvider } from './context.js'
-import { useRestoreScroll } from './useRestoreScroll.js'
 import { useSelectedChoice } from './useSelectedChoice.js'
 
 type ChoiceGroupDescriptor = {
@@ -68,7 +67,7 @@ const ChoiceGroup = ({
 }) => {
   const [selectedChoice, setSelectedChoice] = useSelectedChoice(choiceGroup.name, choiceGroup.default)
   const bodyRef = useRef<HTMLDivElement>(null)
-  const previousPositionRef = useRestoreScroll([selectedChoice])
+  // const previousPositionRef = useRestoreScroll([selectedChoice])
   const choiceElements = Children.toArray(children).filter(isChoiceElement)
   const activeChoiceElement =
     choiceElements.find((choiceElement) => choiceElement.props['data-choice-value'] === selectedChoice) ??
@@ -101,10 +100,6 @@ const ChoiceGroup = ({
               name={`choicesFor-${choiceGroup.name}`}
               value={activeChoiceElement.props['data-choice-value']}
               onChange={(event) => {
-                previousPositionRef.current = {
-                  top: event.currentTarget.getBoundingClientRect().top,
-                  element: event.currentTarget,
-                }
                 setSelectedChoice(event.currentTarget.value)
               }}
             >
