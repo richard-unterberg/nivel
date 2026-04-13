@@ -1,6 +1,9 @@
 ## nivel ✨
 
-documentation engine for vike yeah
+static site builder for mdx documentations - alpha
+
+⚠️ This project is under development and built in mind to mainly support vike & telefunc documentation pages.
+Expect breaking changes on engine updates.
 
 ### [`packages/engine`](packages/engine)
 
