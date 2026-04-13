@@ -36,12 +36,19 @@ test('getCodeBlockPropsFromMeta no longer treats bare tokens as titles', () => {
   assert.equal(meta.env, null)
 })
 
-test('stripMetaProps removes title from the pretty-code meta string', () => {
-  const meta = stripMetaProps('choice=svelte title="src/routes/TodoList.svelte" env=client', ['title'])
+test('stripMetaProps removes renderer-owned props from the pretty-code meta string', () => {
+  const meta = stripMetaProps('choice=svelte title="src/routes/TodoList.svelte" env=client file-added hide-menu', [
+    'title',
+    'env',
+    'file-added',
+    'hide-menu',
+  ])
 
   assert.ok(!meta.includes('title='))
+  assert.ok(!meta.includes('env='))
+  assert.ok(!meta.includes('file-added'))
+  assert.ok(!meta.includes('hide-menu'))
   assert.ok(meta.includes('choice=svelte'))
-  assert.ok(meta.includes('env=client'))
 })
 
 test('Pre renders explicit title and env badge', () => {

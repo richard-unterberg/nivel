@@ -8,16 +8,13 @@ By default, Telefunc uses the URL pathname `/_telefunc` to communicate between c
 
 You can use `config.telefuncUrl` to change that URL.
 
-
 ## Basic usage
 
 You always need to set the value twice: on the server- and client-side.
 
 On the server-side:
 
-```ts
-// Environment: server
-
+```ts env="server"
 import { config } from 'telefunc'
 
 config.telefuncUrl = '/api/_telefunc'
@@ -27,9 +24,7 @@ config.telefuncUrl = '/api/_telefunc'
 
 On the client-side:
 
-```ts
-// Environment: client
-
+```ts env="client"
 import { config } from 'telefunc/client'
 
 config.telefuncUrl = '/api/_telefunc'
@@ -42,9 +37,7 @@ config.telefuncUrl = '/api/_telefunc'
 
 If you deploy your frontend and backend at different domain names, then do the following.
 
-```ts
-// Environment: client
-
+```ts env="client"
 import { config } from 'telefunc/client'
 
 // The client-side value can be:
@@ -54,9 +47,7 @@ import { config } from 'telefunc/client'
 config.telefuncUrl = 'https://example.org/api/_telefunc'
 ```
 
-```ts
-// Environment: server
-
+```ts env="server"
 import { config } from 'telefunc'
 
 // The server-side value always needs to be a URL pathname (such as '/_telefunc')

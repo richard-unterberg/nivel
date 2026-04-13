@@ -5,9 +5,7 @@ import ConfigWhereServer from '../../components/ConfigWhereServer.mdx'
 
 Opt out of the <Link href="/best-practices#naming-convention">naming convention for event-based telefunctions</Link> (removes all related warnings).
 
-```ts
-// Environment: server
-
+```ts env="server"
 import { config } from 'telefunc'
 
 config.disableNamingConvention = true

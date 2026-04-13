@@ -37,10 +37,7 @@ If the user's browser can't connect to your server, the error thrown client-side
 
 If `throw Abort()` interrupts a telefunction call, the abort data is returned to the client, and thrown as a `new Error(abortData)`. It can be accessed with the <Link href="/onAbort" /> hook, or caught and handled by your frontend:
 
-```html
-<!-- index.html -->
-<!-- Environment: client -->
-
+```html title="index.html" env="client"
 <html>
   <body>
     <script type="module">
@@ -63,9 +60,7 @@ If `throw Abort()` interrupts a telefunction call, the abort data is returned to
 
 You can also handle the thrown error at your Telefunc server middleware:
 
-```ts
-// server.ts
-
+```ts title="server.ts"
 import { telefunc } from 'telefunc'
 
 // Add Telefunc middleware to server (Hono/Express.js/...)

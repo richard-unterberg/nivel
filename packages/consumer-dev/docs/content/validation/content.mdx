@@ -4,10 +4,7 @@ When a user enters a form with invalid inputs, such as an invalid email address,
 
 Simply return early with an error result, including any message the UI should display to the user.
 
-```ts
-// SignUpForm.telefunc.ts
-// Environment: server
-
+```ts title="SignUpForm.telefunc.ts" env="server"
 export async function onFormSubmit(email: string, password: string) {
   // Form validation
   const inputErrors = {}

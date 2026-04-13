@@ -41,10 +41,7 @@ You can opt-out at any time by setting <Link href="/disableNamingConvention"><co
 
 Non-function exports increase the chance of scope creep, 
 
-```ts
-// NewsletterForm.telefunc.ts
-// Environment: server
- 
+```ts title="NewsletterForm.telefunc.ts" env="server"
 // ✅ Exporting a function
 export async function onNewSubscription(email: string) {
   // ...

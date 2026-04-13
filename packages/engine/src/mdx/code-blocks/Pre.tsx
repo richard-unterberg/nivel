@@ -82,7 +82,7 @@ const Pre = ({ children, className, ...props }: PreProps) => {
     <div
       className={cmMerge(
         'group relative h-full not-prose overflow-hidden',
-        isInChoiceGroup ? '' : 'mb-6 rounded-box border border-base-muted-light',
+        isInChoiceGroup ? '' : 'rounded-box border border-base-muted-light',
         className,
       )}
       data-code-block-frame=""

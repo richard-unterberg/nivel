@@ -6,10 +6,7 @@ Telefunc supports [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File
 
 ## Example
 
-```ts
-// FileUpload.telefunc.ts
-// Environment: server
-
+```ts title="FileUpload.telefunc.ts" env="server"
 import fs from 'node:fs'
 
 export async function onUpload(file: File, description: string) {
@@ -24,10 +21,7 @@ export async function onUpload(file: File, description: string) {
 }
 ```
 
-```tsx
-// FileUpload.tsx
-// Environment: client
-
+```tsx title="FileUpload.tsx" env="client"
 import { onUpload } from './FileUpload.telefunc'
 
 function FileUpload() {

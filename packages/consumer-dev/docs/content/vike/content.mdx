@@ -13,9 +13,7 @@ npm install telefunc
 
 ## 2. Plugin to Vite
 
-```ts
-// vite.config.ts
-
+```ts title="vite.config.ts"
 import react from '@vitejs/plugin-react'
 import vike from 'vike/plugin'
 import telefunc from 'telefunc/vite'
@@ -29,10 +27,7 @@ export default {
 
 The Telefunc middleware intercepts and executes telefunction calls. This is also your opportunity to set any data you'd like available in the Telefunc request context. For more info, see <Link href="/getContext" />.
 
-```ts
-// server.ts
-// Environment: server
-
+```ts title="server.ts" env="server"
 import { Hono } from 'hono'
 import { telefunc } from 'telefunc'
 

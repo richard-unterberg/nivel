@@ -12,9 +12,7 @@ The client-side `onAbort()` hook is called whenever telefunction calls fail beca
 
 Use the `abortValue` property to access the error data.
 
-```ts
-// *.telefunc.ts
-// Environment: server
+```ts title="*.telefunc.ts" env="server"
 import { abort, getContext } from 'telefunc'
 
 export async function someTelefunction() {
@@ -23,12 +21,9 @@ export async function someTelefunction() {
     throw Abort({ code: 'unauthenticated' })
   }
 }
-````
+```
 
-```ts
-// onAbort.ts
-// Environment: client
-
+```ts title="onAbort.ts" env="client"
 import { onAbort } from 'telefunc/client'
 
 onAbort((error: TelefunctionCallAbort) => {

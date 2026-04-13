@@ -6,10 +6,7 @@ Telefunc can be used in any JavaScript environment without using a transformer b
 
 ## Without transformer
 
-```ts
-// TodoList.ts
-// Environment: client
-
+```ts title="TodoList.ts" env="client"
 import { defineTelefunction } from 'telefunc/client'
 import type { onNewTodo as onNewTodoType } from './TodoList.telefunc.ts'
 const onNewTodo = defineTelefunction<typeof onNewTodoType>('TodoList.telefunc.ts', 'onNewTodo')
@@ -36,9 +33,7 @@ The plugin:
 
 You can pass Telefunc server configurations to the Vite plugin:
 
-```ts
-// vite.config.ts
-
+```ts title="vite.config.ts"
 import { telefunc } from 'telefunc/vite'
 import { UserConfig } from 'vite'
 
@@ -55,9 +50,7 @@ The [webpack](https://webpack.js.org) plugin adds the <Link text="Telefunc Trans
 
 If you use webpack, you can transform `*.telefunc.js` files by using the Telefunc's webpack plugin:
 
-```js
-// webpack.config.js
-
+```js title="webpack.config.js"
 module.exports = {
   module: {
     rules: [

@@ -10,9 +10,7 @@ npm install telefunc
 
 ## 2. Plugin to Vite
 
-```ts
-// vite.config.ts
-
+```ts title="vite.config.ts"
 import { sveltekit } from '@sveltejs/kit/vite'
 import { telefunc } from 'telefunc/vite'
 import { defineConfig } from 'vite'
@@ -26,10 +24,7 @@ export default defineConfig({
 
 The Telefunc middleware intercepts and executes telefunction calls. This is also your opportunity to set any data you'd like available in the Telefunc request context. For more info, see <Link href="/getContext" />.
 
-```ts
-// src/routes/_telefunc/+server.ts
-// Environment: server
-
+```ts title="src/routes/_telefunc/+server.ts" env="server"
 import { telefunc } from 'telefunc'
 import type { RequestHandler } from './$types'
 

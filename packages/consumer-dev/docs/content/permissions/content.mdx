@@ -8,10 +8,7 @@ Add authorization checks to telefunctions using guard expressions in the functio
 
 To reject a request for any reason, simply <Link href="/Abort" />. This is equivalent to a status code of `403`. Include error data like a code to trigger a redirect or a message to display to the user.
 
-```js
-// TodoItem.telefunc.js
-// Environment: server
-
+```js title="TodoItem.telefunc.js" env="server"
 import { getContext, Abort } from 'telefunc'
 
 /**
@@ -51,8 +48,7 @@ Use `throw Abort()` to when rejecting access to a resource, or if a telefunction
 
 On the frontend, use the <Link href="/onAbort" /> hook to handle redirects.
 
-```js
-// Environment: client
+```js env="client"
  
 import { onAbort } from 'telefunc/client'
  
@@ -70,10 +66,7 @@ Not every failed request is an error though. To bypass the `onAbort` control flo
 
 We can update the previous example to use a `code` property instead of `throw Abort()` to trigger the redirect.
 
-```js
-// TodoItem.telefunc.js
-// Environment: server
-
+```js title="TodoItem.telefunc.js" env="server"
 import { getContext, Abort } from 'telefunc'
 
 /**
@@ -105,10 +98,7 @@ type OnNewTodoResult = {
 }
 ```
 
-```jsx
-// TodoItem.jsx
-// Environment: client
-
+```jsx title="TodoItem.jsx" env="client"
 /** @param {string} text */
 const onSubmit = async (text) => {
   const result = await onNewTodo(text)
@@ -124,10 +114,7 @@ const onSubmit = async (text) => {
 
 To implement reusable permissions logic, define helper functions that call <Link href="/getContext" text={(<code>getContext()</code>)}/>.
 
-```ts
-// auth/getUser.ts
-// Environment: server
-
+```ts title="auth/getUser.ts" env="server"
 import { getContext, Abort } from 'telefunc'
 
 export function getUser() {
@@ -141,10 +128,7 @@ export function getUser() {
 
 Then use as needed in your telefunctions.
 
-```ts
-// components/TodoItem.telefunc.ts
-// Environment: server
-
+```ts title="components/TodoItem.telefunc.ts" env="server"
 import { getUser } from '../auth/getUser'
 
 export function onTextChange(id: string, text: string) {

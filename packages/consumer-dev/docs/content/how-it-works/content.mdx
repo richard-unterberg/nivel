@@ -5,10 +5,7 @@ Under the hood, Telefunc converts telefunction calls into an HTTP request to you
 
 Let's see what happens when a telefunction is called.
 
-```js
-// hello.telefunc.js
-// Environment: server
-
+```js title="hello.telefunc.js" env="server"
 export { hello }
 
 async function hello({ name }) {
@@ -17,9 +14,7 @@ async function hello({ name }) {
 }
 ```
 
-```js
-// Environment: client
-
+```js env="client"
 import { hello } from './hello.telefunc.js'
 
 const { message } = await hello('Eva')
@@ -27,8 +22,7 @@ const { message } = await hello('Eva')
 
 The `hello.telefunc.js` file is never loaded in the browser: instead Telefunc transforms `hello.telefunc.js` into the following:
 
-```js
-// hello.telefunc.js (after Telefunc transformation)
+```js title="hello.telefunc.js (after Telefunc transformation)"
 // Environment: Browser
 import { __internal_makeHttpRequest } from 'telefunc/client'
 export const hello = (...args) => __internal_makeHttpRequest('/hello.telefunc.js:hello', args)

@@ -20,9 +20,7 @@ In other words, use `throw Abort` to implement permissions and other control flo
 
 In the following example, unauthenticated calls are rejected with `throw Abort()`. The request bypasses `onBug()`, and is returned with a status code `403`.
 
-```js
-// hello.telefunc.js
-// Environment: server
+```js title="hello.telefunc.js" env="server"
  
 export async function hello(name) {
   const { user } = getContext()

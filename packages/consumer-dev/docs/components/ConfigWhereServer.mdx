@@ -2,9 +2,7 @@ import { Alert } from '@unterberg/nivel'
 
 <Alert>
 You usually define server-side configs (`import { config } from 'telefunc'`) at your server entry. For example:
-```ts
-// /server/index.ts
-// Environment: server
+```ts title="/server/index.ts" env="server"
 import { config } from 'telefunc'
 const app = express() // If you use Express.js
 // @docpress-replace app2 app

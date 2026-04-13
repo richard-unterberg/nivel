@@ -16,12 +16,21 @@ export { remarkDetype } from './remarkDetype.js'
 export { remarkPkgManager } from './remarkPkgManager.js'
 export { shikiTransformerAutoLinks } from './shikiTransformerAutoLinks.js'
 
+const REHYPE_PRETTY_CODE_INTERNAL_META_PROPS = [
+  'data-language-label',
+  'env',
+  'file-added',
+  'file-removed',
+  'hide-menu',
+  'title',
+] as const
+
 export const getCodeBlockMdxPlugins = () => {
   const rehypePrettyCodePlugin = [
     rehypePrettyCode,
     {
       keepBackground: false,
-      filterMetaString: (meta: string) => stripMetaProps(meta, ['title']),
+      filterMetaString: (meta: string) => stripMetaProps(meta, [...REHYPE_PRETTY_CODE_INTERNAL_META_PROPS]),
       theme: {
         light: 'github-light',
         dark: 'one-dark-pro',

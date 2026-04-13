@@ -10,10 +10,7 @@ import { Alert, Link } from '@unterberg/nivel'
 
 It's most commonly used for implementing permissions, see <Link href="/permissions" />.
 
-```ts
-// TodoList.telefunc.ts
-// Environment: server
-
+```ts title="TodoList.telefunc.ts" env="server"
 import { Abort, getContext } from 'telefunc'
 
 export async function onLoad() {
@@ -30,9 +27,7 @@ export async function onLoad() {
 
 You can use a generic type argument to set the type locally...
 
-```ts ts-only
-// *.telefunc.ts
-
+```ts ts-only title="*.telefunc.ts"
 import { getContext } from 'telefunc'
 
 type UserContext = { user: string }
@@ -45,9 +40,7 @@ export async function someTelefunction() {
 
 ...or declare the `Telefunc.Context` type globally.
 
-```ts ts-only
-// TelefuncContext.d.ts
-
+```ts ts-only title="TelefuncContext.d.ts"
 import 'telefunc'
 
 declare module 'telefunc' {
@@ -59,9 +52,7 @@ declare module 'telefunc' {
 }
 ```
 
-```ts ts-only
-// *.telefunc.ts
-
+```ts ts-only title="*.telefunc.ts"
 import { getContext } from 'telefunc'
 
 export async function someTelefunction() {
@@ -75,9 +66,7 @@ export async function someTelefunction() {
 
 Make sure to call `getContext()` before any `await` operators:
 
-```ts
-// TodoList.telefunc.ts
-
+```ts title="TodoList.telefunc.ts"
 export async function myTelefunction() {
   // ✅ Good: getContext() is called before `await`
   const context = getContext()
@@ -87,9 +76,7 @@ export async function myTelefunction() {
 
 If you call `getContext()` called after an `await` operator...
 
-```ts
-// TodoList.telefunc.ts
-
+```ts title="TodoList.telefunc.ts"
 export async function myTelefunction() {
   await something()
   // ❌ Wrong: getContext() must be called before `await something()`
