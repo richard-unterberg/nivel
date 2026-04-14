@@ -32,13 +32,13 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Typecheck
+        run: pnpm --filter @unterberg/nivel typecheck && pnpm --filter ./packages/consumer-dev typecheck
+
       - name: Build Page
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
         run: pnpm build
-
-      - name: Typecheck
-        run: pnpm --filter @unterberg/nivel typecheck && pnpm --filter ./packages/consumer-dev typecheck
 
       - name: Run Engine Tests
         run: cd packages/engine && pnpm test
