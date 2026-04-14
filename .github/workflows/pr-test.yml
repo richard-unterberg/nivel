@@ -38,7 +38,7 @@ jobs:
       - name: Build Page
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
-        run: pnpm build
+        run: pnpm --filter ./packages/consumer-dev build
 
       - name: Run Engine Tests
         run: cd packages/engine && pnpm test
