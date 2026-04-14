@@ -16,7 +16,7 @@
   "dependencies": {
     "@unterberg/nivel": "workspace:*",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react-dom": "^19.2.5",
     "vike": "^0.4.256",
     "vike-react": "^0.6.21"
   },
