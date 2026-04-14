@@ -1,0 +1,44 @@
+name: Test Engine
+
+on:
+  pull_request:
+    branches:
+      - master
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: write
+
+jobs:
+  test-engine:
+    name: Test Engine
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Page
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: pnpm build
+
+      - name: Typecheck
+        run: pnpm --filter @unterberg/nivel typecheck && pnpm --filter ./packages/consumer-dev typecheck
+
+      - name: Run Engine Tests
+        run: cd packages/engine && pnpm test
