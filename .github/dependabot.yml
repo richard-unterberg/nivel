@@ -4,7 +4,7 @@ updates:
     directory: "/"
     target-branch: "master"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "monday"
       time: "09:00"
       timezone: "Europe/Berlin"
