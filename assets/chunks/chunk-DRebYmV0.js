@@ -1,0 +1,1 @@
+import{j as o,c as e}from"./chunk-CxXeevQR.js";const r=({children:t})=>o.jsx(e,{children:t}),u=Object.freeze(Object.defineProperty({__proto__:null,default:r},Symbol.toStringTag,{value:"Module"}));export{u as i};
