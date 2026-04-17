@@ -51,7 +51,7 @@ const BreadcrumbSidebarTrigger = ({ currentHref }: { currentHref: string }) => {
   ])
 
   // limit breadcrumbs to max 3 items (including the active section) to avoid overflow
-  const mobileBreadcrumbItems = breadcrumbItems.length > 2 ? breadcrumbItems.slice(0, 2) : breadcrumbItems
+  const mobileBreadcrumbItems = breadcrumbItems.length > 2 ? breadcrumbItems.slice(0, 1) : breadcrumbItems
 
   const handleClick = useCallback(() => {
     alert('TODO: Open sidebar')
