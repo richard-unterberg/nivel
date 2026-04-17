@@ -1,1 +1,0 @@
-import{j as o,c as e}from"./chunk-DFpPrfZK.js";const r=({children:t})=>o.jsx(e,{children:t}),a=Object.freeze(Object.defineProperty({__proto__:null,default:r},Symbol.toStringTag,{value:"Module"}));export{a as i};
