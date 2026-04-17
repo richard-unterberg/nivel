@@ -1,6 +1,5 @@
 import { ChevronLast, ChevronsRight } from 'lucide-react'
 import { useCallback } from 'react'
-import { usePageContext } from 'vike-react/usePageContext'
 import { getActiveSectionByPathname } from '../../../docs/resolveDocsConfig.js'
 import type { ResolvedSidebarNode } from '../../../docs/types.js'
 import { renderInlineMarkdown } from '../../../shared/renderInlineMarkdown.js'
@@ -43,17 +42,16 @@ const getSidebarBreadcrumbs = (items: ResolvedSidebarNode[], currentHref: string
   return null
 }
 
-const BreadcrumbSidebarTrigger = () => {
-  const { urlPathname } = usePageContext()
+const BreadcrumbSidebarTrigger = ({ currentHref }: { currentHref: string }) => {
   const docs = useDocsGlobalContext()
-  const activeSection = getActiveSectionByPathname(docs, urlPathname)
+  const activeSection = getActiveSectionByPathname(docs, currentHref)
   const breadcrumbItems = dedupeBreadcrumbs([
     ...(activeSection ? [{ id: activeSection.id, title: activeSection.navTitle }] : []),
-    ...(activeSection ? (getSidebarBreadcrumbs(activeSection.items, urlPathname) ?? []) : []),
+    ...(activeSection ? (getSidebarBreadcrumbs(activeSection.items, currentHref) ?? []) : []),
   ])
 
   // limit breadcrumbs to max 3 items (including the active section) to avoid overflow
-  const mobileBreadcrumbItems = breadcrumbItems.length > 3 ? breadcrumbItems.slice(0, 2) : breadcrumbItems
+  const mobileBreadcrumbItems = breadcrumbItems.length > 2 ? breadcrumbItems.slice(0, 2) : breadcrumbItems
 
   const handleClick = useCallback(() => {
     alert('TODO: Open sidebar')

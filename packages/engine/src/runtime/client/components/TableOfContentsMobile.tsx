@@ -8,6 +8,7 @@ interface TableOfContentsProps {
   headings?: DocHeading[]
   tableOfContents?: boolean
   pageTitle?: string
+  currentHref: string
   activeHeadingId?: string
   setActiveHeadingId?: Dispatch<SetStateAction<string>>
 }
@@ -16,6 +17,7 @@ const TableOfContentsMobile = ({
   headings = [],
   tableOfContents = false,
   pageTitle = 'On this page',
+  currentHref,
   activeHeadingId = '',
   setActiveHeadingId = () => undefined,
 }: TableOfContentsProps) => {
@@ -28,9 +30,9 @@ const TableOfContentsMobile = ({
       <div className="h-12 xl:hidden"></div>
       <StyledTOC>
         <StyledTOCInner>
-          <BreadcrumbSidebarTrigger />
-          <label className="select select-sm md:w-60 w-30" htmlFor="table-of-contents-select">
-            <span className="label">
+          <BreadcrumbSidebarTrigger currentHref={currentHref} />
+          <label className="select select-sm md:w-60 w-fit" htmlFor="table-of-contents-select">
+            <span className="label hidden lg:flex">
               <TableOfContents className="w-4 h-4" />
             </span>
             <select

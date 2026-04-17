@@ -32,6 +32,7 @@ export const DocsLayout = ({ children }: DocsLayoutProps) => {
               headings={effectiveHeadings}
               tableOfContents={data.page.tableOfContents && effectiveHeadings.length > 0}
               pageTitle={data.page.title}
+              currentHref={data.page.href}
               activeHeadingId={activeHeadingId}
               setActiveHeadingId={setActiveHeadingId}
             />
