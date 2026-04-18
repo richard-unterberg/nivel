@@ -138,4 +138,5 @@ const AdbarLink = cm.a`
 const Image = cm.img`
   mx-auto
   w-24
+  h-auto
 `
