@@ -18,10 +18,11 @@ const NavbarNew = () => {
   const activeSection = getActiveSectionByPathname(docs, urlPathname)
   const { toggle: toggleSearch } = useDocsSearchActions()
 
-  const { closeMegaMenu, hoveredSectionId, isMegaMenuOpen, openMegaMenu, scheduleMegaMenuClose } = useMegaMenu({
-    activeSectionId: activeSection?.id,
-    sections,
-  })
+  const { closeMegaMenu, hoveredSectionId, isMegaMenuOpen, openMegaMenu, scheduleMegaMenuOpen, scheduleMegaMenuClose } =
+    useMegaMenu({
+      activeSectionId: activeSection?.id,
+      sections,
+    })
 
   return (
     <StyledNavbar $border={isLandingPage}>
@@ -29,17 +30,23 @@ const NavbarNew = () => {
         {isLandingPage ? (
           <LandingPageNavbar
             openMegaMenu={openMegaMenu}
+            scheduleMegaMenuOpen={scheduleMegaMenuOpen}
             scheduleMegaMenuClose={scheduleMegaMenuClose}
             toggleSearch={toggleSearch}
             closeMegaMenu={closeMegaMenu}
+            hoveredSectionId={hoveredSectionId}
+            isMegaMenuOpen={isMegaMenuOpen}
           />
         ) : (
           <DocsNavbar
             openMegaMenu={openMegaMenu}
+            scheduleMegaMenuOpen={scheduleMegaMenuOpen}
             scheduleMegaMenuClose={scheduleMegaMenuClose}
             toggleSearch={toggleSearch}
             closeMegaMenu={closeMegaMenu}
             activeSection={activeSection}
+            hoveredSectionId={hoveredSectionId}
+            isMegaMenuOpen={isMegaMenuOpen}
           />
         )}
       </LayoutComponent>

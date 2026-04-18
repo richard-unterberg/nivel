@@ -20,18 +20,24 @@ const StyledNavList = cm.ul`
 
 interface DocsNavbarProps {
   scheduleMegaMenuClose?: () => void
+  scheduleMegaMenuOpen: (id?: string) => void
   openMegaMenu: (id?: string) => void
   toggleSearch: () => void
   closeMegaMenu?: () => void
   activeSection?: ResolvedDocsSection | null
+  hoveredSectionId?: string
+  isMegaMenuOpen: boolean
 }
 
 const DocsNavbar = ({
   closeMegaMenu,
   openMegaMenu,
+  scheduleMegaMenuOpen,
   scheduleMegaMenuClose,
   toggleSearch,
   activeSection,
+  hoveredSectionId,
+  isMegaMenuOpen,
 }: DocsNavbarProps) => {
   const docs = useDocsGlobalContext()
 
@@ -46,29 +52,38 @@ const DocsNavbar = ({
       </div>
       <StyledNav aria-label="Primary">
         <StyledNavList className="">
-          {docs.navbarItems.map((item) => (
-            <li key={item.id}>
-              <a
-                href={withSiteBaseUrl(item.href)}
-                className={'block'}
-                onPointerEnter={() => openMegaMenu(item.id)}
-                onPointerLeave={scheduleMegaMenuClose}
-                onFocus={() => openMegaMenu(item.id)}
-                onBlur={scheduleMegaMenuClose}
-                onClick={closeMegaMenu}
-              >
-                <span
-                  className={cmMerge(
-                    'btn text-base btn-sm md:min-w-30 px-2 whitespace-nowrap tracking-tight',
-                    activeSection?.id === item.id ? 'btn-primary btn-soft' : 'btn-ghost ',
-                  )}
+          {docs.navbarItems.map((item) => {
+            const isMegaMenuItemActive = isMegaMenuOpen && hoveredSectionId === item.id
+
+            return (
+              <li key={item.id}>
+                <a
+                  href={withSiteBaseUrl(item.href)}
+                  className={'block'}
+                  onPointerEnter={() => scheduleMegaMenuOpen(item.id)}
+                  onPointerLeave={scheduleMegaMenuClose}
+                  onFocus={() => openMegaMenu(item.id)}
+                  onBlur={scheduleMegaMenuClose}
+                  onClick={closeMegaMenu}
                 >
-                  {renderInlineMarkdown(item.title)}
-                  <ChevronDown className="h-4 w-4 shrink-0" />
-                </span>
-              </a>
-            </li>
-          ))}
+                  <span
+                    className={cmMerge(
+                      'btn text-base btn-sm md:min-w-30 px-2 whitespace-nowrap tracking-tight',
+                      activeSection?.id === item.id ? 'btn-primary btn-soft' : 'btn-ghost ',
+                    )}
+                  >
+                    {renderInlineMarkdown(item.title)}
+                    <ChevronDown
+                      className={cmMerge(
+                        'h-4 w-4 shrink-0 transition-transform duration-200',
+                        isMegaMenuItemActive ? 'rotate-180' : 'rotate-0',
+                      )}
+                    />
+                  </span>
+                </a>
+              </li>
+            )
+          })}
           {docs.algolia ? (
             <li>
               <button
