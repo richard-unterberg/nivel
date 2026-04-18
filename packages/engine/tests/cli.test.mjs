@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
+import { spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { spawnSync } from 'node:child_process'
 import test from 'node:test'
 import { fileURLToPath } from 'node:url'
 
@@ -71,10 +71,9 @@ test('nivel init creates visible consumer files and standard scripts', () => {
   const viteConfigSource = fs.readFileSync(path.join(rootDir, 'vite.config.ts'), 'utf8')
   const wrapperSource = fs.readFileSync(path.join(rootDir, 'pages', '+Wrapper.tsx'), 'utf8')
   assert.match(configSource, /createNivelVikeConfig/)
-  assert.match(configSource, /satisfies Config/)
   assert.match(configSource, /prerender: true/)
   assert.match(configSource, /prefetchStaticAssets/)
-  assert.doesNotMatch(configSource, /const config: Config =/)
+  assert.doesNotMatch(configSource, /import type \{ Config \} from 'vike\/types'/)
   assert.match(viteConfigSource, /@unterberg\/nivel\/tailwind/)
   assert.match(viteConfigSource, /nivelTailwindVite\(\)/)
   assert.match(wrapperSource, /\.\.\/styles\/global\.css/)

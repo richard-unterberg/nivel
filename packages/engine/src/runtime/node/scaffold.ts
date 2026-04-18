@@ -93,7 +93,6 @@ const getDocsGraphTemplate = () => {
 const getConfigTemplate = () => {
   return [
     "import { createNivelVikeConfig } from '@unterberg/nivel/vike'",
-    "import type { Config } from 'vike/types'",
     "import docsConfig from './+docs'",
     '',
     'const config = {',
@@ -103,7 +102,7 @@ const getConfigTemplate = () => {
     '  prerender: true,',
     '  // ssr: true,',
     "  // prefetchStaticAssets: 'viewport',",
-    '} satisfies Config',
+    '}',
     '',
     'export default config',
     '',
