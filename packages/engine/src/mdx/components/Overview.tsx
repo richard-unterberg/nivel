@@ -65,7 +65,7 @@ const groupOverviewItems = (items: OverviewItem[]) => {
 const OverviewCard = ({ excerpt, href, title, compact }: OverviewLinkItem) => {
   return (
     <StyleOverviewCard href={withSiteBaseUrl(href)} $compact={compact}>
-      <h3 className="text-lg font-semibold text-base-content">{renderInlineMarkdown(title)}</h3>
+      <span className="text-lg font-semibold text-base-content">{renderInlineMarkdown(title)}</span>
       {excerpt && !compact ? (
         <p className="text-sm leading-relaxed text-base-muted">{renderInlineMarkdown(excerpt)}</p>
       ) : null}
