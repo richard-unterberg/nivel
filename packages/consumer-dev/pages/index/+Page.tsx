@@ -7,29 +7,31 @@ import FrontendCode from './frontendCode.mdx'
 import { Quickstart } from './QuickStart/QuickStart'
 import SectionHeading from './SectionHeading'
 
+const styles = `
+  .landing-code-samples [data-code-block-content] {
+    height: 100%;
+    margin-bottom: 0 !important;
+    padding-top: 1rem !important;
+    font-size: 12.5px !important;
+  }
+
+  .landing-code-samples [data-rehype-pretty-code-figure] {
+    height: 100%;
+  }
+
+  .landing-code-samples [data-code-block-frame] {
+    height: 100%;
+  }
+
+  .landing-code-samples [data-choice-group-outer] {
+    margin-top: 0 !important;
+  }
+`
+
 const Page = () => {
   return (
     <div className="landing-code-samples">
-      <style>{`
-        .landing-code-samples [data-code-block-content] {
-          height: 100%;
-          margin-bottom: 0 !important;
-          padding-top: 1rem !important;
-          font-size: 12.5px !important;
-        }
-
-        .landing-code-samples [data-rehype-pretty-code-figure] {
-          height: 100%;
-        }
-
-        .landing-code-samples [data-code-block-frame] {
-          height: 100%;
-        }
-
-        .landing-code-samples [data-choice-group-outer] {
-          margin-top: 0 !important;
-        }
-      `}</style>
+      <style>{styles}</style>
       <div className="overflow-x-clip min-h-[calc(100svh-14*var(--spacing))] flex flex-col justify-center py-16 w-full">
         <div className="w-full overflow-x-hidden h-full max-w-full absolute top-0 left-0">
           <div className="absolute top-0 min-w-300 left-1/2 w-full h-svh bg-radial-[at_50%_50%] from-primary-muted-light/30 dark:from-primary-muted-light/30 to-55% translate-x-[-50%] pointer-events-none" />
