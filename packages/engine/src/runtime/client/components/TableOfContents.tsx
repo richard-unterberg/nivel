@@ -105,12 +105,12 @@ const PartnerLogo = ({
       <Image
         src={partner.logoLight}
         width={200}
-        height={100}
+        height={200}
         alt={partner.logoAlt}
         className={cmMerge('block', partner.logoDark ? 'dark:hidden' : 'dark:invert')}
       />
       {partner.logoDark ? (
-        <Image src={partner.logoDark} width={200} height={100} alt={partner.logoAlt} className="hidden dark:block" />
+        <Image src={partner.logoDark} width={200} height={200} alt={partner.logoAlt} className="hidden dark:block" />
       ) : null}
     </>
   )
