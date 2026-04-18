@@ -1,5 +1,6 @@
 import cm, { cmMerge } from '@classmatejs/react'
 import { ChevronDown, Menu, TextSearch } from 'lucide-react'
+import { useCallback } from 'react'
 import type { ResolvedDocsSection } from '../../../../docs/types'
 import { withSiteBaseUrl } from '../../../../shared/assets'
 import { renderInlineMarkdown } from '../../../../shared/renderInlineMarkdown'
@@ -10,7 +11,7 @@ import AsideButtons from './AsideButtons'
 const StyledNav = cm.nav`
   gap-4
   flex-1 pl-10 items-center justify-end lg:justify-start 
-  hidden sm:flex
+  hidden lg:flex
 `
 
 const StyledNavList = cm.ul`
@@ -34,9 +35,9 @@ const DocsNavbar = ({
 }: DocsNavbarProps) => {
   const docs = useDocsGlobalContext()
 
-  const handleMenuButtonClick = () => {
-    openMegaMenu('api')
-  }
+  const handleClick = useCallback(() => {
+    alert('TODO: Open mobile menu')
+  }, [])
 
   return (
     <div className="flex flex-1 gap-4 pt-3 justify-between">
@@ -82,7 +83,7 @@ const DocsNavbar = ({
           ) : null}
         </StyledNavList>
       </StyledNav>
-      <button type="button" className="block lg:hidden" onClick={handleMenuButtonClick}>
+      <button type="button" className="block lg:hidden" onClick={handleClick}>
         <Menu className="w-6 h-6" />
       </button>
       <div className="lg:min-w-40 hidden lg:block">

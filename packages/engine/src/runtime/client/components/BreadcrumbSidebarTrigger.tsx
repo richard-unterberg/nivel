@@ -50,15 +50,12 @@ const BreadcrumbSidebarTrigger = ({ currentHref }: { currentHref: string }) => {
     ...(activeSection ? (getSidebarBreadcrumbs(activeSection.items, currentHref) ?? []) : []),
   ])
 
-  // limit breadcrumbs to max 3 items (including the active section) to avoid overflow
-  const mobileBreadcrumbItems = breadcrumbItems.length > 2 ? breadcrumbItems.slice(0, 1) : breadcrumbItems
-
   const handleClick = useCallback(() => {
-    alert('TODO: Open sidebar')
+    alert('TODO: Open mobile menu')
   }, [])
 
   return (
-    <button className="cursor-pointer min-w-0 max-w-full" type="button" onClick={handleClick}>
+    <button className="cursor-pointer min-w-0 max-w-full hidden md:block" type="button" onClick={handleClick}>
       <span className="flex items-center gap-1 min-w-0 overflow-hidden lg:hidden">
         <ChevronLast className="w-4 h-4 shrink-0 text-primary" />
         <span className="hidden md:flex items-center gap-1">
@@ -71,7 +68,6 @@ const BreadcrumbSidebarTrigger = ({ currentHref }: { currentHref: string }) => {
             </span>
           ))}
         </span>
-        <span className="md:hidden text-sm">{mobileBreadcrumbItems.map((item) => item.title).join(' / ')}</span>
       </span>
     </button>
   )

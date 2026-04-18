@@ -1,5 +1,6 @@
 import cm, { cmMerge } from '@classmatejs/react'
-import { ChevronDown, TextSearch } from 'lucide-react'
+import { ChevronDown, Menu, TextSearch } from 'lucide-react'
+import { useCallback } from 'react'
 import { withSiteBaseUrl } from '../../../../shared/assets'
 import { renderInlineMarkdown } from '../../../../shared/renderInlineMarkdown'
 import { useDocsGlobalContext } from '../../docsGlobalContext'
@@ -30,13 +31,17 @@ const LandingPageNavbar = ({
 }: LandingPageNavbarProps) => {
   const docs = useDocsGlobalContext()
 
+  const handleClick = useCallback(() => {
+    alert('TODO: Open mobile menu')
+  }, [])
+
   return (
-    <div className="flex flex-1 gap-4 pt-3">
+    <div className="flex flex-1 gap-4 pt-3 justify-between">
       <div className="min-w-40">
         <Brand brand={docs.brand} />
       </div>
-      <StyledNav aria-label="Primary" className=" flex-1 flex">
-        <StyledNavList className=" justify-end">
+      <StyledNav aria-label="Primary" className="flex-1 flex hidden lg:flex">
+        <StyledNavList className="justify-end ">
           {docs.navbarItems.map((item) => (
             <li key={item.id}>
               <a
@@ -73,9 +78,12 @@ const LandingPageNavbar = ({
           ) : null}
         </StyledNavList>
       </StyledNav>
-      <div className="min-w-40">
+      <div className="min-w-40 hidden lg:block">
         <AsideButtons />
       </div>
+      <button type="button" className="block lg:hidden" onClick={handleClick}>
+        <Menu className="w-6 h-6" />
+      </button>
     </div>
   )
 }

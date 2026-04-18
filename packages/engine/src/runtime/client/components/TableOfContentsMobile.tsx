@@ -31,8 +31,8 @@ const TableOfContentsMobile = ({
       <StyledTOC>
         <StyledTOCInner>
           <BreadcrumbSidebarTrigger currentHref={currentHref} />
-          <label className="select select-sm sm:w-60 w-3/4" htmlFor="table-of-contents-select">
-            <span className="label hidden sm:flex">
+          <label className="select select-sm md:w-80 w-full" htmlFor="table-of-contents-select">
+            <span className="label flex">
               <TableOfContents className="w-4 h-4" />
             </span>
             <select
