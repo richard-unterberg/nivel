@@ -16,7 +16,6 @@
     "dev:consumer": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/consumer-dev dev",
     "build": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/consumer-dev build",
     "purge:bunny": "node ./scripts/purgeBunnyPullZone.mjs",
-    "warm:cache": "node ./scripts/warmCacheFromSitemap.mjs",
     "typecheck": "pnpm --filter @unterberg/nivel build && pnpm --filter @unterberg/nivel typecheck && pnpm --filter ./packages/consumer-dev typecheck",
     "lint": "biome lint --write .",
     "format": "biome format --write .",

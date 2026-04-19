@@ -63,13 +63,3 @@ jobs:
           BUNNY_API_KEY: ${{ secrets.BUNNY_API_KEY }}
           BUNNY_PULL_ZONE_ID: ${{ secrets.BUNNY_PULL_ZONE_ID }}
         run: pnpm purge:bunny
-
-      - name: Warm Bunny Cache from Sitemap
-        if: github.ref == 'refs/heads/master'
-        env:
-          SITE_URL: https://nivel-docs.de
-          CACHE_WARM_CONCURRENCY: 4
-          CACHE_WARM_SENTINEL_URL: https://nivel-docs.de/
-          CACHE_WARM_WAIT_ATTEMPTS: 12
-          CACHE_WARM_WAIT_INTERVAL_MS: 5000
-        run: pnpm warm:cache
