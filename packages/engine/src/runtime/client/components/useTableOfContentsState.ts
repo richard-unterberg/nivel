@@ -50,7 +50,7 @@ const syncHeadingsFromDom = (setDomHeadings: Dispatch<SetStateAction<DocHeading[
       }
 
       element.classList.add('scroll-mt-32')
-      element.classList.add('xl:scroll-mt-24')
+      element.classList.add('xl:scroll-mt-22')
 
       const id = element.id || slugify(title)
       if (!element.id) {

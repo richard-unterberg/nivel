@@ -49,7 +49,7 @@ const DocsBreadcrumbs = ({ currentHref }: { currentHref: string }) => {
   ])
 
   return (
-    <span className="hidden lg:flex items-center text-sm gap-1 min-w-0 overflow-hidden mb-2 text-primary">
+    <span className="hidden lg:flex items-center text-sm gap-1 min-w-0 overflow-hidden mb-3 text-primary">
       {breadcrumbItems.map((item, index) => {
         const Icon = docs.docsIconMap[getDocsIconMapKey(item.kind, item.id)]
 

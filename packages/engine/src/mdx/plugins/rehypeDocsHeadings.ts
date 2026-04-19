@@ -63,7 +63,7 @@ export const rehypeDocsHeadings = () => {
         node.properties.className = [
           ...classNames,
           'scroll-mt-32',
-          'xl:scroll-mt-24',
+          'xl:scroll-mt-22',
           'flex gap-2 items-center',
           'group',
           'relative',

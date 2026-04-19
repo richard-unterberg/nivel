@@ -27,7 +27,7 @@ export const DocsPage = ({ Content }: DocsPageProps) => {
     >
       <ProseContainer data-doc-content="">
         <DocsBreadcrumbs currentHref={page.href} />
-        <h1 className="scroll-mt-32 xl:scroll-mt-24">{renderInlineMarkdown(page.title)}</h1>
+        <h1 className="scroll-mt-32 xl:scroll-mt-22">{renderInlineMarkdown(page.title)}</h1>
         <Content />
       </ProseContainer>
     </UniversalMdxProvider>
