@@ -10,7 +10,7 @@ import AsideButtons from './AsideButtons'
 
 const StyledNav = cm.nav`
   gap-4
-  flex-1 lg:pl-6 xl:pl-10 items-center justify-center
+  flex-1 items-center justify-center
 `
 
 const StyledNavList = cm.ul`
