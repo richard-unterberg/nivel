@@ -53,6 +53,5 @@ jobs:
         if: github.ref == 'refs/heads/master'
         env:
           BUNNY_API_KEY: ${{ secrets.BUNNY_API_KEY }}
-          BUNNY_PULL_ZONE_ID: ${{ secrets.BUNNY_PULL_ZONE_ID }}
-          BUNNY_CACHE_TAG: ${{ secrets.BUNNY_CACHE_TAG }}
+          BUNNY_PULL_ZONE_URL: ${{ secrets.BUNNY_PULL_ZONE_URL }}
         run: pnpm purge:bunny

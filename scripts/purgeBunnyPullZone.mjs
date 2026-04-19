@@ -11,7 +11,7 @@ if (!apiKey) {
 }
 
 if (!pullZoneUrl) {
-  fail('Missing BUNNY_PULL_ZONE_ID.')
+  fail('Missing BUNNY_PULL_ZONE_URL.')
 }
 
 const requestUrl = `https://api.bunny.net/purge=${pullZoneUrl}`
