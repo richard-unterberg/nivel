@@ -192,7 +192,7 @@ const SidebarNestedGroup = ({ group, currentHref, docsIconMap }: SidebarNestedGr
           setIsOpen(event.currentTarget.open)
         }}
       >
-        <summary className="rounded-field">
+        <summary className="rounded-field max-h-9 flex items-center">
           <SidebarGroupTitle
             title={group.title}
             href={groupHref ?? undefined}
