@@ -94,3 +94,9 @@ test('createNivelVikeConfig only enables sitemap plugins when siteUrl is provide
     fs.rmSync(rootDir, { force: true, recursive: true })
   }
 })
+
+test('daisyui-theme entry is importable in Node ESM', async () => {
+  const mod = await import('../dist/daisyui-theme.js')
+
+  assert.equal(typeof mod.default, 'function')
+})
