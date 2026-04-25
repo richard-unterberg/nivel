@@ -7,6 +7,7 @@ import { rehypeMetaToProps } from './rehypeMetaToProps.js'
 import { remarkChoiceGroup } from './remarkChoiceGroup.js'
 import { remarkDetype } from './remarkDetype.js'
 import { remarkPkgManager } from './remarkPkgManager.js'
+import { remarkRestoreUnsupportedDirectives } from './remarkRestoreUnsupportedDirectives.js'
 import { shikiTransformerAutoLinks } from './shikiTransformerAutoLinks.js'
 
 export { getCodeBlockPropsFromMeta, parseMetaString, stripMetaProps } from './meta.js'
@@ -14,6 +15,7 @@ export { rehypeMetaToProps } from './rehypeMetaToProps.js'
 export { remarkChoiceGroup } from './remarkChoiceGroup.js'
 export { remarkDetype } from './remarkDetype.js'
 export { remarkPkgManager } from './remarkPkgManager.js'
+export { remarkRestoreUnsupportedDirectives } from './remarkRestoreUnsupportedDirectives.js'
 export { shikiTransformerAutoLinks } from './shikiTransformerAutoLinks.js'
 
 const REHYPE_PRETTY_CODE_INTERNAL_META_PROPS = [
@@ -45,7 +47,13 @@ export const getCodeBlockMdxPlugins = () => {
   ] as [typeof rehypePrettyCode, Parameters<typeof rehypePrettyCode>[0]]
 
   return {
-    remarkPlugins: [remarkDirective, remarkDetype, remarkPkgManager, remarkChoiceGroup],
+    remarkPlugins: [
+      remarkDirective,
+      remarkRestoreUnsupportedDirectives,
+      remarkDetype,
+      remarkPkgManager,
+      remarkChoiceGroup,
+    ],
     rehypePlugins: [rehypePrettyCodePlugin, rehypeMetaToProps],
   }
 }

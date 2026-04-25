@@ -42,11 +42,30 @@ export interface ContainerDirective extends ParentNode<ChoiceCarrierNode> {
 
 export interface FileLike {
   path?: string | undefined
+  value?: unknown
 }
 
 export interface TextNode extends AstNode {
   type: 'text'
   value: string
+}
+
+export interface ParagraphNode extends ParentNode<TextNode> {
+  type: 'paragraph'
+}
+
+export interface PositionLike {
+  start?: {
+    offset?: number | undefined
+  }
+  end?: {
+    offset?: number | undefined
+  }
+}
+
+export interface UnsupportedDirectiveNode extends AstNode {
+  type: 'leafDirective' | 'textDirective'
+  position?: PositionLike | undefined
 }
 
 export type ElementContentNode = ElementNode | TextNode
