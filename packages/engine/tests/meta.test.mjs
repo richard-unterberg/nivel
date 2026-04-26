@@ -21,9 +21,9 @@ test('getCodeBlockPropsFromMeta extracts explicit title and supported env', () =
 })
 
 test('getCodeBlockPropsFromMeta keeps supported pre props and ignores unsupported env values', () => {
-  const meta = getCodeBlockPropsFromMeta('file-added title="hello.ts" env=edge hide-menu')
+  const meta = getCodeBlockPropsFromMeta('file-added title="hello.ts" env=edge hide-menu render=true')
 
-  assert.deepEqual(meta.props, { 'file-added': 'true', 'hide-menu': 'true' })
+  assert.deepEqual(meta.props, { 'file-added': 'true', 'hide-menu': 'true', render: 'true' })
   assert.equal(meta.title, 'hello.ts')
   assert.equal(meta.env, null)
 })
@@ -37,17 +37,16 @@ test('getCodeBlockPropsFromMeta no longer treats bare tokens as titles', () => {
 })
 
 test('stripMetaProps removes renderer-owned props from the pretty-code meta string', () => {
-  const meta = stripMetaProps('choice=svelte title="src/routes/TodoList.svelte" env=client file-added hide-menu', [
-    'title',
-    'env',
-    'file-added',
-    'hide-menu',
-  ])
+  const meta = stripMetaProps(
+    'choice=svelte title="src/routes/TodoList.svelte" env=client file-added hide-menu render=true',
+    ['title', 'env', 'file-added', 'hide-menu', 'render'],
+  )
 
   assert.ok(!meta.includes('title='))
   assert.ok(!meta.includes('env='))
   assert.ok(!meta.includes('file-added'))
   assert.ok(!meta.includes('hide-menu'))
+  assert.ok(!meta.includes('render='))
   assert.ok(meta.includes('choice=svelte'))
 })
 
@@ -82,6 +81,23 @@ test('Pre falls back to language label when title is absent', () => {
 
   assert.match(html, />JS</)
   assert.match(html, />client</)
+})
+
+test('Pre renders Mermaid diagrams when language is mermaid and render=true', () => {
+  const html = renderToStaticMarkup(
+    React.createElement(
+      Pre,
+      {
+        'data-language': 'mermaid',
+        render: 'true',
+      },
+      React.createElement('code', null, 'graph TD\nA-->B'),
+    ),
+  )
+
+  assert.match(html, /data-mermaid-diagram/)
+  assert.match(html, /Rendering diagram\.\.\./)
+  assert.match(html, /graph TD/)
 })
 
 test('ChoiceGroup renders title and env from the active code block', () => {

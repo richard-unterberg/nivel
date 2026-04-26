@@ -6,7 +6,7 @@ const kebabCase = (value: string) => {
 }
 
 const CODE_BLOCK_HEADER_ENVIRONMENTS = ['client', 'server'] as const
-const CODE_BLOCK_PRE_PROP_NAMES = ['data-language-label', 'file-added', 'file-removed', 'hide-menu'] as const
+const CODE_BLOCK_PRE_PROP_NAMES = ['data-language-label', 'file-added', 'file-removed', 'hide-menu', 'render'] as const
 
 type ParsedMeta<Name extends string = string> = {
   props: Partial<Record<Name, string>>

@@ -41,6 +41,7 @@ export {
   FileAdded,
   FileRemoved,
 } from './mdx/code-blocks/FileState.js'
+export { MermaidDiagram } from './mdx/code-blocks/MermaidDiagram.js'
 export { Pre } from './mdx/code-blocks/Pre.js'
 export { Alert, type AlertVariant } from './mdx/components/Alert.js'
 export { Link, type LinkProps } from './mdx/components/Link.js'

@@ -24,6 +24,7 @@ const REHYPE_PRETTY_CODE_INTERNAL_META_PROPS = [
   'file-added',
   'file-removed',
   'hide-menu',
+  'render',
   'title',
 ] as const
 
