@@ -1,6 +1,5 @@
 @import '@unterberg/nivel/tailwind.css';
 @import './theme.css';
-@import './code.css';
 
 @source '../pages';
 @source '../docs';
