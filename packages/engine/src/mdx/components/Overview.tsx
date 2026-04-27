@@ -130,7 +130,7 @@ export const Overview = ({ items, compact }: OverviewProps) => {
           ) : null}
           <div className="grid gap-3 sm:grid-cols-2">
             {group.items.map((item, itemIndex) => (
-              <OverviewCard {...item} key={item.href || itemIndex} excerpt={!!item.excerpt} compact={compact} />
+              <OverviewCard {...item} key={item.href || itemIndex} excerpt={item.excerpt} compact={compact} />
             ))}
           </div>
         </section>
