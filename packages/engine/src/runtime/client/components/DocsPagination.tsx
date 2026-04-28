@@ -4,6 +4,7 @@ import type { DocPageData } from '../../../docs/types.js'
 import { withSiteBaseUrl } from '../../../shared/assets.js'
 import { renderInlineMarkdown } from '../../../shared/renderInlineMarkdown.js'
 import { useDocsGlobalContext } from '../docsGlobalContext.js'
+import DocsBreadcrumbs from './DocsBreadcrumbs.js'
 
 interface PaginationCardProps {
   item: NonNullable<DocPageData['previousPage']>
@@ -24,17 +25,22 @@ const PaginationCard = ({ item, direction, isOffset }: PaginationCardProps) => {
       )}
       aria-label={`${isPrevious ? 'Previous' : 'Next'}: ${item.title}`}
     >
-      <div className="flex flex-col justify-between gap-2">
+      <div className="flex flex-col h-full justify-between gap-2">
+        <div className={cmMerge('flex gap-1 text-base-muted', isPrevious ? 'justify-start' : 'justify-end')}>
+          <DocsBreadcrumbs currentHref={item.href} />
+        </div>
         <p className="text-lg font-semibold text-base-content">{renderInlineMarkdown(item.title)}</p>
         <div
           className={cmMerge(
-            'flex items-center gap-1 text-base-muted group-hover:text-base-content',
+            'flex flex-1 items-end gap-1 text-base-muted group-hover:text-base-content',
             isPrevious ? 'justify-start' : 'justify-end',
           )}
         >
-          {isPrevious && <ChevronLeft className="size-4" />}
-          <span>{isPrevious ? 'Previous' : 'Next'}</span>
-          {!isPrevious && <ChevronRight className="size-4" />}
+          <div className="flex items-center">
+            {isPrevious && <ChevronLeft className="size-4" />}
+            <span>{isPrevious ? 'Previous' : 'Next'}</span>
+            {!isPrevious && <ChevronRight className="size-4" />}
+          </div>
         </div>
       </div>
     </a>

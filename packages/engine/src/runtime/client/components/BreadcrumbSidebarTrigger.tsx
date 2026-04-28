@@ -55,10 +55,10 @@ const BreadcrumbSidebarTrigger = ({ currentHref }: { currentHref: string }) => {
   }, [])
 
   return (
-    <button className="cursor-pointer min-w-0 max-w-full hidden md:block" type="button" onClick={handleClick}>
+    <button className="cursor-pointer min-w-0 max-w-full block" type="button" onClick={handleClick}>
       <span className="flex items-center gap-1 min-w-0 overflow-hidden lg:hidden">
         <ChevronLast className="size-4 shrink-0 text-primary" />
-        <span className="hidden md:flex items-center gap-1">
+        <span className="flex items-center gap-1">
           {breadcrumbItems.map((item, index) => (
             <span key={item.id} className="contents">
               {index > 0 ? <ChevronsRight className="size-4 shrink-0 text-base-muted-medium" /> : null}

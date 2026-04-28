@@ -32,7 +32,9 @@ const TableOfContentsMobile = ({
       <div className="h-12 xl:hidden"></div>
       <StyledTOC>
         <StyledTOCInner>
-          <BreadcrumbSidebarTrigger currentHref={currentHref} />
+          <div className="hidden md:block">
+            <BreadcrumbSidebarTrigger currentHref={currentHref} />
+          </div>
           <label className="select select-sm md:w-80 w-full" htmlFor={selectId}>
             <span id={labelId} className="sr-only">
               {pageTitle}
