@@ -1,6 +1,7 @@
 export { ChoiceGroup }
 
 import { Children, isValidElement, type ReactElement, type ReactNode, useId, useRef } from 'react'
+import { dispatchNivelAction } from '../../shared/nivelActionEvents.js'
 import { CodeBlockHeaderMeta } from './CodeBlockHeaderMeta.js'
 import { CodeBlockCopyButton, trimTrailingWhitespace } from './CopyButton.js'
 import { CodeBlockGroupProvider } from './context.js'
@@ -89,6 +90,7 @@ const ChoiceGroup = ({
   return (
     <div
       data-choice-group-outer
+      data-nivel-component="code-choice-group"
       className="my-6 flex h-full min-w-0 max-w-full flex-col overflow-hidden rounded-box border border-base-muted-light"
     >
       <div
@@ -105,9 +107,17 @@ const ChoiceGroup = ({
               id={selectId}
               aria-labelledby={labelId}
               name={`choicesFor-${choiceGroup.name}`}
+              data-nivel-action="code.choice_change"
               value={activeChoiceElement.props['data-choice-value']}
               onChange={(event) => {
-                setSelectedChoice(event.currentTarget.value)
+                const choice = event.currentTarget.value
+                setSelectedChoice(choice)
+                dispatchNivelAction(event.currentTarget, {
+                  action: 'code.choice_change',
+                  choice,
+                  choiceGroup: choiceGroup.name,
+                  component: 'code-choice-group',
+                })
               }}
             >
               {choiceGroup.choices.map((choice) => (
@@ -119,6 +129,14 @@ const ChoiceGroup = ({
           </label>
           {!activeCodeBlockMeta.hideCopy && (
             <CodeBlockCopyButton
+              actionDetail={{
+                action: 'code.copy',
+                choice: activeChoiceElement.props['data-choice-value'] ?? null,
+                choiceGroup: choiceGroup.name,
+                component: 'code-choice-group',
+                env: activeCodeBlockMeta.env,
+                label: headerLabel,
+              }}
               onCopy={async () => {
                 const text = trimTrailingWhitespace(bodyRef.current?.textContent ?? '')
 
