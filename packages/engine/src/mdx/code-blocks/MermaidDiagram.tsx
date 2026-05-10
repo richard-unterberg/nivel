@@ -4,9 +4,9 @@ import { cmMerge } from '@classmatejs/react'
 import { useEffect, useId, useState } from 'react'
 
 type ViteImportMeta = ImportMeta & { env: { SSR?: boolean } }
+type MermaidClientModule = typeof import('./renderMermaid.client.js')
 
-let isMermaidInitialized = false
-let mermaidModulePromise: Promise<typeof import('mermaid').default> | null = null
+let mermaidClientModulePromise: Promise<MermaidClientModule> | null = null
 const MERMAID_SVG_CLASS_NAME = 'nivel-mermaid-svg'
 const MERMAID_ROOT_CLASS_NAME = 'nivel-mermaid'
 
@@ -66,30 +66,13 @@ const getMermaidSvgOverrideCss = (diagramId: string) => `
 }
 `
 
-const loadMermaid = async () => {
+const loadMermaidClient = async () => {
   if ((import.meta as ViteImportMeta).env.SSR) {
     throw new Error('Mermaid diagrams can only be rendered in the browser.')
   }
 
-  mermaidModulePromise ??= import('mermaid').then((module) => module.default)
-  return mermaidModulePromise
-}
-
-const ensureMermaidInitialized = async () => {
-  const mermaid = await loadMermaid()
-
-  if (isMermaidInitialized) {
-    return mermaid
-  }
-
-  mermaid.initialize({
-    startOnLoad: false,
-    suppressErrorRendering: true,
-    theme: 'base',
-  })
-  isMermaidInitialized = true
-
-  return mermaid
+  mermaidClientModulePromise ??= import('./renderMermaid.client.js')
+  return mermaidClientModulePromise
 }
 
 const decorateSvg = (svg: string, diagramId: string) => {
@@ -124,8 +107,8 @@ const MermaidDiagram = ({ className, source }: { className?: string; source: str
 
     const renderDiagram = async () => {
       try {
-        const mermaid = await ensureMermaidInitialized()
-        const { svg: renderedSvg } = await mermaid.render(`nivel-mermaid-${diagramId}`, source)
+        const { renderMermaidSvg } = await loadMermaidClient()
+        const renderedSvg = await renderMermaidSvg(`nivel-mermaid-${diagramId}`, source)
 
         if (!isActive) {
           return
