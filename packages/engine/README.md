@@ -1,6 +1,6 @@
 # @unterberg/nivel
 
-(static) site builder for mdx documentations - alpha
+Deterministic structure engine for documentation systems
 
 `@unterberg/nivel` owns the docs runtime: Vike integration, MDX setup, docs-graph validation, route code generation, page shell rendering, and reusable docs UI primitives. The consumer stays thin and keeps its content, docs graph, visible Vike shell files, and theme files local.
 

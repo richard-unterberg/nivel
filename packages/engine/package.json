@@ -1,7 +1,8 @@
 {
   "name": "@unterberg/nivel",
-  "version": "0.2.45",
+  "version": "0.2.46",
   "type": "module",
+  "description": "Deterministic structure engine for documentation systems",
   "sideEffects": false,
   "repository": {
     "type": "git",
