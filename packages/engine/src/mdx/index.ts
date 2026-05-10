@@ -10,6 +10,7 @@ import {
   RepoLink,
   Table,
 } from '../index.js'
+import { MdxTable } from './components/Table.js'
 
 type MdxComponents = Record<string, unknown>
 
@@ -25,6 +26,7 @@ export const useMDXComponents = (components?: MdxComponents): MdxComponents => {
     FileAdded,
     FileRemoved,
     pre: Pre,
+    table: MdxTable,
     ...components,
   }
 }
