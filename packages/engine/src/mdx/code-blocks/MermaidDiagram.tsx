@@ -3,6 +3,8 @@ export { MermaidDiagram }
 import { cmMerge } from '@classmatejs/react'
 import { useEffect, useId, useState } from 'react'
 
+type ViteImportMeta = ImportMeta & { env: { SSR?: boolean } }
+
 let isMermaidInitialized = false
 let mermaidModulePromise: Promise<typeof import('mermaid').default> | null = null
 const MERMAID_SVG_CLASS_NAME = 'nivel-mermaid-svg'
@@ -65,6 +67,10 @@ const getMermaidSvgOverrideCss = (diagramId: string) => `
 `
 
 const loadMermaid = async () => {
+  if ((import.meta as ViteImportMeta).env.SSR) {
+    throw new Error('Mermaid diagrams can only be rendered in the browser.')
+  }
+
   mermaidModulePromise ??= import('mermaid').then((module) => module.default)
   return mermaidModulePromise
 }
