@@ -38,6 +38,7 @@ export const TableOfContents = ({
   return (
     <aside className={cmMerge(effectiveTableOfContents ? 'w-58' : 'w-32', 'hidden shrink-0 xl:block')}>
       <div className="sticky top-14">
+        <div className="absolute left-0 bottom-0 bg-linear-to-t h-10 w-full from-base-100 z-20 pointer-events-none" />
         <StickyContent className="pt-10 pb-8">
           {effectiveTableOfContents
             ? effectiveHeadings.length > 0 && (

@@ -254,10 +254,12 @@ export const Sidebar = memo(
 
     return (
       <aside className="hidden basis-72 shrink-0 lg:block">
-        <div className="-ml-3 sticky top-14">
+        <div className="-ml-3 sticky top-14 relative">
+          <div className="absolute left-0 bottom-0 bg-linear-to-t h-10 w-full from-base-100 z-20 pointer-events-none" />
+          <div className="absolute right-px top-px bg-linear-to-t h-8 w-full to-base-100 z-20 pointer-events-none" />
           <div className="absolute h-full w-px right-0 top-0 bg-linear-to-t to-base-muted-light via-base-muted-light pointer-events-none z-1" />
           <StickyContent ref={scrollContainerRef} className="pr-4 relative z-10">
-            <ul className={cmMerge('menu p-0 m-0 w-full px-0 pt-3 li:last-child:border-0')}>
+            <ul className={cmMerge('menu p-0 m-0 w-full px-0 pt-3 li:last-child:border-0 pb-4')}>
               {sidebarSections.map((section) => (
                 <SidebarSectionGroup
                   key={section.id}
