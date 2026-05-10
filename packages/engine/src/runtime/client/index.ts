@@ -21,3 +21,8 @@ export type {
   DocsSidebarState,
 } from './store/types.js'
 export { applyThemePreference, DEFAULT_THEME_PREFERENCE } from './theme.js'
+export {
+  dispatchNivelAction,
+  NIVEL_ACTION_EVENT,
+  type NivelActionEventDetail,
+} from '../../shared/nivelActionEvents.js'

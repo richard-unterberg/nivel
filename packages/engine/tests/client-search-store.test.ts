@@ -55,3 +55,8 @@ test('client runtime exports the public sidebar hooks', () => {
   assert.equal(typeof clientRuntime.useDocsSidebarActions, 'function')
   assert.equal(typeof clientRuntime.useDocsSidebarStore, 'function')
 })
+
+test('client runtime exports nivel action event helpers', () => {
+  assert.equal(clientRuntime.NIVEL_ACTION_EVENT, 'nivel:action')
+  assert.equal(typeof clientRuntime.dispatchNivelAction, 'function')
+})

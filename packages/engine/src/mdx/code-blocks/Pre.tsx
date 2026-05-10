@@ -88,6 +88,13 @@ const Pre = ({ children, className, ...props }: PreProps) => {
   const copyButton =
     hideMenu || isInChoiceGroup ? null : (
       <CodeBlockCopyButton
+        actionDetail={{
+          action: 'code.copy',
+          component: 'code-block',
+          env,
+          label,
+          language,
+        }}
         onCopy={async () => {
           const text = shouldRenderMermaid ? sourceText : trimTrailingWhitespace(preRef.current?.textContent ?? '')
 
@@ -110,6 +117,7 @@ const Pre = ({ children, className, ...props }: PreProps) => {
       )}
       data-code-block-frame=""
       data-file-state={fileState ?? undefined}
+      data-nivel-component="code-block"
     >
       {!isInChoiceGroup && (
         <div

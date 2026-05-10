@@ -75,4 +75,9 @@ export {
   nivelAssetUrl,
   nivelPublicRoute,
 } from './shared/assets.js'
+export {
+  dispatchNivelAction,
+  NIVEL_ACTION_EVENT,
+  type NivelActionEventDetail,
+} from './shared/nivelActionEvents.js'
 export { renderInlineMarkdown } from './shared/renderInlineMarkdown.js'

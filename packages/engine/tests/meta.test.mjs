@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { ChoiceGroup, Pre } from '../dist/index.js'
+import { ChoiceGroup, dispatchNivelAction, NIVEL_ACTION_EVENT, Pre } from '../dist/index.js'
 import { getCodeBlockPropsFromMeta, parseMetaString, stripMetaProps } from '../dist/mdx/code-blocks.js'
 
 test('parseMetaString preserves quoted values in rest while extracting requested props', () => {
@@ -65,6 +65,8 @@ test('Pre renders explicit title and env badge', () => {
 
   assert.match(html, /hello\.ts/)
   assert.match(html, />server</)
+  assert.match(html, /data-nivel-component="code-block"/)
+  assert.match(html, /data-nivel-action="code.copy"/)
 })
 
 test('Pre falls back to language label when title is absent', () => {
@@ -125,6 +127,9 @@ test('ChoiceGroup renders title and env from the active code block', () => {
 
   assert.match(html, /components\/TodoList\.jsx/)
   assert.match(html, />client</)
+  assert.match(html, /data-nivel-component="code-choice-group"/)
+  assert.match(html, /data-nivel-action="code.choice_change"/)
+  assert.match(html, /data-nivel-action="code.copy"/)
 })
 
 test('ChoiceGroup falls back to the choice label when no title is present', () => {
@@ -151,4 +156,34 @@ test('ChoiceGroup falls back to the choice label when no title is present', () =
 
   assert.match(html, />React</)
   assert.match(html, />client</)
+})
+
+test('dispatchNivelAction emits a bubbling composed custom event with serializable detail', () => {
+  const target = new EventTarget()
+  let received = null
+
+  target.addEventListener(NIVEL_ACTION_EVENT, (event) => {
+    received = event
+  })
+
+  dispatchNivelAction(target, {
+    action: 'code.copy',
+    component: 'code-block',
+    env: 'client',
+    label: 'hello.ts',
+    language: 'ts',
+    success: true,
+  })
+
+  assert.ok(received instanceof CustomEvent)
+  assert.equal(received.bubbles, true)
+  assert.equal(received.composed, true)
+  assert.deepEqual(received.detail, {
+    action: 'code.copy',
+    component: 'code-block',
+    env: 'client',
+    label: 'hello.ts',
+    language: 'ts',
+    success: true,
+  })
 })
