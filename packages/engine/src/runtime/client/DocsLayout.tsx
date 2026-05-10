@@ -25,7 +25,7 @@ export const DocsLayout = ({ children }: DocsLayoutProps) => {
       <HeadingLinkCopy />
       <div className="absolute top-0 left-0 h-[60svh] w-full bg-radial-[at_65%_-85%] from-primary-muted-light/40 to-65% dark:from-primary-muted-light/60" />
       <LayoutComponent>
-        <div className="lg:flex gap-14 xl:gap-20">
+        <div className="lg:flex gap-14 xl:gap-18">
           <Sidebar currentHref={data.page.href} activeSectionId={data.page.sectionId} />
           <main className="min-w-0 flex-1 basis-auto shrink">
             <TableOfContentsMobile

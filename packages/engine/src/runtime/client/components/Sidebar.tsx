@@ -253,7 +253,7 @@ export const Sidebar = memo(
     const { sidebarSections } = docs
 
     return (
-      <aside className="hidden basis-72 shrink-0 lg:block">
+      <aside className="hidden basis-76 shrink-0 lg:block">
         <div className="-ml-3 sticky top-14 relative">
           <div className="absolute left-0 bottom-0 bg-linear-to-t h-10 w-full from-base-100 z-20 pointer-events-none" />
           <div className="absolute right-px top-px bg-linear-to-t h-8 w-full to-base-100 z-20 pointer-events-none" />
