@@ -41,6 +41,7 @@ test('createNivelVikeConfig includes the default nivel config and docs-derived m
   assert.equal(config.prerender, true)
   assert.equal(config.trailingSlash, nivel.trailingSlash)
   assert.equal(config.meta.docs.global, true)
+  assert.deepEqual(config.vite.resolve.dedupe, ['react', 'react-dom', 'vike', 'vike-react'])
   assert.deepEqual(config.htmlAttributes, { 'data-theme': 'custom-dark' })
   assert.equal(Array.isArray(config.extends), true)
   assert.equal(config.extends.length, 1)

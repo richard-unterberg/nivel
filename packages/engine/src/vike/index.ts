@@ -28,6 +28,9 @@ const viteConfig: UserConfig = {
     } as PluginOption,
     nivelPagesPlugin(),
   ],
+  resolve: {
+    dedupe: ['react', 'react-dom', 'vike', 'vike-react'],
+  },
   ssr: {
     noExternal: ['@unterberg/nivel'],
   },
