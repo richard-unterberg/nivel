@@ -80,7 +80,7 @@ const StyledTable = cm.table.variants<{ $size: TableProps['size'] }>({
   base: `
     table
     w-full
-    min-w-[48rem]
+    min-w-[44rem]
     table-zebra
     [&_td]:[overflow-wrap:normal]
     [&_td]:[word-break:normal]
