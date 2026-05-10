@@ -188,7 +188,7 @@ const SidebarNestedGroup = ({ group, currentHref, docsIconMap }: SidebarNestedGr
           setIsOpen(event.currentTarget.open)
         }}
       >
-        <summary className="rounded-field max-h-9 flex items-center">
+        <summary className="rounded-field py-0 flex items-center">
           <SidebarGroupTitle
             title={group.title}
             href={groupHref ?? undefined}
@@ -229,7 +229,7 @@ const SidebarSectionGroup = ({ section, currentHref, activeSectionId }: SidebarS
           setIsOpen(event.currentTarget.open)
         }}
       >
-        <summary className="rounded-field max-h-9 flex items-center">
+        <summary className="rounded-field py-0 flex items-center">
           <SidebarGroupTitle title={section.title} isActive={sectionHasActiveItem} icon={SectionIcon} />
         </summary>
         <SidebarItemList items={section.items} currentHref={currentHref} docsIconMap={docs.docsIconMap} />
