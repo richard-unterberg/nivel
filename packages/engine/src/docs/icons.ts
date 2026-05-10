@@ -1,28 +1,9 @@
-import type { LucideIcon } from 'lucide-react'
-import * as lucideIcons from 'lucide-react'
+import type { DocsGeneratedIconName } from '../generated/iconNames.js'
+import { docsGeneratedIconNames } from '../generated/iconNames.js'
 
-type LucideModule = typeof import('lucide-react')
+export type DocsIconName = DocsGeneratedIconName
 
-export type DocsIconName = {
-  [Key in keyof LucideModule]: LucideModule[Key] extends LucideIcon ? Key : never
-}[keyof LucideModule]
-
-const excludedLucideExports = new Set(['createLucideIcon', 'Icon', 'icons', 'LucideProvider', 'useLucideContext'])
-
-const isLucideIconExport = (value: unknown) => {
-  if (typeof value !== 'object' || value === null) {
-    return false
-  }
-
-  return '$$typeof' in value && 'render' in value
-}
-
-const docsIconNames = Object.freeze(
-  Object.entries(lucideIcons)
-    .filter(([name, value]) => !excludedLucideExports.has(name) && isLucideIconExport(value))
-    .map(([name]) => name)
-    .sort(),
-) as readonly DocsIconName[]
+const docsIconNames = Object.freeze([...docsGeneratedIconNames])
 
 const docsIconNameSet = new Set<string>(docsIconNames)
 

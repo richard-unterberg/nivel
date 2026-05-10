@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import * as lucideIcons from 'lucide-react'
 import { extractDocHeadings } from '../../docs/docHeadings.js'
 import { getDocsIconMapKey } from '../../docs/iconKeys.js'
 import { getResolvedPageById, resolveDocsConfig } from '../../docs/resolveDocsConfig.js'
@@ -12,20 +11,9 @@ import type {
   DocsIconName,
   ResolvedSidebarNode,
 } from '../../docs/types.js'
+import { getGeneratedDocsIconNode } from '../../generated/iconNodes.js'
 
 const GENERATED_DIRNAME = '(nivel-generated)'
-
-type GeneratedDocsIconNode = [tagName: string, attrs: Record<string, string>][]
-type LucideIconComponent = {
-  render: (props: Record<string, unknown>, ref: null) => LucideIconElement
-}
-type LucideIconElement = {
-  props?: {
-    iconNode?: GeneratedDocsIconNode
-  }
-}
-
-const lucideIconNodeByName = new Map<DocsIconName, GeneratedDocsIconNode>()
 
 const writeFileIfChanged = (filePath: string, source: string) => {
   const current = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null
@@ -153,24 +141,11 @@ const getGeneratedIconMapSource = (entries: IconEntry[]) => {
 }
 
 const getDocsIconNode = (iconName: DocsIconName) => {
-  const cachedIconNode = lucideIconNodeByName.get(iconName)
-
-  if (cachedIconNode) {
-    return cachedIconNode
-  }
-
-  const iconComponent = lucideIcons[iconName as keyof typeof lucideIcons] as unknown as LucideIconComponent | undefined
-  if (!iconComponent || typeof iconComponent !== 'object' || !('render' in iconComponent)) {
-    throw new Error(`Unable to resolve lucide-react export for docs icon "${iconName}".`)
-  }
-
-  const iconElement = iconComponent.render({}, null) as LucideIconElement
-  const iconNode = iconElement.props?.iconNode
+  const iconNode = getGeneratedDocsIconNode(iconName)
   if (!iconNode) {
-    throw new Error(`Unable to read lucide-react icon node for docs icon "${iconName}".`)
+    throw new Error(`Unable to resolve generated docs icon node for "${iconName}".`)
   }
 
-  lucideIconNodeByName.set(iconName, iconNode)
   return iconNode
 }
 

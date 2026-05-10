@@ -5,4 +5,4 @@ node_modules
 (nivel-generated)
 package-lock.json
 dist
-packages/engine/src/generated/icons.ts
+packages/engine/src/generated
