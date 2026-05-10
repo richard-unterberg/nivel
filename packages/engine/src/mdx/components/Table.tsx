@@ -12,24 +12,26 @@ export interface TableProps {
 /** @deprecated - do not use pls */
 export const Table = ({ size = 'md', data }: TableProps) => {
   return (
-    <StyledTable $size={size}>
-      <thead className="overflow-hidden rounded-t-box bg-base-200">
-        <tr>
-          {data.headers.map((header, index) => (
-            <th key={index}>{header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.rows.map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <td key={cellIndex}>{cell}</td>
+    <div className="overflow-x-auto">
+      <StyledTable $size={size}>
+        <thead className="overflow-hidden rounded-t-box bg-base-200">
+          <tr>
+            {data.headers.map((header, index) => (
+              <th key={index}>{header}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </StyledTable>
+        </thead>
+        <tbody>
+          {data.rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex}>{cell}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </StyledTable>
+    </div>
   )
 }
 

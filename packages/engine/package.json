@@ -1,6 +1,6 @@
 {
   "name": "@unterberg/nivel",
-  "version": "0.2.46",
+  "version": "0.2.47",
   "type": "module",
   "description": "Deterministic structure engine for documentation systems",
   "sideEffects": false,

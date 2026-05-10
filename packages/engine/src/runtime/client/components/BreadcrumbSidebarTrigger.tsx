@@ -63,8 +63,8 @@ const BreadcrumbSidebarTrigger = ({ currentHref }: { currentHref: string }) => {
           {breadcrumbItems.map((item, index) => (
             <span key={item.id} className="contents">
               {index > 0 ? <ChevronsRight className="size-4 shrink-0 text-base-muted-medium" /> : null}
-              <span className={cmMerge(index === 0 && 'font-semibold', 'text-sm truncate')}>
-                {renderInlineMarkdown(item.title, { codeClassName: 'text-sm!' })}
+              <span className={cmMerge(index === 0 && 'font-semibold', 'text-xs truncate')}>
+                {renderInlineMarkdown(item.title, { codeClassName: 'text-xs!' })}
               </span>
             </span>
           ))}
