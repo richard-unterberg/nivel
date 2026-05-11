@@ -384,7 +384,6 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
     head: resolved.head,
     partners: resolved.partners,
     social: resolved.social,
-    algolia: resolved.algolia,
     pages: resolved.pages,
     navbarItems: resolved.navbarItems,
     topBarNav: getSerializableTopBarNav(resolved.topBarNav),

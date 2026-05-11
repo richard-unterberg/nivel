@@ -20,11 +20,6 @@ const docsConfig = {
   footer: {
     pagination: true,
   },
-  algolia: {
-    appId: 'NONXS2JSTL',
-    apiKey: '9bf6a6f9bc168ca425e8e19a62cd8ba1',
-    indexName: 'telefunc',
-  },
   brand: {
     text: 'Telefunc',
     href: '/',

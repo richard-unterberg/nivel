@@ -20,10 +20,6 @@ export type DocsFooterConfig = {
   pagination?: boolean
 }
 
-export type JsonPrimitive = string | number | boolean | null
-
-export type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue }
-
 export type DocsBrandConfig = {
   text?: string
   href?: string
@@ -51,21 +47,6 @@ export type DocsSocialConfig = {
   x?: string
   bluesky?: string
   linkedin?: string
-}
-
-export type DocsAlgoliaFieldsConfig = {
-  href?: string
-  title?: string
-  excerpt?: string
-  sectionTitle?: string
-}
-
-export type DocsAlgoliaConfig = {
-  appId: string
-  apiKey: string
-  indexName: string
-  fields?: DocsAlgoliaFieldsConfig
-  searchParams?: Record<string, JsonValue>
 }
 
 export type DocsHeadConfig = {
@@ -145,7 +126,6 @@ export type DocsConfig = {
   brand?: DocsBrandConfig
   head?: DocsHeadConfig
   partners?: DocsPartnersConfig
-  algolia?: DocsAlgoliaConfig
   topBarNav?: TopBarNavOptions
 }
 
@@ -170,21 +150,6 @@ export type ResolvedDocsPartnerConfig = {
 export type ResolvedDocsPartnersConfig = {
   primary: ResolvedDocsPartnerConfig[]
   gold: ResolvedDocsPartnerConfig[]
-}
-
-export type ResolvedDocsAlgoliaFieldsConfig = {
-  href: string
-  title: string
-  excerpt: string
-  sectionTitle: string
-}
-
-export type ResolvedDocsAlgoliaConfig = {
-  appId: string
-  apiKey: string
-  indexName: string
-  fields: ResolvedDocsAlgoliaFieldsConfig
-  searchParams: Record<string, JsonValue>
 }
 
 export type ResolvedDocsHeadConfig = DocsHeadConfig & {
@@ -283,7 +248,6 @@ export type ResolvedDocsConfig = {
   head: ResolvedDocsHeadConfig
   social: ResolvedDocsSocialConfig
   partners: ResolvedDocsPartnersConfig
-  algolia: ResolvedDocsAlgoliaConfig | null
   pages: ResolvedDocsPage[]
   sections: ResolvedDocsSection[]
   navbarItems: ResolvedNavbarItem[]
@@ -304,7 +268,6 @@ export type DocsGlobalContextSerializableData = Pick<
   | 'brand'
   | 'head'
   | 'partners'
-  | 'algolia'
   | 'pages'
   | 'navbarItems'
   | 'social'

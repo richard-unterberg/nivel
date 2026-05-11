@@ -1,6 +1,6 @@
 import { nivelAssetUrl, resolvePublicAssetUrl, withSiteBaseUrl } from '../shared/assets.js'
+import { assertDocsIconName } from './icons.js'
 import type {
-  DocsAlgoliaConfig,
   DocsBrandConfig,
   DocsConfig,
   DocsFooterConfig,
@@ -9,7 +9,6 @@ import type {
   DocsPartnerConfig,
   DocsSectionNode,
   DocsSidebarNode,
-  ResolvedDocsAlgoliaConfig,
   ResolvedDocsBrandConfig,
   ResolvedDocsConfig,
   ResolvedDocsPage,
@@ -20,11 +19,10 @@ import type {
   ResolvedNavbarItem,
   ResolvedSidebarNode,
   ResolvedTopBarNav,
-  TopBarNavComponentsOptions,
   ThemePreference,
+  TopBarNavComponentsOptions,
   TopBarNavOptions,
 } from './types.js'
-import { assertDocsIconName } from './icons.js'
 
 const isExternalHref = (value: string) => {
   return /^(?:[a-z]+:)?\/\//i.test(value) || value.startsWith('mailto:') || value.startsWith('tel:')
@@ -356,35 +354,6 @@ const resolvePartnersConfig = (partners: DocsConfig['partners']): ResolvedDocsPa
   }
 }
 
-const requireTrimmedString = (value: string, fieldName: string) => {
-  const normalized = value.trim()
-
-  if (!normalized) {
-    throw new Error(`Docs algolia config "${fieldName}" must be a non-empty string.`)
-  }
-
-  return normalized
-}
-
-const resolveAlgoliaConfig = (algolia: DocsAlgoliaConfig | undefined): ResolvedDocsAlgoliaConfig | null => {
-  if (!algolia) {
-    return null
-  }
-
-  return {
-    appId: requireTrimmedString(algolia.appId, 'appId'),
-    apiKey: requireTrimmedString(algolia.apiKey, 'apiKey'),
-    indexName: requireTrimmedString(algolia.indexName, 'indexName'),
-    fields: {
-      href: algolia.fields?.href?.trim() || 'href',
-      title: algolia.fields?.title?.trim() || 'title',
-      excerpt: algolia.fields?.excerpt?.trim() || 'excerpt',
-      sectionTitle: algolia.fields?.sectionTitle?.trim() || 'sectionTitle',
-    },
-    searchParams: algolia.searchParams ?? {},
-  }
-}
-
 const normalizeAliases = (aliases: string[] | undefined, slug: string) => {
   const normalizedAliases = new Set<string>()
 
@@ -560,7 +529,6 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
     head: resolveHeadConfig(config.head, customFonts),
     partners: resolvePartnersConfig(config.partners),
     social: resolveSocialConfig(config.social),
-    algolia: resolveAlgoliaConfig(config.algolia),
     pages,
     sections,
     navbarItems,

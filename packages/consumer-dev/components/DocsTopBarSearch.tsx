@@ -1,4 +1,3 @@
-import { useDocsContext } from '@unterberg/nivel/client'
 import { TextSearch } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -7,6 +6,19 @@ import { getTopBarButtonClassName, useHasMounted, withSiteBaseUrl } from './topB
 
 const minQueryLength = 2
 const queryDebounceMs = 150
+
+const searchConfig = {
+  appId: 'NONXS2JSTL',
+  apiKey: '9bf6a6f9bc168ca425e8e19a62cd8ba1',
+  indexName: 'telefunc',
+  fields: {
+    href: 'href',
+    title: 'title',
+    excerpt: 'excerpt',
+    sectionTitle: 'sectionTitle',
+  },
+  searchParams: {},
+}
 
 type SearchResult = {
   href: string
@@ -146,7 +158,6 @@ const useDebouncedValue = (value: string, delayMs: number) => {
 }
 
 const DocsTopBarSearch = () => {
-  const docs = useDocsContext()
   const { urlPathname, urlParsed } = usePageContext()
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -159,7 +170,7 @@ const DocsTopBarSearch = () => {
   const debouncedQuery = useDebouncedValue(query, queryDebounceMs)
   const hasMounted = useHasMounted()
   const normalizedQuery = debouncedQuery.trim()
-  const canSearch = Boolean(docs.algolia) && normalizedQuery.length >= minQueryLength
+  const canSearch = normalizedQuery.length >= minQueryLength
   const buttonClassName = getTopBarButtonClassName(urlParsed.pathname === '/')
 
   useEffect(() => {
@@ -213,9 +224,7 @@ const DocsTopBarSearch = () => {
   }, [isOpen])
 
   useEffect(() => {
-    const algolia = docs.algolia
-
-    if (!isOpen || !canSearch || !algolia) {
+    if (!isOpen || !canSearch) {
       setResults([])
       setIsLoading(false)
       setIsError(false)
@@ -227,18 +236,18 @@ const DocsTopBarSearch = () => {
     setIsLoading(true)
     setIsError(false)
 
-    fetch(buildSearchUrl(algolia.appId, algolia.indexName), {
+    fetch(buildSearchUrl(searchConfig.appId, searchConfig.indexName), {
       method: 'POST',
       signal: abortController.signal,
       headers: {
         accept: 'application/json',
         'content-type': 'application/json',
-        'x-algolia-api-key': algolia.apiKey,
-        'x-algolia-application-id': algolia.appId,
+        'x-algolia-api-key': searchConfig.apiKey,
+        'x-algolia-application-id': searchConfig.appId,
       },
       body: JSON.stringify({
         query: normalizedQuery,
-        ...algolia.searchParams,
+        ...searchConfig.searchParams,
       }),
     })
       .then((response) => {
@@ -256,8 +265,8 @@ const DocsTopBarSearch = () => {
         const nextResults = (data.hits ?? [])
           .map((hit): SearchResult | null => {
             const fallback = getDocSearchFallbackResult(hit)
-            const href = getMappedString(hit, algolia.fields.href) ?? fallback.href
-            const title = getMappedString(hit, algolia.fields.title) ?? fallback.title
+            const href = getMappedString(hit, searchConfig.fields.href) ?? fallback.href
+            const title = getMappedString(hit, searchConfig.fields.title) ?? fallback.title
 
             if (!href || !title) {
               return null
@@ -266,8 +275,8 @@ const DocsTopBarSearch = () => {
             return {
               href,
               title,
-              excerpt: getMappedString(hit, algolia.fields.excerpt) ?? fallback.excerpt,
-              sectionTitle: getMappedString(hit, algolia.fields.sectionTitle) ?? fallback.sectionTitle,
+              excerpt: getMappedString(hit, searchConfig.fields.excerpt) ?? fallback.excerpt,
+              sectionTitle: getMappedString(hit, searchConfig.fields.sectionTitle) ?? fallback.sectionTitle,
             }
           })
           .filter((result): result is SearchResult => result !== null)
@@ -295,11 +304,7 @@ const DocsTopBarSearch = () => {
     return () => {
       abortController.abort()
     }
-  }, [canSearch, docs.algolia, isOpen, normalizedQuery])
-
-  if (!docs.algolia) {
-    return null
-  }
+  }, [canSearch, isOpen, normalizedQuery])
 
   return (
     <li>
