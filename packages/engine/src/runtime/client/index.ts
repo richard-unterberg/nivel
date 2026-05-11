@@ -1,12 +1,11 @@
 export { AppLayout } from './AppLayout.js'
-export { MegaMenu as DocsMegaMenu } from './components/Navbar/MegaMenu.js'
-export { default as useDocsMegaMenu } from './components/Navbar/useMegaMenu.js'
 export { LayoutComponent } from './components/LayoutComponent.js'
 export { MetaHead } from './components/MetaHead/index.js'
 export { ProseContainer } from './components/ProseContainer.js'
 export { UserSettingsSync } from './components/UserSettingsSync.js'
 export { DocsLayout as DocsRouteLayout } from './DocsLayout.js'
 export { DocsPage } from './DocsPage.js'
+export { useDocsGlobalContext as useDocsContext } from './docsGlobalContext.js'
 export { useDocsSidebarActions, useDocsSidebarStore } from './store/runtime-store.js'
 export { useDocsUserSettingsStore } from './store/settings-store.js'
 export type {

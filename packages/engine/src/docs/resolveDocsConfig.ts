@@ -20,7 +20,7 @@ import type {
   ResolvedNavbarItem,
   ResolvedSidebarNode,
   ResolvedTopBarNav,
-  TopBarNavComponentOptions,
+  TopBarNavComponentsOptions,
   ThemePreference,
   TopBarNavOptions,
 } from './types.js'
@@ -201,6 +201,25 @@ const resolveNavigationHref = (value: string, fieldName: string, basePath: strin
   return normalizePathname(normalized)
 }
 
+const resolveTopBarNavComponentPath = (component: string, index: number) => {
+  const normalized = component.trim().replaceAll('\\', '/')
+  const fieldName = `topBarNav component ${index + 1}`
+
+  if (!normalized) {
+    throw new Error(`Docs ${fieldName} must be a non-empty relative import path.`)
+  }
+
+  if (!normalized.startsWith('./') && !normalized.startsWith('../')) {
+    throw new Error(`Docs ${fieldName} must be a relative import path. Received ${JSON.stringify(normalized)}.`)
+  }
+
+  if (normalized.includes('?') || normalized.includes('#')) {
+    throw new Error(`Docs ${fieldName} cannot include query strings or hashes. Received ${JSON.stringify(normalized)}.`)
+  }
+
+  return normalized
+}
+
 const resolveTopBarNavConfig = (topBarNav: TopBarNavOptions | undefined, basePath: string): ResolvedTopBarNav => {
   if (topBarNav === undefined || topBarNav === false) {
     return {
@@ -214,25 +233,19 @@ const resolveTopBarNavConfig = (topBarNav: TopBarNavOptions | undefined, basePat
   }
 
   if (!Array.isArray(topBarNav)) {
-    const component = (topBarNav as TopBarNavComponentOptions).component.trim().replaceAll('\\', '/')
+    const components = (topBarNav as TopBarNavComponentsOptions).components
 
-    if (!component) {
-      throw new Error('Docs topBarNav component must be a non-empty relative import path.')
+    if (!Array.isArray(components)) {
+      throw new Error('Docs topBarNav components must be an array of relative import paths.')
     }
 
-    if (!component.startsWith('./') && !component.startsWith('../')) {
-      throw new Error(`Docs topBarNav component must be a relative import path. Received ${JSON.stringify(component)}.`)
-    }
-
-    if (component.includes('?') || component.includes('#')) {
-      throw new Error(
-        `Docs topBarNav component cannot include query strings or hashes. Received ${JSON.stringify(component)}.`,
-      )
+    if (components.length === 0) {
+      throw new Error('Docs topBarNav components must include at least one relative import path.')
     }
 
     return {
-      kind: 'component',
-      component,
+      kind: 'components',
+      components: components.map(resolveTopBarNavComponentPath),
     }
   }
 

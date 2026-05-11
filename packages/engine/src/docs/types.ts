@@ -83,11 +83,11 @@ export type TopBarNavItem = {
   isCta?: boolean
 }
 
-export type TopBarNavComponentOptions = {
-  component: string
+export type TopBarNavComponentsOptions = {
+  components: string[]
 }
 
-export type TopBarNavOptions = false | TopBarNavItem[] | TopBarNavComponentOptions
+export type TopBarNavOptions = false | TopBarNavItem[] | TopBarNavComponentsOptions
 
 export type DocsPageNode = {
   kind: 'page'
@@ -260,14 +260,14 @@ export type ResolvedTopBarNav =
       items: ResolvedTopBarNavItem[]
     }
   | {
-      kind: 'component'
-      component: string
+      kind: 'components'
+      components: string[]
     }
 
 export type DocsGlobalContextTopBarNav =
-  | Exclude<ResolvedTopBarNav, { kind: 'component' }>
+  | Exclude<ResolvedTopBarNav, { kind: 'components' }>
   | {
-      kind: 'component'
+      kind: 'components'
     }
 
 export type ResolvedDocsConfig = {
@@ -315,15 +315,7 @@ export type DocsGlobalContextSerializableData = Pick<
 
 export type DocsGlobalContextData = DocsGlobalContextSerializableData & {
   docsIconMap: DocsIconMap
-  topBarNavComponent?: ComponentType<TopBarNavComponentProps>
-}
-
-export type TopBarNavComponentProps = {
-  docs: DocsGlobalContextData
-  isLandingPage: boolean
-  activeSection: ResolvedDocsSection | null
-  buttonClassName: string
-  activeButtonClassName: string
+  topBarNavComponents?: ComponentType[]
 }
 
 export type DocPageData = {

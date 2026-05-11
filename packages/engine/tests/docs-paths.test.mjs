@@ -190,7 +190,7 @@ test('syncGeneratedDocsPages reads custom contentDir and emits custom route file
   }
 })
 
-test('syncGeneratedDocsPages imports component topBarNav without serializing the component path', () => {
+test('syncGeneratedDocsPages imports component topBarNav entries without serializing component paths', () => {
   const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), 'nivel-docs-topbar-'))
 
   try {
@@ -206,7 +206,7 @@ test('syncGeneratedDocsPages imports component topBarNav without serializing the
       rootDir,
       docsConfig: createDocsConfig({
         topBarNav: {
-          component: './components/DocsTopBarNav',
+          components: ['./components/DocsMegaMenuTopBarItems', './components/DocsTopBarSearch'],
         },
       }),
     })
@@ -216,10 +216,11 @@ test('syncGeneratedDocsPages imports component topBarNav without serializing the
       'utf8',
     )
 
-    assert.match(globalContext, /import TopBarNavComponent from "\.\.\/components\/DocsTopBarNav"/)
-    assert.match(globalContext, /"topBarNav": \{\n {4}"kind": "component"\n {2}\}/)
-    assert.match(globalContext, /topBarNavComponent: TopBarNavComponent/)
-    assert.doesNotMatch(globalContext, /"component": "\.\/components\/DocsTopBarNav"/)
+    assert.match(globalContext, /import TopBarNavComponent0 from "\.\.\/components\/DocsMegaMenuTopBarItems"/)
+    assert.match(globalContext, /import TopBarNavComponent1 from "\.\.\/components\/DocsTopBarSearch"/)
+    assert.match(globalContext, /"topBarNav": \{\n {4}"kind": "components"\n {2}\}/)
+    assert.match(globalContext, /topBarNavComponents: \[TopBarNavComponent0, TopBarNavComponent1\]/)
+    assert.doesNotMatch(globalContext, /"components": \[/)
   } finally {
     fs.rmSync(rootDir, { force: true, recursive: true })
   }

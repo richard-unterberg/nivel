@@ -132,32 +132,32 @@ test('topBarNav empty link arrays resolve to links mode with no items', () => {
   })
 })
 
-test('topBarNav component mode preserves a normalized relative import path', () => {
+test('topBarNav components mode preserves normalized relative import paths', () => {
   const resolved = resolveDocsConfig(
     createConfig({
       topBarNav: {
-        component: '.\\components\\DocsTopBarNav',
+        components: ['.\\components\\DocsMegaMenuTopBarItems', './components/DocsTopBarSearch'],
       },
     }),
   )
 
   assert.deepEqual(resolved.topBarNav, {
-    kind: 'component',
-    component: './components/DocsTopBarNav',
+    kind: 'components',
+    components: ['./components/DocsMegaMenuTopBarItems', './components/DocsTopBarSearch'],
   })
 })
 
-test('topBarNav component mode rejects invalid import paths', () => {
+test('topBarNav components mode rejects invalid import paths', () => {
   assert.throws(
     () =>
       resolveDocsConfig(
         createConfig({
           topBarNav: {
-            component: ' ',
+            components: [],
           },
         }),
       ),
-    /topBarNav component must be a non-empty relative import path/,
+    /topBarNav components must include at least one relative import path/,
   )
 
   assert.throws(
@@ -165,11 +165,35 @@ test('topBarNav component mode rejects invalid import paths', () => {
       resolveDocsConfig(
         createConfig({
           topBarNav: {
-            component: '@app/DocsTopBarNav',
+            component: './components/DocsTopBarNav',
+          } as never,
+        }),
+      ),
+    /topBarNav components must be an array of relative import paths/,
+  )
+
+  assert.throws(
+    () =>
+      resolveDocsConfig(
+        createConfig({
+          topBarNav: {
+            components: [' '],
           },
         }),
       ),
-    /topBarNav component must be a relative import path/,
+    /topBarNav component 1 must be a non-empty relative import path/,
+  )
+
+  assert.throws(
+    () =>
+      resolveDocsConfig(
+        createConfig({
+          topBarNav: {
+            components: ['@app/DocsTopBarSearch'],
+          },
+        }),
+      ),
+    /topBarNav component 1 must be a relative import path/,
   )
 })
 

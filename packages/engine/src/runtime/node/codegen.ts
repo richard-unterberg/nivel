@@ -213,7 +213,7 @@ const getGeneratedIconDefinitionsSource = (iconNames: DocsIconName[]) => {
 
 const getGeneratedGlobalContextSource = (
   data: DocsGlobalContextSerializableData,
-  topBarNavComponentImportPath?: string,
+  topBarNavComponentImportPaths: string[] = [],
 ) => {
   const iconEntries = data.sidebarSections.flatMap((section) => {
     const sectionIconEntries = section.icon
@@ -226,9 +226,9 @@ const getGeneratedGlobalContextSource = (
 
   return [
     "import type { DocsGlobalContextData, DocsGlobalContextSerializableData, DocsIconMap } from '@unterberg/nivel'",
-    topBarNavComponentImportPath
-      ? `import TopBarNavComponent from ${JSON.stringify(topBarNavComponentImportPath)}`
-      : null,
+    ...topBarNavComponentImportPaths.map(
+      (importPath, index) => `import TopBarNavComponent${index} from ${JSON.stringify(importPath)}`,
+    ),
     ...getGeneratedIconDefinitionsSource(iconImports),
     '',
     `const docsGlobalContextSerializableData: DocsGlobalContextSerializableData = ${serializeData(data)}`,
@@ -238,7 +238,11 @@ const getGeneratedGlobalContextSource = (
     'const docsGlobalContextData: DocsGlobalContextData = {',
     '  ...docsGlobalContextSerializableData,',
     '  docsIconMap,',
-    topBarNavComponentImportPath ? '  topBarNavComponent: TopBarNavComponent,' : null,
+    topBarNavComponentImportPaths.length > 0
+      ? `  topBarNavComponents: [${topBarNavComponentImportPaths
+          .map((_, index) => `TopBarNavComponent${index}`)
+          .join(', ')}],`
+      : null,
     '}',
     '',
     'export { docsGlobalContextData }',
@@ -300,24 +304,27 @@ const getDocsConfigPath = (rootDir: string) => path.join(rootDir, 'pages', '+doc
 const getDocsGraphPath = (rootDir: string) => path.join(rootDir, 'docs', 'docs.graph.ts')
 
 const getSerializableTopBarNav = (topBarNav: ResolvedTopBarNav): DocsGlobalContextTopBarNav => {
-  if (topBarNav.kind === 'component') {
+  if (topBarNav.kind === 'components') {
     return {
-      kind: 'component',
+      kind: 'components',
     }
   }
 
   return topBarNav
 }
 
-const getTopBarNavComponentImportPath = (options: { rootDir: string; topBarNav: ResolvedTopBarNav }) => {
-  if (options.topBarNav.kind !== 'component') {
-    return undefined
+const getTopBarNavComponentImportPaths = (options: { rootDir: string; topBarNav: ResolvedTopBarNav }) => {
+  if (options.topBarNav.kind !== 'components') {
+    return []
   }
 
   const generatedPagesRoot = getGeneratedPagesRoot(options.rootDir)
-  const componentPath = path.resolve(path.dirname(getDocsConfigPath(options.rootDir)), options.topBarNav.component)
 
-  return getRelativeImportPath(generatedPagesRoot, componentPath)
+  return options.topBarNav.components.map((component) => {
+    const componentPath = path.resolve(path.dirname(getDocsConfigPath(options.rootDir)), component)
+
+    return getRelativeImportPath(generatedPagesRoot, componentPath)
+  })
 }
 
 export const getDocsSourcePaths = (options: { rootDir: string; docsConfig: DocsConfig }): DocsSourcePaths => {
@@ -388,7 +395,7 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
     globalContextFilePath,
     getGeneratedGlobalContextSource(
       globalContextData,
-      getTopBarNavComponentImportPath({ rootDir, topBarNav: resolved.topBarNav }),
+      getTopBarNavComponentImportPaths({ rootDir, topBarNav: resolved.topBarNav }),
     ),
   )
   writeFileIfChanged(layoutFilePath, getGeneratedLayoutSource())

@@ -1,21 +1,57 @@
 import { cmMerge } from '@classmatejs/react'
+import {
+  LayoutComponent,
+  renderInlineMarkdown,
+  type DocsIconMap,
+  type ResolvedDocsSection,
+  type ResolvedSidebarGroup,
+  type ResolvedSidebarNode,
+} from '@unterberg/nivel'
 import type { LucideIcon } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
-import { getDocsIconMapKey } from '../../../../docs/iconKeys.js'
-import type {
-  DocsIconMap,
-  ResolvedDocsSection,
-  ResolvedSidebarGroup,
-  ResolvedSidebarNode,
-} from '../../../../docs/types.js'
-import { withSiteBaseUrl } from '../../../../shared/assets.js'
-import { renderInlineMarkdown } from '../../../../shared/renderInlineMarkdown.js'
-import { useDocsGlobalContext } from '../../docsGlobalContext.js'
-import { containsActiveHref, getGroupHref, getVisibleGroupItems, getVisibleNavItems } from '../docsNavigation.js'
-import { LayoutComponent } from '../LayoutComponent.js'
 
 const detailsTransitionDurationMs = 260
+
+const getDocsIconMapKey = (type: 'section' | 'group' | 'page', id: string) => `${type}:${id}`
+
+const withSiteBaseUrl = (value: string) => {
+  if (value === '' || value.startsWith('#') || value.startsWith('//') || /^[a-z][a-z\d+.-]*:/i.test(value)) {
+    return value
+  }
+
+  return value.startsWith('/') ? value : `/${value.replace(/^\/+/, '')}`
+}
+
+const containsActiveHref = (items: ResolvedSidebarNode[], currentHref: string): boolean => {
+  return items.some((item) => {
+    if (item.kind === 'page') {
+      return item.href === currentHref
+    }
+
+    return item.href === currentHref || containsActiveHref(item.items, currentHref)
+  })
+}
+
+const getVisibleNavItems = (items: ResolvedSidebarNode[]) => items.filter((item) => item.showInNav)
+
+const getVisibleGroupItems = (group: ResolvedSidebarGroup) => {
+  const visibleItems = getVisibleNavItems(group.items)
+
+  if (!group.href) {
+    return visibleItems
+  }
+
+  return visibleItems.filter((item): item is ResolvedSidebarNode => {
+    if (item.kind !== 'page') {
+      return true
+    }
+
+    return item.href !== group.href
+  })
+}
+
+const getGroupHref = (group: ResolvedSidebarGroup): string | null => group.href ?? null
 
 const findActiveItemId = (section: ResolvedDocsSection | undefined, currentHref: string): string | undefined => {
   if (!section) {
@@ -471,24 +507,27 @@ const hasVisibleItems = (items: ResolvedSidebarNode[]): boolean => {
   })
 }
 
-export const MegaMenu = ({
-  isActive,
-  onOpen,
-  onClose,
-  sections,
-  activeSectionId,
-  hoveredSectionId,
-  isLandingPage,
-}: {
+interface DocsMegaMenuProps {
   isActive: boolean
   onOpen: (sectionId?: string) => void
   onClose: () => void
   sections: ResolvedDocsSection[]
+  docsIconMap: DocsIconMap
   activeSectionId?: string
   hoveredSectionId?: string
   isLandingPage: boolean
-}) => {
-  const docs = useDocsGlobalContext()
+}
+
+const DocsMegaMenu = ({
+  isActive,
+  onOpen,
+  onClose,
+  sections,
+  docsIconMap,
+  activeSectionId,
+  hoveredSectionId,
+  isLandingPage,
+}: DocsMegaMenuProps) => {
   const { urlPathname } = usePageContext()
   const visibleSectionId = hoveredSectionId ?? activeSectionId ?? sections[0]?.id
   const [visibleSectionElement, setVisibleSectionElement] = useState<HTMLDivElement | null>(null)
@@ -637,7 +676,7 @@ export const MegaMenu = ({
                         item={child}
                         activeItemId={activeItemId}
                         currentHref={urlPathname}
-                        docsIconMap={docs.docsIconMap}
+                        docsIconMap={docsIconMap}
                         onClose={closeMegaMenu}
                         onContentHeightChange={scheduleContentHeightUpdate}
                         openGroupId={openGroupId}
@@ -654,3 +693,5 @@ export const MegaMenu = ({
     </div>
   )
 }
+
+export default DocsMegaMenu

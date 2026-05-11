@@ -1,22 +1,16 @@
 import cm from '@classmatejs/react'
 import { usePageContext } from 'vike-react/usePageContext'
-import { getActiveSectionByPathname } from '../../../../docs/runtime'
-import { useDocsGlobalContext } from '../../docsGlobalContext'
 import { LayoutComponent } from '../LayoutComponent'
 import DocsNavbar from './DocsNavbar'
 import LandingPageNavbar from './LandingPageNavbar'
 
 const Navbar = () => {
-  const docs = useDocsGlobalContext()
-  const { urlPathname, urlParsed } = usePageContext()
+  const { urlParsed } = usePageContext()
   const isLandingPage = urlParsed.pathname === '/'
-  const activeSection = getActiveSectionByPathname(docs, urlPathname)
 
   return (
     <StyledNavbar $fixed={!isLandingPage} $borderBottom>
-      <LayoutComponent>
-        {isLandingPage ? <LandingPageNavbar /> : <DocsNavbar activeSection={activeSection} />}
-      </LayoutComponent>
+      <LayoutComponent>{isLandingPage ? <LandingPageNavbar /> : <DocsNavbar />}</LayoutComponent>
     </StyledNavbar>
   )
 }

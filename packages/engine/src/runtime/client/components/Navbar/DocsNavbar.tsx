@@ -1,7 +1,6 @@
-import cm, { cmMerge } from '@classmatejs/react'
+import cm from '@classmatejs/react'
 import { Menu } from 'lucide-react'
 import { useCallback } from 'react'
-import type { ResolvedDocsSection } from '../../../../docs/types'
 import { useDocsGlobalContext } from '../../docsGlobalContext'
 import { Brand } from '../Brand'
 import AsideButtons from './AsideButtons'
@@ -19,14 +18,9 @@ const StyledNavList = cm.ul`
   inline-flex items-center gap-2 font-semibold 
 `
 
-interface DocsNavbarProps {
-  activeSection?: ResolvedDocsSection | null
-}
-
-const DocsNavbar = ({ activeSection }: DocsNavbarProps) => {
+const DocsNavbar = () => {
   const docs = useDocsGlobalContext()
-  const TopBarNavComponent = docs.topBarNavComponent
-  const buttonClassName = 'btn btn-ghost btn-sm text-base md:min-w-30 px-2 whitespace-nowrap tracking-tight'
+  const topBarNavComponents = docs.topBarNavComponents ?? []
 
   const handleClick = useCallback(() => {
     alert('TODO: Open mobile menu')
@@ -42,15 +36,9 @@ const DocsNavbar = ({ activeSection }: DocsNavbarProps) => {
           {docs.topBarNav.kind === 'links' ? (
             <TopBarNavLinks items={docs.topBarNav.items} minWidthClass="md:min-w-30" />
           ) : null}
-          {docs.topBarNav.kind === 'component' && TopBarNavComponent ? (
-            <TopBarNavComponent
-              activeButtonClassName={cmMerge(buttonClassName, 'btn-primary btn-soft')}
-              activeSection={activeSection ?? null}
-              buttonClassName={buttonClassName}
-              docs={docs}
-              isLandingPage={false}
-            />
-          ) : null}
+          {docs.topBarNav.kind === 'components'
+            ? topBarNavComponents.map((TopBarNavComponent) => <TopBarNavComponent key={TopBarNavComponent.name} />)
+            : null}
         </StyledNavList>
       </StyledNav>
       <button type="button" className="block lg:hidden" aria-label="Open navigation menu" onClick={handleClick}>

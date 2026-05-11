@@ -1,4 +1,4 @@
-import cm, { cmMerge } from '@classmatejs/react'
+import cm from '@classmatejs/react'
 import { Menu } from 'lucide-react'
 import { useCallback } from 'react'
 import { useDocsGlobalContext } from '../../docsGlobalContext'
@@ -17,8 +17,7 @@ const StyledNavList = cm.ul`
 
 const LandingPageNavbar = () => {
   const docs = useDocsGlobalContext()
-  const TopBarNavComponent = docs.topBarNavComponent
-  const buttonClassName = 'btn btn-ghost btn-sm text-base lg:min-w-30 px-2 whitespace-nowrap tracking-tight'
+  const topBarNavComponents = docs.topBarNavComponents ?? []
 
   const handleClick = useCallback(() => {
     alert('TODO: Open mobile menu')
@@ -34,15 +33,9 @@ const LandingPageNavbar = () => {
           {docs.topBarNav.kind === 'links' ? (
             <TopBarNavLinks items={docs.topBarNav.items} minWidthClass="lg:min-w-30" />
           ) : null}
-          {docs.topBarNav.kind === 'component' && TopBarNavComponent ? (
-            <TopBarNavComponent
-              activeButtonClassName={cmMerge(buttonClassName, 'btn-primary btn-soft')}
-              activeSection={null}
-              buttonClassName={buttonClassName}
-              docs={docs}
-              isLandingPage={true}
-            />
-          ) : null}
+          {docs.topBarNav.kind === 'components'
+            ? topBarNavComponents.map((TopBarNavComponent) => <TopBarNavComponent key={TopBarNavComponent.name} />)
+            : null}
         </StyledNavList>
       </StyledNav>
       <div className="min-w-40 hidden lg:block">

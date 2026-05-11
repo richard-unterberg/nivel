@@ -1,10 +1,9 @@
-import { cmMerge } from '@classmatejs/react'
-import type { TopBarNavComponentProps } from '@unterberg/nivel'
-import { renderInlineMarkdown } from '@unterberg/nivel'
-import { DocsMegaMenu, useDocsMegaMenu } from '@unterberg/nivel/client'
+import { useDocsContext } from '@unterberg/nivel/client'
+import { TextSearch } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { usePageContext } from 'vike-react/usePageContext'
+import { getTopBarButtonClassName, useHasMounted, withSiteBaseUrl } from './topBarNavUtils'
 
 const minQueryLength = 2
 const queryDebounceMs = 150
@@ -146,26 +145,9 @@ const useDebouncedValue = (value: string, delayMs: number) => {
   return debouncedValue
 }
 
-const useHasMounted = () => {
-  const [hasMounted, setHasMounted] = useState(false)
-
-  useEffect(() => {
-    setHasMounted(true)
-  }, [])
-
-  return hasMounted
-}
-
-const withSiteBaseUrl = (value: string) => {
-  if (value === '' || value.startsWith('#') || value.startsWith('//') || /^[a-z][a-z\d+.-]*:/i.test(value)) {
-    return value
-  }
-
-  return value.startsWith('/') ? value : `/${value.replace(/^\/+/, '')}`
-}
-
-const SearchTopBarItem = ({ buttonClassName, docs }: TopBarNavComponentProps) => {
-  const { urlPathname } = usePageContext()
+const DocsTopBarSearch = () => {
+  const docs = useDocsContext()
+  const { urlPathname, urlParsed } = usePageContext()
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
@@ -178,6 +160,7 @@ const SearchTopBarItem = ({ buttonClassName, docs }: TopBarNavComponentProps) =>
   const hasMounted = useHasMounted()
   const normalizedQuery = debouncedQuery.trim()
   const canSearch = Boolean(docs.algolia) && normalizedQuery.length >= minQueryLength
+  const buttonClassName = getTopBarButtonClassName(urlParsed.pathname === '/')
 
   useEffect(() => {
     if (previousPathnameRef.current !== urlPathname) {
@@ -321,7 +304,7 @@ const SearchTopBarItem = ({ buttonClassName, docs }: TopBarNavComponentProps) =>
   return (
     <li>
       <button type="button" className={buttonClassName} onClick={() => setIsOpen(true)}>
-        Search
+        Search <TextSearch className="size-4" aria-hidden="true" />
       </button>
       {isOpen && hasMounted
         ? createPortal(
@@ -393,68 +376,4 @@ const SearchTopBarItem = ({ buttonClassName, docs }: TopBarNavComponentProps) =>
   )
 }
 
-const DocsTopBarNav = (props: TopBarNavComponentProps) => {
-  const { activeButtonClassName, activeSection, buttonClassName, docs, isLandingPage } = props
-  const sections = docs.sidebarSections
-  const hasMounted = useHasMounted()
-  const { closeMegaMenu, hoveredSectionId, isMegaMenuOpen, openMegaMenu, scheduleMegaMenuClose, scheduleMegaMenuOpen } =
-    useDocsMegaMenu({
-      activeSectionId: activeSection?.id,
-      sections,
-    })
-
-  return (
-    <>
-      {sections.map((section) => {
-        const SectionIcon = docs.docsIconMap[`section:${section.id}`]
-        const isActiveSection = activeSection?.id === section.id
-        const isMegaMenuItemActive = isMegaMenuOpen && hoveredSectionId === section.id
-
-        return (
-          <li key={section.id}>
-            <a
-              href={withSiteBaseUrl(section.href)}
-              className="block"
-              onPointerEnter={() => scheduleMegaMenuOpen(section.id)}
-              onPointerLeave={scheduleMegaMenuClose}
-              onFocus={() => openMegaMenu(section.id)}
-              onBlur={scheduleMegaMenuClose}
-              onClick={closeMegaMenu}
-            >
-              <span className={isActiveSection ? activeButtonClassName : buttonClassName}>
-                {SectionIcon ? <SectionIcon className="size-4 shrink-0" aria-hidden="true" /> : null}
-                {renderInlineMarkdown(section.navTitle)}
-                <span
-                  className={cmMerge(
-                    'size-4 shrink-0 transition-transform duration-200',
-                    isMegaMenuItemActive ? 'rotate-180' : 'rotate-0',
-                  )}
-                  aria-hidden="true"
-                >
-                  v
-                </span>
-              </span>
-            </a>
-          </li>
-        )
-      })}
-      <SearchTopBarItem {...props} />
-      {hasMounted
-        ? createPortal(
-            <DocsMegaMenu
-              activeSectionId={activeSection?.id}
-              hoveredSectionId={hoveredSectionId}
-              isActive={isMegaMenuOpen}
-              isLandingPage={isLandingPage}
-              onClose={scheduleMegaMenuClose}
-              onOpen={openMegaMenu}
-              sections={sections}
-            />,
-            document.body,
-          )
-        : null}
-    </>
-  )
-}
-
-export default DocsTopBarNav
+export default DocsTopBarSearch
