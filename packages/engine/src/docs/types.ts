@@ -87,7 +87,7 @@ export type TopBarNavComponentOptions = {
   component: string
 }
 
-export type TopBarNavOptions = true | false | TopBarNavItem[] | TopBarNavComponentOptions
+export type TopBarNavOptions = false | TopBarNavItem[] | TopBarNavComponentOptions
 
 export type DocsPageNode = {
   kind: 'page'
@@ -256,10 +256,6 @@ export type ResolvedTopBarNav =
       items: []
     }
   | {
-      kind: 'mega'
-      items: ResolvedNavbarItem[]
-    }
-  | {
       kind: 'links'
       items: ResolvedTopBarNavItem[]
     }
@@ -327,6 +323,7 @@ export type TopBarNavComponentProps = {
   isLandingPage: boolean
   activeSection: ResolvedDocsSection | null
   buttonClassName: string
+  activeButtonClassName: string
 }
 
 export type DocPageData = {

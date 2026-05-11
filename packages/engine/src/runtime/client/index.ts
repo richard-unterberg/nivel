@@ -1,4 +1,6 @@
 export { AppLayout } from './AppLayout.js'
+export { MegaMenu as DocsMegaMenu } from './components/Navbar/MegaMenu.js'
+export { default as useDocsMegaMenu } from './components/Navbar/useMegaMenu.js'
 export { LayoutComponent } from './components/LayoutComponent.js'
 export { MetaHead } from './components/MetaHead/index.js'
 export { ProseContainer } from './components/ProseContainer.js'

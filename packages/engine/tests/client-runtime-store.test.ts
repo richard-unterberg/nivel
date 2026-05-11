@@ -34,6 +34,11 @@ test('client runtime exports the public sidebar hooks', () => {
   assert.equal(typeof clientRuntime.useDocsSidebarStore, 'function')
 })
 
+test('client runtime exports reusable mega menu primitives', () => {
+  assert.equal(typeof clientRuntime.DocsMegaMenu, 'function')
+  assert.equal(typeof clientRuntime.useDocsMegaMenu, 'function')
+})
+
 test('client runtime exports nivel action event helpers', () => {
   assert.equal(clientRuntime.NIVEL_ACTION_EVENT, 'nivel:action')
   assert.equal(typeof clientRuntime.dispatchNivelAction, 'function')

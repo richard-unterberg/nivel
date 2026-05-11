@@ -64,22 +64,11 @@ test('topBarNav false resolves to no topbar nav items', () => {
   })
 })
 
-test('topBarNav true resolves to graph-driven mega menu items', () => {
-  const resolved = resolveDocsConfig(createConfig({ topBarNav: true }))
-
-  assert.equal(resolved.topBarNav.kind, 'mega')
-  assert.deepEqual(resolved.topBarNav.items, [
-    {
-      id: 'guide',
-      title: 'Docs',
-      href: '/docs/intro/',
-    },
-    {
-      id: 'api',
-      title: 'API',
-      href: '/docs/reference/',
-    },
-  ])
+test('topBarNav true is rejected because mega menu composition is consumer-owned', () => {
+  assert.throws(
+    () => resolveDocsConfig(createConfig({ topBarNav: true } as Partial<DocsConfig>)),
+    /topBarNav no longer accepts true/,
+  )
 })
 
 test('topBarNav link arrays preserve order, CTA flags, and normalized hrefs', () => {
@@ -147,14 +136,14 @@ test('topBarNav component mode preserves a normalized relative import path', () 
   const resolved = resolveDocsConfig(
     createConfig({
       topBarNav: {
-        component: '.\\components\\DocsTopBarSearch',
+        component: '.\\components\\DocsTopBarNav',
       },
     }),
   )
 
   assert.deepEqual(resolved.topBarNav, {
     kind: 'component',
-    component: './components/DocsTopBarSearch',
+    component: './components/DocsTopBarNav',
   })
 })
 
@@ -176,7 +165,7 @@ test('topBarNav component mode rejects invalid import paths', () => {
       resolveDocsConfig(
         createConfig({
           topBarNav: {
-            component: '@app/DocsTopBarSearch',
+            component: '@app/DocsTopBarNav',
           },
         }),
       ),

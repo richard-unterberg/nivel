@@ -5,66 +5,27 @@ import { useDocsGlobalContext } from '../../docsGlobalContext'
 import { LayoutComponent } from '../LayoutComponent'
 import DocsNavbar from './DocsNavbar'
 import LandingPageNavbar from './LandingPageNavbar'
-import { MegaMenu } from './MegaMenu'
-import useMegaMenu from './useMegaMenu'
 
-const NavbarNew = () => {
+const Navbar = () => {
   const docs = useDocsGlobalContext()
   const { urlPathname, urlParsed } = usePageContext()
   const isLandingPage = urlParsed.pathname === '/'
-  const sections = docs.sidebarSections
   const activeSection = getActiveSectionByPathname(docs, urlPathname)
-  const isMegaNav = docs.topBarNav.kind === 'mega'
-
-  const { closeMegaMenu, hoveredSectionId, isMegaMenuOpen, openMegaMenu, scheduleMegaMenuOpen, scheduleMegaMenuClose } =
-    useMegaMenu({
-      activeSectionId: activeSection?.id,
-      sections,
-    })
 
   return (
-    <StyledNavbar $border={isLandingPage}>
+    <StyledNavbar $fixed={!isLandingPage} $borderBottom>
       <LayoutComponent>
-        {isLandingPage ? (
-          <LandingPageNavbar
-            openMegaMenu={openMegaMenu}
-            scheduleMegaMenuOpen={scheduleMegaMenuOpen}
-            scheduleMegaMenuClose={scheduleMegaMenuClose}
-            closeMegaMenu={closeMegaMenu}
-            hoveredSectionId={hoveredSectionId}
-            isMegaMenuOpen={isMegaMenuOpen}
-          />
-        ) : (
-          <DocsNavbar
-            openMegaMenu={openMegaMenu}
-            scheduleMegaMenuOpen={scheduleMegaMenuOpen}
-            scheduleMegaMenuClose={scheduleMegaMenuClose}
-            closeMegaMenu={closeMegaMenu}
-            activeSection={activeSection}
-            hoveredSectionId={hoveredSectionId}
-            isMegaMenuOpen={isMegaMenuOpen}
-          />
-        )}
+        {isLandingPage ? <LandingPageNavbar /> : <DocsNavbar activeSection={activeSection} />}
       </LayoutComponent>
-      {isMegaNav ? (
-        <MegaMenu
-          sections={sections}
-          activeSectionId={activeSection?.id}
-          hoveredSectionId={hoveredSectionId}
-          isActive={isMegaMenuOpen}
-          onOpen={openMegaMenu}
-          onClose={scheduleMegaMenuClose}
-          isLandingPage={isLandingPage}
-        />
-      ) : null}
     </StyledNavbar>
   )
 }
 
-export default NavbarNew
+export default Navbar
 
-const StyledNavbar = cm.header<{ $border: boolean }>`
+const StyledNavbar = cm.header<{ $fixed: boolean; $borderBottom?: boolean }>`
   top-0 left-0 z-20 w-full bg-base-100
   pt-0 h-14
-  ${({ $border }) => ($border ? 'relative' : 'fixed')}
+  ${({ $borderBottom, $fixed }) => ($borderBottom && $fixed ? 'border-b border-base-muted-light' : '')}
+  ${({ $fixed }) => ($fixed ? 'fixed' : 'relative ')}
 `

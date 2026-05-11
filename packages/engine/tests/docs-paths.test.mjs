@@ -206,7 +206,7 @@ test('syncGeneratedDocsPages imports component topBarNav without serializing the
       rootDir,
       docsConfig: createDocsConfig({
         topBarNav: {
-          component: './components/DocsTopBarSearch',
+          component: './components/DocsTopBarNav',
         },
       }),
     })
@@ -216,10 +216,10 @@ test('syncGeneratedDocsPages imports component topBarNav without serializing the
       'utf8',
     )
 
-    assert.match(globalContext, /import TopBarNavComponent from "\.\.\/components\/DocsTopBarSearch"/)
+    assert.match(globalContext, /import TopBarNavComponent from "\.\.\/components\/DocsTopBarNav"/)
     assert.match(globalContext, /"topBarNav": \{\n {4}"kind": "component"\n {2}\}/)
     assert.match(globalContext, /topBarNavComponent: TopBarNavComponent/)
-    assert.doesNotMatch(globalContext, /"component": "\.\/components\/DocsTopBarSearch"/)
+    assert.doesNotMatch(globalContext, /"component": "\.\/components\/DocsTopBarNav"/)
   } finally {
     fs.rmSync(rootDir, { force: true, recursive: true })
   }

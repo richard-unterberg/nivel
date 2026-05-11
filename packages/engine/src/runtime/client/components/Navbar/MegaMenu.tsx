@@ -595,7 +595,7 @@ export const MegaMenu = ({
 
   return (
     <div
-      className={cmMerge('fixed top-14 left-0 z-3 w-full', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
+      className={cmMerge('fixed top-14 left-0 z-20 w-full', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
       onPointerEnter={() => onOpen(visibleSectionId)}
       onPointerLeave={closeMegaMenu}
     >
@@ -607,7 +607,7 @@ export const MegaMenu = ({
       />
       <div
         className={cmMerge(
-          'relative z-4 overflow-hidden transition-[height] bg-base-100 duration-300 ease-out pointer-events-none',
+          'relative z-4 overflow-hidden -mt-px transition-[height] bg-base-100 duration-300 ease-out pointer-events-none',
           isLandingPage && !isActive ? '' : 'pointer-events-auto lg:border-b lg:border-base-muted-light',
         )}
         // biome-ignore lint/nursery/noInlineStyles: needed here

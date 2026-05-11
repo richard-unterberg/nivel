@@ -1,10 +1,6 @@
 {
   "$schema": "./node_modules/knip/schema.json",
-  "ignore": [
-    "tests/npm-consumer/**",
-    "packages/engine/assets/**",
-    "packages/consumer-dev/pages/components/DocsTopBarSearch.tsx"
-  ],
+  "ignore": ["tests/npm-consumer/**", "packages/engine/assets/**"],
   "ignoreDependencies": [],
   "ignoreIssues": {
     "packages/consumer-dev/docs/content/concepts/CodeComparison.tsx": [

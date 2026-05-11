@@ -20,6 +20,7 @@ import type {
   ResolvedNavbarItem,
   ResolvedSidebarNode,
   ResolvedTopBarNav,
+  TopBarNavComponentOptions,
   ThemePreference,
   TopBarNavOptions,
 } from './types.js'
@@ -200,11 +201,7 @@ const resolveNavigationHref = (value: string, fieldName: string, basePath: strin
   return normalizePathname(normalized)
 }
 
-const resolveTopBarNavConfig = (
-  topBarNav: TopBarNavOptions | undefined,
-  navbarItems: ResolvedNavbarItem[],
-  basePath: string,
-): ResolvedTopBarNav => {
+const resolveTopBarNavConfig = (topBarNav: TopBarNavOptions | undefined, basePath: string): ResolvedTopBarNav => {
   if (topBarNav === undefined || topBarNav === false) {
     return {
       kind: 'none',
@@ -212,15 +209,12 @@ const resolveTopBarNavConfig = (
     }
   }
 
-  if (topBarNav === true) {
-    return {
-      kind: 'mega',
-      items: navbarItems,
-    }
+  if ((topBarNav as unknown) === true) {
+    throw new Error('Docs topBarNav no longer accepts true. Use a consumer component for mega menu composition.')
   }
 
   if (!Array.isArray(topBarNav)) {
-    const component = topBarNav.component.trim().replaceAll('\\', '/')
+    const component = (topBarNav as TopBarNavComponentOptions).component.trim().replaceAll('\\', '/')
 
     if (!component) {
       throw new Error('Docs topBarNav component must be a non-empty relative import path.')
@@ -557,7 +551,7 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
     pages,
     sections,
     navbarItems,
-    topBarNav: resolveTopBarNavConfig(config.topBarNav, navbarItems, normalizedBasePath),
+    topBarNav: resolveTopBarNavConfig(config.topBarNav, normalizedBasePath),
   }
 }
 

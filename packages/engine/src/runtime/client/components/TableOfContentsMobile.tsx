@@ -84,6 +84,7 @@ const StyledTOC = cm.div`
   top-14 left-0 border-b z-5
   lg:w-[calc(100svw-80*var(--spacing))]
   lg:left-80
+  z-1
 `
 
 const StyledTOCInner = cm.div`
