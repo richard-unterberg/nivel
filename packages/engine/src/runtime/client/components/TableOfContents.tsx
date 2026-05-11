@@ -47,7 +47,7 @@ export const TableOfContents = ({
                     <TableOfContentsIcon className="size-3" />
                     On this page
                   </p>
-                  <nav aria-label="On this page" className="mb-12">
+                  <nav aria-label="On this page" className="mb-4">
                     <ul>
                       {effectiveHeadings.map((heading) => {
                         return (
