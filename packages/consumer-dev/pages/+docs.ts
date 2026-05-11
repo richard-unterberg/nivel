@@ -9,6 +9,9 @@ const docsConfig = {
   robots: false,
   basePath: '/',
   contentDir: 'docs',
+  topBarNav: {
+    component: './components/DocsTopBarSearch',
+  },
   theme: {
     light: 'telefunc-light',
     dark: 'telefunc-dark',

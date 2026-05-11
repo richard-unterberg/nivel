@@ -1,5 +1,5 @@
 import cm, { cmMerge } from '@classmatejs/react'
-import { ChevronDown, Menu, TextSearch } from 'lucide-react'
+import { ChevronDown, Menu } from 'lucide-react'
 import { useCallback } from 'react'
 import { getDocsIconMapKey } from '../../../../docs/iconKeys.js'
 import { withSiteBaseUrl } from '../../../../shared/assets'
@@ -7,6 +7,7 @@ import { renderInlineMarkdown } from '../../../../shared/renderInlineMarkdown'
 import { useDocsGlobalContext } from '../../docsGlobalContext'
 import { Brand } from '../Brand'
 import AsideButtons from './AsideButtons'
+import { TopBarNavLinks } from './TopBarNavLinks'
 
 const StyledNav = cm.nav`
   gap-4
@@ -21,7 +22,6 @@ interface LandingPageNavbarProps {
   scheduleMegaMenuClose?: () => void
   scheduleMegaMenuOpen: (id?: string) => void
   openMegaMenu: (id?: string) => void
-  toggleSearch: () => void
   closeMegaMenu?: () => void
   hoveredSectionId?: string
   isMegaMenuOpen: boolean
@@ -32,11 +32,11 @@ const LandingPageNavbar = ({
   openMegaMenu,
   scheduleMegaMenuOpen,
   scheduleMegaMenuClose,
-  toggleSearch,
   hoveredSectionId,
   isMegaMenuOpen,
 }: LandingPageNavbarProps) => {
   const docs = useDocsGlobalContext()
+  const TopBarNavComponent = docs.topBarNavComponent
 
   const handleClick = useCallback(() => {
     alert('TODO: Open mobile menu')
@@ -49,49 +49,52 @@ const LandingPageNavbar = ({
       </div>
       <StyledNav aria-label="Primary" className="flex-1 flex hidden lg:flex">
         <StyledNavList className="justify-end ">
-          {docs.navbarItems.map((item) => {
-            const ItemIcon = docs.docsIconMap[getDocsIconMapKey('section', item.id)]
-            const isMegaMenuItemActive = isMegaMenuOpen && hoveredSectionId === item.id
+          {docs.topBarNav.kind === 'mega'
+            ? docs.topBarNav.items.map((item) => {
+                const ItemIcon = docs.docsIconMap[getDocsIconMapKey('section', item.id)]
+                const isMegaMenuItemActive = isMegaMenuOpen && hoveredSectionId === item.id
 
-            return (
-              <li key={item.id}>
-                <a
-                  href={withSiteBaseUrl(item.href)}
-                  className={'block'}
-                  onPointerEnter={() => scheduleMegaMenuOpen(item.id)}
-                  onPointerLeave={scheduleMegaMenuClose}
-                  onFocus={() => openMegaMenu(item.id)}
-                  onBlur={scheduleMegaMenuClose}
-                  onClick={closeMegaMenu}
-                >
-                  <span
-                    className={cmMerge(
-                      'btn btn-ghost text-base btn-sm lg:min-w-30 px-2 whitespace-nowrap tracking-tight',
-                    )}
-                  >
-                    {ItemIcon ? <ItemIcon className="size-4 shrink-0" aria-hidden="true" /> : null}
-                    {renderInlineMarkdown(item.title)}
-                    <ChevronDown
-                      className={cmMerge(
-                        'size-4 shrink-0 transition-transform duration-200',
-                        isMegaMenuItemActive ? 'rotate-180' : 'rotate-0',
-                      )}
-                    />
-                  </span>
-                </a>
-              </li>
-            )
-          })}
-          {docs.algolia ? (
+                return (
+                  <li key={item.id}>
+                    <a
+                      href={withSiteBaseUrl(item.href)}
+                      className={'block'}
+                      onPointerEnter={() => scheduleMegaMenuOpen(item.id)}
+                      onPointerLeave={scheduleMegaMenuClose}
+                      onFocus={() => openMegaMenu(item.id)}
+                      onBlur={scheduleMegaMenuClose}
+                      onClick={closeMegaMenu}
+                    >
+                      <span
+                        className={cmMerge(
+                          'btn btn-ghost text-base btn-sm lg:min-w-30 px-2 whitespace-nowrap tracking-tight',
+                        )}
+                      >
+                        {ItemIcon ? <ItemIcon className="size-4 shrink-0" aria-hidden="true" /> : null}
+                        {renderInlineMarkdown(item.title)}
+                        <ChevronDown
+                          className={cmMerge(
+                            'size-4 shrink-0 transition-transform duration-200',
+                            isMegaMenuItemActive ? 'rotate-180' : 'rotate-0',
+                          )}
+                        />
+                      </span>
+                    </a>
+                  </li>
+                )
+              })
+            : null}
+          {docs.topBarNav.kind === 'links' ? (
+            <TopBarNavLinks items={docs.topBarNav.items} minWidthClass="lg:min-w-30" />
+          ) : null}
+          {docs.topBarNav.kind === 'component' && TopBarNavComponent ? (
             <li>
-              <button
-                type="button"
-                onClick={toggleSearch}
-                className="btn btn-ghost btn-sm text-base lg:min-w-30 px-2 whitespace-nowrap tracking-tight"
-              >
-                Search
-                <TextSearch className="size-4" />
-              </button>
+              <TopBarNavComponent
+                activeSection={null}
+                buttonClassName="btn btn-ghost btn-sm text-base lg:min-w-30 px-2 whitespace-nowrap tracking-tight"
+                docs={docs}
+                isLandingPage={true}
+              />
             </li>
           ) : null}
         </StyledNavList>

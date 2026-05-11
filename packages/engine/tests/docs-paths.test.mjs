@@ -189,3 +189,38 @@ test('syncGeneratedDocsPages reads custom contentDir and emits custom route file
     fs.rmSync(rootDir, { force: true, recursive: true })
   }
 })
+
+test('syncGeneratedDocsPages imports component topBarNav without serializing the component path', () => {
+  const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), 'nivel-docs-topbar-'))
+
+  try {
+    const introDir = path.join(rootDir, 'docs', 'content', 'intro')
+    const pricingDir = path.join(rootDir, 'docs', 'content', 'pricing')
+
+    fs.mkdirSync(introDir, { recursive: true })
+    fs.mkdirSync(pricingDir, { recursive: true })
+    fs.writeFileSync(path.join(introDir, 'content.mdx'), '# Intro\n')
+    fs.writeFileSync(path.join(pricingDir, 'content.mdx'), '# Pricing\n')
+
+    syncGeneratedDocsPages({
+      rootDir,
+      docsConfig: createDocsConfig({
+        topBarNav: {
+          component: './components/DocsTopBarSearch',
+        },
+      }),
+    })
+
+    const globalContext = fs.readFileSync(
+      path.join(rootDir, 'pages', '(nivel-generated)', '_docsGlobalContext.ts'),
+      'utf8',
+    )
+
+    assert.match(globalContext, /import TopBarNavComponent from "\.\.\/components\/DocsTopBarSearch"/)
+    assert.match(globalContext, /"topBarNav": \{\n {4}"kind": "component"\n {2}\}/)
+    assert.match(globalContext, /topBarNavComponent: TopBarNavComponent/)
+    assert.doesNotMatch(globalContext, /"component": "\.\/components\/DocsTopBarSearch"/)
+  } finally {
+    fs.rmSync(rootDir, { force: true, recursive: true })
+  }
+})

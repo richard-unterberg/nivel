@@ -10,6 +10,7 @@ export type {
   DocsFooterConfig,
   DocsGlobalContextData,
   DocsGlobalContextSerializableData,
+  DocsGlobalContextTopBarNav,
   DocsGraph,
   DocsGroupNode,
   DocsHeadConfig,
@@ -30,7 +31,13 @@ export type {
   ResolvedDocsPartnerConfig,
   ResolvedDocsPartnersConfig,
   ResolvedDocsSection,
+  ResolvedTopBarNav,
+  ResolvedTopBarNavItem,
   ThemePreference,
+  TopBarNavComponentOptions,
+  TopBarNavComponentProps,
+  TopBarNavItem,
+  TopBarNavOptions,
 } from './docs/types.js'
 export { ChoiceGroup } from './mdx/code-blocks/ChoiceGroup.js'
 export {
@@ -45,7 +52,6 @@ export { MermaidDiagram } from './mdx/code-blocks/MermaidDiagram.js'
 export { Pre } from './mdx/code-blocks/Pre.js'
 export { Alert, type AlertVariant } from './mdx/components/Alert.js'
 export { Link, type LinkProps } from './mdx/components/Link.js'
-export { LayoutComponent } from './runtime/client/components/LayoutComponent.js'
 export {
   Overview,
   type OverviewItem,
@@ -70,6 +76,7 @@ export {
   UniversalMdxProvider,
   useUniversalMdxRuntime,
 } from './mdx/components/UniversalMdxProvider.js'
+export { LayoutComponent } from './runtime/client/components/LayoutComponent.js'
 export {
   baseAssets,
   nivelAssetUrl,

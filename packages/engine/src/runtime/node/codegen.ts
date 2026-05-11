@@ -9,7 +9,9 @@ import type {
   DocsConfig,
   DocsGlobalContextSerializableData,
   DocsIconName,
+  DocsGlobalContextTopBarNav,
   ResolvedSidebarNode,
+  ResolvedTopBarNav,
 } from '../../docs/types.js'
 import { getGeneratedDocsIconNode } from '../../generated/iconNodes.js'
 
@@ -209,7 +211,10 @@ const getGeneratedIconDefinitionsSource = (iconNames: DocsIconName[]) => {
   ]
 }
 
-const getGeneratedGlobalContextSource = (data: DocsGlobalContextSerializableData) => {
+const getGeneratedGlobalContextSource = (
+  data: DocsGlobalContextSerializableData,
+  topBarNavComponentImportPath?: string,
+) => {
   const iconEntries = data.sidebarSections.flatMap((section) => {
     const sectionIconEntries = section.icon
       ? [{ iconKey: getDocsIconMapKey('section', section.id), iconName: section.icon }]
@@ -221,6 +226,9 @@ const getGeneratedGlobalContextSource = (data: DocsGlobalContextSerializableData
 
   return [
     "import type { DocsGlobalContextData, DocsGlobalContextSerializableData, DocsIconMap } from '@unterberg/nivel'",
+    topBarNavComponentImportPath
+      ? `import TopBarNavComponent from ${JSON.stringify(topBarNavComponentImportPath)}`
+      : null,
     ...getGeneratedIconDefinitionsSource(iconImports),
     '',
     `const docsGlobalContextSerializableData: DocsGlobalContextSerializableData = ${serializeData(data)}`,
@@ -230,11 +238,14 @@ const getGeneratedGlobalContextSource = (data: DocsGlobalContextSerializableData
     'const docsGlobalContextData: DocsGlobalContextData = {',
     '  ...docsGlobalContextSerializableData,',
     '  docsIconMap,',
+    topBarNavComponentImportPath ? '  topBarNavComponent: TopBarNavComponent,' : null,
     '}',
     '',
     'export { docsGlobalContextData }',
     '',
-  ].join('\n')
+  ]
+    .filter((line): line is string => line !== null)
+    .join('\n')
 }
 
 const getRouteString = (href: string) => {
@@ -287,6 +298,27 @@ export type DocsSourcePaths = {
 const getDocsConfigPath = (rootDir: string) => path.join(rootDir, 'pages', '+docs.ts')
 
 const getDocsGraphPath = (rootDir: string) => path.join(rootDir, 'docs', 'docs.graph.ts')
+
+const getSerializableTopBarNav = (topBarNav: ResolvedTopBarNav): DocsGlobalContextTopBarNav => {
+  if (topBarNav.kind === 'component') {
+    return {
+      kind: 'component',
+    }
+  }
+
+  return topBarNav
+}
+
+const getTopBarNavComponentImportPath = (options: { rootDir: string; topBarNav: ResolvedTopBarNav }) => {
+  if (options.topBarNav.kind !== 'component') {
+    return undefined
+  }
+
+  const generatedPagesRoot = getGeneratedPagesRoot(options.rootDir)
+  const componentPath = path.resolve(path.dirname(getDocsConfigPath(options.rootDir)), options.topBarNav.component)
+
+  return getRelativeImportPath(generatedPagesRoot, componentPath)
+}
 
 export const getDocsSourcePaths = (options: { rootDir: string; docsConfig: DocsConfig }): DocsSourcePaths => {
   const resolved = resolveDocsConfig(options.docsConfig)
@@ -348,10 +380,17 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
     algolia: resolved.algolia,
     pages: resolved.pages,
     navbarItems: resolved.navbarItems,
+    topBarNav: getSerializableTopBarNav(resolved.topBarNav),
     sidebarSections: resolved.sections,
   }
 
-  writeFileIfChanged(globalContextFilePath, getGeneratedGlobalContextSource(globalContextData))
+  writeFileIfChanged(
+    globalContextFilePath,
+    getGeneratedGlobalContextSource(
+      globalContextData,
+      getTopBarNavComponentImportPath({ rootDir, topBarNav: resolved.topBarNav }),
+    ),
+  )
   writeFileIfChanged(layoutFilePath, getGeneratedLayoutSource())
   expectedFiles.add(globalContextFilePath)
   expectedFiles.add(layoutFilePath)

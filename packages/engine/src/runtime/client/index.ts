@@ -5,17 +5,9 @@ export { ProseContainer } from './components/ProseContainer.js'
 export { UserSettingsSync } from './components/UserSettingsSync.js'
 export { DocsLayout as DocsRouteLayout } from './DocsLayout.js'
 export { DocsPage } from './DocsPage.js'
-export {
-  useDocsSearchActions,
-  useDocsSearchStore,
-  useDocsSidebarActions,
-  useDocsSidebarStore,
-} from './store/runtime-store.js'
+export { useDocsSidebarActions, useDocsSidebarStore } from './store/runtime-store.js'
 export { useDocsUserSettingsStore } from './store/settings-store.js'
 export type {
-  DocsSearchActions,
-  DocsSearchSlice,
-  DocsSearchState,
   DocsSidebarActions,
   DocsSidebarSlice,
   DocsSidebarState,

@@ -1,5 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
+import type { ComponentType } from 'react'
 import type { DocsIconName } from './icons.js'
+
 export type { DocsIconName } from './icons.js'
 
 export type DocsCollapsible = {
@@ -75,6 +77,18 @@ export type DocsHeadConfig = {
   fontPreloadHrefs?: string[]
 }
 
+export type TopBarNavItem = {
+  label: string
+  href: string
+  isCta?: boolean
+}
+
+export type TopBarNavComponentOptions = {
+  component: string
+}
+
+export type TopBarNavOptions = true | false | TopBarNavItem[] | TopBarNavComponentOptions
+
 export type DocsPageNode = {
   kind: 'page'
   id: string
@@ -132,6 +146,7 @@ export type DocsConfig = {
   head?: DocsHeadConfig
   partners?: DocsPartnersConfig
   algolia?: DocsAlgoliaConfig
+  topBarNav?: TopBarNavOptions
 }
 
 export type ResolvedDocsBrandConfig = {
@@ -229,6 +244,36 @@ export type ResolvedNavbarItem = {
   href: string
 }
 
+export type ResolvedTopBarNavItem = {
+  label: string
+  href: string
+  isCta: boolean
+}
+
+export type ResolvedTopBarNav =
+  | {
+      kind: 'none'
+      items: []
+    }
+  | {
+      kind: 'mega'
+      items: ResolvedNavbarItem[]
+    }
+  | {
+      kind: 'links'
+      items: ResolvedTopBarNavItem[]
+    }
+  | {
+      kind: 'component'
+      component: string
+    }
+
+export type DocsGlobalContextTopBarNav =
+  | Exclude<ResolvedTopBarNav, { kind: 'component' }>
+  | {
+      kind: 'component'
+    }
+
 export type ResolvedDocsConfig = {
   siteTitle: string
   siteDescription: string | null
@@ -246,6 +291,7 @@ export type ResolvedDocsConfig = {
   pages: ResolvedDocsPage[]
   sections: ResolvedDocsSection[]
   navbarItems: ResolvedNavbarItem[]
+  topBarNav: ResolvedTopBarNav
 }
 
 export type DocPageLinkData = Pick<ResolvedDocsPage, 'id' | 'title' | 'href' | 'documentTitle'>
@@ -268,10 +314,19 @@ export type DocsGlobalContextSerializableData = Pick<
   | 'social'
 > & {
   sidebarSections: ResolvedDocsConfig['sections']
+  topBarNav: DocsGlobalContextTopBarNav
 }
 
 export type DocsGlobalContextData = DocsGlobalContextSerializableData & {
   docsIconMap: DocsIconMap
+  topBarNavComponent?: ComponentType<TopBarNavComponentProps>
+}
+
+export type TopBarNavComponentProps = {
+  docs: DocsGlobalContextData
+  isLandingPage: boolean
+  activeSection: ResolvedDocsSection | null
+  buttonClassName: string
 }
 
 export type DocPageData = {

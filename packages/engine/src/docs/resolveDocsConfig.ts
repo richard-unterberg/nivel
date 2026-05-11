@@ -19,7 +19,9 @@ import type {
   ResolvedDocsSocialConfig,
   ResolvedNavbarItem,
   ResolvedSidebarNode,
+  ResolvedTopBarNav,
   ThemePreference,
+  TopBarNavOptions,
 } from './types.js'
 import { assertDocsIconName } from './icons.js'
 
@@ -196,6 +198,66 @@ const resolveNavigationHref = (value: string, fieldName: string, basePath: strin
   }
 
   return normalizePathname(normalized)
+}
+
+const resolveTopBarNavConfig = (
+  topBarNav: TopBarNavOptions | undefined,
+  navbarItems: ResolvedNavbarItem[],
+  basePath: string,
+): ResolvedTopBarNav => {
+  if (topBarNav === undefined || topBarNav === false) {
+    return {
+      kind: 'none',
+      items: [],
+    }
+  }
+
+  if (topBarNav === true) {
+    return {
+      kind: 'mega',
+      items: navbarItems,
+    }
+  }
+
+  if (!Array.isArray(topBarNav)) {
+    const component = topBarNav.component.trim().replaceAll('\\', '/')
+
+    if (!component) {
+      throw new Error('Docs topBarNav component must be a non-empty relative import path.')
+    }
+
+    if (!component.startsWith('./') && !component.startsWith('../')) {
+      throw new Error(`Docs topBarNav component must be a relative import path. Received ${JSON.stringify(component)}.`)
+    }
+
+    if (component.includes('?') || component.includes('#')) {
+      throw new Error(
+        `Docs topBarNav component cannot include query strings or hashes. Received ${JSON.stringify(component)}.`,
+      )
+    }
+
+    return {
+      kind: 'component',
+      component,
+    }
+  }
+
+  return {
+    kind: 'links',
+    items: topBarNav.map((item, index) => {
+      const label = item.label.trim()
+
+      if (!label) {
+        throw new Error(`Docs topBarNav item ${index + 1} label must be a non-empty string.`)
+      }
+
+      return {
+        label,
+        href: resolveNavigationHref(item.href, `topBarNav item ${index + 1} href`, basePath),
+        isCta: item.isCta ?? false,
+      }
+    }),
+  }
 }
 
 const resolveThemeConfig = (theme: DocsConfig['theme']) => {
@@ -495,6 +557,7 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
     pages,
     sections,
     navbarItems,
+    topBarNav: resolveTopBarNavConfig(config.topBarNav, navbarItems, normalizedBasePath),
   }
 }
 
