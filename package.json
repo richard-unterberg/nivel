@@ -21,6 +21,7 @@
     "format": "biome format --write .",
     "check:knip": "pnpm --filter @unterberg/nivel generate:icons && pnpm knip",
     "deploy:npm": "node ./scripts/deployNpm.mjs",
+    "deploy:npm:alpha": "node ./scripts/deployNpm.mjs --tag alpha",
     "test:engine": "cd packages/engine && pnpm test",
     "prepare": "lefthook install",
     "verify": "pnpm format && pnpm run check:knip && pnpm run lint && pnpm run typecheck && pnpm run test:engine"

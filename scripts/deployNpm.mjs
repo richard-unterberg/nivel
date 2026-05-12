@@ -11,6 +11,7 @@ const publishEnvKeys = [
   'npm_config_npm_globalconfig',
   'npm_config_verify_deps_before_run',
 ]
+const scriptArgs = process.argv.slice(2)
 
 const run = (command, args, options = {}) => {
   execFileSync(command, args, {
@@ -37,9 +38,38 @@ const getPublishEnv = () => {
   return env
 }
 
+const getArgValue = (name) => {
+  const inlineValue = scriptArgs.find((arg) => arg.startsWith(`${name}=`))
+
+  if (inlineValue) {
+    return inlineValue.slice(name.length + 1)
+  }
+
+  const argIndex = scriptArgs.indexOf(name)
+
+  if (argIndex === -1) {
+    return undefined
+  }
+
+  const value = scriptArgs[argIndex + 1]
+
+  if (!value || value.startsWith('--')) {
+    throw new Error(`Expected a value after ${name}`)
+  }
+
+  return value
+}
+
 const main = () => {
+  const tag = getArgValue('--tag')
+  const publishArgs = ['publish', '--access', 'public']
+
+  if (tag) {
+    publishArgs.push('--tag', tag)
+  }
+
   run('pnpm', ['--filter', '@unterberg/nivel', 'build'])
-  run('npm', ['publish', '--access', 'public'], {
+  run('npm', publishArgs, {
     cwd: engineDir,
     env: getPublishEnv(),
   })
