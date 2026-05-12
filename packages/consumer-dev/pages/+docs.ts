@@ -10,7 +10,7 @@ const docsConfig = {
   basePath: '/',
   contentDir: 'docs',
   topBarNav: {
-    components: ['../components/DocsMegaMenuTopBarItems', '../components/DocsTopBarSearch'],
+    components: ['../components/DocsMegaMenuTopBarItems'],
   },
   theme: {
     light: 'telefunc-light',

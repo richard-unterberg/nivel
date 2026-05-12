@@ -20,15 +20,12 @@ export const withSiteBaseUrl = (value: string) => {
   return value.startsWith('/') ? value : `/${value.replace(/^\/+/, '')}`
 }
 
-export const getTopBarButtonClassName = (isLandingPage: boolean) => {
-  return cmMerge(
-    'btn btn-ghost btn-sm text-base px-2 whitespace-nowrap tracking-tight',
-    isLandingPage ? 'lg:min-w-30' : 'md:min-w-30',
-  )
+export const getTopBarButtonClassName = () => {
+  return cmMerge('btn btn-ghost btn-sm text-base px-2 whitespace-nowrap tracking-tight', 'lg:min-w-30')
 }
 
-export const getActiveTopBarButtonClassName = (isLandingPage: boolean) => {
-  return cmMerge(getTopBarButtonClassName(isLandingPage), 'btn-primary btn-soft')
+export const getActiveTopBarButtonClassName = () => {
+  return cmMerge(getTopBarButtonClassName(), 'btn-primary btn-soft')
 }
 
 const normalizePathname = (value: string) => {

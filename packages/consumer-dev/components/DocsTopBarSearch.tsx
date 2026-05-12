@@ -158,7 +158,7 @@ const useDebouncedValue = (value: string, delayMs: number) => {
 }
 
 const DocsTopBarSearch = () => {
-  const { urlPathname, urlParsed } = usePageContext()
+  const { urlPathname } = usePageContext()
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
@@ -171,7 +171,7 @@ const DocsTopBarSearch = () => {
   const hasMounted = useHasMounted()
   const normalizedQuery = debouncedQuery.trim()
   const canSearch = normalizedQuery.length >= minQueryLength
-  const buttonClassName = getTopBarButtonClassName(urlParsed.pathname === '/')
+  const buttonClassName = getTopBarButtonClassName()
 
   useEffect(() => {
     if (previousPathnameRef.current !== urlPathname) {
