@@ -1,5 +1,7 @@
 import { nivelTailwindVite } from '@unterberg/nivel/tailwind'
+
 import vike from 'vike/plugin'
+import { viteBeastiesOutputPlugin } from './lib/critical'
 
 process.env.VIKE_CRAWL ??= JSON.stringify({ git: false })
 
@@ -10,5 +12,5 @@ const base = (() => {
 
 export default {
   base,
-  plugins: [nivelTailwindVite(), vike()],
+  plugins: [nivelTailwindVite(), vike(), viteBeastiesOutputPlugin()],
 }

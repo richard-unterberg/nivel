@@ -1,6 +1,5 @@
 # Nivel Architecture
 
-- Read this file before making structural changes to the repo.
 - This repo is a pnpm TypeScript monorepo with two workspace packages: `packages/engine` and `packages/consumer-dev`. It also contains the standalone npm fixture at `tests/npm-consumer`.
 - `@unterberg/nivel` owns the docs runtime. That includes Vike integration, MDX/Vite setup, graph validation, route code generation, page-shell rendering, and any engine-provided UI primitives.
 - `packages/consumer-dev` is intentionally thin. It should only own docs content, `docs/docs.graph.ts`, `pages/+docs.ts`, and any optional leaf-level custom components needed by content.
