@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { Context, ReactNode } from 'react'
 import { createContext, createElement, useContext } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import type { DocsGlobalContextData } from '../../docs/types.js'
@@ -9,7 +9,15 @@ export type DocsPageContext = {
   }
 }
 
-const DocsGlobalContext = createContext<DocsGlobalContextData | null>(null)
+const docsGlobalContextKey = Symbol.for('@unterberg/nivel/docs-global-context')
+const docsGlobalContextGlobal = globalThis as typeof globalThis & {
+  [docsGlobalContextKey]?: Context<DocsGlobalContextData | null>
+}
+
+const DocsGlobalContext =
+  docsGlobalContextGlobal[docsGlobalContextKey] ?? createContext<DocsGlobalContextData | null>(null)
+
+docsGlobalContextGlobal[docsGlobalContextKey] = DocsGlobalContext
 
 export const getDocsFromGlobalContext = (pageContext: DocsPageContext) => {
   const docs = pageContext.globalContext?.docs

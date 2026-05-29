@@ -59,7 +59,7 @@ const SidebarPageLink = ({ title, href, currentHref, icon: Icon }: SidebarPageLi
       <a
         href={withSiteBaseUrl(href)}
         className={cmMerge(
-          'rounded-field py-2 text-base-muted hover:text-base-content justify-start hover:bg-base-200',
+          'rounded-field py-1.5 text-base-muted hover:text-base-content justify-start hover:bg-base-200',
           href === currentHref && 'text-primary! bg-base-200',
         )}
       >
@@ -106,7 +106,7 @@ const SidebarGroupTitle = ({ title, href, isActive, allowNavigation = false, ico
       <a
         href={withSiteBaseUrl(href)}
         className={cmMerge(
-          'flex items-center gap-2 rounded-field py-2 text-base-muted hover:text-base-content no-underline',
+          'flex items-center gap-2 rounded-field py-1 text-base-muted hover:text-base-content no-underline',
           isActive && 'text-primary!',
         )}
       >
@@ -115,7 +115,7 @@ const SidebarGroupTitle = ({ title, href, isActive, allowNavigation = false, ico
     )
   }
 
-  return <span className="flex  items-center gap-2 rounded-field py-2 text-base-content">{content}</span>
+  return <span className="flex  items-center gap-2 rounded-field py-1 text-base-content">{content}</span>
 }
 
 const renderSidebarItems = (
@@ -149,7 +149,7 @@ interface SidebarItemListProps {
 const SidebarItemList = ({ items, currentHref, docsIconMap }: SidebarItemListProps) => {
   const visibleItems = getVisibleNavItems(items)
 
-  return <ul className="menu lg:w-[97%]">{renderSidebarItems(visibleItems, currentHref, docsIconMap)}</ul>
+  return <ul className="menu py-0.5 lg:w-[97%]">{renderSidebarItems(visibleItems, currentHref, docsIconMap)}</ul>
 }
 
 interface SidebarNestedGroupProps {
@@ -188,7 +188,7 @@ const SidebarNestedGroup = ({ group, currentHref, docsIconMap }: SidebarNestedGr
           setIsOpen(event.currentTarget.open)
         }}
       >
-        <summary className="rounded-field py-0 flex items-center">
+        <summary className="py-0.5 rounded-field py-0 flex items-center">
           <SidebarGroupTitle
             title={group.title}
             href={groupHref ?? undefined}
