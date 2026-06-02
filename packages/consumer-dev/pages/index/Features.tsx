@@ -36,7 +36,7 @@ export const Features = () => {
             </span>
             Type-Safe by definition
           </FeatureHeading>
-          <p className="">
+          <p>
             Telefunc <b>automatically generates runtime shields</b> from argument types. Inference and autocompletion
             are default.
           </p>
@@ -45,7 +45,7 @@ export const Features = () => {
           <FeatureHeading>
             <span>💎</span> Schemaless by design
           </FeatureHeading>
-          <p className="">
+          <p>
             <b>The types are the contract.</b> Just import and call telefunctions like any other function. Telefunc does
             the rest.
           </p>
@@ -54,7 +54,7 @@ export const Features = () => {
           <FeatureHeading>
             <span>💫</span> Full-stack development
           </FeatureHeading>
-          <p className="">
+          <p>
             Iterate flexibly and rapidly. <b>Add telefunctions as you go,</b> instead of getting bogged down with a
             back-end API schema.
           </p>
@@ -63,7 +63,7 @@ export const Features = () => {
           <FeatureHeading>
             <span>⚡</span> Minimal footprint
           </FeatureHeading>
-          <p className="">
+          <p>
             Telefunc isn't just small, it lets you write small. <b>Send only the data you need</b> for optimal
             performance and security.
           </p>
@@ -72,7 +72,7 @@ export const Features = () => {
           <FeatureHeading>
             <span>🛡️</span> Separation of concerns
           </FeatureHeading>
-          <p className="">
+          <p>
             <b>Couple code, not environments.</b> Telefunctions let you call server-side tools like databases or
             third-party clients without worrying about the boilerplate.
           </p>
@@ -81,7 +81,7 @@ export const Features = () => {
           <FeatureHeading>
             <span>🔌</span> Framework agnostic
           </FeatureHeading>
-          <p className="">
+          <p>
             It works out-of-box with <b>Next.js, Nuxt, SvelteKit, Vike, and React Native</b>, as well as bundlers like
             Vite, Webpack, Babel, or Parcel.
           </p>
