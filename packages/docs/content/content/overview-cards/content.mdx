@@ -1,0 +1,25 @@
+import { Overview } from '@unterberg/nivel'
+
+`Overview` renders a compact grid of card links. It is useful for section start pages, guide indexes, and pages that need to point readers to several next steps.
+
+```mdx
+import { Overview } from '@unterberg/nivel'
+
+<Overview
+  items={[
+    { title: 'Installation', href: '/docs/installation' },
+    { title: 'Quick Start', href: '/docs/quick-start' },
+  ]}
+/>
+```
+
+## Example
+
+<Overview
+  items={[
+    { title: 'The Docs Graph', href: '/docs/docs-graph' },
+    { title: 'Routes and Aliases', href: '/docs/routes-aliases' },
+    { title: 'Generated Pages', href: '/docs/generated-pages' },
+    { title: 'Public Entry Points', href: '/docs/public-entry-points' },
+  ]}
+/>

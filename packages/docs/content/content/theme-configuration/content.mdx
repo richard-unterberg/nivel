@@ -1,0 +1,22 @@
+import { Link } from '@unterberg/nivel'
+
+The `theme` config maps Nivel's runtime theme preference to consumer-owned theme names. Those names should match the theme selectors and tokens defined in the consumer CSS.
+
+```ts
+const docsConfig = {
+  theme: {
+    light: 'my-docs-light',
+    dark: 'my-docs-dark',
+    defaultPreference: 'dark',
+  },
+  // ...
+} satisfies DocsConfig
+```
+
+## Fields
+
+- `light` is the theme name used for light mode.
+- `dark` is the theme name used for dark mode.
+- `defaultPreference` can be `light` or `dark`.
+
+Nivel uses these names in the runtime shell. The actual palette remains local to the consumer; see <Link href="/custom-theming" />.

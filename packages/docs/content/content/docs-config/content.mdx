@@ -1,0 +1,24 @@
+import { Link } from '@unterberg/nivel'
+
+`pages/+docs.ts` is the main consumer config file for Nivel. It combines site metadata, route behavior, the docs graph, theme settings, brand assets, head tags, social links, partners, and top bar navigation.
+
+```ts
+import type { DocsConfig } from '@unterberg/nivel'
+import { docsGraph } from '../content/docs.graph'
+
+const docsConfig = {
+  graph: docsGraph,
+  siteTitle: 'My Docs',
+  siteDescription: 'Documentation site powered by @unterberg/nivel.',
+  siteUrl: 'https://docs.example.com',
+  basePath: '/docs',
+} satisfies DocsConfig
+
+export default docsConfig
+```
+
+## Keep it plain
+
+Use a plain object with `satisfies DocsConfig`. The config file should be easy for consumers to read and edit without wrapper helpers.
+
+Related settings are covered in <Link href="/base-path-content-directory" />, <Link href="/theme-configuration" />, and <Link href="/brand-head-fonts" />.

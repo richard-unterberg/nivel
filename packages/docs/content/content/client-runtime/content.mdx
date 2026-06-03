@@ -1,0 +1,17 @@
+import { Link } from '@unterberg/nivel'
+
+The client runtime entry provides the components and stores used by the visible Vike shell. Most consumers only need the shell-level components.
+
+```tsx
+import { AppLayout, MetaHead } from '@unterberg/nivel/client'
+```
+
+## Common exports
+
+- `AppLayout` wraps docs pages with the Nivel runtime shell.
+- `MetaHead` injects meta tags, favicons, theme bootstrap data, and font links.
+- `DocsPage` renders an individual generated docs page.
+- `UserSettingsSync` keeps persisted user settings aligned with runtime state.
+- Runtime stores and theme helpers support advanced shell customization.
+
+The standard shell files are listed in <Link href="/project-shape" />.

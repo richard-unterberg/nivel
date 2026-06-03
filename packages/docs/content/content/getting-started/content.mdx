@@ -1,21 +1,27 @@
-import { Alert, Link } from '@unterberg/nivel'
+import { Link, Overview } from '@unterberg/nivel'
 
-# Getting Started
+Nivel is a structure-first documentation engine for React apps built with Vike. You define the docs structure once, then Nivel resolves routes, aliases, navigation, page metadata, MDX runtime data, and layout context from that graph.
 
-This fixture exists to verify that a consumer can install `@unterberg/nivel` as an external package and run without any workspace linking.
+The consumer stays intentionally thin: content, `docs.graph.ts`, visible Vike shell files, brand assets, and theme files remain local. Nivel owns the generated route layer and the reusable docs runtime.
 
-<Alert heading="What this tests">
-  The app uses the packaged entry points from a standalone install, keeps the consumer shell files visible in <code>pages/</code>, runs <code>nivel prepare</code>, and builds a docs page from a minimal docs graph.
-</Alert>
+<Overview
+  items={[
+    { title: 'Install Nivel', href: '/docs/installation' },
+    { title: 'Run the quick start', href: '/docs/quick-start' },
+    { title: 'Understand the project shape', href: '/docs/project-shape' },
+    { title: 'Create a first docs page', href: '/docs/first-docs-page' },
+  ]}
+/>
 
-## Current setup
+## What Nivel provides
 
-- The fixture points to the local engine package using <code>file:../../packages/engine</code>.
-- The consumer lives under <code>tests/npm-consumer</code> and is not part of the workspace packages list.
-- Tailwind is still configured in a hand-authored consumer stylesheet.
-- The authored docs config and graph are plain objects typed with <code>satisfies</code>.
-- The Vike setup keeps a normal-looking <code>+config.ts</code> and spreads in <code>@unterberg/nivel/vike</code>.
+- typed `DocsConfig` and `DocsGraph` surfaces
+- generated Vike docs pages from one graph
+- navbar, sidebar, breadcrumbs, table of contents, pagination, and meta head wiring
+- MDX support with built-in docs components and code-block tooling
+- Tailwind v4 and daisyUI integration helpers
+- a small CLI for scaffolding and docs page generation
 
-## Next step
+## Good first path
 
-Open <Link href="getting-started" doNotInferSectionTitle={true} /> after starting the dev server.
+Start with <Link href="/installation" />, then follow <Link href="/quick-start" />. After that, read <Link href="/docs-graph" /> to understand why the graph is the center of the system.

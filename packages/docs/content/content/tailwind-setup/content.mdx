@@ -1,0 +1,26 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel provides a Tailwind CSS entry that includes the engine-owned docs UI styles. The consumer still owns its theme file and Tailwind source declarations.
+
+```css
+@import '@unterberg/nivel/tailwind.css';
+@import './theme.css';
+
+@source '../pages';
+@source '../docs';
+```
+
+## Vite helper
+
+Use the Tailwind Vite helper together with Vike:
+
+```ts
+import { nivelTailwindVite } from '@unterberg/nivel/tailwind'
+import vike from 'vike/plugin'
+
+export default {
+  plugins: [nivelTailwindVite(), vike()],
+}
+```
+
+Theme ownership is covered in <Link href="/custom-theming" />.

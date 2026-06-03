@@ -1,0 +1,37 @@
+import { Alert, Link } from '@unterberg/nivel'
+
+The fastest path is to scaffold a consumer, generate docs pages, and run the Vike app. Nivel keeps the visible shell files local and writes generated route files under `pages/(nivel-generated)`.
+
+```bash
+pnpm exec nivel init
+pnpm exec nivel prepare
+pnpm dev
+```
+
+<Alert heading="Generated files">
+  `nivel prepare` reads `pages/+docs.ts`, resolves the docs graph, and writes generated Vike files. Do not edit `pages/(nivel-generated)` by hand.
+</Alert>
+
+## Typical scripts
+
+```json
+{
+  "scripts": {
+    "generate:docs": "nivel prepare",
+    "predev": "pnpm generate:docs",
+    "dev": "vike dev",
+    "prebuild": "pnpm generate:docs",
+    "build": "vike build",
+    "pretypecheck": "pnpm generate:docs",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}
+```
+
+## What to inspect
+
+- `pages/+docs.ts` contains the docs config.
+- `docs/docs.graph.ts` or `content/docs.graph.ts` contains the structure.
+- `styles/global.css` imports Nivel CSS and points Tailwind at local sources.
+
+Continue with <Link href="/first-docs-page" /> to add a real page.

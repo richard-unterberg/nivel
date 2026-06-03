@@ -1,0 +1,21 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel is validated through both the in-repo consumer and a standalone npm-style fixture. This catches different classes of integration problems.
+
+## `packages/consumer-dev`
+
+The in-repo consumer is the main development playground. It exercises the workspace engine against real docs content and custom consumer shell files.
+
+## `tests/npm-consumer`
+
+The npm consumer fixture validates the package from the perspective of an external install. It should stay aligned with the recommended published-package integration rather than workspace-only shortcuts.
+
+## Repository checks
+
+Workspace changes should finish with:
+
+```bash
+pnpm verify
+```
+
+That command runs formatting, dependency checks, linting, typechecking, and engine tests. See <Link href="/development-workflow" /> for consumer scripts.

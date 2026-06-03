@@ -1,0 +1,27 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel renders MDX files that are registered by the docs graph. The graph decides the public route and metadata; the MDX file owns the page body.
+
+## Source paths
+
+`source` is relative to the configured `contentDir`.
+
+```ts
+const page = {
+  kind: 'page',
+  id: 'writingMdx',
+  title: 'Writing MDX Pages',
+  slug: 'writing-mdx',
+  source: 'content/writing-mdx/content.mdx',
+  description: 'Author MDX files and register them in the graph.',
+}
+```
+
+## Authoring rules
+
+- Use normal Markdown for prose, lists, tables, and headings.
+- Import Nivel MDX components when a page needs them.
+- Prefer internal docs links through `<Link />` so labels and hrefs can be resolved by the runtime.
+- Keep page order, descriptions, aliases, and navigation decisions in the graph.
+
+See <Link href="/built-in-mdx-components" /> for the component surface.

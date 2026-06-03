@@ -1,0 +1,17 @@
+import { Link } from '@unterberg/nivel'
+
+After resolving config and graph data, Nivel writes the generated Vike files needed for canonical docs routes and alias routes. Generation is deterministic and can be run again whenever the graph or content changes.
+
+## Generated output
+
+Generated output can include route modules, page modules, title and description data, layout glue, and the serialized docs global context. It belongs under `pages/(nivel-generated)`.
+
+## Operational rule
+
+Treat generated files as disposable engine output. Change the graph, config, or MDX source files, then run:
+
+```bash
+pnpm generate:docs
+```
+
+The consumer-facing generated-file contract is covered in <Link href="/generated-pages" />.

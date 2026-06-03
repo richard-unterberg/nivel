@@ -11,8 +11,8 @@ const docsConfig = {
   contentDir: 'content',
   topBarNav: [
     { label: 'Get started', href: '/docs/getting-started', isCta: true },
-    { label: 'Examples', href: '/docs/examples' },
-    { label: 'About', href: '/about' },
+    { label: 'Concepts', href: '/docs/docs-graph' },
+    { label: 'API', href: '/docs/public-entry-points' },
   ],
   customFonts: false,
   theme: {

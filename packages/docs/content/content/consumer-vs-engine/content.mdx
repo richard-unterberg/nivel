@@ -1,0 +1,19 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel's architecture works because ownership stays explicit. Consumers keep the files that express site intent. The engine owns reusable docs behavior and generated internals.
+
+## Consumer-owned
+
+- docs content and optional leaf-level MDX components
+- the docs graph
+- `pages/+docs.ts` and visible Vike shell files
+- theme files, Tailwind sources, logos, favicons, and brand assets
+
+## Engine-owned
+
+- docs graph validation and resolution
+- generated Vike route files
+- MDX and code-block setup
+- layout primitives such as navbar, sidebar, table of contents, pagination, and meta head wiring
+
+This split keeps consumers understandable while still avoiding duplicated route, nav, and metadata logic. For the visible file layout, read <Link href="/project-shape" />.

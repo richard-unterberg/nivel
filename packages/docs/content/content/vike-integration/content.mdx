@@ -1,0 +1,26 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel exposes a Vike config helper so the consumer can keep a normal `pages/+config.ts` while delegating docs-specific integration to the engine.
+
+```ts
+import { createNivelVikeConfig } from '@unterberg/nivel/vike'
+import type { Config } from 'vike/types'
+import docsConfig from './+docs'
+
+export { config }
+
+const config: Config = {
+  ...createNivelVikeConfig(docsConfig),
+  prerender: true,
+}
+```
+
+## What the helper wires
+
+- Vike React integration for docs rendering
+- docs route generation expectations
+- default title and description behavior
+- prerender-friendly docs output
+- global docs context consumed by the Nivel layout
+
+The consumer still owns the visible shell files. See <Link href="/project-shape" /> for the complete shape.

@@ -9,7 +9,9 @@
       "!packages/consumer-dev/pages/(nivel-generated)",
       "!packages/engine/dist",
       "!packages/engine/src/generated",
-      "!packages/consumer-dev/dist"
+      "!packages/consumer-dev/dist",
+      "!packages/docs/pages/(nivel-generated)",
+      "!packages/docs/dist"
     ]
   },
   "formatter": {
