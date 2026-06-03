@@ -1,10 +1,10 @@
 @custom-variant dark (&:where(
-    [data-theme='telefunc-dark'],
-    [data-theme='telefunc-dark'] *
+    [data-theme='nivel-docs-dark'],
+    [data-theme='nivel-docs-dark'] *
   ));
 
 @plugin '@unterberg/nivel/daisyui-theme' {
-  name: 'telefunc-light';
+  name: 'nivel-docs-light';
   default: true;
   prefersdark: false;
   color-scheme: 'light';
@@ -12,11 +12,11 @@
   --color-base-200: oklch(95% 0 0);
   --color-base-300: oklch(92% 0 0);
   --color-base-content: oklch(20% 0 0);
-  --color-primary: #c18b28;
+  --color-primary: #1f78d1;
   --color-primary-content: oklch(95% 0 0);
-  --color-secondary: #f7e018;
+  --color-secondary: #256f7e;
   --color-secondary-content: oklch(20% 0 0);
-  --color-accent: #ad8032;
+  --color-accent: #a85b66;
   --color-accent-content: oklch(95% 0 0);
   --color-neutral: oklch(20% 0 0);
   --color-neutral-content: oklch(95% 0 0);
@@ -39,7 +39,7 @@
 }
 
 @plugin '@unterberg/nivel/daisyui-theme' {
-  name: 'telefunc-dark';
+  name: 'nivel-docs-dark';
   default: false;
   prefersdark: false;
   color-scheme: 'dark';
@@ -47,11 +47,11 @@
   --color-base-200: oklch(20% 0 0);
   --color-base-300: oklch(30% 0 0);
   --color-base-content: oklch(85% 0 0);
-  --color-primary: #e2a431;
+  --color-primary: #5ab0ff;
   --color-primary-content: oklch(15% 0 0);
-  --color-secondary: #f7e018;
+  --color-secondary: #3f8fa0;
   --color-secondary-content: oklch(15% 0 0);
-  --color-accent: #cc9639;
+  --color-accent: #c97884;
   --color-accent-content: oklch(85% 0 0);
   --color-neutral: oklch(85% 0 0);
   --color-neutral-content: oklch(13% 0 0);
@@ -114,17 +114,19 @@
     var(--color-primary) 5%,
     transparent
   );
+  --font-sans: 'Inter', 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-mono:
+    'Monaco', 'SF Mono', SF Mono, SF Mono Regular, Consolas, 'Liberation Mono',
+    Menlo, Courier, monospace;
   --nivel-mermaid-node-fill: var(--color-primary-muted-superlight);
   --nivel-mermaid-node-stroke: var(--color-primary-muted-medium);
   --nivel-mermaid-node-stroke-width: 1px;
   --nivel-mermaid-node-text: var(--color-base-content);
   --nivel-mermaid-line-color: var(--color-primary-muted);
-  --nivel-mermaid-line-width: 1.5px;
+  --nivel-mermaid-line-width: 2px;
+  --nivel-mermaid-edge-label-fill: var(--color-base-200);
+  --nivel-mermaid-edge-label-text: var(--color-accent);
   --nivel-mermaid-cluster-fill: var(--color-base-100);
   --nivel-mermaid-cluster-stroke: var(--color-primary-muted-light);
   --nivel-mermaid-cluster-stroke-width: 1px;
-  --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
-  --font-mono:
-    'Monaco', 'SF Mono', SF Mono, SF Mono Regular, Consolas, 'Liberation Mono',
-    Menlo, Courier, monospace;
 }

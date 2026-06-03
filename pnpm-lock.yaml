@@ -60,12 +60,18 @@ importers:
 
   packages/docs:
     dependencies:
+      '@classmatejs/react':
+        specifier: ^0.2.1
+        version: 0.2.1(react@19.2.6)
       '@unterberg/nivel':
         specifier: workspace:*
         version: link:../engine
       beasties:
         specifier: ^0.4.2
         version: 0.4.2
+      lucide-react:
+        specifier: ^1.14.0
+        version: 1.14.0(react@19.2.6)
       react:
         specifier: ^19.2.6
         version: 19.2.6

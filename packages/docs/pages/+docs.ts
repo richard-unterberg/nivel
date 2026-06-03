@@ -7,13 +7,17 @@ const docsConfig = {
   siteDescription: 'nivel documentation',
   siteUrl: 'https://nivel-docs.de',
   robots: false,
-  basePath: '/',
+  basePath: '/docs/',
   contentDir: 'content',
-  topBarNav: false,
+  topBarNav: [
+    { label: 'Get started', href: '/docs/getting-started', isCta: true },
+    { label: 'Examples', href: '/docs/examples' },
+    { label: 'About', href: '/about' },
+  ],
   customFonts: false,
   theme: {
-    light: 'telefunc-light',
-    dark: 'telefunc-dark',
+    light: 'nivel-docs-light',
+    dark: 'nivel-docs-dark',
     defaultPreference: 'dark',
   },
   footer: {
@@ -32,19 +36,7 @@ const docsConfig = {
     appleTouchIcon: '/apple-touch-icon.png',
   },
   social: {
-    github: 'https://github.com/telefunc/telefunc',
-    discord: 'https://discord.com/invite/VJKjMNMguV',
-    x: 'https://discord.com/invite/VJKjMNMguV',
-  },
-  partners: {
-    primary: [
-      {
-        name: 'Tencent Edge One',
-        href: 'https://edgeone.ai/',
-        logoLight: 'partners/tencent_edgeone_dark.webp',
-        logoDark: 'partners/tencent_edgeone_light.webp',
-      },
-    ],
+    github: 'https://github.com/richard-unterberg/nivel',
   },
 } satisfies DocsConfig
 
