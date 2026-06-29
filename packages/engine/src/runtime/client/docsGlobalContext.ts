@@ -19,8 +19,8 @@ const DocsGlobalContext =
 
 docsGlobalContextGlobal[docsGlobalContextKey] = DocsGlobalContext
 
-export const getDocsFromGlobalContext = (pageContext: DocsPageContext) => {
-  const docs = pageContext.globalContext?.docs
+export const getDocsFromGlobalContext = (pageContext: DocsPageContext | undefined) => {
+  const docs = pageContext?.globalContext?.docs
 
   if (!docs) {
     throw new Error('Missing docs global context data.')
@@ -35,14 +35,15 @@ export const DocsGlobalContextProvider = ({ children, docs }: { children: ReactN
 
 export const useDocsGlobalContext = () => {
   const docs = useContext(DocsGlobalContext)
+  const pageContext = usePageContext() as DocsPageContext | undefined
 
-  if (!docs) {
-    throw new Error('Missing docs global context provider.')
+  if (docs) {
+    return docs
   }
 
-  return docs
+  return getDocsFromGlobalContext(pageContext)
 }
 
 export const useDocsFromPageGlobalContext = () => {
-  return getDocsFromGlobalContext(usePageContext() as DocsPageContext)
+  return getDocsFromGlobalContext(usePageContext() as DocsPageContext | undefined)
 }

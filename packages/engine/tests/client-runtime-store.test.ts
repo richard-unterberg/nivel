@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import * as clientRuntime from '../src/runtime/client/index.ts'
+import type { DocsGlobalContextData } from '../src/docs/types.ts'
 import { createDocsRuntimeStore } from '../src/runtime/client/store/runtime-store.tsx'
+import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { VikeReactProviderPageContext } from 'vike-react/usePageContext'
 
 test('sidebar store actions update open node state', () => {
   const store = createDocsRuntimeStore()
@@ -36,6 +40,32 @@ test('client runtime exports the public sidebar hooks', () => {
 
 test('client runtime exports docs context hook', () => {
   assert.equal(typeof clientRuntime.useDocsContext, 'function')
+})
+
+test('useDocsContext reads Vike global context outside the Nivel provider', () => {
+  const docs = {
+    siteTitle: 'Head Context Docs',
+  } as DocsGlobalContextData
+  const ReadDocsTitle = () => {
+    const docsContext = clientRuntime.useDocsContext()
+
+    return React.createElement('title', null, docsContext.siteTitle)
+  }
+  const html = renderToStaticMarkup(
+    React.createElement(
+      VikeReactProviderPageContext,
+      {
+        pageContext: {
+          globalContext: {
+            docs,
+          },
+        } as never,
+      },
+      React.createElement(ReadDocsTitle),
+    ),
+  )
+
+  assert.equal(html, '<title>Head Context Docs</title>')
 })
 
 test('client runtime exports nivel action event helpers', () => {
