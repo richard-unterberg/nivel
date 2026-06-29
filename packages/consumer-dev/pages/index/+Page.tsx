@@ -11,7 +11,10 @@ import './startpage.css'
 const Page = () => {
   return (
     <div className="landing-code-samples">
-      <div className="overflow-x-clip min-h-[calc(100svh-14*var(--spacing))] flex flex-col justify-center py-16 w-full">
+      <div
+        data-beasties-container
+        className="overflow-x-clip min-h-[calc(100svh-14*var(--spacing))] flex flex-col justify-center py-16 w-full"
+      >
         <div className="w-full overflow-x-hidden h-full max-w-full absolute top-0 left-0">
           <div className="absolute top-0 min-w-300 left-1/2 w-full h-svh bg-radial-[at_50%_50%] from-primary-muted-light/30 dark:from-primary-muted-light/30 to-55% translate-x-[-50%] pointer-events-none" />
         </div>
@@ -41,7 +44,7 @@ const Page = () => {
         <LayoutComponent $size="sm">
           <div className="hidden md:grid md:grid-cols-2 gap-4">
             <h2 className="text-lg mb-2 text-center">Call in the browser</h2>
-            <h2 className="text-lg  mb-2 text-center">Run on the server</h2>
+            <h2 className="text-lg mb-2 text-center">Run on the server</h2>
           </div>
           <div className="landing-code-samples grid md:grid-cols-2 gap-4 md:items-stretch">
             <span className="md:hidden text-lg text-center  font-semibold">Call in the browser</span>

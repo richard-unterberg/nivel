@@ -1,4 +1,5 @@
 import { nivelTailwindVite } from '@unterberg/nivel/tailwind'
+import { viteBeastiesOutputPlugin } from '@unterberg/vite-beasties-output'
 
 import vike from 'vike/plugin'
 
@@ -11,5 +12,19 @@ const base = (() => {
 
 export default {
   base,
-  plugins: [nivelTailwindVite(), vike()],
+  plugins: [
+    nivelTailwindVite(),
+    vike(),
+    viteBeastiesOutputPlugin({
+      outputDirectory: 'dist/client',
+      beastiesOptions: {
+        allowRules: [
+          /data-theme=.*dark/,
+          /data-theme=.*light/,
+          /^:root:has\(input\.theme-controller/,
+          /^:where\(:root\)$/,
+        ],
+      },
+    }),
+  ],
 }

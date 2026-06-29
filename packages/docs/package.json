@@ -16,7 +16,6 @@
   "dependencies": {
     "@classmatejs/react": "^0.2.1",
     "@unterberg/nivel": "workspace:*",
-    "beasties": "^0.4.2",
     "lucide-react": "^1.14.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
@@ -26,6 +25,7 @@
   "devDependencies": {
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@unterberg/vite-beasties-output": "^0.1.4",
     "typescript": "^6.0.2",
     "vite": "^8.0.11"
   }

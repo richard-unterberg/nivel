@@ -48,27 +48,29 @@ const Navbar = () => {
   }, [])
 
   return (
-    <StyledNavbar $fixed={!isLandingPage} $borderBottom>
-      <LayoutComponent>
-        <div className="relative flex h-14 flex-1 items-center justify-between gap-4">
-          <div className="z-10 flex min-w-0 shrink-0 lg:min-w-40">
-            <Brand brand={docs.brand} />
+    <div data-beasties-container>
+      <StyledNavbar $fixed={!isLandingPage} $borderBottom>
+        <LayoutComponent>
+          <div className="relative flex h-14 flex-1 items-center justify-between gap-4">
+            <div className="z-10 flex min-w-0 shrink-0 lg:min-w-40">
+              <Brand brand={docs.brand} />
+            </div>
+            <TopBarNav />
+            <div className="z-10 hidden min-w-40 justify-end lg:flex">
+              <AsideButtons />
+            </div>
+            <button
+              type="button"
+              className="z-10 block lg:hidden"
+              aria-label="Open navigation menu"
+              onClick={handleClick}
+            >
+              <Menu className="h-6 w-6" />
+            </button>
           </div>
-          <TopBarNav />
-          <div className="z-10 hidden min-w-40 justify-end lg:flex">
-            <AsideButtons />
-          </div>
-          <button
-            type="button"
-            className="z-10 block lg:hidden"
-            aria-label="Open navigation menu"
-            onClick={handleClick}
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-        </div>
-      </LayoutComponent>
-    </StyledNavbar>
+        </LayoutComponent>
+      </StyledNavbar>
+    </div>
   )
 }
 

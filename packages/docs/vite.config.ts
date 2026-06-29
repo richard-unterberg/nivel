@@ -1,7 +1,7 @@
 import { nivelTailwindVite } from '@unterberg/nivel/tailwind'
+import { viteBeastiesOutputPlugin } from '@unterberg/vite-beasties-output'
 
 import vike from 'vike/plugin'
-import { viteBeastiesOutputPlugin } from './lib/critical'
 
 process.env.VIKE_CRAWL ??= JSON.stringify({ git: false })
 
@@ -12,5 +12,19 @@ const base = (() => {
 
 export default {
   base,
-  plugins: [nivelTailwindVite(), vike(), viteBeastiesOutputPlugin()],
+  plugins: [
+    nivelTailwindVite(),
+    vike(),
+    viteBeastiesOutputPlugin({
+      outputDirectory: 'dist/client',
+      beastiesOptions: {
+        allowRules: [
+          /data-theme=.*dark/,
+          /data-theme=.*light/,
+          /^:root:has\(input\.theme-controller/,
+          /^:where\(:root\)$/,
+        ],
+      },
+    }),
+  ],
 }
