@@ -174,6 +174,7 @@ test('syncGeneratedDocsPages reads custom contentDir and emits custom route file
     assert.equal(aliasRoute, 'export default "/guide/start"\n')
     assert.match(globalContext, /"robots": true/)
     assert.match(globalContext, /"basePath": "\/guide"/)
+    assert.match(globalContext, /"contentDir": "docs-source"/)
     assert.doesNotMatch(globalContext, /@unterberg\/nivel\/icons/)
     assert.match(globalContext, /const BadgeDollarSign = createDocsIcon\(/)
     assert.match(globalContext, /const BookOpen = createDocsIcon\(/)

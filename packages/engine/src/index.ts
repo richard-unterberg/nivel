@@ -19,6 +19,7 @@ export type {
   DocsPartnersConfig,
   DocsSectionNode,
   DocsSidebarNode,
+  DocsSocialConfig,
   DocsThemeConfig,
   ResolvedDocsBrandConfig,
   ResolvedDocsConfig,

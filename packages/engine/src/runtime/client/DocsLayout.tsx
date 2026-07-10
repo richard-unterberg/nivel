@@ -38,7 +38,7 @@ export const DocsLayout = ({ children }: DocsLayoutProps) => {
             />
             <div className="mt-10 min-w-0">{children}</div>
             <DocsPagination previousPage={data.previousPage} nextPage={data.nextPage} />
-            <DocsFooter />
+            <DocsFooter page={data.page} />
           </main>
           <TableOfContents
             headings={effectiveHeadings}

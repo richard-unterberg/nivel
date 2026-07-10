@@ -43,6 +43,7 @@ export type DocsPartnersConfig = {
 
 export type DocsSocialConfig = {
   github?: string
+  editLinkBranch?: string
   discord?: string
   x?: string
   bluesky?: string
@@ -263,6 +264,7 @@ export type DocsGlobalContextSerializableData = Pick<
   | 'siteTitle'
   | 'robots'
   | 'basePath'
+  | 'contentDir'
   | 'theme'
   | 'footer'
   | 'brand'

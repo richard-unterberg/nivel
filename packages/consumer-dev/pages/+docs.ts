@@ -34,6 +34,7 @@ const docsConfig = {
   },
   social: {
     github: 'https://github.com/telefunc/telefunc',
+    editLinkBranch: 'master',
     discord: 'https://discord.com/invite/VJKjMNMguV',
     x: 'https://discord.com/invite/VJKjMNMguV',
   },
