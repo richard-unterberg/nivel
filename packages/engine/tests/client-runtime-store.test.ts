@@ -11,12 +11,14 @@ test('sidebar store actions update open node state', () => {
   const store = createDocsRuntimeStore()
 
   assert.deepEqual(store.getState().sidebarState, {
+    isMobileMenuOpen: false,
     openNodes: {},
   })
 
   store.getState().sidebarActions.setNodeOpen('section:docs', true)
 
   assert.deepEqual(store.getState().sidebarState, {
+    isMobileMenuOpen: false,
     openNodes: {
       'section:docs': true,
     },
@@ -29,6 +31,27 @@ test('sidebar store actions preserve state when setting an unchanged value', () 
   store.getState().sidebarActions.setNodeOpen('section:docs', true)
   const previousState = store.getState()
   store.getState().sidebarActions.setNodeOpen('section:docs', true)
+
+  assert.equal(store.getState(), previousState)
+})
+
+test('sidebar store actions update mobile menu state', () => {
+  const store = createDocsRuntimeStore()
+
+  store.getState().sidebarActions.openMobileMenu()
+
+  assert.equal(store.getState().sidebarState.isMobileMenuOpen, true)
+
+  store.getState().sidebarActions.closeMobileMenu()
+
+  assert.equal(store.getState().sidebarState.isMobileMenuOpen, false)
+})
+
+test('sidebar store actions preserve state when setting unchanged mobile menu value', () => {
+  const store = createDocsRuntimeStore()
+  const previousState = store.getState()
+
+  store.getState().sidebarActions.setMobileMenuOpen(false)
 
   assert.equal(store.getState(), previousState)
 })

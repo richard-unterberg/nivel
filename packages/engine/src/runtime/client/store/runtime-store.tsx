@@ -12,12 +12,28 @@ type DocsRuntimeStoreState = {
 type DocsRuntimeStoreApi = ReturnType<typeof createDocsRuntimeStore>
 
 const defaultDocsSidebarState: DocsSidebarState = {
+  isMobileMenuOpen: false,
   openNodes: {},
 }
 
 export const createDocsRuntimeStore = () => {
   return createStore<DocsRuntimeStoreState>()((set) => {
     const sidebarActions: DocsSidebarActions = {
+      closeMobileMenu: () => sidebarActions.setMobileMenuOpen(false),
+      openMobileMenu: () => sidebarActions.setMobileMenuOpen(true),
+      setMobileMenuOpen: (isOpen) =>
+        set((state) => {
+          if (state.sidebarState.isMobileMenuOpen === isOpen) {
+            return state
+          }
+
+          return {
+            sidebarState: {
+              ...state.sidebarState,
+              isMobileMenuOpen: isOpen,
+            },
+          }
+        }),
       setNodeOpen: (nodeId, isOpen) =>
         set((state) => {
           if (state.sidebarState.openNodes[nodeId] === isOpen) {

@@ -1,8 +1,8 @@
 import cm from '@classmatejs/react'
 import { Menu } from 'lucide-react'
-import { useCallback } from 'react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { useDocsGlobalContext } from '../../docsGlobalContext'
+import { useDocsSidebarActions } from '../../store/runtime-store'
 import { Brand } from '../Brand'
 import { LayoutComponent } from '../LayoutComponent'
 import AsideButtons from './AsideButtons'
@@ -41,11 +41,8 @@ const TopBarNav = () => {
 const Navbar = () => {
   const { urlParsed } = usePageContext()
   const docs = useDocsGlobalContext()
+  const { openMobileMenu } = useDocsSidebarActions()
   const isLandingPage = urlParsed.pathname === '/'
-
-  const handleClick = useCallback(() => {
-    alert('TODO: Open mobile menu')
-  }, [])
 
   return (
     <div data-beasties-container>
@@ -63,7 +60,7 @@ const Navbar = () => {
               type="button"
               className="z-10 block lg:hidden"
               aria-label="Open navigation menu"
-              onClick={handleClick}
+              onClick={openMobileMenu}
             >
               <Menu className="h-6 w-6" />
             </button>

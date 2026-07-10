@@ -51,13 +51,15 @@ interface SidebarPageLinkProps {
   href: string
   currentHref: string
   icon?: LucideIcon
+  onNavigate?: () => void
 }
 
-const SidebarPageLink = ({ title, href, currentHref, icon: Icon }: SidebarPageLinkProps) => {
+const SidebarPageLink = ({ title, href, currentHref, icon: Icon, onNavigate }: SidebarPageLinkProps) => {
   return (
     <li className="rounded-none">
       <a
         href={withSiteBaseUrl(href)}
+        onClick={onNavigate}
         className={cmMerge(
           'rounded-field py-1.5 text-base-muted hover:text-base-content justify-start hover:bg-base-200',
           href === currentHref && 'text-primary! bg-base-200',
@@ -89,9 +91,17 @@ interface SidebarGroupTitleProps {
   isActive: boolean
   allowNavigation?: boolean
   icon?: LucideIcon
+  onNavigate?: () => void
 }
 
-const SidebarGroupTitle = ({ title, href, isActive, allowNavigation = false, icon: Icon }: SidebarGroupTitleProps) => {
+const SidebarGroupTitle = ({
+  title,
+  href,
+  isActive,
+  allowNavigation = false,
+  icon: Icon,
+  onNavigate,
+}: SidebarGroupTitleProps) => {
   const content = (
     <span className="flex items-center gap-2 font-base">
       {Icon ? <Icon className="size-4 shrink-0" aria-hidden="true" /> : null}
@@ -105,6 +115,7 @@ const SidebarGroupTitle = ({ title, href, isActive, allowNavigation = false, ico
     return (
       <a
         href={withSiteBaseUrl(href)}
+        onClick={onNavigate}
         className={cmMerge(
           'flex items-center gap-2 rounded-field py-1 text-base-muted hover:text-base-content no-underline',
           isActive && 'text-primary!',
@@ -122,6 +133,7 @@ const renderSidebarItems = (
   items: ResolvedSidebarNode[],
   currentHref: string,
   docsIconMap: DocsIconMap,
+  onNavigate?: () => void,
 ): ReactNode[] => {
   return items.map((item) => {
     if (item.kind === 'page') {
@@ -132,11 +144,20 @@ const renderSidebarItems = (
           href={item.href}
           currentHref={currentHref}
           icon={docsIconMap[getDocsIconMapKey('page', item.id)]}
+          onNavigate={onNavigate}
         />
       )
     }
 
-    return <SidebarNestedGroup key={item.id} group={item} currentHref={currentHref} docsIconMap={docsIconMap} />
+    return (
+      <SidebarNestedGroup
+        key={item.id}
+        group={item}
+        currentHref={currentHref}
+        docsIconMap={docsIconMap}
+        onNavigate={onNavigate}
+      />
+    )
   })
 }
 
@@ -144,21 +165,25 @@ interface SidebarItemListProps {
   items: ResolvedSidebarNode[]
   currentHref: string
   docsIconMap: DocsIconMap
+  onNavigate?: () => void
 }
 
-const SidebarItemList = ({ items, currentHref, docsIconMap }: SidebarItemListProps) => {
+const SidebarItemList = ({ items, currentHref, docsIconMap, onNavigate }: SidebarItemListProps) => {
   const visibleItems = getVisibleNavItems(items)
 
-  return <ul className="menu py-0.5 lg:w-[97%]">{renderSidebarItems(visibleItems, currentHref, docsIconMap)}</ul>
+  return (
+    <ul className="menu py-0.5 lg:w-[97%]">{renderSidebarItems(visibleItems, currentHref, docsIconMap, onNavigate)}</ul>
+  )
 }
 
 interface SidebarNestedGroupProps {
   group: ResolvedSidebarGroup
   currentHref: string
   docsIconMap: DocsIconMap
+  onNavigate?: () => void
 }
 
-const SidebarNestedGroup = ({ group, currentHref, docsIconMap }: SidebarNestedGroupProps) => {
+const SidebarNestedGroup = ({ group, currentHref, docsIconMap, onNavigate }: SidebarNestedGroupProps) => {
   const groupHref = getGroupHref(group)
   const visibleItems = getVisibleGroupItems(group)
   const isCollapsible = group.collapsible !== undefined
@@ -169,13 +194,13 @@ const SidebarNestedGroup = ({ group, currentHref, docsIconMap }: SidebarNestedGr
 
   if (!isCollapsible) {
     if (!group.title) {
-      return <>{renderSidebarItems(visibleItems, currentHref, docsIconMap)}</>
+      return <>{renderSidebarItems(visibleItems, currentHref, docsIconMap, onNavigate)}</>
     }
 
     return (
       <>
         <SidebarGroupDivider title={group.title} icon={GroupIcon} />
-        {renderSidebarItems(visibleItems, currentHref, docsIconMap)}
+        {renderSidebarItems(visibleItems, currentHref, docsIconMap, onNavigate)}
       </>
     )
   }
@@ -195,10 +220,16 @@ const SidebarNestedGroup = ({ group, currentHref, docsIconMap }: SidebarNestedGr
             isActive={nestedHasActiveItem}
             allowNavigation={Boolean(groupHref)}
             icon={GroupIcon}
+            onNavigate={onNavigate}
           />
         </summary>
         {visibleItems.length > 0 ? (
-          <SidebarItemList items={visibleItems} currentHref={currentHref} docsIconMap={docsIconMap} />
+          <SidebarItemList
+            items={visibleItems}
+            currentHref={currentHref}
+            docsIconMap={docsIconMap}
+            onNavigate={onNavigate}
+          />
         ) : null}
       </details>
     </li>
@@ -209,9 +240,10 @@ interface SidebarSectionGroupProps {
   section: ResolvedDocsSection
   currentHref: string
   activeSectionId: string
+  onNavigate?: () => void
 }
 
-const SidebarSectionGroup = ({ section, currentHref, activeSectionId }: SidebarSectionGroupProps) => {
+const SidebarSectionGroup = ({ section, currentHref, activeSectionId, onNavigate }: SidebarSectionGroupProps) => {
   const docs = useDocsGlobalContext()
   const SectionIcon = docs.docsIconMap[getDocsIconMapKey('section', section.id)]
   const sectionHasActiveItem = section.id === activeSectionId || containsActiveHref(section.items, currentHref)
@@ -232,9 +264,46 @@ const SidebarSectionGroup = ({ section, currentHref, activeSectionId }: SidebarS
         <summary className="rounded-field py-0 flex items-center">
           <SidebarGroupTitle title={section.title} isActive={sectionHasActiveItem} icon={SectionIcon} />
         </summary>
-        <SidebarItemList items={section.items} currentHref={currentHref} docsIconMap={docs.docsIconMap} />
+        <SidebarItemList
+          items={section.items}
+          currentHref={currentHref}
+          docsIconMap={docs.docsIconMap}
+          onNavigate={onNavigate}
+        />
       </details>
     </li>
+  )
+}
+
+interface SidebarContentProps {
+  currentHref?: string
+  activeSectionId?: string
+  onNavigate?: () => void
+}
+
+export const SidebarContent = ({
+  currentHref: currentHrefProp = '',
+  activeSectionId: activeSectionIdProp = '',
+  onNavigate,
+}: SidebarContentProps) => {
+  const { urlPathname } = usePageContext()
+  const currentHref = currentHrefProp || urlPathname
+  const docs = useDocsGlobalContext()
+  const activeSectionId = activeSectionIdProp || getActiveSectionByPathname(docs, currentHref)?.id || ''
+  const { sidebarSections } = docs
+
+  return (
+    <ul className={cmMerge('menu p-0 m-0 w-full px-0 pt-3 li:last-child:border-0 pb-4')}>
+      {sidebarSections.map((section) => (
+        <SidebarSectionGroup
+          key={section.id}
+          section={section}
+          currentHref={currentHref}
+          activeSectionId={activeSectionId}
+          onNavigate={onNavigate}
+        />
+      ))}
+    </ul>
   )
 }
 
@@ -246,11 +315,6 @@ interface SidebarProps {
 export const Sidebar = memo(
   ({ currentHref: currentHrefProp = '', activeSectionId: activeSectionIdProp = '' }: SidebarProps) => {
     const scrollContainerRef = useRef<HTMLDivElement | null>(null)
-    const { urlPathname } = usePageContext()
-    const currentHref = currentHrefProp || urlPathname
-    const docs = useDocsGlobalContext()
-    const activeSectionId = activeSectionIdProp || getActiveSectionByPathname(docs, currentHref)?.id || ''
-    const { sidebarSections } = docs
 
     return (
       <aside className="hidden basis-76 shrink-0 lg:block">
@@ -259,16 +323,7 @@ export const Sidebar = memo(
           <div className="absolute right-px top-px bg-linear-to-t h-4 w-full to-base-100 z-20 pointer-events-none" />
           <div className="absolute h-full w-px right-0 top-0 bg-linear-to-t to-base-muted-light via-base-muted-light pointer-events-none z-1" />
           <StickyContent ref={scrollContainerRef} className="pr-4 relative z-10">
-            <ul className={cmMerge('menu p-0 m-0 w-full px-0 pt-3 li:last-child:border-0 pb-4')}>
-              {sidebarSections.map((section) => (
-                <SidebarSectionGroup
-                  key={section.id}
-                  section={section}
-                  currentHref={currentHref}
-                  activeSectionId={activeSectionId}
-                />
-              ))}
-            </ul>
+            <SidebarContent currentHref={currentHrefProp} activeSectionId={activeSectionIdProp} />
           </StickyContent>
         </div>
       </aside>

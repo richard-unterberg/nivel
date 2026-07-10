@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react'
+import { cmMerge } from '@classmatejs/react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { UniversalMdxProvider } from '../../mdx/components/UniversalMdxProvider.js'
+import { MobileSidebarDialog } from './components/MobileSidebarDialog.js'
 import Navbar from './components/Navbar/index.js'
 import { UserSettingsSync } from './components/UserSettingsSync.js'
 import { DocsGlobalContextProvider, type DocsPageContext, getDocsFromGlobalContext } from './docsGlobalContext.js'
 import { getMdxRuntimeValue } from './getMdxRuntimeValue.js'
 import { createDocsRuntimeStore, DocsRuntimeStoreProvider } from './store/runtime-store.js'
-import { cmMerge } from '@classmatejs/react'
 
 interface AppLayoutProps {
   children: ReactNode
@@ -35,6 +36,7 @@ export const AppLayout = ({ children, header }: AppLayoutProps) => {
           <div className="min-h-screen bg-base-100 text-base-content">
             {header ?? <Navbar />}
             <div className={cmMerge(!isLandingPage && 'pt-14')}>{children}</div>
+            <MobileSidebarDialog />
           </div>
         </UniversalMdxProvider>
       </DocsGlobalContextProvider>
