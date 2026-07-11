@@ -99,7 +99,7 @@ export type DocsGroupNode = {
 export type DocsSectionNode = {
   kind: 'section'
   id: string
-  title: string
+  title?: string
   navTitle?: string
   href?: string
   items: DocsSidebarNode[]
@@ -197,8 +197,8 @@ export type ResolvedSidebarNode = ResolvedSidebarGroup | ResolvedSidebarPage
 
 export type ResolvedDocsSection = {
   id: string
-  title: string
-  navTitle: string
+  title?: string
+  navTitle?: string
   href: string
   items: ResolvedSidebarNode[]
   icon?: DocsIconName

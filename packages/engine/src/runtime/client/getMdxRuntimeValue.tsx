@@ -53,7 +53,7 @@ const resolveDocLink = (options: {
   return {
     href: withSiteBaseUrl(`${page.href}${hash}`),
     title: page.title,
-    breadcrumb: section ? [section.navTitle] : [],
+    breadcrumb: section?.navTitle ? [section.navTitle] : [],
     isCurrentPage: isSamePagePathname(page, currentPathname),
   }
 }

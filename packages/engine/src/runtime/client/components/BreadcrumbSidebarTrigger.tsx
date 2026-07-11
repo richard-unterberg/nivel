@@ -48,7 +48,7 @@ const BreadcrumbSidebarTrigger = ({ currentHref }: { currentHref: string }) => {
   const { openMobileMenu } = useDocsSidebarActions()
   const activeSection = getActiveSectionByPathname(docs, currentHref)
   const breadcrumbItems = dedupeBreadcrumbs([
-    ...(activeSection ? [{ id: activeSection.id, title: activeSection.navTitle }] : []),
+    ...(activeSection?.navTitle ? [{ id: activeSection.id, title: activeSection.navTitle }] : []),
     ...(activeSection ? (getSidebarBreadcrumbs(activeSection.items, currentHref) ?? []) : []),
   ])
 

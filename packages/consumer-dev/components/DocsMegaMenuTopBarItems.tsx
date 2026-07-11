@@ -1,5 +1,5 @@
 import { cmMerge } from '@classmatejs/react'
-import { renderInlineMarkdown } from '@unterberg/nivel'
+import { renderInlineMarkdown, type ResolvedDocsSection } from '@unterberg/nivel'
 import { useDocsContext } from '@unterberg/nivel/client'
 import { ChevronDown } from 'lucide-react'
 import { createPortal } from 'react-dom'
@@ -15,18 +15,25 @@ import {
 } from './topBarNavUtils'
 import useDocsMegaMenu from './useDocsMegaMenu'
 
+type LabeledDocsSection = ResolvedDocsSection & { navTitle: string }
+
+const hasSectionNavTitle = (section: ResolvedDocsSection): section is LabeledDocsSection => Boolean(section.navTitle)
+
 const DocsMegaMenuTopBarItems = () => {
   const docs = useDocsContext()
   const { urlPathname, urlParsed } = usePageContext()
-  const sections = docs.sidebarSections
+  const sections = docs.sidebarSections.filter(hasSectionNavTitle)
   const hasMounted = useHasMounted()
   const isLandingPage = urlParsed.pathname === '/'
   const activeSection = getActiveSectionByPathname(docs, urlPathname)
+  const activeMenuSectionId = sections.some((section) => section.id === activeSection?.id)
+    ? activeSection?.id
+    : undefined
   const buttonClassName = getTopBarButtonClassName()
   const activeButtonClassName = getActiveTopBarButtonClassName()
   const { closeMegaMenu, hoveredSectionId, isMegaMenuOpen, openMegaMenu, scheduleMegaMenuClose, scheduleMegaMenuOpen } =
     useDocsMegaMenu({
-      activeSectionId: activeSection?.id,
+      activeSectionId: activeMenuSectionId,
       sections,
     })
 

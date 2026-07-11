@@ -253,6 +253,10 @@ const SidebarSectionGroup = ({ section, currentHref, activeSectionId, onNavigate
     sectionHasActiveItem,
   )
 
+  if (!section.title) {
+    return <>{renderSidebarItems(getVisibleNavItems(section.items), currentHref, docs.docsIconMap, onNavigate)}</>
+  }
+
   return (
     <li className="pb-1">
       <details

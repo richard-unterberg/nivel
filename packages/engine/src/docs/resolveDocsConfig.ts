@@ -86,6 +86,11 @@ const normalizeContentDir = (value: string | undefined) => {
 
 const normalizeSlug = (value: string) => value.replace(/^\/+|\/+$/g, '')
 
+const normalizeOptionalLabel = (value: string | undefined) => {
+  const normalized = value?.trim()
+  return normalized ? normalized : undefined
+}
+
 const joinDocsHref = (basePath: string, slug: string) => {
   const normalizedBasePath = normalizeBasePath(basePath)
   const normalizedSlug = normalizeSlug(slug)
@@ -494,20 +499,24 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
       throw new Error(`Docs section "${section.id}" must contain at least one page.`)
     }
 
+    const title = normalizeOptionalLabel(section.title)
+    const navTitle = normalizeOptionalLabel(section.navTitle) ?? title
     const resolvedSection: ResolvedDocsSection = {
       id: section.id,
-      title: section.title,
-      navTitle: section.navTitle ?? section.title,
+      title,
+      navTitle,
       href,
       items,
       icon: section.icon,
     }
 
-    navbarItems.push({
-      id: section.id,
-      title: resolvedSection.navTitle,
-      href: resolvedSection.href,
-    })
+    if (resolvedSection.navTitle) {
+      navbarItems.push({
+        id: section.id,
+        title: resolvedSection.navTitle,
+        href: resolvedSection.href,
+      })
+    }
 
     return resolvedSection
   })
