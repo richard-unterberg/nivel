@@ -96,6 +96,34 @@ test('createNivelVikeConfig only enables sitemap plugins when siteUrl is provide
   }
 })
 
+test('createNivelVikeConfig rewrites nivel icon imports to direct lucide icon modules', () => {
+  const config = createNivelVikeConfig({
+    basePath: '/docs',
+    graph: { items: [] },
+    siteTitle: 'My Docs',
+  })
+  const plugin = config.vite.plugins.find((vitePlugin) => vitePlugin.name === 'nivel-icons-import-rewrite')
+  const result = plugin.transform(
+    [
+      "import { ActivitySquare, BookOpen as DocsIcon, type LucideIcon } from '@unterberg/nivel/icons'",
+      '',
+      'export const icons: LucideIcon[] = [ActivitySquare, DocsIcon]',
+    ].join('\n'),
+    '/docs/components/IconList.tsx',
+  )
+
+  assert.equal(plugin.enforce, 'pre')
+  assert.equal(result.map, null)
+  assert.doesNotMatch(result.code, /@unterberg\/nivel\/icons/)
+  assert.match(result.code, /import type \{ LucideIcon \} from 'lucide-react'/)
+  assert.match(result.code, /import ActivitySquare from 'virtual:nivel-icons\/ActivitySquare'/)
+  assert.match(result.code, /import DocsIcon from 'virtual:nivel-icons\/BookOpen'/)
+  assert.match(
+    plugin.resolveId('virtual:nivel-icons/ActivitySquare'),
+    /lucide-react\/dist\/esm\/icons\/square-activity\.mjs/,
+  )
+})
+
 test('daisyui-theme entry is importable in Node ESM', async () => {
   const mod = await import('../dist/daisyui-theme.js')
 

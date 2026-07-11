@@ -1,7 +1,16 @@
 {
   "$schema": "./node_modules/knip/schema.json",
-  "ignore": ["tests/npm-consumer/**", "packages/engine/assets/**"],
-  "ignoreDependencies": [],
+  "ignore": [
+    "tests/npm-consumer/**",
+    "packages/engine/assets/**",
+    "packages/*/vite.config.ts"
+  ],
+  "ignoreDependencies": ["@unterberg/vite-beasties-output"],
+  "vike": {
+    "entry": "packages/*/{pages,renderer}/**/+*.{js,jsx,ts,tsx,vue,react,solid}",
+    "project": "packages/*/{pages,renderer}/**/+*.{js,jsx,ts,tsx,vue,react,solid}"
+  },
+  "vite": false,
   "ignoreIssues": {
     "packages/consumer-dev/docs/content/concepts/CodeComparison.tsx": [
       "exports"
