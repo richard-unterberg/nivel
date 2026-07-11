@@ -5,7 +5,7 @@ import { docsGeneratedIconImportPaths } from '../generated/iconImportPaths.js'
 const nivelIconsImportSource = '@unterberg/nivel/icons'
 const lucideReactImportSource = 'lucide-react'
 const virtualNivelIconImportPrefix = 'virtual:nivel-icons/'
-const nivelIconsImportPattern = /import\s+((?:type\s+)?[\s\S]*?)\s+from\s+(['"])@unterberg\/nivel\/icons\2\s*;?/g
+const nivelIconsImportPattern = /import\s+((?:type\s+)?\{[^}]*\})\s+from\s+(['"])@unterberg\/nivel\/icons\2[ \t]*;?/g
 const sourceFilePattern = /\.(?:[cm]?[jt]sx?|mdx)$/
 
 type ImportSpecifier = {
