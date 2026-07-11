@@ -158,6 +158,73 @@ test('ChoiceGroup falls back to the choice label when no title is present', () =
   assert.match(html, />client</)
 })
 
+test('nested choice groups share one header and combine their labels', () => {
+  const languageGroup = React.createElement(
+    ChoiceGroup,
+    {
+      choiceGroup: {
+        choices: ['JavaScript', 'TypeScript'],
+        default: 'TypeScript',
+        disabled: [],
+        name: 'codeLang',
+      },
+    },
+    React.createElement(
+      'div',
+      { 'data-choice-value': 'TypeScript' },
+      React.createElement('pre', { 'data-code-title': 'Container.ts' }),
+    ),
+  )
+  const html = renderToStaticMarkup(
+    React.createElement(
+      ChoiceGroup,
+      {
+        choiceGroup: {
+          choices: ['react'],
+          default: 'react',
+          disabled: [],
+          name: 'custom:react',
+        },
+      },
+      React.createElement('div', { 'data-choice-value': 'react' }, languageGroup),
+    ),
+  )
+
+  assert.equal(html.match(/data-choice-group-header/g)?.length, 1)
+  assert.equal(html.match(/data-nivel-action="code.copy"/g)?.length, 1)
+  assert.equal(html.match(/data-nivel-action="code.choice_change"/g)?.length, 2)
+  assert.match(html, /Container\.ts \/ typescript/)
+})
+
+test('nested choice groups combine choice labels when no title is set', () => {
+  const html = renderToStaticMarkup(
+    React.createElement(
+      ChoiceGroup,
+      {
+        choiceGroup: { choices: ['react'], default: 'react', disabled: [], name: 'custom:react' },
+      },
+      React.createElement(
+        'div',
+        { 'data-choice-value': 'react' },
+        React.createElement(
+          ChoiceGroup,
+          {
+            choiceGroup: {
+              choices: ['JavaScript', 'TypeScript'],
+              default: 'TypeScript',
+              disabled: [],
+              name: 'codeLang',
+            },
+          },
+          React.createElement('div', { 'data-choice-value': 'TypeScript' }, React.createElement('pre')),
+        ),
+      ),
+    ),
+  )
+
+  assert.match(html, /react - typescript/)
+})
+
 test('dispatchNivelAction emits a bubbling composed custom event with serializable detail', () => {
   const target = new EventTarget()
   let received = null
