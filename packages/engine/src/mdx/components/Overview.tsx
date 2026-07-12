@@ -24,7 +24,7 @@ interface OverviewProps {
 const isOverviewDividerItem = (item: string | OverviewItem): item is OverviewDividerItem =>
   typeof item === 'object' && item !== null && 'dividerText' in item
 
-function assertUsage(condition: unknown, message: string): asserts condition {
+const assertUsage: (condition: unknown, message: string) => asserts condition = (condition, message) => {
   if (!condition) {
     throw new Error(`[UniversalMdxMods][Wrong Usage] ${message}`)
   }
@@ -64,7 +64,7 @@ const OverviewCard = ({ href, title, excerpt }: OverviewLinkItem) => {
   return (
     <StyleOverviewCard href={withSiteBaseUrl(href)}>
       <span className="text-lg font-semibold text-base-content">{renderInlineMarkdown(title)}</span>
-      {excerpt ? <span className="mt-4 text-sm text-base-muted">{renderInlineMarkdown(excerpt)}</span> : null}
+      {excerpt ? <p className="text-sm leading-relaxed text-base-muted">{renderInlineMarkdown(excerpt)}</p> : null}
     </StyleOverviewCard>
   )
 }
