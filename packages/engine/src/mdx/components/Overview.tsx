@@ -60,10 +60,11 @@ const groupOverviewItems = (items: OverviewItem[]) => {
   return groups
 }
 
-const OverviewCard = ({ href, title }: OverviewLinkItem) => {
+const OverviewCard = ({ href, title, excerpt }: OverviewLinkItem) => {
   return (
     <StyleOverviewCard href={withSiteBaseUrl(href)}>
       <span className="text-lg font-semibold text-base-content">{renderInlineMarkdown(title)}</span>
+      {excerpt ? <span className="mt-4 text-sm text-base-muted">{renderInlineMarkdown(excerpt)}</span> : null}
     </StyleOverviewCard>
   )
 }
