@@ -44,6 +44,7 @@ export type DocsPartnersConfig = {
 export type DocsSocialConfig = {
   github?: string
   editLinkBranch?: string
+  editLinkPathPrefix?: string
   discord?: string
   x?: string
   bluesky?: string
@@ -138,7 +139,9 @@ export type ResolvedDocsBrandConfig = {
   logoAlt: string
 }
 
-export type ResolvedDocsSocialConfig = DocsSocialConfig
+export type ResolvedDocsSocialConfig = Omit<DocsSocialConfig, 'editLinkPathPrefix'> & {
+  editLinkPathPrefix?: string
+}
 
 export type ResolvedDocsPartnerConfig = {
   name: string

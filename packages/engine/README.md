@@ -225,6 +225,7 @@ nivel --help
 
 - `basePath` controls the public docs route prefix.
 - `contentDir` is optional and defaults to `docs`.
+- `social.editLinkPathPrefix` optionally prepends a repository-relative directory to GitHub edit links when the consumer root is nested inside the repository.
 - `customFonts` is optional and defaults to `true`; set it to `false` in `pages/+docs.ts` to stop Nivel from injecting Inter so you can own fonts in consumer CSS.
 - If you configure Algolia, `apiKey` must be a browser-safe search key.
 - The repo validates this package through both the in-repo consumer at `packages/consumer-dev` and the standalone fixture at `tests/npm-consumer`.

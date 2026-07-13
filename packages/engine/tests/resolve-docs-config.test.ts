@@ -144,6 +144,22 @@ test('topBarNav defaults to no topbar nav items', () => {
   })
 })
 
+test('social edit link path prefixes are normalized as repository-relative paths', () => {
+  const resolved = resolveDocsConfig(
+    createConfig({
+      social: {
+        github: 'https://github.com/example/docs',
+        editLinkBranch: 'main',
+        editLinkPathPrefix: './packages\\docs//',
+      },
+    }),
+  )
+
+  assert.equal(resolved.social.editLinkPathPrefix, 'packages/docs')
+  assert.throws(() => resolveDocsConfig(createConfig({ social: { editLinkPathPrefix: '../docs' } })))
+  assert.throws(() => resolveDocsConfig(createConfig({ social: { editLinkPathPrefix: '/docs' } })))
+})
+
 test('topBarNav false resolves to no topbar nav items', () => {
   const resolved = resolveDocsConfig(createConfig({ topBarNav: false }))
 

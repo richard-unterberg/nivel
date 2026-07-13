@@ -23,7 +23,13 @@ const getGithubHref = (github: string | undefined) => {
   return github ? github.replace(/\/+$/g, '') : null
 }
 
-const getEditPageHref = (options: { github: string | undefined; branch: string | undefined; sourcePath: string }) => {
+export const getEditPageHref = (options: {
+  github: string | undefined
+  branch: string | undefined
+  pathPrefix: string | undefined
+  contentDir: string
+  source: string
+}) => {
   const githubHref = getGithubHref(options.github)
   const branch = options.branch ? encodePath(options.branch) : ''
 
@@ -31,7 +37,9 @@ const getEditPageHref = (options: { github: string | undefined; branch: string |
     return null
   }
 
-  return `${githubHref}/edit/${branch}/${encodePath(options.sourcePath)}`
+  const sourcePath = [options.pathPrefix, options.contentDir, options.source].filter(Boolean).join('/')
+
+  return `${githubHref}/edit/${branch}/${encodePath(sourcePath)}`
 }
 
 export const DocsFooter = memo(({ page }: DocsFooterProps) => {
@@ -40,7 +48,9 @@ export const DocsFooter = memo(({ page }: DocsFooterProps) => {
   const editPageHref = getEditPageHref({
     github: social?.github,
     branch: social?.editLinkBranch,
-    sourcePath: `${contentDir}/${page.source}`,
+    pathPrefix: social?.editLinkPathPrefix,
+    contentDir,
+    source: page.source,
   })
 
   return (
