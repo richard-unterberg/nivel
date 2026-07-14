@@ -1,8 +1,8 @@
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 import { baseAssets } from '@unterberg/nivel'
 import { ProseContainer } from '@unterberg/nivel/client'
 
-const FeatureProse = cm.extend(ProseContainer)`
+const FeatureProse = ma.extend(ProseContainer)`
   prose-headings:my-0 
   prose-p:my-0 
   prose-headings:mb-4 
@@ -10,12 +10,12 @@ const FeatureProse = cm.extend(ProseContainer)`
   mb-8
 `
 
-const FeatureHeading = cm.h3`
+const FeatureHeading = ma.h3`
   flex items-center 
   gap-x-3
 `
 
-const FeatureBox = cm.div`
+const FeatureBox = ma.div`
   bg-base-200
   p-3 lg:p-6 
   rounded-box

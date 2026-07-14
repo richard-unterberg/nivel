@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { isExternalHref } from '../../docs/runtime.js'
 import { withSiteBaseUrl } from '../../shared/assets.js'
@@ -151,7 +151,7 @@ export const Link = ({
     assertWarning(false, '<Link /> is missing `href`.')
 
     return (
-      <a className={cmMerge(className, 'inline-flex gap-1 items-center')} {...props}>
+      <a className={maMerge(className, 'inline-flex gap-1 items-center')} {...props}>
         {text ?? children ?? 'LINK-TARGET-NOT-FOUND'}
       </a>
     )
@@ -187,7 +187,7 @@ export const Link = ({
         : (inferredSectionTitle ?? 'LINK-TARGET-NOT-FOUND'))
 
   return (
-    <a href={localizedHref} className={cmMerge(className, '')} {...props}>
+    <a href={localizedHref} className={maMerge(className, '')} {...props}>
       {inferredText}
     </a>
   )

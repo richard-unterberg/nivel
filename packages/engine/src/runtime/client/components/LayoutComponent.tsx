@@ -1,4 +1,4 @@
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 
 const LayoutSize = {
   xxs: 'xxs',
@@ -26,7 +26,7 @@ interface LayoutComponentProps {
   $noGrow?: boolean
 }
 
-export const LayoutComponent = cm.div.variants<LayoutComponentProps>({
+export const LayoutComponent = ma.div.variants<LayoutComponentProps>({
   base: ({ $noGrow }) => `px-4 ${$noGrow ? '' : 'mx-auto w-full'} relative`,
   variants: {
     $size: layoutComponentSizeMapping,

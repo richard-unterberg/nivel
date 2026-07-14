@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import type { DocsGlobalContextData, ResolvedDocsSection } from '@unterberg/nivel'
 import { useEffect, useState } from 'react'
 
@@ -21,11 +21,11 @@ export const withSiteBaseUrl = (value: string) => {
 }
 
 export const getTopBarButtonClassName = () => {
-  return cmMerge('btn btn-ghost btn-sm text-base px-2 whitespace-nowrap tracking-tight', 'lg:min-w-30')
+  return maMerge('btn btn-ghost btn-sm text-base px-2 whitespace-nowrap tracking-tight', 'lg:min-w-30')
 }
 
 export const getActiveTopBarButtonClassName = () => {
-  return cmMerge(getTopBarButtonClassName(), 'btn-primary btn-soft')
+  return maMerge(getTopBarButtonClassName(), 'btn-primary btn-soft')
 }
 
 const normalizePathname = (value: string) => {

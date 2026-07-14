@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import type { ResolvedTopBarNavItem } from '../../../../docs/types.js'
 import { withSiteBaseUrl } from '../../../../shared/assets.js'
 import { renderInlineMarkdown } from '../../../../shared/renderInlineMarkdown.js'
@@ -15,7 +15,7 @@ export const TopBarNavLinks = ({ items, minWidthClass }: TopBarNavLinksProps) =>
         <li key={`${item.href}:${item.label}`}>
           <a
             href={withSiteBaseUrl(item.href)}
-            className={cmMerge(
+            className={maMerge(
               'btn text-base btn-sm px-2 whitespace-nowrap tracking-tight',
               minWidthClass,
               item.isCta ? 'btn-primary btn-soft' : 'btn-ghost',

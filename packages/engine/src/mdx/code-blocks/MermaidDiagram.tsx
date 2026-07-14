@@ -1,6 +1,6 @@
 export { MermaidDiagram }
 
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import { useEffect, useId, useState } from 'react'
 
 type ViteImportMeta = ImportMeta & { env: { SSR?: boolean } }
@@ -137,7 +137,7 @@ const MermaidDiagram = ({ className, source }: { className?: string; source: str
   if (error) {
     return (
       <div
-        className={cmMerge(MERMAID_ROOT_CLASS_NAME, 'space-y-3', className)}
+        className={maMerge(MERMAID_ROOT_CLASS_NAME, 'space-y-3', className)}
         data-mermaid-diagram=""
         data-mermaid-status="error"
       >
@@ -152,7 +152,7 @@ const MermaidDiagram = ({ className, source }: { className?: string; source: str
   if (!svg) {
     return (
       <div
-        className={cmMerge(MERMAID_ROOT_CLASS_NAME, 'space-y-3', className)}
+        className={maMerge(MERMAID_ROOT_CLASS_NAME, 'space-y-3', className)}
         data-mermaid-diagram=""
         data-mermaid-status="loading"
       >
@@ -167,7 +167,7 @@ const MermaidDiagram = ({ className, source }: { className?: string; source: str
 
   return (
     <div
-      className={cmMerge(
+      className={maMerge(
         MERMAID_ROOT_CLASS_NAME,
         'overflow-x-auto bg-base-200 px-3 py-4 [&_svg]:mx-auto [&_svg]:h-auto [&_svg]:max-w-full',
         className,

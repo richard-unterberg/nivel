@@ -1,4 +1,4 @@
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 import { Alert } from '@unterberg/nivel'
 import { ProseContainer } from '@unterberg/nivel/client'
 import DefineTelefunctionSnippet from './DefineTelefunctionSnippet.mdx'
@@ -82,7 +82,7 @@ const NumberedHeading = ({ index, label }: { index: number; label: string }) => 
   )
 }
 
-const QuickStartProse = cm.extend(ProseContainer)`
+const QuickStartProse = ma.extend(ProseContainer)`
   prose-headings:my-0 
   prose-headings:mb-4
   prose-p:last:mb-0
@@ -92,7 +92,7 @@ const QuickStartProse = cm.extend(ProseContainer)`
   prose-h3:text-lg
 `
 
-const StyledHeadingNumber = cm.span`
+const StyledHeadingNumber = ma.span`
   xl:-ml-12
   w-6 xl:w-9 
   h-6 xl:h-9
@@ -103,7 +103,7 @@ const StyledHeadingNumber = cm.span`
   bg-primary text-primary-content 
 `
 
-const StyledOuter = cm.div`
+const StyledOuter = ma.div`
   lg:pr-10
   *:last-child:mb-0
 `

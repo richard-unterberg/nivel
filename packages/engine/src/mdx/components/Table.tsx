@@ -1,4 +1,4 @@
-import cm, { cmMerge } from '@classmatejs/react'
+import ma, { maMerge } from '@marmo/react'
 import type { ComponentPropsWithoutRef } from 'react'
 
 export interface TableData {
@@ -40,7 +40,7 @@ export const MdxTable = ({ className, ...props }: ComponentPropsWithoutRef<'tabl
   return (
     <TableScrollContainer>
       <table
-        className={cmMerge(
+        className={maMerge(
           `
             table
             w-full
@@ -69,14 +69,14 @@ export const MdxTable = ({ className, ...props }: ComponentPropsWithoutRef<'tabl
   )
 }
 
-const TableScrollContainer = cm.div`
+const TableScrollContainer = ma.div`
   not-prose 
   my-8 
   max-w-full overflow-x-auto 
   rounded-box shadow
 `
 
-const StyledTable = cm.table.variants<{ $size: TableProps['size'] }>({
+const StyledTable = ma.table.variants<{ $size: TableProps['size'] }>({
   base: `
     table
     w-full

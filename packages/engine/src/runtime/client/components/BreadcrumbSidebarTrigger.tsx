@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import { ChevronLast, ChevronsRight } from 'lucide-react'
 import { getActiveSectionByPathname } from '../../../docs/runtime.js'
 import type { ResolvedSidebarNode } from '../../../docs/types.js'
@@ -60,7 +60,7 @@ const BreadcrumbSidebarTrigger = ({ currentHref }: { currentHref: string }) => {
           {breadcrumbItems.map((item, index) => (
             <span key={item.id} className="contents">
               {index > 0 ? <ChevronsRight className="size-4 shrink-0 text-base-muted-medium" /> : null}
-              <span className={cmMerge(index === 0 && 'font-semibold', 'text-xs truncate')}>
+              <span className={maMerge(index === 0 && 'font-semibold', 'text-xs truncate')}>
                 {renderInlineMarkdown(item.title, { codeClassName: 'text-xs!' })}
               </span>
             </span>

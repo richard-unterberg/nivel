@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { UniversalMdxProvider } from '../../mdx/components/UniversalMdxProvider.js'
 import { MobileSidebarDialog } from './components/MobileSidebarDialog.js'
@@ -35,7 +35,7 @@ export const AppLayout = ({ children, header }: AppLayoutProps) => {
           <UserSettingsSync theme={docs.theme} />
           <div className="min-h-screen bg-base-100 text-base-content">
             {header ?? <Navbar />}
-            <div className={cmMerge(!isLandingPage && 'pt-14')}>{children}</div>
+            <div className={maMerge(!isLandingPage && 'pt-14')}>{children}</div>
             <MobileSidebarDialog />
           </div>
         </UniversalMdxProvider>

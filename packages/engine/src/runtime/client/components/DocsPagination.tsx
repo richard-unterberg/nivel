@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { DocPageData } from '../../../docs/types.js'
 import { withSiteBaseUrl } from '../../../shared/assets.js'
@@ -18,7 +18,7 @@ const PaginationCard = ({ item, direction, isOffset }: PaginationCardProps) => {
   return (
     <a
       href={withSiteBaseUrl(item.href)}
-      className={cmMerge(
+      className={maMerge(
         'group rounded-box border border-base-muted-light bg-base-100 p-5 no-underline hover:border-primary-muted-medium hover:bg-base-200',
         isPrevious ? 'text-left' : 'text-right',
         isOffset && 'sm:col-start-2',
@@ -26,12 +26,12 @@ const PaginationCard = ({ item, direction, isOffset }: PaginationCardProps) => {
       aria-label={`${isPrevious ? 'Previous' : 'Next'}: ${item.title}`}
     >
       <div className="flex flex-col h-full justify-between gap-2">
-        <div className={cmMerge('flex gap-1 text-base-muted', isPrevious ? 'justify-start' : 'justify-end')}>
+        <div className={maMerge('flex gap-1 text-base-muted', isPrevious ? 'justify-start' : 'justify-end')}>
           <DocsBreadcrumbs currentHref={item.href} />
         </div>
         <p className="text-lg font-semibold text-base-content">{renderInlineMarkdown(item.title)}</p>
         <div
-          className={cmMerge(
+          className={maMerge(
             'flex flex-1 items-end gap-1 text-base-muted group-hover:text-base-content',
             isPrevious ? 'justify-start' : 'justify-end',
           )}

@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { memo, useEffect, useRef } from 'react'
@@ -60,7 +60,7 @@ const SidebarPageLink = ({ title, href, currentHref, icon: Icon, onNavigate }: S
       <a
         href={withSiteBaseUrl(href)}
         onClick={onNavigate}
-        className={cmMerge(
+        className={maMerge(
           'rounded-field py-1.5 text-base-muted hover:text-base-content justify-start hover:bg-base-200',
           href === currentHref && 'text-primary! bg-base-200',
         )}
@@ -105,7 +105,7 @@ const SidebarGroupTitle = ({
   const content = (
     <span className="flex items-center gap-2 font-base">
       {Icon ? <Icon className="size-4 shrink-0" aria-hidden="true" /> : null}
-      <span className={cmMerge(isActive && allowNavigation && 'text-primary!')}>
+      <span className={maMerge(isActive && allowNavigation && 'text-primary!')}>
         {title ? renderInlineMarkdown(title, { codeClassName: 'text-sm!' }) : null}
       </span>
     </span>
@@ -116,7 +116,7 @@ const SidebarGroupTitle = ({
       <a
         href={withSiteBaseUrl(href)}
         onClick={onNavigate}
-        className={cmMerge(
+        className={maMerge(
           'flex items-center gap-2 rounded-field py-1 text-base-muted hover:text-base-content no-underline',
           isActive && 'text-primary!',
         )}
@@ -297,7 +297,7 @@ export const SidebarContent = ({
   const { sidebarSections } = docs
 
   return (
-    <ul className={cmMerge('menu p-0 m-0 w-full px-0 pt-3 li:last-child:border-0 pb-4')}>
+    <ul className={maMerge('menu p-0 m-0 w-full px-0 pt-3 li:last-child:border-0 pb-4')}>
       {sidebarSections.map((section) => (
         <SidebarSectionGroup
           key={section.id}

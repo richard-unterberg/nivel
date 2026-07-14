@@ -1,6 +1,6 @@
 import { LayoutComponent } from '@unterberg/nivel/client'
 import './startpage.css'
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 import { Calculator, CirclePile, Hammer, type LucideIcon, Smile } from 'lucide-react'
 
 const kpis = [
@@ -57,7 +57,7 @@ const KpiCard = ({
   )
 }
 
-const GradientTop = cm.div`
+const GradientTop = ma.div`
   absolute 
   min-w-300 
   left-1/2 w-full h-svh 

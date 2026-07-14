@@ -1,4 +1,4 @@
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 import { Menu } from 'lucide-react'
 import { usePageContext } from 'vike-react/usePageContext'
 import { useDocsGlobalContext } from '../../docsGlobalContext'
@@ -73,7 +73,7 @@ const Navbar = () => {
 
 export default Navbar
 
-const StyledNavbar = cm.header<{ $fixed: boolean; $borderBottom?: boolean }>`
+const StyledNavbar = ma.header<{ $fixed: boolean; $borderBottom?: boolean }>`
   top-0 left-0 z-20 w-full bg-base-100
   pt-0 h-14
   ${({ $borderBottom, $fixed }) => ($borderBottom && $fixed ? 'border-b border-base-muted-light' : '')}

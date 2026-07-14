@@ -105,7 +105,7 @@ test('createNivelVikeConfig rewrites nivel icon imports to direct lucide icon mo
   const plugin = config.vite.plugins.find((vitePlugin) => vitePlugin.name === 'nivel-icons-import-rewrite')
   const result = plugin.transform(
     [
-      "import cm from '@classmatejs/react'",
+      "import ma from '@marmo/react'",
       "import { ActivitySquare, BookOpen as DocsIcon, type LucideIcon } from '@unterberg/nivel/icons'",
       "import type { JSX } from 'react'",
       '',
@@ -117,7 +117,7 @@ test('createNivelVikeConfig rewrites nivel icon imports to direct lucide icon mo
   assert.equal(plugin.enforce, 'pre')
   assert.equal(result.map, null)
   assert.doesNotMatch(result.code, /@unterberg\/nivel\/icons/)
-  assert.match(result.code, /import cm from '@classmatejs\/react'/)
+  assert.match(result.code, /import ma from '@marmo\/react'/)
   assert.match(result.code, /virtual:nivel-icons\/BookOpen'\nimport type \{ JSX \} from 'react'/)
   assert.match(result.code, /import type \{ LucideIcon \} from 'lucide-react'/)
   assert.match(result.code, /import ActivitySquare from 'virtual:nivel-icons\/ActivitySquare'/)

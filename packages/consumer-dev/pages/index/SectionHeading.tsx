@@ -1,6 +1,6 @@
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 
-const StyledSectionHeading = cm.h2`
+const StyledSectionHeading = ma.h2`
   border-t-1 border-primary-muted-light pt-16 px-12 mt-16
   w-fit mx-auto
   font-semibold text-center mb-16

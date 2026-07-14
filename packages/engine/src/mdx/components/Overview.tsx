@@ -1,4 +1,4 @@
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 import type { ReactNode } from 'react'
 import { withSiteBaseUrl } from '../../shared/assets.js'
 import { renderInlineMarkdown } from '../../shared/renderInlineMarkdown.js'
@@ -69,7 +69,7 @@ const OverviewCard = ({ href, title, excerpt }: OverviewLinkItem) => {
   )
 }
 
-const StyleOverviewCard = cm.a`
+const StyleOverviewCard = ma.a`
     flex h-full flex-col gap-3 
     rounded-box border 
     border-base-muted-light hover:border-primary-muted

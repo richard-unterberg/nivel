@@ -1,6 +1,6 @@
 {
   "name": "@unterberg/nivel",
-  "version": "0.3.0-alpha-12",
+  "version": "0.3.0-alpha-13",
   "type": "module",
   "description": "Deterministic structure engine for documentation systems",
   "sideEffects": false,
@@ -85,7 +85,7 @@
   },
   "dependencies": {
     "@brillout/shiki-transformers": "^4.0.2",
-    "@classmatejs/react": "^0.3.0",
+    "@marmo/react": "^1.0.2",
     "@mdx-js/rollup": "^3.1.1",
     "@shikijs/transformers": "^4.0.2",
     "@tailwindcss/typography": "^0.5.19",

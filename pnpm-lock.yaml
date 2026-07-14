@@ -42,9 +42,9 @@ importers:
         specifier: ^0.6.21
         version: 0.6.21(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(vike@0.4.259(react-streaming@0.4.17(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(srvx@0.11.15)(vite@8.0.11(@types/node@24.12.0)(esbuild@0.28.0)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)))
     devDependencies:
-      '@classmatejs/react':
-        specifier: ^0.3.0
-        version: 0.3.0(react@19.2.6)
+      '@marmo/react':
+        specifier: ^1.0.2
+        version: 1.0.2(react@19.2.6)
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14
@@ -63,9 +63,9 @@ importers:
 
   packages/docs:
     dependencies:
-      '@classmatejs/react':
-        specifier: ^0.3.0
-        version: 0.3.0(react@19.2.6)
+      '@marmo/react':
+        specifier: ^1.0.2
+        version: 1.0.2(react@19.2.6)
       '@unterberg/nivel':
         specifier: workspace:*
         version: link:../engine
@@ -106,9 +106,9 @@ importers:
       '@brillout/shiki-transformers':
         specifier: ^4.0.2
         version: 4.0.2
-      '@classmatejs/react':
-        specifier: ^0.3.0
-        version: 0.3.0(react@19.2.6)
+      '@marmo/react':
+        specifier: ^1.0.2
+        version: 1.0.2(react@19.2.6)
       '@mdx-js/rollup':
         specifier: ^3.1.1
         version: 3.1.1(rollup@4.60.1)
@@ -422,11 +422,6 @@ packages:
 
   '@chevrotain/utils@12.0.0':
     resolution: {integrity: sha512-lB59uJoaGIfOOL9knQqQRfhl9g7x8/wqFkp13zTdkRu1huG9kg6IJs1O8hqj9rs6h7orGxHJUKb+mX3rPbWGhA==}
-
-  '@classmatejs/react@0.3.0':
-    resolution: {integrity: sha512-19L69nqKEIUkjjtra9ZKyYBguzYRW0xenfXtAPm58cHs1AU8qS6EcLJKZrRrGFlJMqWLV4luIvK1YEQcgs/aHg==}
-    peerDependencies:
-      react: '>=16.8.0'
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -770,6 +765,11 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@marmo/react@1.0.2':
+    resolution: {integrity: sha512-7kUEGItFNp9pIuGUx3wAt5fA563IQE4Gyls7YNnrPPXcpIXU2KbzSRBQCsnhhTZmx14Vhb6+aZz+4n1T4Z50xA==}
+    peerDependencies:
+      react: '>=16.8.0'
 
   '@mdx-js/mdx@3.1.1':
     resolution: {integrity: sha512-f6ZO2ifpwAQIpzGWaBQT2TXxPv6z3RBzQKpVftEWN78Vl/YweF1uwussDx8ECAXVtr3Rs89fKyG9YlzUs9DyGQ==}
@@ -2928,8 +2928,8 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
 
-  tailwind-merge@3.5.0:
-    resolution: {integrity: sha512-I8K9wewnVDkL1NTGoqWmVEIlUcB9gFriAEkXkfCjX5ib8ezGxtR3xD7iZIxrfArjEsH7F1CHD4RFUtxefdqV/A==}
+  tailwind-merge@3.6.0:
+    resolution: {integrity: sha512-uxL7qAVQriqRQPAyK3pj66VqskWqoZ37PW94jwOTwNfq/z9oyu1V+eqrZqtR2+fCiXdYOZe/Modt8GtvqNzu+w==}
 
   tailwindcss@4.3.0:
     resolution: {integrity: sha512-y6nxMGB1nMW9R6k96e5gdIFzcfL/gTJRNaqGes1YvkLnPVXzWgbqFF2yLC0T8G774n24cx3Pe8XrKoniCOAH+Q==}
@@ -3477,11 +3477,6 @@ snapshots:
 
   '@chevrotain/utils@12.0.0': {}
 
-  '@classmatejs/react@0.3.0(react@19.2.6)':
-    dependencies:
-      react: 19.2.6
-      tailwind-merge: 3.5.0
-
   '@emnapi/core@1.10.0':
     dependencies:
       '@emnapi/wasi-threads': 1.2.1
@@ -3680,6 +3675,11 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@marmo/react@1.0.2(react@19.2.6)':
+    dependencies:
+      react: 19.2.6
+      tailwind-merge: 3.6.0
 
   '@mdx-js/mdx@3.1.1':
     dependencies:
@@ -6255,7 +6255,7 @@ snapshots:
       tinyglobby: 0.2.16
       ts-interface-checker: 0.1.13
 
-  tailwind-merge@3.5.0: {}
+  tailwind-merge@3.6.0: {}
 
   tailwindcss@4.3.0: {}
 

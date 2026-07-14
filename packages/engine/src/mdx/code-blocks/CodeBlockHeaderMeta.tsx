@@ -1,4 +1,4 @@
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 
 export { CodeBlockHeaderMeta }
 
@@ -15,7 +15,7 @@ const CodeBlockHeaderMeta = ({ env, label }: { env?: string | null; label: strin
   )
 }
 
-const StyledDivider = cm.div.variants<{ $env?: 'server' | 'client' }>({
+const StyledDivider = ma.div.variants<{ $env?: 'server' | 'client' }>({
   base: 'absolute h-1 -bottom-px left-0 w-full pointer-events-none',
   variants: {
     $env: {
@@ -26,7 +26,7 @@ const StyledDivider = cm.div.variants<{ $env?: 'server' | 'client' }>({
   defaultVariants: { $env: 'server' },
 })
 
-const StyledBadge = cm.div.variants<{ $env?: 'server' | 'client' }>({
+const StyledBadge = ma.div.variants<{ $env?: 'server' | 'client' }>({
   base: 'shrink-0 badge badge-sm rounded-field badge-soft border pointer-events-none',
   variants: {
     $env: {
@@ -37,7 +37,7 @@ const StyledBadge = cm.div.variants<{ $env?: 'server' | 'client' }>({
   defaultVariants: { $env: 'server' },
 })
 
-const StyledBgShade = cm.div.variants<{ $env?: 'server' | 'client' }>({
+const StyledBgShade = ma.div.variants<{ $env?: 'server' | 'client' }>({
   base: 'absolute inset-0 opacity-5 bg-linear-to-t via-40% via-transparent pointer-events-none',
   variants: {
     $env: {

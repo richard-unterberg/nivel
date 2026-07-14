@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import {
   LayoutComponent,
   renderInlineMarkdown,
@@ -99,7 +99,7 @@ const MegaMenuNodeLink = ({ title, href, icon: Icon, isActive, className, onClos
   if (href) {
     return (
       <a
-        className={cmMerge(
+        className={maMerge(
           'flex min-w-0 items-center text-base-muted hover:text-base-content',
           isActive && 'text-primary! font-semibold',
           className,
@@ -114,7 +114,7 @@ const MegaMenuNodeLink = ({ title, href, icon: Icon, isActive, className, onClos
 
   return (
     <span
-      className={cmMerge(
+      className={maMerge(
         'flex min-w-0 items-center text-base-content',
         isActive && 'text-primary! font-semibold',
         className,
@@ -155,7 +155,7 @@ const MegaMenuNodeList = ({
   }
 
   return (
-    <ul className={cmMerge('menu menu-sm w-full p-0', depth > 0 && 'mt-1 pl-3')}>
+    <ul className={maMerge('menu menu-sm w-full p-0', depth > 0 && 'mt-1 pl-3')}>
       {visibleItems.map((item) => (
         <MegaMenuNode
           key={item.id}
@@ -286,10 +286,10 @@ const MegaMenuGroup = ({
       href={groupHref ?? undefined}
       icon={GroupIcon}
       isActive={isActive}
-      className={cmMerge(
+      className={maMerge(
         depth === 0
-          ? cmMerge(!isCollapsible && 'mb-2', 'text-lg font-semibold tracking-tight')
-          : cmMerge(!isCollapsible && 'rounded-field px-2 py-1.5', 'text-sm font-semibold'),
+          ? maMerge(!isCollapsible && 'mb-2', 'text-lg font-semibold tracking-tight')
+          : maMerge(!isCollapsible && 'rounded-field px-2 py-1.5', 'text-sm font-semibold'),
       )}
       onClose={onClose}
     />
@@ -336,7 +336,7 @@ const MegaMenuGroup = ({
             }
           }}
         >
-          <summary className={cmMerge('rounded-field flex min-h-0 items-center py-1.5', depth === 0 ? 'px-0' : 'px-2')}>
+          <summary className={maMerge('rounded-field flex min-h-0 items-center py-1.5', depth === 0 ? 'px-0' : 'px-2')}>
             {title}
           </summary>
           {nestedItems}
@@ -634,18 +634,18 @@ const DocsMegaMenu = ({
 
   return (
     <div
-      className={cmMerge('fixed top-14 left-0 z-20 w-full', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
+      className={maMerge('fixed top-14 left-0 z-20 w-full', isActive ? 'pointer-events-auto' : 'pointer-events-none')}
       onPointerEnter={() => onOpen(visibleSectionId)}
       onPointerLeave={closeMegaMenu}
     >
       <div
-        className={cmMerge(
+        className={maMerge(
           isActive ? 'opacity-100' : 'opacity-0',
           'pointer-events-none absolute top-0 left-0 h-svh w-full bg-linear-to-t from-base-100/60 to-base-100 transition-opacity duration-200 backdrop-blur-md',
         )}
       />
       <div
-        className={cmMerge(
+        className={maMerge(
           'relative z-4 overflow-hidden -mt-px transition-[height] bg-base-100 duration-300 ease-out pointer-events-none',
           isLandingPage && !isActive ? '' : 'pointer-events-auto lg:border-b lg:border-base-muted-light',
         )}
@@ -654,7 +654,7 @@ const DocsMegaMenu = ({
       >
         <LayoutComponent $size="sm">
           <div
-            className={cmMerge(
+            className={maMerge(
               isActive ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0',
               'relative z-4 transition-all duration-300',
             )}
@@ -663,7 +663,7 @@ const DocsMegaMenu = ({
               <div
                 key={section.id}
                 ref={section.id === visibleSectionId ? setVisibleSectionElement : undefined}
-                className={cmMerge(
+                className={maMerge(
                   section.id === visibleSectionId ? 'opacity-100' : 'opacity-0 pointer-events-none',
                   'transition-all absolute w-full duration-300',
                 )}

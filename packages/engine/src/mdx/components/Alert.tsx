@@ -1,4 +1,4 @@
-import cm, { cmMerge } from '@classmatejs/react'
+import ma, { maMerge } from '@marmo/react'
 import { Check, CircleX, Info, TriangleAlert } from 'lucide-react'
 import type { ReactNode } from 'react'
 
@@ -35,13 +35,13 @@ export const Alert = ({
     <AlertOuter $variant={type}>
       {!!heading && AlertIcon && (
         <div className="mb-3 flex items-center gap-2">
-          <AlertIcon className={cmMerge(alertIconTextColorClass, 'float-left h-5 w-5')} />
+          <AlertIcon className={maMerge(alertIconTextColorClass, 'float-left h-5 w-5')} />
           <AlertHeading>{heading}</AlertHeading>
         </div>
       )}
       {!(!!heading && AlertIcon) && !!heading && <AlertHeading>{heading}</AlertHeading>}
       {!(!!heading && AlertIcon) && AlertIcon && (
-        <div className={cmMerge(alertIconTextColorClass, 'float-left mr-2')}>
+        <div className={maMerge(alertIconTextColorClass, 'float-left mr-2')}>
           <AlertIcon className="mt-1 h-5 w-5" />
         </div>
       )}
@@ -50,7 +50,7 @@ export const Alert = ({
   )
 }
 
-const AlertOuter = cm.section.variants<{ $variant: AlertVariant }>({
+const AlertOuter = ma.section.variants<{ $variant: AlertVariant }>({
   base: `
     p-4
     my-6
@@ -77,7 +77,7 @@ const AlertOuter = cm.section.variants<{ $variant: AlertVariant }>({
   },
 })
 
-const AlertHeading = cm.header`
+const AlertHeading = ma.header`
   font-bold
   text-base
 `

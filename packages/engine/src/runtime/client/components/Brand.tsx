@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import type { ResolvedDocsBrandConfig } from '../../../docs/types.js'
 
 interface BrandProps {
@@ -21,14 +21,14 @@ export const Brand = ({ brand, noText = false }: BrandProps) => {
             <img
               src={brand.logoLight}
               alt={brand.logoAlt}
-              className={cmMerge('h-8 w-8 object-contain', brand.logoDark ? 'block dark:hidden' : 'block')}
+              className={maMerge('h-8 w-8 object-contain', brand.logoDark ? 'block dark:hidden' : 'block')}
             />
           )}
           {brand.logoDark && (
             <img
               src={brand.logoDark}
               alt={brand.logoAlt}
-              className={cmMerge('h-8 w-8 object-contain', brand.logoLight ? 'hidden dark:block' : 'block')}
+              className={maMerge('h-8 w-8 object-contain', brand.logoLight ? 'hidden dark:block' : 'block')}
             />
           )}
         </span>

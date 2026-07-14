@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import { renderInlineMarkdown, type ResolvedDocsSection } from '@unterberg/nivel'
 import { useDocsContext } from '@unterberg/nivel/client'
 import { ChevronDown } from 'lucide-react'
@@ -60,7 +60,7 @@ const DocsMegaMenuTopBarItems = () => {
                   {SectionIcon ? <SectionIcon className="size-4 shrink-0" aria-hidden="true" /> : null}
                   {renderInlineMarkdown(section.navTitle)}
                   <span
-                    className={cmMerge(
+                    className={maMerge(
                       'size-4 shrink-0 transition-transform duration-200',
                       isMegaMenuItemActive ? 'rotate-180' : 'rotate-0',
                     )}

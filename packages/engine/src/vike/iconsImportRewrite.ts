@@ -6,7 +6,7 @@ const nivelIconsImportSource = '@unterberg/nivel/icons'
 const lucideReactImportSource = 'lucide-react'
 const virtualNivelIconImportPrefix = 'virtual:nivel-icons/'
 const nivelIconsImportPattern = /import\s+((?:type\s+)?\{[^}]*\})\s+from\s+(['"])@unterberg\/nivel\/icons\2[ \t]*;?/g
-const sourceFilePattern = /\.(?:[cm]?[jt]sx?|mdx)$/
+const sourceFilePattern = /\.(?:[ma]?[jt]sx?|mdx)$/
 
 type ImportSpecifier = {
   imported: string
