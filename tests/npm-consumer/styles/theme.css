@@ -1,7 +1,6 @@
-@custom-variant dark (&:where(
-    [data-theme='consumer-dark'],
-    [data-theme='consumer-dark'] *
-  ));
+@custom-variant dark (
+  &:where([data-theme='consumer-dark'], [data-theme='consumer-dark'] *)
+);
 
 @plugin '@unterberg/nivel/daisyui-theme' {
   name: 'consumer-light';

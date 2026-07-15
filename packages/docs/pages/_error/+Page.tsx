@@ -1,3 +1,4 @@
+import { LayoutComponent, Link } from '@unterberg/nivel'
 import { usePageContext } from 'vike-react/usePageContext'
 
 const Page = () => {
@@ -25,6 +26,17 @@ const Page = () => {
     msg = pageContext.is404 ? "This page doesn't exist." : 'Something went wrong. Try again (later).'
   }
 
-  return <p>{msg}</p>
+  const usedStatusCode = typeof abortStatusCode === 'number' ? abortStatusCode : pageContext?.is404 ? 404 : 500
+
+  return (
+    <LayoutComponent className="prose-container mt-20 text-center">
+      <h1>
+        {usedStatusCode} - {msg}
+      </h1>
+      <Link href="/" className="btn btn-primary btn-soft">
+        Go to homepage
+      </Link>
+    </LayoutComponent>
+  )
 }
 export default Page

@@ -1,6 +1,6 @@
 import type { MdxJsxFlowElement } from 'mdast-util-mdx-jsx'
 
-export type ChoiceData = {
+type ChoiceData = {
   customDataChoice?: string | undefined
   customDataFilter?: string | undefined
 }
@@ -54,7 +54,7 @@ export interface ParagraphNode extends ParentNode<TextNode> {
   type: 'paragraph'
 }
 
-export interface PositionLike {
+interface PositionLike {
   start?: {
     offset?: number | undefined
   }

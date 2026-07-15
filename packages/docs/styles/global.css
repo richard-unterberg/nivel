@@ -3,6 +3,7 @@
 
 @source '../pages';
 @source '../docs';
+@source '../content';
 
 @layer base {
   html,

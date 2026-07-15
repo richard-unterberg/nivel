@@ -5,9 +5,9 @@ import { Link } from '@unterberg/nivel'
 ```ts
 const docsConfig = {
   topBarNav: [
-    { label: 'Get started', href: '/docs/getting-started', isCta: true },
-    { label: 'Concepts', href: '/docs/docs-graph' },
-    { label: 'API', href: '/docs/public-entry-points' },
+    { label: 'Get started', href: 'getting-started', isCta: true },
+    { label: 'Concepts', href: 'docs-graph' },
+    { label: 'API', href: 'public-entry-points' },
   ],
   // ...
 } satisfies DocsConfig
@@ -20,10 +20,10 @@ Advanced consumers can provide consumer-owned components instead of static links
 ```ts
 const docsConfig = {
   topBarNav: {
-    components: ['DocsTopBarSearch', 'DocsMegaMenuTopBarItems'],
+    components: ['../components/DocsTopBarSearch', '../components/DocsMegaMenuTopBarItems'],
   },
   // ...
 } satisfies DocsConfig
 ```
 
-Navigation should still be coherent with the docs graph. Use the graph for docs structure, not separate manual navigation files. See <Link href="/docs-graph" />.
+Navigation should still be coherent with the docs graph. Use the graph for docs structure, not separate manual navigation files. See <Link href="docs-graph" />.

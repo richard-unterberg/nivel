@@ -1,9 +1,14 @@
 name: Deploy Page
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -37,6 +42,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
       - name: Typecheck
         run: pnpm typecheck
 
@@ -44,13 +52,16 @@ jobs:
         run: cd packages/engine && pnpm test
 
       - name: Build Page
-        run: pnpm --filter ./packages/consumer-dev build
+        run: pnpm --filter ./packages/docs build
+
+      - name: Check Page Links
+        run: pnpm --filter ./packages/docs check:links
 
       - name: Upload GitHub Pages Artifact
         if: github.ref == 'refs/heads/master'
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./packages/consumer-dev/dist/client
+          path: ./packages/docs/dist/client
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/master'

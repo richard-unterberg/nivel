@@ -8,6 +8,7 @@
     "dev": "vike dev",
     "prebuild": "pnpm generate:docs",
     "build": "vike build",
+    "check:links": "node scripts/check-built-links.mjs",
     "prepreview": "pnpm build",
     "preview": "vike preview",
     "pretypecheck": "pnpm generate:docs",
@@ -16,17 +17,17 @@
   "dependencies": {
     "@marmo/react": "^1.0.2",
     "@unterberg/nivel": "workspace:*",
-    "lucide-react": "^1.14.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "vike": "^0.4.259",
-    "vike-react": "^0.6.21"
+    "lucide-react": "^1.24.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "vike": "^0.4.260",
+    "vike-react": "^0.6.25"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@unterberg/vite-beasties-output": "^0.1.4",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.11"
+    "@unterberg/vite-beasties-output": "^0.1.16",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.4"
   }
 }

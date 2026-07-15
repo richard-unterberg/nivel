@@ -11,12 +11,12 @@
     "url": "https://github.com/richard-unterberg/nivel/issues"
   },
   "scripts": {
-    "preview": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/consumer-dev build && pnpm --filter ./packages/consumer-dev exec vike preview",
-    "dev": "pnpm --filter @unterberg/nivel build && pnpm -r --parallel --stream --filter @unterberg/nivel --filter ./packages/consumer-dev run dev",
-    "dev:consumer": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/consumer-dev dev",
-    "build": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/consumer-dev build",
+    "preview": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/docs build && pnpm --filter ./packages/docs exec vike preview",
+    "dev": "pnpm --filter @unterberg/nivel build && pnpm -r --parallel --stream --filter @unterberg/nivel --filter ./packages/docs run dev",
+    "docs:dev": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/docs dev",
+    "build": "pnpm --filter @unterberg/nivel build && pnpm --filter ./packages/docs build",
     "purge:bunny": "node ./scripts/purgeBunnyPullZone.mjs",
-    "typecheck": "pnpm --filter @unterberg/nivel build && pnpm --filter @unterberg/nivel typecheck && pnpm --filter ./packages/consumer-dev typecheck",
+    "typecheck": "pnpm --filter @unterberg/nivel build && pnpm --filter @unterberg/nivel typecheck && pnpm --filter ./packages/docs typecheck",
     "lint": "biome lint --write .",
     "format": "biome format --write .",
     "check:knip": "pnpm --filter @unterberg/nivel generate:icons && pnpm knip",
@@ -27,10 +27,10 @@
     "verify": "pnpm format && pnpm run check:knip && pnpm run lint && pnpm run typecheck && pnpm run test:engine"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.11",
-    "knip": "^6.0.13",
-    "lefthook": "^2.1.5",
-    "typescript": "^6.0.2"
+    "@biomejs/biome": "2.5.4",
+    "knip": "^6.26.0",
+    "lefthook": "^2.1.10",
+    "typescript": "^6.0.3"
   },
   "version": ""
 }

@@ -4,7 +4,6 @@ export const docsGraph = {
   items: [
     {
       id: 'index',
-      title: 'Docs',
       kind: 'section',
       items: [
         {
@@ -314,6 +313,7 @@ export const docsGraph = {
           items: [
             {
               kind: 'page',
+              tableOfContents: false,
               id: 'publicEntryPoints',
               title: 'Public Entry Points',
               slug: 'public-entry-points',

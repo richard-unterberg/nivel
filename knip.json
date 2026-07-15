@@ -12,9 +12,6 @@
   },
   "vite": false,
   "ignoreIssues": {
-    "packages/consumer-dev/docs/content/concepts/CodeComparison.tsx": [
-      "exports"
-    ],
     "packages/engine/src/index.ts": ["exports", "types"]
   }
 }

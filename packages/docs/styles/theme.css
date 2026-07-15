@@ -1,7 +1,6 @@
-@custom-variant dark (&:where(
-    [data-theme='nivel-docs-dark'],
-    [data-theme='nivel-docs-dark'] *
-  ));
+@custom-variant dark (
+  &:where([data-theme='nivel-docs-dark'], [data-theme='nivel-docs-dark'] *)
+);
 
 @plugin '@unterberg/nivel/daisyui-theme' {
   name: 'nivel-docs-light';

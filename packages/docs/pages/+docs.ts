@@ -3,16 +3,16 @@ import { docsGraph } from '../content/docs.graph'
 
 const docsConfig = {
   graph: docsGraph,
-  siteTitle: 'nivel documentation',
-  siteDescription: 'nivel documentation',
+  siteTitle: 'Nivel Documentation',
+  siteDescription: 'Build structure-first documentation sites for React with Nivel, Vike, MDX, and TypeScript.',
   siteUrl: 'https://nivel-docs.de',
-  robots: false,
+  robots: true,
   basePath: '/docs/',
   contentDir: 'content',
   topBarNav: [
-    { label: 'Get started', href: '/docs/getting-started', isCta: true },
-    { label: 'Concepts', href: '/docs/docs-graph' },
-    { label: 'API', href: '/docs/public-entry-points' },
+    { label: 'Get started', href: 'getting-started', isCta: true },
+    { label: 'Concepts', href: 'docs-graph' },
+    { label: 'API', href: 'public-entry-points' },
   ],
   customFonts: false,
   theme: {
@@ -37,6 +37,8 @@ const docsConfig = {
   },
   social: {
     github: 'https://github.com/richard-unterberg/nivel',
+    editLinkBranch: 'master',
+    editLinkPathPrefix: 'packages/docs',
   },
 } satisfies DocsConfig
 

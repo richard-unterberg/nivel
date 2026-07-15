@@ -10,7 +10,7 @@ It is intentionally kept outside the pnpm workspace package flow so we can valid
 
 ## Why `npm-consumer` exists
 
-The main workspace already covers engine development in `packages/engine` and the first-party docs app in `packages/consumer-dev`.
+The main workspace already covers engine development in `packages/engine` and the first-party docs app in `packages/docs`.
 
 `tests/npm-consumer` covers a different concern:
 

@@ -2,9 +2,9 @@ import { Link } from '@unterberg/nivel'
 
 Nivel is validated through both the in-repo consumer and a standalone npm-style fixture. This catches different classes of integration problems.
 
-## `packages/consumer-dev`
+## `packages/docs`
 
-The in-repo consumer is the main development playground. It exercises the workspace engine against real docs content and custom consumer shell files.
+The first-party docs app is the in-repo integration consumer. It exercises the workspace engine against release documentation and consumer-owned shell files.
 
 ## `tests/npm-consumer`
 
@@ -18,4 +18,4 @@ Workspace changes should finish with:
 pnpm verify
 ```
 
-That command runs formatting, dependency checks, linting, typechecking, and engine tests. See <Link href="/development-workflow" /> for consumer scripts.
+That command runs formatting, dependency checks, linting, typechecking, and engine tests. See <Link href="development-workflow" /> for consumer scripts.

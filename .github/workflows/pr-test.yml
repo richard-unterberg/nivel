@@ -41,5 +41,9 @@ jobs:
       - name: Build Page
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
-        run: pnpm --filter ./packages/consumer-dev build
+        run: pnpm --filter ./packages/docs build
 
+      - name: Check Page Links
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: pnpm --filter ./packages/docs check:links

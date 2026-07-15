@@ -7,12 +7,12 @@ import { createNivelVikeConfig } from '@unterberg/nivel/vike'
 import type { Config } from 'vike/types'
 import docsConfig from './+docs'
 
-export { config }
-
-const config: Config = {
+const config = {
   ...createNivelVikeConfig(docsConfig),
   prerender: true,
-}
+} satisfies Config
+
+export default config
 ```
 
 ## What the helper wires
@@ -23,4 +23,4 @@ const config: Config = {
 - prerender-friendly docs output
 - global docs context consumed by the Nivel layout
 
-The consumer still owns the visible shell files. See <Link href="/project-shape" /> for the complete shape.
+The consumer still owns the visible shell files. See <Link href="project-shape" /> for the complete shape.
