@@ -30,7 +30,7 @@ Generate docs pages:
 pnpm exec nivel prepare
 ```
 
-[Read more here](https://github.com/richard-unterberg/nivel/blob/master/packages/engine/README.md) 
+[Read more here on the website:](https://nivel-docs.de/) 
 
 https://www.npmjs.com/package/@unterberg/nivel
 
