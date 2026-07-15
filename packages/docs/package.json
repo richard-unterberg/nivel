@@ -1,0 +1,33 @@
+{
+  "name": "nivel-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:docs": "nivel prepare",
+    "predev": "pnpm generate:docs",
+    "dev": "vike dev",
+    "prebuild": "pnpm generate:docs",
+    "build": "vike build",
+    "check:links": "node scripts/check-built-links.mjs",
+    "prepreview": "pnpm build",
+    "preview": "vike preview",
+    "pretypecheck": "pnpm generate:docs",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@marmo/react": "^1.0.2",
+    "@unterberg/nivel": "workspace:*",
+    "lucide-react": "^1.24.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "vike": "^0.4.260",
+    "vike-react": "^0.6.25"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@unterberg/vite-beasties-output": "^0.1.16",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.4"
+  }
+}

@@ -1,0 +1,29 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel uses three structural node types. Sections are top-level docs areas, groups organize sidebar items, and pages are routable MDX documents.
+
+## Sections
+
+A section owns a top-level navigation area. It has an `id`, `title`, optional `navTitle`, optional `href`, and an `items` list. When no `href` is provided, Nivel can use the first visible page in the section.
+
+## Groups
+
+A group organizes sidebar items without necessarily creating a page. It can have a title, icon, optional `href`, and optional collapsible behavior.
+
+## Pages
+
+A page points at one MDX source file and creates a canonical docs route.
+
+```ts
+const page = {
+  kind: 'page',
+  id: 'routesAliases',
+  title: 'Routes and Aliases',
+  slug: 'routes-aliases',
+  source: 'content/routes-aliases/content.mdx',
+  aliases: ['routes'],
+  description: 'Generate canonical docs routes and optional alias routes.',
+}
+```
+
+For the resolved output, continue with <Link href="deterministic-resolving" />.

@@ -1,4 +1,4 @@
-import cm, { cmMerge } from '@classmatejs/react'
+import ma, { maMerge } from '@marmo/react'
 import { Flame, TableOfContentsIcon } from 'lucide-react'
 import type { Dispatch, SetStateAction } from 'react'
 import type { DocHeading, ResolvedDocsPartnersConfig } from '../../../docs/types.js'
@@ -36,7 +36,7 @@ export const TableOfContents = ({
   const effectiveTableOfContents = tableOfContentsProp
 
   return (
-    <aside className={cmMerge(effectiveTableOfContents ? 'w-58' : 'w-32', 'hidden shrink-0 xl:block')}>
+    <aside className={maMerge(effectiveTableOfContents ? 'w-58' : 'w-32', 'hidden shrink-0 xl:block')}>
       <div className="sticky top-14">
         <div className="absolute left-0 bottom-0 bg-linear-to-t h-10 w-full from-base-100 z-20 pointer-events-none" />
         <StickyContent className="pt-10 pb-8">
@@ -56,7 +56,7 @@ export const TableOfContents = ({
                               href={`#${heading.id}`}
                               aria-current={activeHeadingId === heading.id ? 'location' : undefined}
                               onClick={() => setActiveHeadingId(heading.id)}
-                              className={cmMerge(
+                              className={maMerge(
                                 'cursor-pointer block border-l-1 border-base-muted-light py-1.5 text-base-muted hover:border-primary-muted hover:text-base-content text-xs',
                                 getPadLeft(heading.depth),
                                 activeHeadingId === heading.id ? 'border-primary text-base-content' : '',
@@ -122,7 +122,7 @@ const PartnerLogo = ({
         width={200}
         height={200}
         alt={partner.logoAlt}
-        className={cmMerge('block', partner.logoDark ? 'dark:hidden' : 'dark:invert')}
+        className={maMerge('block', partner.logoDark ? 'dark:hidden' : 'dark:invert')}
       />
       {partner.logoDark ? (
         <Image src={partner.logoDark} width={200} height={200} alt={partner.logoAlt} className="hidden dark:block" />
@@ -131,7 +131,7 @@ const PartnerLogo = ({
   )
 }
 
-const AdbarItem = cm.li`
+const AdbarItem = ma.li`
   list-none
   px-5
   py-5
@@ -143,7 +143,7 @@ const AdbarItem = cm.li`
   rounded-field
 `
 
-const AdbarLink = cm.a`
+const AdbarLink = ma.a`
   block
   w-full
   transition-opacity
@@ -151,7 +151,7 @@ const AdbarLink = cm.a`
   focus-visible:opacity-100
 `
 
-const Image = cm.img`
+const Image = ma.img`
   mx-auto
   w-24
   h-auto

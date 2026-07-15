@@ -1,0 +1,15 @@
+import { Link } from '@unterberg/nivel'
+
+The node runtime entry contains lower-level helpers used by the CLI, Vike plugin, scaffolding, config loading, resolving, and generated page synchronization.
+
+Most consumers should not need these helpers directly. They are public for advanced integrations and tests that need to call the same runtime behavior as the CLI.
+
+## Typical responsibilities
+
+- load `pages/+docs.ts`
+- resolve docs config and graph data
+- scaffold visible consumer files
+- generate or synchronize docs pages
+- provide Vite plugin behavior for docs projects
+
+Use the CLI and Vike helper first. Read <Link href="quick-start" /> and <Link href="vike-integration" /> before reaching for the node runtime.

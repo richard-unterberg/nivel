@@ -174,6 +174,7 @@ test('syncGeneratedDocsPages reads custom contentDir and emits custom route file
     assert.equal(aliasRoute, 'export default "/guide/start"\n')
     assert.match(globalContext, /"robots": true/)
     assert.match(globalContext, /"basePath": "\/guide"/)
+    assert.match(globalContext, /"contentDir": "docs-source"/)
     assert.doesNotMatch(globalContext, /@unterberg\/nivel\/icons/)
     assert.match(globalContext, /const BadgeDollarSign = createDocsIcon\(/)
     assert.match(globalContext, /const BookOpen = createDocsIcon\(/)
@@ -185,6 +186,71 @@ test('syncGeneratedDocsPages reads custom contentDir and emits custom route file
     assert.match(globalContext, /"page:intro": FileText/)
     assert.match(globalContext, /"section:more": SquareTerminal/)
     assert.match(globalContext, /"page:pricing": BadgeDollarSign/)
+  } finally {
+    fs.rmSync(rootDir, { force: true, recursive: true })
+  }
+})
+
+test('syncGeneratedDocsPages serializes unlabeled sections without visible nav labels', () => {
+  const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), 'nivel-docs-unlabeled-section-'))
+
+  try {
+    const introDir = path.join(rootDir, 'docs', 'content', 'intro')
+    const blankDir = path.join(rootDir, 'docs', 'content', 'blank')
+
+    fs.mkdirSync(introDir, { recursive: true })
+    fs.mkdirSync(blankDir, { recursive: true })
+    fs.writeFileSync(path.join(introDir, 'content.mdx'), '# Intro\n')
+    fs.writeFileSync(path.join(blankDir, 'content.mdx'), '# Blank\n')
+
+    syncGeneratedDocsPages({
+      rootDir,
+      docsConfig: createDocsConfig({
+        graph: {
+          items: [
+            {
+              kind: 'section',
+              id: 'unlabeled',
+              items: [
+                {
+                  kind: 'page',
+                  id: 'intro',
+                  title: 'Intro',
+                  slug: 'intro',
+                  source: 'content/intro/content.mdx',
+                },
+              ],
+            },
+            {
+              kind: 'section',
+              id: 'blank',
+              title: ' ',
+              navTitle: ' ',
+              items: [
+                {
+                  kind: 'page',
+                  id: 'blank',
+                  title: 'Blank',
+                  slug: 'blank',
+                  source: 'content/blank/content.mdx',
+                },
+              ],
+            },
+          ],
+        },
+      }),
+    })
+
+    const globalContext = fs.readFileSync(
+      path.join(rootDir, 'pages', '(nivel-generated)', '_docsGlobalContext.ts'),
+      'utf8',
+    )
+
+    assert.match(globalContext, /"id": "unlabeled"/)
+    assert.match(globalContext, /"id": "blank"/)
+    assert.match(globalContext, /"navbarItems": \[\]/)
+    assert.doesNotMatch(globalContext, /"title": "\s*"/)
+    assert.doesNotMatch(globalContext, /"navTitle": "\s*"/)
   } finally {
     fs.rmSync(rootDir, { force: true, recursive: true })
   }

@@ -1,10 +1,10 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import { ChevronLast, ChevronsRight } from 'lucide-react'
-import { useCallback } from 'react'
 import { getActiveSectionByPathname } from '../../../docs/runtime.js'
 import type { ResolvedSidebarNode } from '../../../docs/types.js'
 import { renderInlineMarkdown } from '../../../shared/renderInlineMarkdown.js'
 import { useDocsGlobalContext } from '../docsGlobalContext.js'
+import { useDocsSidebarActions } from '../store/runtime-store.js'
 
 type BreadcrumbItem = {
   id: string
@@ -45,25 +45,22 @@ const getSidebarBreadcrumbs = (items: ResolvedSidebarNode[], currentHref: string
 
 const BreadcrumbSidebarTrigger = ({ currentHref }: { currentHref: string }) => {
   const docs = useDocsGlobalContext()
+  const { openMobileMenu } = useDocsSidebarActions()
   const activeSection = getActiveSectionByPathname(docs, currentHref)
   const breadcrumbItems = dedupeBreadcrumbs([
-    ...(activeSection ? [{ id: activeSection.id, title: activeSection.navTitle }] : []),
+    ...(activeSection?.navTitle ? [{ id: activeSection.id, title: activeSection.navTitle }] : []),
     ...(activeSection ? (getSidebarBreadcrumbs(activeSection.items, currentHref) ?? []) : []),
   ])
 
-  const handleClick = useCallback(() => {
-    alert('TODO: Open mobile menu')
-  }, [])
-
   return (
-    <button className="cursor-pointer min-w-0 max-w-full block " type="button" onClick={handleClick}>
+    <button className="cursor-pointer min-w-0 max-w-full block " type="button" onClick={openMobileMenu}>
       <span className="flex items-center gap-1 min-w-0 overflow-hidden lg:hidden">
         <ChevronLast className="size-4 shrink-0 text-primary" />
         <span className="flex items-center gap-1">
           {breadcrumbItems.map((item, index) => (
             <span key={item.id} className="contents">
               {index > 0 ? <ChevronsRight className="size-4 shrink-0 text-base-muted-medium" /> : null}
-              <span className={cmMerge(index === 0 && 'font-semibold', 'text-xs truncate')}>
+              <span className={maMerge(index === 0 && 'font-semibold', 'text-xs truncate')}>
                 {renderInlineMarkdown(item.title, { codeClassName: 'text-xs!' })}
               </span>
             </span>

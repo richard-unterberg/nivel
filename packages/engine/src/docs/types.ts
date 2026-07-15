@@ -43,6 +43,8 @@ export type DocsPartnersConfig = {
 
 export type DocsSocialConfig = {
   github?: string
+  editLinkBranch?: string
+  editLinkPathPrefix?: string
   discord?: string
   x?: string
   bluesky?: string
@@ -98,7 +100,7 @@ export type DocsGroupNode = {
 export type DocsSectionNode = {
   kind: 'section'
   id: string
-  title: string
+  title?: string
   navTitle?: string
   href?: string
   items: DocsSidebarNode[]
@@ -137,7 +139,9 @@ export type ResolvedDocsBrandConfig = {
   logoAlt: string
 }
 
-export type ResolvedDocsSocialConfig = DocsSocialConfig
+export type ResolvedDocsSocialConfig = Omit<DocsSocialConfig, 'editLinkPathPrefix'> & {
+  editLinkPathPrefix?: string
+}
 
 export type ResolvedDocsPartnerConfig = {
   name: string
@@ -196,8 +200,8 @@ export type ResolvedSidebarNode = ResolvedSidebarGroup | ResolvedSidebarPage
 
 export type ResolvedDocsSection = {
   id: string
-  title: string
-  navTitle: string
+  title?: string
+  navTitle?: string
   href: string
   items: ResolvedSidebarNode[]
   icon?: DocsIconName
@@ -263,6 +267,7 @@ export type DocsGlobalContextSerializableData = Pick<
   | 'siteTitle'
   | 'robots'
   | 'basePath'
+  | 'contentDir'
   | 'theme'
   | 'footer'
   | 'brand'

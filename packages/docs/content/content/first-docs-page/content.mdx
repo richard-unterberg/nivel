@@ -1,0 +1,38 @@
+import { Link } from '@unterberg/nivel'
+
+A docs page needs two things: an MDX source file and a page node in the docs graph. The graph entry gives Nivel enough information to generate a route, add the page to navigation, and provide metadata to the runtime.
+
+## Create the content
+
+```mdx
+# Example Page
+
+This page is rendered by Nivel from an MDX source file.
+```
+
+Save it under the configured content directory, for example:
+
+```txt
+content/example-page/content.mdx
+```
+
+## Register the page
+
+```ts
+const page = {
+  kind: 'page',
+  id: 'examplePage',
+  title: 'Example Page',
+  slug: 'example-page',
+  source: 'content/example-page/content.mdx',
+  description: 'A first example page rendered by Nivel.',
+}
+```
+
+Then run:
+
+```bash
+pnpm generate:docs
+```
+
+For the complete graph model, read <Link href="docs-graph" /> and <Link href="sections-groups-pages" />.

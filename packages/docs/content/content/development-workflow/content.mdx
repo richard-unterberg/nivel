@@ -1,0 +1,26 @@
+import { Link } from '@unterberg/nivel'
+
+A Nivel consumer should generate docs pages before dev, build, and typecheck. That keeps Vike routes aligned with the current graph and content sources.
+
+```json
+{
+  "scripts": {
+    "generate:docs": "nivel prepare",
+    "predev": "pnpm generate:docs",
+    "dev": "vike dev",
+    "prebuild": "pnpm generate:docs",
+    "build": "vike build",
+    "pretypecheck": "pnpm generate:docs",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}
+```
+
+## During local work
+
+- Edit MDX under the configured content directory.
+- Edit structure in the docs graph.
+- Run `pnpm generate:docs` when you need generated files refreshed.
+- Let Vike serve the app through the normal consumer dev script.
+
+Generated files are explained in <Link href="generated-pages" />.

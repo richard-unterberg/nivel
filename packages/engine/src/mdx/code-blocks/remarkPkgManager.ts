@@ -27,11 +27,11 @@ export const remarkPkgManager = () => {
         return
       }
 
-      let choice: string | undefined
       if (node.meta) {
         const meta = parseMetaString(node.meta, ['choice'])
-        choice = meta.props.choice
-        node.meta = meta.rest
+        if (meta.props.choice) {
+          return
+        }
       }
 
       node.value = node.value.replaceAll('npm i ', 'npm install ')
@@ -54,9 +54,6 @@ export const remarkPkgManager = () => {
         })),
       ) as ChoiceGroupElement
 
-      replacement.data ??= {}
-      replacement.data.customDataChoice = choice
-      replacement.data.customDataFilter = replacement.type
       parent.children.splice(index, 1, replacement)
     })
   }

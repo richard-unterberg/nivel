@@ -38,9 +38,9 @@ https://www.npmjs.com/package/@unterberg/nivel
 
 Main reusable package that exports the core engine and public helpers for consumer use. The engine is framework-agnostic and can be used in any React-based setup, but we currently only export a Vike config helper for convenience.
 
-### [`packages/consumer-dev`](packages/consumer-dev)
+### [`packages/docs`](packages/docs)
 
-In-repo consumer that exercises the engine against real docs content. This is the main playground for development and testing. It also serves as a reference implementation for consumers.
+First-party documentation site and in-repo integration consumer. It exercises the workspace engine against the release docs while remaining a reference implementation for consumers.
 
 ### [`tests/npm-consumer`](tests/npm-consumer)
 

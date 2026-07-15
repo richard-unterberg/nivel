@@ -1,4 +1,4 @@
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 import { TableOfContents } from 'lucide-react'
 import { type Dispatch, type SetStateAction, useId } from 'react'
 import type { DocHeading } from '../../../docs/types'
@@ -76,7 +76,7 @@ const TableOfContentsMobile = ({
 
 export default TableOfContentsMobile
 
-const StyledTOC = cm.div`
+const StyledTOC = ma.div`
   block xl:hidden
   fixed
   bg-base-100 border-b-base-muted-light
@@ -87,7 +87,7 @@ const StyledTOC = cm.div`
   z-1
 `
 
-const StyledTOCInner = cm.div`
+const StyledTOCInner = ma.div`
   absolute inset-0 flex justify-between items-center
   pr-4
   px-4 lg:pl-14

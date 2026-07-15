@@ -1,0 +1,23 @@
+import { Alert, Link } from '@unterberg/nivel'
+
+Nivel writes generated Vike files under `pages/(nivel-generated)` after resolving the docs graph. These files connect each docs page and alias to the MDX runtime and global docs context.
+
+<Alert type="warning" heading="Do not edit generated pages">
+  Generated pages can be rewritten by `nivel prepare`. Put content, navigation, metadata, and theme decisions in consumer-owned files instead.
+</Alert>
+
+## What generation represents
+
+- canonical page routes from graph slugs
+- alias routes from graph aliases
+- page data files for title and description metadata
+- a generated docs layout boundary
+- serialized global context for navbar, sidebar, theme, social links, and other docs shell data
+
+Run generation with:
+
+```bash
+pnpm generate:docs
+```
+
+For route behavior, read <Link href="routes-aliases" />.

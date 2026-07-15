@@ -46,6 +46,95 @@ const createConfig = (overrides: Partial<DocsConfig> = {}): DocsConfig => {
   }
 }
 
+test('section labels are optional and blank-aware', () => {
+  const resolved = resolveDocsConfig(
+    createConfig({
+      graph: {
+        items: [
+          {
+            kind: 'section',
+            id: 'unlabeled',
+            items: [
+              {
+                kind: 'page',
+                id: 'intro',
+                title: 'Introduction',
+                slug: 'intro',
+                source: 'intro.mdx',
+              },
+            ],
+          },
+          {
+            kind: 'section',
+            id: 'blank',
+            title: ' ',
+            navTitle: ' ',
+            items: [
+              {
+                kind: 'page',
+                id: 'blank-page',
+                title: 'Blank Label',
+                slug: 'blank-label',
+                source: 'blank-label.mdx',
+              },
+            ],
+          },
+          {
+            kind: 'section',
+            id: 'titled',
+            title: ' Guide ',
+            items: [
+              {
+                kind: 'page',
+                id: 'guide',
+                title: 'Guide',
+                slug: 'guide',
+                source: 'guide.mdx',
+              },
+            ],
+          },
+          {
+            kind: 'section',
+            id: 'renamed',
+            title: 'Reference',
+            navTitle: ' API ',
+            items: [
+              {
+                kind: 'page',
+                id: 'api',
+                title: 'API',
+                slug: 'api',
+                source: 'api.mdx',
+              },
+            ],
+          },
+        ],
+      } satisfies DocsGraph,
+    }),
+  )
+
+  assert.equal(resolved.sections[0]?.title, undefined)
+  assert.equal(resolved.sections[0]?.navTitle, undefined)
+  assert.equal(resolved.sections[1]?.title, undefined)
+  assert.equal(resolved.sections[1]?.navTitle, undefined)
+  assert.equal(resolved.sections[2]?.title, 'Guide')
+  assert.equal(resolved.sections[2]?.navTitle, 'Guide')
+  assert.equal(resolved.sections[3]?.title, 'Reference')
+  assert.equal(resolved.sections[3]?.navTitle, 'API')
+  assert.deepEqual(resolved.navbarItems, [
+    {
+      id: 'titled',
+      title: 'Guide',
+      href: '/docs/guide/',
+    },
+    {
+      id: 'renamed',
+      title: 'API',
+      href: '/docs/api/',
+    },
+  ])
+})
+
 test('topBarNav defaults to no topbar nav items', () => {
   const resolved = resolveDocsConfig(createConfig())
 
@@ -53,6 +142,22 @@ test('topBarNav defaults to no topbar nav items', () => {
     kind: 'none',
     items: [],
   })
+})
+
+test('social edit link path prefixes are normalized as repository-relative paths', () => {
+  const resolved = resolveDocsConfig(
+    createConfig({
+      social: {
+        github: 'https://github.com/example/docs',
+        editLinkBranch: 'main',
+        editLinkPathPrefix: './packages\\docs//',
+      },
+    }),
+  )
+
+  assert.equal(resolved.social.editLinkPathPrefix, 'packages/docs')
+  assert.throws(() => resolveDocsConfig(createConfig({ social: { editLinkPathPrefix: '../docs' } })))
+  assert.throws(() => resolveDocsConfig(createConfig({ social: { editLinkPathPrefix: '/docs' } })))
 })
 
 test('topBarNav false resolves to no topbar nav items', () => {

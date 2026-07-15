@@ -1,0 +1,18 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel exports public TypeScript types for docs config, graph nodes, resolved runtime data, and page metadata. Consumers should use these types with `satisfies` on plain objects.
+
+```ts
+import type { DocsConfig, DocsGraph } from '@unterberg/nivel'
+```
+
+## Common types
+
+- `DocsConfig` describes `pages/+docs.ts`.
+- `DocsGraph` describes the top-level graph.
+- `DocsSectionNode`, `DocsGroupNode`, and `DocsPageNode` describe graph items.
+- `ResolvedDocsConfig` describes the normalized runtime model.
+- `ResolvedDocsPage` describes resolved page data.
+- `DocHeading` describes extracted MDX headings.
+
+For concrete graph examples, read <Link href="docs-graph" /> and <Link href="sections-groups-pages" />.

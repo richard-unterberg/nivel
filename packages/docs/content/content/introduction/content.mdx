@@ -1,0 +1,24 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel exists to keep documentation structure in one visible, typed place. Instead of manually coordinating filesystem routes, sidebar files, page metadata, aliases, and layout data, the consumer writes a docs graph and lets Nivel resolve the rest.
+
+That model is useful for documentation sites that need to stay predictable as they grow. The same page entry can drive the route, navigation label, description, table of contents behavior, pagination order, and runtime link resolution.
+
+## Design principle
+
+The consumer should own what makes the site specific:
+
+- docs content and custom MDX leaf components
+- `docs/docs.graph.ts` or `content/docs.graph.ts`
+- `pages/+docs.ts` and visible Vike shell files
+- CSS, Tailwind sources, theme tokens, logos, and favicons
+
+Nivel should own reusable docs behavior:
+
+- docs graph validation and resolution
+- route and alias generation
+- Vike integration
+- MDX setup
+- page shell rendering and UI primitives
+
+Read <Link href="consumer-vs-engine" /> for the responsibility split, or jump to <Link href="docs-graph" /> for the core data model.

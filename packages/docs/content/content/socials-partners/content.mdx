@@ -1,0 +1,30 @@
+import { Link } from '@unterberg/nivel'
+
+Social and partner config add site-level metadata for the docs shell. These are optional and should stay consumer-owned because they represent project identity.
+
+```ts
+const docsConfig = {
+  social: {
+    github: 'https://github.com/richard-unterberg/nivel',
+    editLinkBranch: 'master',
+    editLinkPathPrefix: 'packages/docs',
+  },
+  partners: {
+    primary: [
+      {
+        name: 'Example',
+        href: 'https://example.com',
+        logoLight: '/partners/example-light.svg',
+        logoDark: '/partners/example-dark.svg',
+        logoAlt: 'Example logo',
+      },
+    ],
+  },
+} satisfies DocsConfig
+```
+
+## Supported socials
+
+Nivel supports GitHub, Discord, X, Bluesky, and LinkedIn fields in `social`. Set both `editLinkBranch` and the optional repository-relative `editLinkPathPrefix` to show accurate GitHub edit links for nested docs packages.
+
+For visible brand assets, read <Link href="brand-head-fonts" />.

@@ -1,4 +1,4 @@
-import cm from '@classmatejs/react'
+import ma from '@marmo/react'
 import type { ReactNode } from 'react'
 import { withSiteBaseUrl } from '../../shared/assets.js'
 import { renderInlineMarkdown } from '../../shared/renderInlineMarkdown.js'
@@ -24,7 +24,7 @@ interface OverviewProps {
 const isOverviewDividerItem = (item: string | OverviewItem): item is OverviewDividerItem =>
   typeof item === 'object' && item !== null && 'dividerText' in item
 
-function assertUsage(condition: unknown, message: string): asserts condition {
+const assertUsage: (condition: unknown, message: string) => asserts condition = (condition, message) => {
   if (!condition) {
     throw new Error(`[UniversalMdxMods][Wrong Usage] ${message}`)
   }
@@ -60,15 +60,16 @@ const groupOverviewItems = (items: OverviewItem[]) => {
   return groups
 }
 
-const OverviewCard = ({ href, title }: OverviewLinkItem) => {
+const OverviewCard = ({ href, title, excerpt }: OverviewLinkItem) => {
   return (
     <StyleOverviewCard href={withSiteBaseUrl(href)}>
       <span className="text-lg font-semibold text-base-content">{renderInlineMarkdown(title)}</span>
+      {excerpt ? <p className="text-sm leading-relaxed text-base-muted">{renderInlineMarkdown(excerpt)}</p> : null}
     </StyleOverviewCard>
   )
 }
 
-const StyleOverviewCard = cm.a`
+const StyleOverviewCard = ma.a`
     flex h-full flex-col gap-3 
     rounded-box border 
     border-base-muted-light hover:border-primary-muted

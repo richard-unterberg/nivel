@@ -1,0 +1,23 @@
+import { Alert, Link } from '@unterberg/nivel'
+
+Use `Alert` for information that should stand apart from the main prose. Alerts are useful for generated-file warnings, compatibility notes, and important setup constraints.
+
+```mdx
+import { Alert } from '@unterberg/nivel'
+
+<Alert type="warning" heading="Do not edit generated pages">
+  Generated pages can be rewritten by `nivel prepare`.
+</Alert>
+```
+
+## Variants
+
+<Alert heading="Info">Use info alerts for helpful context.</Alert>
+
+<Alert type="warning" heading="Warning">Use warning alerts for sharp edges and generated files.</Alert>
+
+<Alert type="success" heading="Success">Use success alerts for completed setup states.</Alert>
+
+<Alert type="error" heading="Error">Use error alerts for invalid usage or broken configuration.</Alert>
+
+See <Link href="generated-pages" /> for a practical warning example.

@@ -1,0 +1,39 @@
+import { Link } from '@unterberg/nivel'
+
+`basePath` controls the public URL prefix for generated docs routes. `contentDir` controls where Nivel reads MDX sources from, relative to the consumer root.
+
+```ts
+const docsConfig = {
+  basePath: '/docs/',
+  contentDir: 'content',
+  graph: docsGraph,
+  siteTitle: 'My Docs',
+} satisfies DocsConfig
+```
+
+## Base path
+
+Use an absolute path such as `/docs` or `/docs/`. Nivel normalizes the route prefix when it resolves canonical page hrefs and alias hrefs.
+
+## Content directory
+
+`contentDir` is optional and defaults to `docs`. It should stay project-relative and should not point outside the consumer root.
+
+The page `source` field is resolved relative to `contentDir`. See <Link href="writing-mdx" /> for an example page source.
+
+## Edit link repository path
+
+When the docs consumer root is nested inside its Git repository, set `social.editLinkPathPrefix` to the consumer root's repository-relative path. This prefix only affects the footer's GitHub edit links; `contentDir` remains relative to the consumer root.
+
+```ts
+const docsConfig = {
+  contentDir: 'content',
+  social: {
+    github: 'https://github.com/example/project',
+    editLinkBranch: 'main',
+    editLinkPathPrefix: 'docs',
+  },
+} satisfies DocsConfig
+```
+
+This configuration links a page with `source: 'getting-started.mdx'` to `docs/content/getting-started.mdx` in the repository.

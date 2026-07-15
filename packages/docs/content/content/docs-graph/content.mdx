@@ -1,0 +1,40 @@
+import { Link } from '@unterberg/nivel'
+
+The docs graph is Nivel's single source of truth for documentation structure. It contains sections, optional sidebar groups, and pages with slugs, sources, aliases, descriptions, and display options.
+
+```ts
+import type { DocsGraph } from '@unterberg/nivel'
+
+export const docsGraph = {
+  items: [
+    {
+      kind: 'section',
+      id: 'docs',
+      title: 'Docs',
+      items: [
+        {
+          kind: 'page',
+          id: 'gettingStarted',
+          title: 'Getting Started',
+          slug: 'getting-started',
+          source: 'content/getting-started/content.mdx',
+          description: 'Getting started with @unterberg/nivel.',
+        },
+      ],
+    },
+  ],
+} satisfies DocsGraph
+```
+
+## What the graph drives
+
+- public docs routes and alias routes
+- navbar and sidebar structure
+- page titles and descriptions
+- pagination order
+- table of contents defaults
+- runtime link and overview resolution
+
+Use plain objects with `satisfies DocsGraph`. Nivel does not need wrapper helpers around the graph object.
+
+Next, read <Link href="sections-groups-pages" /> for the graph node model.

@@ -1,6 +1,6 @@
 export { CodeBlockCopyButton, trimTrailingWhitespace }
 
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import { Check, Copy } from 'lucide-react'
 import { useState } from 'react'
 import { dispatchNivelAction, type NivelActionEventDetail } from '../../shared/nivelActionEvents.js'
@@ -26,7 +26,7 @@ const CodeBlockCopyButton = ({
   return (
     <button
       type="button"
-      className={cmMerge('btn btn-ghost btn-xs h-8 min-h-8 px-2 text-base-muted hover:text-base-content', className)}
+      className={maMerge('btn btn-ghost btn-xs h-8 min-h-8 px-2 text-base-muted hover:text-base-content', className)}
       data-nivel-action={actionDetail?.action}
       onClick={async (event) => {
         const button = event.currentTarget

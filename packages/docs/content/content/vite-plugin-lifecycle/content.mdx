@@ -1,0 +1,13 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel's Vite integration keeps the docs runtime connected to the Vike app during development and builds. It watches the inputs that affect generated docs output and coordinates reload behavior when those inputs change.
+
+## Responsibilities
+
+- integrate Nivel Tailwind sources with Vite
+- keep generated docs pages synchronized during local work
+- watch docs config, graph, content, and generated files
+- trigger reloads when generated docs state changes
+- support static build and prerender workflows
+
+Most consumers interact with this through <Link href="tailwind-setup" /> and <Link href="development-workflow" />.

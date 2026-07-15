@@ -1,0 +1,27 @@
+import { Link, Overview } from '@unterberg/nivel'
+
+Nivel is a structure-first documentation engine for React apps built with Vike. You define the docs structure once, then Nivel resolves routes, aliases, navigation, page metadata, MDX runtime data, and layout context from that graph.
+
+The consumer stays intentionally thin: content, `docs.graph.ts`, visible Vike shell files, brand assets, and theme files remain local. Nivel owns the generated route layer and the reusable docs runtime.
+
+<Overview
+  items={[
+    'installation',
+    'quickStart',
+    'projectShape',
+    'firstDocsPage',
+  ]}
+/>
+
+## What Nivel provides
+
+- typed `DocsConfig` and `DocsGraph` surfaces
+- generated Vike docs pages from one graph
+- navbar, sidebar, breadcrumbs, table of contents, pagination, and meta head wiring
+- MDX support with built-in docs components and code-block tooling
+- Tailwind v4 and daisyUI integration helpers
+- a small CLI for scaffolding and docs page generation
+
+## Good first path
+
+Start with <Link href="installation" />, then follow <Link href="quick-start" />. After that, read <Link href="docs-graph" /> to understand why the graph is the center of the system.

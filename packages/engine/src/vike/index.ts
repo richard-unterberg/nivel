@@ -9,6 +9,7 @@ import { getCodeBlockMdxPlugins } from '../mdx/code-blocks/index.js'
 import { rehypeDefinitionLists } from '../mdx/plugins/rehypeDefinitionLists.js'
 import { rehypeDocsHeadings } from '../mdx/plugins/rehypeDocsHeadings.js'
 import { nivelPagesPlugin } from '../runtime/node/index.js'
+import { nivelIconsImportRewritePlugin } from './iconsImportRewrite.js'
 import { createNivelSitemapPlugins } from './sitemap.js'
 
 process.env.VIKE_CRAWL ??= JSON.stringify({ git: false })
@@ -17,6 +18,7 @@ const codeBlockMdxPlugins = getCodeBlockMdxPlugins()
 
 const viteConfig: UserConfig = {
   plugins: [
+    nivelIconsImportRewritePlugin(),
     {
       ...mdx({
         providerImportSource: '@unterberg/nivel/mdx',

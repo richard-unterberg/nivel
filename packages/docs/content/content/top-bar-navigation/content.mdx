@@ -1,0 +1,29 @@
+import { Link } from '@unterberg/nivel'
+
+`topBarNav` controls the links or component slots rendered in the top bar. Use simple link items for most documentation sites.
+
+```ts
+const docsConfig = {
+  topBarNav: [
+    { label: 'Get started', href: 'getting-started', isCta: true },
+    { label: 'Concepts', href: 'docs-graph' },
+    { label: 'API', href: 'public-entry-points' },
+  ],
+  // ...
+} satisfies DocsConfig
+```
+
+## Component mode
+
+Advanced consumers can provide consumer-owned components instead of static links.
+
+```ts
+const docsConfig = {
+  topBarNav: {
+    components: ['../components/DocsTopBarSearch', '../components/DocsMegaMenuTopBarItems'],
+  },
+  // ...
+} satisfies DocsConfig
+```
+
+Navigation should still be coherent with the docs graph. Use the graph for docs structure, not separate manual navigation files. See <Link href="docs-graph" />.

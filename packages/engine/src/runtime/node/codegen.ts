@@ -378,6 +378,7 @@ export const syncGeneratedDocsPages = (options: { rootDir: string; docsConfig: D
     siteTitle: resolved.siteTitle,
     robots: resolved.robots,
     basePath: resolved.basePath,
+    contentDir: resolved.contentDir,
     theme: resolved.theme,
     footer: resolved.footer,
     brand: resolved.brand,

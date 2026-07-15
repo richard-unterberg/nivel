@@ -1,0 +1,33 @@
+import { Link } from '@unterberg/nivel'
+
+Brand and head config let the consumer provide visible identity and browser metadata while Nivel handles consistent injection through the docs shell.
+
+```ts
+const docsConfig = {
+  brand: {
+    text: 'Nivel',
+    href: '/',
+    logoLight: '/logo-light.svg',
+    logoDark: '/logo-dark.svg',
+    logoAlt: 'Nivel logo',
+  },
+  head: {
+    faviconSvg: '/favicon.svg',
+    faviconIco: '/favicon.ico',
+    appleTouchIcon: '/apple-touch-icon.png',
+  },
+} satisfies DocsConfig
+```
+
+## Fonts
+
+By default, Nivel can inject reusable font loading. Set `customFonts: false` when the consumer should own all font loading through CSS or custom head config.
+
+```ts
+const docsConfig = {
+  customFonts: false,
+  // ...
+} satisfies DocsConfig
+```
+
+For theme names and palette ownership, read <Link href="theme-configuration" />.

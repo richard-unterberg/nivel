@@ -1,0 +1,17 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel exposes focused package entry points so consumers can import config helpers, client runtime components, MDX utilities, and Tailwind integration without reaching into internal files.
+
+| Entry | Purpose |
+| --- | --- |
+| `@unterberg/nivel` | main types, MDX components, and shared utilities |
+| `@unterberg/nivel/vike` | Vike config helper for `pages/+config.ts` |
+| `@unterberg/nivel/client` | client runtime components such as `AppLayout`, `MetaHead`, and `DocsPage` |
+| `@unterberg/nivel/mdx` | MDX provider entry |
+| `@unterberg/nivel/mdx/code-blocks` | code-block components and transforms |
+| `@unterberg/nivel/tailwind` | Tailwind and Vite helper surface |
+| `@unterberg/nivel/daisyui-theme` | daisyUI theme plugin surface |
+| `@unterberg/nivel/runtime/node` | lower-level node runtime helpers |
+| `@unterberg/nivel/runtime/client` | lower-level client runtime entry |
+
+Most consumers should start with the main package, <Link href="vike-integration" />, and <Link href="tailwind-setup" />.

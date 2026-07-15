@@ -1,6 +1,6 @@
 export { Pre }
 
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import {
   Children,
   type ComponentPropsWithoutRef,
@@ -110,7 +110,7 @@ const Pre = ({ children, className, ...props }: PreProps) => {
 
   return (
     <div
-      className={cmMerge(
+      className={maMerge(
         'group relative h-full min-w-0 max-w-full not-prose overflow-hidden',
         isInChoiceGroup ? '' : 'rounded-box border border-base-muted-light',
         className,
@@ -134,7 +134,7 @@ const Pre = ({ children, className, ...props }: PreProps) => {
         <pre
           {...props}
           ref={preRef}
-          className={cmMerge(
+          className={maMerge(
             'doc-code-pre m-0 h-full min-w-0 max-w-full overflow-x-auto bg-base-200! p-4 text-sm',
             className,
           )}

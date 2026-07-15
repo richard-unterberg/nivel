@@ -84,7 +84,57 @@ const normalizeContentDir = (value: string | undefined) => {
   return resolvedSegments.join('/')
 }
 
+const normalizeEditLinkPathPrefix = (value: string | undefined) => {
+  if (value === undefined) {
+    return undefined
+  }
+
+  const normalized = value.trim()
+
+  if (!normalized) {
+    throw new Error('Docs social.editLinkPathPrefix must be a non-empty repository-relative path.')
+  }
+
+  if (normalized.startsWith('/') || normalized.startsWith('\\')) {
+    throw new Error(`Docs social.editLinkPathPrefix must be repository-relative. Received ${JSON.stringify(value)}.`)
+  }
+
+  if (/^[a-zA-Z]:[\\/]/.test(normalized)) {
+    throw new Error(`Docs social.editLinkPathPrefix must be repository-relative. Received ${JSON.stringify(value)}.`)
+  }
+
+  const segments = normalized.replaceAll('\\', '/').split('/')
+  const resolvedSegments: string[] = []
+
+  for (const segment of segments) {
+    if (segment === '' || segment === '.') {
+      continue
+    }
+
+    if (segment === '..') {
+      throw new Error(
+        `Docs social.editLinkPathPrefix cannot escape the repository root. Received ${JSON.stringify(value)}.`,
+      )
+    }
+
+    resolvedSegments.push(segment)
+  }
+
+  if (resolvedSegments.length === 0) {
+    throw new Error(
+      `Docs social.editLinkPathPrefix must contain at least one path segment. Received ${JSON.stringify(value)}.`,
+    )
+  }
+
+  return resolvedSegments.join('/')
+}
+
 const normalizeSlug = (value: string) => value.replace(/^\/+|\/+$/g, '')
+
+const normalizeOptionalLabel = (value: string | undefined) => {
+  const normalized = value?.trim()
+  return normalized ? normalized : undefined
+}
 
 const joinDocsHref = (basePath: string, slug: string) => {
   const normalizedBasePath = normalizeBasePath(basePath)
@@ -344,6 +394,7 @@ const resolveSocialConfig = (social: DocsConfig['social']): ResolvedDocsSocialCo
   // keep the order from the config
   return {
     ...social,
+    editLinkPathPrefix: normalizeEditLinkPathPrefix(social?.editLinkPathPrefix),
   }
 }
 
@@ -494,20 +545,24 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
       throw new Error(`Docs section "${section.id}" must contain at least one page.`)
     }
 
+    const title = normalizeOptionalLabel(section.title)
+    const navTitle = normalizeOptionalLabel(section.navTitle) ?? title
     const resolvedSection: ResolvedDocsSection = {
       id: section.id,
-      title: section.title,
-      navTitle: section.navTitle ?? section.title,
+      title,
+      navTitle,
       href,
       items,
       icon: section.icon,
     }
 
-    navbarItems.push({
-      id: section.id,
-      title: resolvedSection.navTitle,
-      href: resolvedSection.href,
-    })
+    if (resolvedSection.navTitle) {
+      navbarItems.push({
+        id: section.id,
+        title: resolvedSection.navTitle,
+        href: resolvedSection.href,
+      })
+    }
 
     return resolvedSection
   })

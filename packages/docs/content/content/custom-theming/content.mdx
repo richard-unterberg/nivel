@@ -1,0 +1,26 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel owns the docs layout structure, but the consumer owns palette tokens and brand styling. This keeps the documentation engine reusable without forcing every site into the same visual identity.
+
+## Keep local
+
+- `styles/theme.css`
+- `styles/global.css`
+- Tailwind source declarations
+- daisyUI theme names and token values
+- logos, favicons, and brand assets
+
+## Configure theme names
+
+```ts
+const docsConfig = {
+  theme: {
+    light: 'my-docs-light',
+    dark: 'my-docs-dark',
+    defaultPreference: 'dark',
+  },
+  // ...
+} satisfies DocsConfig
+```
+
+Read <Link href="theme-configuration" /> for the config surface and <Link href="brand-head-fonts" /> for brand and asset settings.

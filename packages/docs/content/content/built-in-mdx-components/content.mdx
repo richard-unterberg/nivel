@@ -1,0 +1,17 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel exports reusable MDX components from the main package so content pages can use the same docs primitives as the runtime.
+
+```mdx
+import { Alert, Link, Overview, RepoLink, Table } from '@unterberg/nivel'
+```
+
+## Common components
+
+- `Link` resolves internal docs links and can infer labels from the docs graph.
+- `Overview` renders card links for section landing pages or related-page clusters.
+- `Alert` highlights notes, warnings, errors, and success states.
+- `RepoLink` links to GitHub repositories with consistent presentation.
+- `Table` provides a docs-styled table primitive.
+
+Start with the linking patterns in <Link href="writing-mdx" />, then use <Link href="overview-cards" /> and <Link href="alerts" /> where the page structure calls for them.

@@ -1,0 +1,27 @@
+import { Link } from '@unterberg/nivel'
+
+Every page node creates a canonical docs route from its `slug`. A page can also declare `aliases` so old URLs or shorter names keep working while the graph still has one canonical page entry.
+
+```ts
+const page = {
+  kind: 'page',
+  id: 'quickStart',
+  title: 'Quick Start',
+  slug: 'quick-start',
+  aliases: ['quickstart', 'start'],
+  source: 'content/quick-start/content.mdx',
+  description: 'Scaffold and run a Nivel consumer.',
+}
+```
+
+With `basePath: '/docs/'`, that page resolves to:
+
+- `/docs/quick-start`
+- `/docs/quickstart`
+- `/docs/start`
+
+## Generated Vike files
+
+Nivel writes route files for canonical pages and aliases under `pages/(nivel-generated)`. Those files are implementation details of the engine and should be regenerated with `nivel prepare`, not edited manually.
+
+Read <Link href="generated-pages" /> for the generated directory contract.

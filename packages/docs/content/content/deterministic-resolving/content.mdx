@@ -1,0 +1,18 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel resolves config and graph data into one normalized model before it generates files or renders runtime UI. The same input should produce the same route files, navigation, metadata, and layout context.
+
+## What gets normalized
+
+- `basePath` and public docs hrefs
+- `contentDir` and MDX source paths
+- section hrefs and nav labels
+- page slugs, aliases, descriptions, and document titles
+- table of contents defaults
+- theme, brand, social, partner, head, and footer config
+
+## Why this matters
+
+The resolver is the point where invalid docs structure should fail early. Duplicate routes, unsafe content directories, invalid icon names, and inconsistent graph data are easier to diagnose before Vike starts rendering pages.
+
+Generated routes are covered in <Link href="routes-aliases" />. The lower-level pipeline is covered in <Link href="resolver-pipeline" />.

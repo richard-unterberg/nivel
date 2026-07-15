@@ -1,0 +1,30 @@
+import { Link } from '@unterberg/nivel'
+
+Set `siteUrl` in `pages/+docs.ts` to enable automatic sitemap and robots output. Nivel uses the resolved docs pages plus normal filesystem-routed consumer pages for the generated static artifacts.
+
+```ts
+const docsConfig = {
+  siteTitle: 'My Docs',
+  siteUrl: 'https://docs.example.com',
+  robots: true,
+  basePath: '/docs',
+  graph: docsGraph,
+} satisfies DocsConfig
+```
+
+## Robots mode
+
+Set `robots: false` when a docs site should not be indexed. Nivel emits `noindex, nofollow` behavior and a disallow-all robots file.
+
+```ts
+const docsConfig = {
+  robots: false,
+  // ...
+} satisfies DocsConfig
+```
+
+## Route coverage
+
+V1 includes canonical docs routes from the docs graph and normal filesystem-routed consumer pages. Consumer routes remapped only through custom `+route.ts` files are not included automatically.
+
+For page and alias routes, read <Link href="routes-aliases" />.

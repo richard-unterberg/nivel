@@ -1,0 +1,13 @@
+import { Link } from '@unterberg/nivel'
+
+The resolver turns the consumer's plain docs config and graph into a normalized `ResolvedDocsConfig`. That resolved model is used by code generation, navigation, page metadata, sitemap output, and runtime layout context.
+
+## Pipeline shape
+
+1. Load `pages/+docs.ts`.
+2. Normalize site-level config such as `basePath`, `contentDir`, theme, brand, head, social, and footer settings.
+3. Walk sections, groups, pages, and aliases from the docs graph.
+4. Validate route uniqueness, source paths, and icon names.
+5. Produce resolved pages, sections, navbar items, top bar data, and runtime metadata.
+
+The consumer-facing concept is covered in <Link href="deterministic-resolving" />.

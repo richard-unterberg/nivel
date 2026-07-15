@@ -1,4 +1,4 @@
-import { cmMerge } from '@classmatejs/react'
+import { maMerge } from '@marmo/react'
 import { Fragment, type ReactNode } from 'react'
 
 type RenderInlineMarkdownOptions = {
@@ -17,7 +17,7 @@ export const renderInlineMarkdown = (
     if (part.startsWith('`') && part.endsWith('`')) {
       return (
         // biome-ignore lint/suspicious/noArrayIndexKey: local presentational split
-        <code className={cmMerge(codeClassName)} key={index}>
+        <code className={maMerge(codeClassName)} key={index}>
           {part.slice(1, -1)}
         </code>
       )

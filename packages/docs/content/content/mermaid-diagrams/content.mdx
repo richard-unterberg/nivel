@@ -1,0 +1,30 @@
+import { Link } from '@unterberg/nivel'
+
+Mermaid diagrams are useful when a docs page needs to explain flow or ownership boundaries. Nivel includes Mermaid rendering through its MDX and code-block tooling.
+
+````mdx
+```mermaid
+flowchart LR
+  graph[Docs graph] --> resolver[Resolver]
+  resolver --> routes[Generated Vike routes]
+  resolver --> runtime[Runtime layout context]
+```
+````
+
+### Example
+
+```mermaid render=true
+flowchart LR
+  graph[Docs graph] --> resolver[Resolver]
+  resolver --> routes[Generated Vike routes]
+  resolver --> runtime[Runtime layout context]
+```
+
+## When to use diagrams
+
+- route and alias generation flow
+- resolver pipeline stages
+- consumer-owned versus engine-owned boundaries
+- Vite plugin lifecycle
+
+For the broader MDX transform chain, read <Link href="mdx-pipeline" />.

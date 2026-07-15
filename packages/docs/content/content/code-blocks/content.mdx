@@ -1,0 +1,19 @@
+import { Link } from '@unterberg/nivel'
+
+Nivel includes code-block tooling for technical documentation. It is designed for package docs where install commands, config snippets, and TypeScript examples need to be readable and consistent.
+
+````mdx
+```ts
+import type { DocsConfig } from '@unterberg/nivel'
+```
+````
+
+## What the pipeline supports
+
+- syntax highlighting through the MDX/code-block setup
+- metadata passed from code fences into rendered code blocks
+- package-manager choice transforms
+- unsupported directive restoration where needed
+- Mermaid rendering through the MDX pipeline
+
+For component-level authoring, read <Link href="built-in-mdx-components" />. For the lower-level pipeline, read <Link href="mdx-pipeline" />.

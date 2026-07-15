@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import test from 'node:test'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { remarkRestoreUnsupportedDirectives } from '../dist/mdx/code-blocks.js'
+import { remarkChoiceGroup, remarkPkgManager, remarkRestoreUnsupportedDirectives } from '../dist/mdx/code-blocks.js'
 
 const testsDir = path.dirname(fileURLToPath(import.meta.url))
 const pnpmStoreDir = path.resolve(testsDir, '../../../node_modules/.pnpm')
@@ -81,4 +81,34 @@ const message = 'hello'
 
   assert.equal(tree.children[0]?.type, 'containerDirective')
   assert.equal(tree.children[0]?.name, 'Choice')
+})
+
+test('explicit npm choices are not expanded into nested package-manager choices', () => {
+  const source = `\`\`\`shell choice="npm"
+npm i @marmo/react
+\`\`\`
+
+\`\`\`shell choice=yarn
+yarn add @marmo/react
+\`\`\`
+
+\`\`\`shell choice=pnpm
+pnpm add @marmo/react
+\`\`\``
+
+  const tree = parseWithDirectives(source)
+  remarkPkgManager()(tree)
+  remarkChoiceGroup()(tree)
+
+  const choiceGroup = tree.children[0]
+  assert.equal(choiceGroup?.type, 'mdxJsxFlowElement')
+  assert.equal(choiceGroup?.name, 'ChoiceGroup')
+  assert.deepEqual(
+    choiceGroup?.children.map((child) => child.attributes[0]?.value),
+    ['npm', 'yarn', 'pnpm'],
+  )
+  assert.deepEqual(
+    choiceGroup?.children.map((child) => child.children[0]?.value),
+    ['npm i @marmo/react', 'yarn add @marmo/react', 'pnpm add @marmo/react'],
+  )
 })

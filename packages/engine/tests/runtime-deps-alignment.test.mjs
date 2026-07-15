@@ -6,13 +6,13 @@ import { fileURLToPath } from 'node:url'
 
 const testsDir = path.dirname(fileURLToPath(import.meta.url))
 const enginePackageJsonPath = path.resolve(testsDir, '..', 'package.json')
-const consumerPackageJsonPath = path.resolve(testsDir, '..', '..', 'consumer-dev', 'package.json')
+const consumerPackageJsonPath = path.resolve(testsDir, '..', '..', 'docs', 'package.json')
 
 const readJson = (filePath) => {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
 }
 
-test('engine local runtime deps stay aligned with the consumer React and Vike stack', () => {
+test('engine local runtime deps stay aligned with the first-party docs React and Vike stack', () => {
   const enginePackageJson = readJson(enginePackageJsonPath)
   const consumerPackageJson = readJson(consumerPackageJsonPath)
 
