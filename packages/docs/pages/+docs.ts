@@ -3,8 +3,8 @@ import { docsGraph } from '../content/docs.graph'
 
 const docsConfig = {
   graph: docsGraph,
-  siteTitle: 'Nivel Documentation',
-  siteDescription: 'Build structure-first documentation sites for React with Nivel, Vike, MDX, and TypeScript.',
+  siteTitle: 'Nivel',
+  siteDescription: 'Build structure-first documentation sites for React with Nivel.',
   siteUrl: 'https://nivel-docs.de',
   robots: true,
   basePath: '/docs/',
