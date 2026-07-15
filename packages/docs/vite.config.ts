@@ -23,8 +23,10 @@ export default {
           /data-theme=.*light/,
           /^:root:has\(input\.theme-controller/,
           /^:where\(:root\)$/,
-          /^\.h-/,
-          /^\.basis-/,
+          // Match base and variant-prefixed Tailwind sizing utilities, e.g.
+          // `.h-*`, `.min-h-*`, `.sm\:w-*`, and `.lg\:min-h-*`.
+          /(?:^\.|\\:)(?:h|min-h|max-h|w|min-w|max-w|basis)-/,
+          /(?:^\.|\\:)prose-container/,
         ],
       },
     }),
