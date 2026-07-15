@@ -74,7 +74,7 @@ const GradientTop = ma.div`
 
 const Page = () => {
   return (
-    <div className="relative">
+    <div className="relative" data-beasties-container>
       <div className="absolute -top-px h-px w-full left-0 bg-base-muted-light pointer-events-none z-100" />
       <div className="overflow-x-clip min-h-[calc(100svh-14*var(--spacing))] flex flex-col w-full">
         <div className="flex-1 py-16 flex flex-col items-center justify-center">
