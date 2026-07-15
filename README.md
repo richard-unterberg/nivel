@@ -2,15 +2,15 @@
 
 static site builder for mdx documentations - alpha
 
-⚠️ This project is under development and built in mind to mainly support vike & telefunc documentation pages.
-Expect breaking changes on engine updates.
+https://nivel-docs.de/
 
-Ok, with that out of the way, have fun:
+⚠️ This project is under development. Expect breaking changes on engine updates.
 
 ## Install
 
 ```bash
 pnpm add @unterberg/nivel react react-dom vike vike-react
+# typescript:
 pnpm add -D vite typescript @types/react @types/react-dom
 ```
 
