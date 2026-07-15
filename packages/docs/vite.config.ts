@@ -23,6 +23,8 @@ export default {
           /data-theme=.*light/,
           /^:root:has\(input\.theme-controller/,
           /^:where\(:root\)$/,
+          /^\.h-/,
+          /^\.basis-/,
         ],
       },
     }),
