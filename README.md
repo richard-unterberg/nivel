@@ -6,7 +6,7 @@ https://nivel-docs.de/
 
 An officially [BSFZ-certified](https://www.bescheinigung-forschungszulage.de/) R&D project under the German Research Allowance Act (FZulG).
 
-![BSFZ Siegel 2026](https://github.com/richard-unterberg/nivel-fue/blob/bbb94456dfd229e15fe9cf50e81eb656607260a3/public/BSFZ_Siegel_RGB_1x.png "BSFZ Siegel 2026")
+![BSFZ Siegel 2026](https://github.com/richard-unterberg/nivel/blob/9f3590fefa461213f42835fdfe7e26180cbd8ecf/packages/docs/public/BSFZ_Siegel_RGB_1x.png "BSFZ Siegel 2026")
 
 ⚠️ Until mid 2027 - This project will be under continuous development. Expect breaking changes on engine updates, while the graph of the docs site should remain stable (non-breaking).
 
