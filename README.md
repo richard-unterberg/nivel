@@ -1,10 +1,14 @@
 ## nivel ✨
 
-static site builder for mdx documentations - alpha
+static site builder for mdx documentations - public alpha
 
 https://nivel-docs.de/
 
-⚠️ This project is under development. Expect breaking changes on engine updates.
+An officially [BSFZ-certified](https://www.bescheinigung-forschungszulage.de/) R&D project under the German Research Allowance Act (FZulG).
+
+![BSFZ Siegel 2026](https://github.com/richard-unterberg/nivel-fue/blob/bbb94456dfd229e15fe9cf50e81eb656607260a3/public/BSFZ_Siegel_RGB_1x.png "BSFZ Siegel 2026")
+
+⚠️ Until mid 2027 - This project will be under continuous development. Expect breaking changes on engine updates, while the graph of the docs site should remain stable (non-breaking).
 
 ## Install
 
@@ -41,7 +45,3 @@ Main reusable package that exports the core engine and public helpers for consum
 ### [`packages/docs`](packages/docs)
 
 First-party documentation site and in-repo integration consumer. It exercises the workspace engine against the release docs while remaining a reference implementation for consumers.
-
-### [`tests/npm-consumer`](tests/npm-consumer)
-
-Standalone npm fixture that installs the published package outside the workspace and validates the consumer contract from a real package install. This is the final gatekeeper for ensuring we don't accidentally break consumers with changes to the engine.

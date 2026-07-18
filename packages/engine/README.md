@@ -228,4 +228,4 @@ nivel --help
 - `social.editLinkPathPrefix` optionally prepends a repository-relative directory to GitHub edit links when the consumer root is nested inside the repository.
 - `customFonts` is optional and defaults to `true`; set it to `false` in `pages/+docs.ts` to stop Nivel from injecting Inter so you can own fonts in consumer CSS.
 - If you configure Algolia, `apiKey` must be a browser-safe search key.
-- The repo validates this package through both the first-party docs app at `packages/docs` and the standalone fixture at `tests/npm-consumer`.
+- The repo validates this package through the first-party docs app at `packages/docs` and the engine test suite, including temporary consumer scaffolding tests.

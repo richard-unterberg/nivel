@@ -1,10 +1,6 @@
 {
   "$schema": "./node_modules/knip/schema.json",
-  "ignore": [
-    "tests/npm-consumer/**",
-    "packages/engine/assets/**",
-    "packages/*/vite.config.ts"
-  ],
+  "ignore": ["packages/engine/assets/**", "packages/*/vite.config.ts"],
   "ignoreDependencies": ["@unterberg/vite-beasties-output"],
   "vike": {
     "entry": "packages/*/{pages,renderer}/**/+*.{js,jsx,ts,tsx,vue,react,solid}",

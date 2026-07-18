@@ -400,14 +400,6 @@ export const docsGraph = {
               description:
                 'Understand the MDX transforms that power headings, definition lists, directives, and code blocks.',
             },
-            {
-              kind: 'page',
-              id: 'testingConsumerFixtures',
-              title: 'Testing and Consumer Fixtures',
-              slug: 'testing-consumer-fixtures',
-              source: 'content/testing-consumer-fixtures/content.mdx',
-              description: 'Use the in-repo consumer and npm fixture to validate Nivel as a real published package.',
-            },
           ],
         },
       ],

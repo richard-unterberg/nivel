@@ -5,7 +5,6 @@
       "**",
       "!legacy",
       "!**/*.build-*.mjs",
-      "!tests/npm-consumer/dist",
       "!packages/engine/dist",
       "!packages/engine/src/generated",
       "!packages/docs/pages/(nivel-generated)",
