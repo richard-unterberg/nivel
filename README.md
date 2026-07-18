@@ -4,12 +4,6 @@ static site builder for mdx documentations - public alpha
 
 https://nivel-docs.de/
 
-An officially [BSFZ-certified](https://www.bescheinigung-forschungszulage.de/) R&D project under the German Research Allowance Act (FZulG).
-
-![BSFZ Siegel 2026](https://github.com/richard-unterberg/nivel/blob/9f3590fefa461213f42835fdfe7e26180cbd8ecf/packages/docs/public/BSFZ_Siegel_RGB_1x.png "BSFZ Siegel 2026")
-
-⚠️ Until mid 2027 - This project will be under continuous development. Expect breaking changes on engine updates, while the graph of the docs site should remain stable (non-breaking).
-
 ## Install
 
 ```bash
@@ -45,3 +39,11 @@ Main reusable package that exports the core engine and public helpers for consum
 ### [`packages/docs`](packages/docs)
 
 First-party documentation site and in-repo integration consumer. It exercises the workspace engine against the release docs while remaining a reference implementation for consumers.
+
+FZulG - Certified R&D Project
+
+This is an officially [BSFZ-certified](https://www.bescheinigung-forschungszulage.de/) R&D project under the German Research Allowance Act (FZulG).
+
+![BSFZ Siegel 2026](https://github.com/richard-unterberg/nivel/blob/9f3590fefa461213f42835fdfe7e26180cbd8ecf/packages/docs/public/BSFZ_Siegel_RGB_1x.png "BSFZ Siegel 2026")
+
+⚠️ Until mid 2027 - This project will be under continuous development. Expect breaking changes on engine updates, while the graph of the docs site should remain stable (non-breaking).
