@@ -40,9 +40,9 @@ Main reusable package that exports the core engine and public helpers for consum
 
 First-party documentation site and in-repo integration consumer. It exercises the workspace engine against the release docs while remaining a reference implementation for consumers.
 
-FZulG - Certified R&D Project
+## Certified R&D Project - FZulG
 
-This is an officially [BSFZ-certified](https://www.bescheinigung-forschungszulage.de/) R&D project under the German Research Allowance Act (FZulG).
+Nivel is an officially [BSFZ-certified](https://www.bescheinigung-forschungszulage.de/) R&D project under the German Research Allowance Act (FZulG).
 
 ![BSFZ Siegel 2026](https://github.com/richard-unterberg/nivel/blob/9f3590fefa461213f42835fdfe7e26180cbd8ecf/packages/docs/public/BSFZ_Siegel_RGB_1x.png "BSFZ Siegel 2026")
 
