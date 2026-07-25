@@ -141,3 +141,81 @@ export const movedPageGraph = {
     },
   ],
 } satisfies DocsGraph
+
+export const orderedSectionsGraph = {
+  items: [
+    {
+      kind: 'section',
+      id: 'docs',
+      title: 'Docs',
+      navTitle: 'Docs',
+      items: [
+        {
+          kind: 'group',
+          id: 'alpha',
+          title: 'Alpha',
+          items: [
+            { kind: 'page', id: 'a', title: 'A', slug: 'a', source: 'a.mdx' },
+            { kind: 'page', id: 'b', title: 'B', slug: 'b', source: 'b.mdx' },
+          ],
+        },
+      ],
+    },
+    {
+      kind: 'section',
+      id: 'api',
+      title: 'API',
+      navTitle: 'API',
+      items: [
+        {
+          kind: 'group',
+          id: 'beta',
+          title: 'Beta',
+          items: [
+            { kind: 'page', id: 'c', title: 'C', slug: 'c', source: 'c.mdx' },
+            { kind: 'page', id: 'd', title: 'D', slug: 'd', source: 'd.mdx' },
+          ],
+        },
+      ],
+    },
+  ],
+} satisfies DocsGraph
+
+export const reorderedSectionsGraph = {
+  items: [
+    {
+      kind: 'section',
+      id: 'api',
+      title: 'API',
+      navTitle: 'API',
+      items: [
+        {
+          kind: 'group',
+          id: 'beta',
+          title: 'Beta',
+          items: [
+            { kind: 'page', id: 'c', title: 'C', slug: 'c', source: 'c.mdx' },
+            { kind: 'page', id: 'd', title: 'D', slug: 'd', source: 'd.mdx' },
+          ],
+        },
+      ],
+    },
+    {
+      kind: 'section',
+      id: 'docs',
+      title: 'Docs',
+      navTitle: 'Docs',
+      items: [
+        {
+          kind: 'group',
+          id: 'alpha',
+          title: 'Alpha',
+          items: [
+            { kind: 'page', id: 'a', title: 'A', slug: 'a', source: 'a.mdx' },
+            { kind: 'page', id: 'b', title: 'B', slug: 'b', source: 'b.mdx' },
+          ],
+        },
+      ],
+    },
+  ],
+} satisfies DocsGraph

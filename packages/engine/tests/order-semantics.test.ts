@@ -13,7 +13,9 @@ import {
   movedPageGraph,
   orderedABCGraph,
   orderedCABGraph,
+  orderedSectionsGraph,
   reorderedGroupsGraph,
+  reorderedSectionsGraph,
 } from './fixtures/order-semantics.ts'
 
 const getUnorderedStructureSignature = (graph: DocsGraph) => {
@@ -98,7 +100,7 @@ const collectResolvedSidebarOrder = (resolved: ResolvedDocsConfig) => {
   return order
 }
 
-const collectVisibleSidebarOrder = (resolved: ResolvedDocsConfig) => {
+const deriveVisibleSidebarOrder = (resolved: ResolvedDocsConfig) => {
   const order: string[] = []
 
   const visit = (nodes: ResolvedSidebarNode[]) => {
@@ -180,7 +182,7 @@ test('showInNav false hides a page only from the visible sidebar projection', ()
   assert.equal(pageB?.kind, 'page')
   assert.equal(pageB?.showInNav, false)
   assert.ok(collectResolvedSidebarOrder(resolved).includes('page:b'))
-  assert.ok(!collectVisibleSidebarOrder(resolved).includes('page:b'))
+  assert.ok(!deriveVisibleSidebarOrder(resolved).includes('page:b'))
   assert.deepEqual(getUnorderedStructureSignature(hiddenBGraph), getUnorderedStructureSignature(orderedABCGraph))
 })
 
@@ -214,6 +216,62 @@ test('moving a page to another group changes topology rather than only order', (
   assert.ok(moved.edges.includes('group:beta->page:b'))
 })
 
+test('unordered structure is unchanged by top-level section reordering', () => {
+  assert.deepEqual(
+    getUnorderedStructureSignature(orderedSectionsGraph),
+    getUnorderedStructureSignature(reorderedSectionsGraph),
+  )
+})
+
+test('ordered structure distinguishes top-level section reordering', () => {
+  assert.notDeepEqual(
+    getOrderedStructureSignature(orderedSectionsGraph),
+    getOrderedStructureSignature(reorderedSectionsGraph),
+  )
+})
+
+test('current resolver preserves top-level section input order', () => {
+  const resolvedOrdered = resolveDocsConfig(createConfig(orderedSectionsGraph))
+  const resolvedReordered = resolveDocsConfig(createConfig(reorderedSectionsGraph))
+
+  assert.deepEqual(
+    resolvedOrdered.sections.map((section) => section.id),
+    ['docs', 'api'],
+  )
+  assert.deepEqual(
+    resolvedReordered.sections.map((section) => section.id),
+    ['api', 'docs'],
+  )
+})
+
+test('current resolver navbar items follow top-level section input order', () => {
+  const resolvedOrdered = resolveDocsConfig(createConfig(orderedSectionsGraph))
+  const resolvedReordered = resolveDocsConfig(createConfig(reorderedSectionsGraph))
+
+  assert.deepEqual(
+    resolvedOrdered.navbarItems.map((item) => item.id),
+    ['docs', 'api'],
+  )
+  assert.deepEqual(
+    resolvedReordered.navbarItems.map((item) => item.id),
+    ['api', 'docs'],
+  )
+})
+
+test('current resolver flat page projection follows cross-section traversal order', () => {
+  const resolvedOrdered = resolveDocsConfig(createConfig(orderedSectionsGraph))
+  const resolvedReordered = resolveDocsConfig(createConfig(reorderedSectionsGraph))
+
+  assert.deepEqual(
+    resolvedOrdered.pages.map((page) => page.id),
+    ['a', 'b', 'c', 'd'],
+  )
+  assert.deepEqual(
+    resolvedReordered.pages.map((page) => page.id),
+    ['c', 'd', 'a', 'b'],
+  )
+})
+
 test('current resolver projections are deterministic for repeated identical inputs', () => {
   const projections = Array.from({ length: 3 }, () => {
     const resolved = resolveDocsConfig(createConfig(orderedCABGraph))
@@ -222,7 +280,24 @@ test('current resolver projections are deterministic for repeated identical inpu
       pages: resolved.pages.map((page) => page.id),
       groups: resolved.sections[0]?.items.map((node) => node.id),
       sidebar: collectResolvedSidebarOrder(resolved),
-      visibleSidebar: collectVisibleSidebarOrder(resolved),
+      visibleSidebar: deriveVisibleSidebarOrder(resolved),
+    }
+  })
+
+  assert.deepEqual(projections[1], projections[0])
+  assert.deepEqual(projections[2], projections[0])
+})
+
+test('current resolver section projections are deterministic for repeated identical inputs', () => {
+  const projections = Array.from({ length: 3 }, () => {
+    const resolved = resolveDocsConfig(createConfig(orderedSectionsGraph))
+
+    return {
+      sections: resolved.sections.map((section) => section.id),
+      navbarItems: resolved.navbarItems.map((item) => item.id),
+      pages: resolved.pages.map((page) => page.id),
+      sidebar: collectResolvedSidebarOrder(resolved),
+      visibleSidebar: deriveVisibleSidebarOrder(resolved),
     }
   })
 
