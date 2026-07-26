@@ -37,6 +37,9 @@
       "security": {
         "noDangerouslySetInnerHtml": "info"
       },
+      "a11y": {
+        "noSvgWithoutTitle": "warn"
+      },
       "suspicious": {
         "noArrayIndexKey": "warn",
         "noTemplateCurlyInString": "info"
