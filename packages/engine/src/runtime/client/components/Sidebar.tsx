@@ -61,7 +61,7 @@ const SidebarPageLink = ({ title, href, currentHref, icon: Icon, onNavigate }: S
         href={withSiteBaseUrl(href)}
         onClick={onNavigate}
         className={maMerge(
-          'rounded-field py-1.5 text-base-muted hover:text-base-content justify-start hover:bg-base-200',
+          'whitespace-normal rounded-field py-1.5 text-base-muted hover:text-base-content justify-start hover:bg-base-200',
           href === currentHref && 'text-primary! bg-base-200',
         )}
       >
@@ -213,7 +213,7 @@ const SidebarNestedGroup = ({ group, currentHref, docsIconMap, onNavigate }: Sid
           setIsOpen(event.currentTarget.open)
         }}
       >
-        <summary className="py-0.5 rounded-field py-0 flex items-center">
+        <summary className="rounded-field py-0 flex items-center">
           <SidebarGroupTitle
             title={group.title}
             href={groupHref ?? undefined}
@@ -258,7 +258,7 @@ const SidebarSectionGroup = ({ section, currentHref, activeSectionId, onNavigate
   }
 
   return (
-    <li className="pb-1">
+    <li className="pb-1 w-76">
       <details
         open={isOpen}
         onToggle={(event) => {
@@ -322,7 +322,7 @@ export const Sidebar = memo(
 
     return (
       <aside className="hidden basis-76 shrink-0 lg:block">
-        <div className="-ml-3 sticky top-14 relative">
+        <div className="-ml-3 sticky top-14">
           <div className="absolute left-0 bottom-0 bg-linear-to-t h-10 w-full from-base-100 z-20 pointer-events-none" />
           <div className="absolute right-px top-px bg-linear-to-t h-4 w-full to-base-100 z-20 pointer-events-none" />
           <div className="absolute h-full w-px right-0 top-0 bg-linear-to-t to-base-muted-light via-base-muted-light pointer-events-none z-1" />
