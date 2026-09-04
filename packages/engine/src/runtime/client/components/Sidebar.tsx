@@ -172,7 +172,9 @@ const SidebarItemList = ({ items, currentHref, docsIconMap, onNavigate }: Sideba
   const visibleItems = getVisibleNavItems(items)
 
   return (
-    <ul className="menu py-0.5 lg:w-[97%]">{renderSidebarItems(visibleItems, currentHref, docsIconMap, onNavigate)}</ul>
+    <ul className={maMerge('menu py-0.5 w-auto whitespace-normal!')}>
+      {renderSidebarItems(visibleItems, currentHref, docsIconMap, onNavigate)}
+    </ul>
   )
 }
 
