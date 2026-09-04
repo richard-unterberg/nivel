@@ -404,68 +404,6 @@ const createDuplicateRouteFailure = (
   success: null,
 })
 
-const m03VariantABaseline = {
-  validity: 'valid',
-  diagnostic: null,
-  success: {
-    claims: [
-      {
-        pageId: 'm03-alias-owner',
-        slug: 'legacy-api',
-        aliases: ['api'],
-        href: '/docs/legacy-api/',
-        aliasHrefs: ['/docs/api/'],
-        sectionId: 'm03-section',
-      },
-      {
-        pageId: 'm03-slug-owner',
-        slug: 'api',
-        aliases: [],
-        href: '/docs/api/',
-        aliasHrefs: [],
-        sectionId: 'm03-section',
-      },
-    ],
-    projections: {
-      pages: ['m03-alias-owner', 'm03-slug-owner'],
-      sections: [{ id: 'm03-section', href: '/docs/api/' }],
-      navbarItems: [{ id: 'm03-section', href: '/docs/api/' }],
-      sidebarPreorder: ['group:m03-group', 'page:m03-alias-owner', 'page:m03-slug-owner'],
-    },
-  },
-} satisfies ResolutionObservation
-
-const m04VariantABaseline = {
-  validity: 'valid',
-  diagnostic: null,
-  success: {
-    claims: [
-      {
-        pageId: 'm04-alias-owner',
-        slug: 'legacy-normalized-api',
-        aliases: ['normalized-api'],
-        href: '/docs/legacy-normalized-api/',
-        aliasHrefs: ['/docs/normalized-api/'],
-        sectionId: 'm04-section',
-      },
-      {
-        pageId: 'm04-slug-owner',
-        slug: 'normalized-api',
-        aliases: [],
-        href: '/docs/normalized-api/',
-        aliasHrefs: [],
-        sectionId: 'm04-section',
-      },
-    ],
-    projections: {
-      pages: ['m04-alias-owner', 'm04-slug-owner'],
-      sections: [{ id: 'm04-section', href: '/docs/normalized-api/' }],
-      navbarItems: [{ id: 'm04-section', href: '/docs/normalized-api/' }],
-      sidebarPreorder: ['group:m04-group', 'page:m04-alias-owner', 'page:m04-slug-owner'],
-    },
-  },
-} satisfies ResolutionObservation
-
 const m05ClaimsBaseline = [
   {
     pageId: 'm05-guide',
@@ -517,80 +455,6 @@ const m05VariantBBaseline = {
       sections: [{ id: 'm05-section', href: '/docs/overview/' }],
       navbarItems: [{ id: 'm05-section', href: '/docs/overview/' }],
       sidebarPreorder: ['group:m05-group', 'page:m05-reference', 'page:m05-overview', 'page:m05-guide'],
-    },
-  },
-} satisfies ResolutionObservation
-
-const m06VariantABaseline = {
-  validity: 'valid',
-  diagnostic: null,
-  success: {
-    claims: [
-      {
-        pageId: 'm06-alias-owner',
-        slug: 'legacy-nested-api',
-        aliases: ['nested-api'],
-        href: '/docs/legacy-nested-api/',
-        aliasHrefs: ['/docs/nested-api/'],
-        sectionId: 'm06-section',
-      },
-      {
-        pageId: 'm06-slug-owner',
-        slug: 'nested-api',
-        aliases: [],
-        href: '/docs/nested-api/',
-        aliasHrefs: [],
-        sectionId: 'm06-section',
-      },
-    ],
-    projections: {
-      pages: ['m06-alias-owner', 'm06-slug-owner'],
-      sections: [{ id: 'm06-section', href: '/docs/nested-api/' }],
-      navbarItems: [{ id: 'm06-section', href: '/docs/nested-api/' }],
-      sidebarPreorder: [
-        'group:m06-root',
-        'group:m06-alias-branch',
-        'page:m06-alias-owner',
-        'group:m06-slug-branch',
-        'page:m06-slug-owner',
-      ],
-    },
-  },
-} satisfies ResolutionObservation
-
-const m07VariantABaseline = {
-  validity: 'valid',
-  diagnostic: null,
-  success: {
-    claims: [
-      {
-        pageId: 'm07-alias-owner',
-        slug: 'legacy-section-api',
-        aliases: ['section-api'],
-        href: '/docs/legacy-section-api/',
-        aliasHrefs: ['/docs/section-api/'],
-        sectionId: 'm07-alias-section',
-      },
-      {
-        pageId: 'm07-slug-owner',
-        slug: 'section-api',
-        aliases: [],
-        href: '/docs/section-api/',
-        aliasHrefs: [],
-        sectionId: 'm07-slug-section',
-      },
-    ],
-    projections: {
-      pages: ['m07-alias-owner', 'm07-slug-owner'],
-      sections: [
-        { id: 'm07-alias-section', href: '/docs/legacy-section-api/' },
-        { id: 'm07-slug-section', href: '/docs/section-api/' },
-      ],
-      navbarItems: [
-        { id: 'm07-alias-section', href: '/docs/legacy-section-api/' },
-        { id: 'm07-slug-section', href: '/docs/section-api/' },
-      ],
-      sidebarPreorder: ['page:m07-alias-owner', 'page:m07-slug-owner'],
     },
   },
 } satisfies ResolutionObservation
@@ -732,30 +596,33 @@ test('M02 baseline pair comparison records matching first observable throws', ()
   })
 })
 
-test('M03 baseline fixture variants are equivalent permutations', () => {
+test('M03 regression fixture variants are equivalent permutations', () => {
   assertEquivalentPermutation(m03AliasSlugPair)
 })
 
-test('M03 baseline variant A records current resolver success when the alias is visited first', () => {
-  assert.deepEqual(observeResolution(createConfig(m03AliasSlugPair.variantA)), m03VariantABaseline)
+test('M03 regression variant A rejects the alias-first conflict with an alias diagnostic', () => {
+  assert.deepEqual(
+    observeResolution(createConfig(m03AliasSlugPair.variantA)),
+    createDuplicateRouteFailure('alias', 'api'),
+  )
 })
 
-test('M03 baseline variant B records the current resolver alias throw when the slug is visited first', () => {
+test('M03 regression variant B rejects the slug-first conflict with the same alias diagnostic', () => {
   assert.deepEqual(
     observeResolution(createConfig(m03AliasSlugPair.variantB)),
     createDuplicateRouteFailure('alias', 'api'),
   )
 })
 
-test('M03 baseline pair comparison records current resolver validity asymmetry', () => {
+test('M03 regression pair comparison records permutation-invariant validity and diagnostics', () => {
   const observations = observePair(m03AliasSlugPair)
   assert.deepEqual(compareObservations(observations.variantA, observations.variantB), {
-    sameValidity: false,
-    sameDiagnosticFamily: null,
-    sameReportedClaimKind: null,
-    sameConflictValue: null,
-    sameErrorName: null,
-    sameRawMessage: null,
+    sameValidity: true,
+    sameDiagnosticFamily: true,
+    sameReportedClaimKind: true,
+    sameConflictValue: true,
+    sameErrorName: true,
+    sameRawMessage: true,
     sameClaims: null,
     samePageOrder: null,
     sameSectionOrder: null,
@@ -764,30 +631,33 @@ test('M03 baseline pair comparison records current resolver validity asymmetry',
   })
 })
 
-test('M04 baseline fixture variants are equivalent after current route-claim normalization', () => {
+test('M04 regression fixture variants are equivalent after current route-claim normalization', () => {
   assertEquivalentPermutation(m04NormalizedAliasSlugPair)
 })
 
-test('M04 baseline variant A records current resolver success when the normalized alias is visited first', () => {
-  assert.deepEqual(observeResolution(createConfig(m04NormalizedAliasSlugPair.variantA)), m04VariantABaseline)
+test('M04 regression variant A rejects the normalized alias-first conflict with an alias diagnostic', () => {
+  assert.deepEqual(
+    observeResolution(createConfig(m04NormalizedAliasSlugPair.variantA)),
+    createDuplicateRouteFailure('alias', 'normalized-api'),
+  )
 })
 
-test('M04 baseline variant B records the current resolver alias throw when the slug is visited first', () => {
+test('M04 regression variant B rejects the normalized slug-first conflict with the same alias diagnostic', () => {
   assert.deepEqual(
     observeResolution(createConfig(m04NormalizedAliasSlugPair.variantB)),
     createDuplicateRouteFailure('alias', 'normalized-api'),
   )
 })
 
-test('M04 baseline pair comparison records current resolver validity asymmetry after normalization', () => {
+test('M04 regression pair comparison records permutation-invariant validity after normalization', () => {
   const observations = observePair(m04NormalizedAliasSlugPair)
   assert.deepEqual(compareObservations(observations.variantA, observations.variantB), {
-    sameValidity: false,
-    sameDiagnosticFamily: null,
-    sameReportedClaimKind: null,
-    sameConflictValue: null,
-    sameErrorName: null,
-    sameRawMessage: null,
+    sameValidity: true,
+    sameDiagnosticFamily: true,
+    sameReportedClaimKind: true,
+    sameConflictValue: true,
+    sameErrorName: true,
+    sameRawMessage: true,
     sameClaims: null,
     samePageOrder: null,
     sameSectionOrder: null,
@@ -825,30 +695,33 @@ test('M05 baseline pair comparison separates equal claims from order-sensitive p
   })
 })
 
-test('M06 baseline fixture variants preserve nested parent-child edges while permuting groups', () => {
+test('M06 regression fixture variants preserve nested parent-child edges while permuting groups', () => {
   assertEquivalentPermutation(m06NestedGroupsPair)
 })
 
-test('M06 baseline variant A records current resolver success when the nested alias branch is visited first', () => {
-  assert.deepEqual(observeResolution(createConfig(m06NestedGroupsPair.variantA)), m06VariantABaseline)
+test('M06 regression variant A rejects the nested alias-first conflict with an alias diagnostic', () => {
+  assert.deepEqual(
+    observeResolution(createConfig(m06NestedGroupsPair.variantA)),
+    createDuplicateRouteFailure('alias', 'nested-api'),
+  )
 })
 
-test('M06 baseline variant B records the current resolver alias throw when the nested slug branch is visited first', () => {
+test('M06 regression variant B rejects the nested slug-first conflict with the same alias diagnostic', () => {
   assert.deepEqual(
     observeResolution(createConfig(m06NestedGroupsPair.variantB)),
     createDuplicateRouteFailure('alias', 'nested-api'),
   )
 })
 
-test('M06 baseline pair comparison records current resolver validity asymmetry across nested groups', () => {
+test('M06 regression pair comparison records permutation-invariant validity across nested groups', () => {
   const observations = observePair(m06NestedGroupsPair)
   assert.deepEqual(compareObservations(observations.variantA, observations.variantB), {
-    sameValidity: false,
-    sameDiagnosticFamily: null,
-    sameReportedClaimKind: null,
-    sameConflictValue: null,
-    sameErrorName: null,
-    sameRawMessage: null,
+    sameValidity: true,
+    sameDiagnosticFamily: true,
+    sameReportedClaimKind: true,
+    sameConflictValue: true,
+    sameErrorName: true,
+    sameRawMessage: true,
     sameClaims: null,
     samePageOrder: null,
     sameSectionOrder: null,
@@ -857,30 +730,33 @@ test('M06 baseline pair comparison records current resolver validity asymmetry a
   })
 })
 
-test('M07 baseline fixture variants preserve section membership while permuting sections', () => {
+test('M07 regression fixture variants preserve section membership while permuting sections', () => {
   assertEquivalentPermutation(m07SectionsPair)
 })
 
-test('M07 baseline variant A records current resolver success when the alias section is visited first', () => {
-  assert.deepEqual(observeResolution(createConfig(m07SectionsPair.variantA)), m07VariantABaseline)
+test('M07 regression variant A rejects the alias-first section conflict with an alias diagnostic', () => {
+  assert.deepEqual(
+    observeResolution(createConfig(m07SectionsPair.variantA)),
+    createDuplicateRouteFailure('alias', 'section-api'),
+  )
 })
 
-test('M07 baseline variant B records the current resolver alias throw when the slug section is visited first', () => {
+test('M07 regression variant B rejects the slug-first section conflict with the same alias diagnostic', () => {
   assert.deepEqual(
     observeResolution(createConfig(m07SectionsPair.variantB)),
     createDuplicateRouteFailure('alias', 'section-api'),
   )
 })
 
-test('M07 baseline pair comparison records current resolver validity asymmetry across sections', () => {
+test('M07 regression pair comparison records permutation-invariant validity across sections', () => {
   const observations = observePair(m07SectionsPair)
   assert.deepEqual(compareObservations(observations.variantA, observations.variantB), {
-    sameValidity: false,
-    sameDiagnosticFamily: null,
-    sameReportedClaimKind: null,
-    sameConflictValue: null,
-    sameErrorName: null,
-    sameRawMessage: null,
+    sameValidity: true,
+    sameDiagnosticFamily: true,
+    sameReportedClaimKind: true,
+    sameConflictValue: true,
+    sameErrorName: true,
+    sameRawMessage: true,
     sameClaims: null,
     samePageOrder: null,
     sameSectionOrder: null,
@@ -989,7 +865,7 @@ test('M09 baseline pair comparison is limited to different first observable thro
   })
 })
 
-const assertThreeSequentialBaselineObservations = (graph: DocsGraph, expected: ResolutionObservation) => {
+const assertThreeSequentialObservations = (graph: DocsGraph, expected: ResolutionObservation) => {
   const config = createConfig(graph)
   const configBeforeCalls = structuredClone(config)
   const observations = Array.from({ length: 3 }, () => observeResolution(config))
@@ -1001,20 +877,20 @@ const assertThreeSequentialBaselineObservations = (graph: DocsGraph, expected: R
   assert.deepEqual(config, configBeforeCalls)
 }
 
-test('M10 baseline records three sequential repeat observations and unchanged input for M03 variant A', () => {
-  assertThreeSequentialBaselineObservations(m03AliasSlugPair.variantA, m03VariantABaseline)
+test('M10 regression records three sequential repeat observations and unchanged input for M03 variant A', () => {
+  assertThreeSequentialObservations(m03AliasSlugPair.variantA, createDuplicateRouteFailure('alias', 'api'))
 })
 
-test('M10 baseline records three sequential repeat observations and unchanged input for M03 variant B', () => {
-  assertThreeSequentialBaselineObservations(m03AliasSlugPair.variantB, createDuplicateRouteFailure('alias', 'api'))
+test('M10 regression records three sequential repeat observations and unchanged input for M03 variant B', () => {
+  assertThreeSequentialObservations(m03AliasSlugPair.variantB, createDuplicateRouteFailure('alias', 'api'))
 })
 
 test('M10 baseline records three sequential repeat observations and unchanged input for M05 variant A', () => {
-  assertThreeSequentialBaselineObservations(m05CollisionFreePair.variantA, m05VariantABaseline)
+  assertThreeSequentialObservations(m05CollisionFreePair.variantA, m05VariantABaseline)
 })
 
 test('M10 baseline records three sequential repeat observations and unchanged input for M09 variant B', () => {
-  assertThreeSequentialBaselineObservations(
+  assertThreeSequentialObservations(
     m09MultipleConflictsPair.variantB,
     createDuplicateRouteFailure('alias', 'multi-alias'),
   )
