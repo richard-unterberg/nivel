@@ -11,6 +11,12 @@ Nivel resolves config and graph data into one normalized model before it generat
 - table of contents defaults
 - theme, brand, social, partner, head, and footer config
 
+## Route conflicts and declared order
+
+Canonical page slugs and aliases share one route namespace after leading and trailing slashes are removed. A collision in that namespace is rejected regardless of the traversal order of otherwise equivalent graph nodes.
+
+Successful resolution still preserves declared order in the `pages`, `sections`, `navbarItems`, and nested sidebar projections. Conflict validation is fail-fast: an error reports the first observed collision, not a complete conflict set or structured participant data.
+
 ## Why this matters
 
 The resolver is the point where invalid docs structure should fail early. Duplicate routes, unsafe content directories, invalid icon names, and inconsistent graph data are easier to diagnose before Vike starts rendering pages.
