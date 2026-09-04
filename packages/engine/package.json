@@ -1,6 +1,6 @@
 {
   "name": "@unterberg/nivel",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "type": "module",
   "description": "Deterministic structure engine for documentation systems",
   "sideEffects": false,
@@ -85,7 +85,7 @@
   },
   "dependencies": {
     "@brillout/shiki-transformers": "^4.0.2",
-    "@marmo/react": "^1.0.2",
+    "@marmo/react": "^1.0.3",
     "@mdx-js/rollup": "^3.1.1",
     "@shikijs/transformers": "^4.3.1",
     "@tailwindcss/typography": "^0.5.20",
