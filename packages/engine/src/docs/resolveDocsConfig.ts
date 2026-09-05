@@ -426,8 +426,7 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
   const customFonts = resolveCustomFontsConfig(config.customFonts)
 
   const pageIds = new Set<string>()
-  const pageSlugs = new Set<string>()
-  const pageAliases = new Set<string>()
+  const pageRouteClaims = new Map<string, 'slug' | 'alias'>()
   const groupIds = new Set<string>()
   const sectionIds = new Set<string>()
   const pages: ResolvedDocsPage[] = []
@@ -478,20 +477,22 @@ export const resolveDocsConfig = (config: DocsConfig): ResolvedDocsConfig => {
         throw new Error(`Duplicate docs page id "${pageNode.id}".`)
       }
 
-      if (pageSlugs.has(slug)) {
-        throw new Error(`Duplicate docs page slug "${slug}".`)
+      const existingSlugClaimKind = pageRouteClaims.get(slug)
+      if (existingSlugClaimKind) {
+        const reportedClaimKind = existingSlugClaimKind === 'alias' ? 'alias' : 'slug'
+        throw new Error(`Duplicate docs page ${reportedClaimKind} "${slug}".`)
       }
 
       for (const alias of aliases) {
-        if (pageSlugs.has(alias) || pageAliases.has(alias)) {
+        if (pageRouteClaims.has(alias)) {
           throw new Error(`Duplicate docs page alias "${alias}".`)
         }
       }
 
       pageIds.add(pageNode.id)
-      pageSlugs.add(slug)
+      pageRouteClaims.set(slug, 'slug')
       for (const alias of aliases) {
-        pageAliases.add(alias)
+        pageRouteClaims.set(alias, 'alias')
       }
 
       const href = joinDocsHref(normalizedBasePath, slug)
